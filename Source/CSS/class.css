@@ -131,5 +131,9 @@ form p {
 }
 
 .progress-bar {
-  background-color: #00b78d !important;
+  background-color: #3279B7;
+}
+
+#singleGrade {
+  background-color: #0EFF00;
 }
