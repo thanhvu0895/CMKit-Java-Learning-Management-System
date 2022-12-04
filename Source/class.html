@@ -60,21 +60,71 @@
         </div>
       </div>
 
-      <div class="mt-4">
-        <div class="dropdown show">
-          <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Class Files </a>
-
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">
-              <span><i class="fa-solid fa-link"></i></span>
-              Kit Help Files
-            </a>
-            <a class="dropdown-item" href="#">
-              <span><i class="fa-solid fa-file"></i></i></span>
-              Link To Reflective Response Templates
-            </a>
-          </div>
-        </div>
+      <div style="outline: 1px solid lightgrey;" class="mt-4">
+        <li class="list-group-item hoverable-thing" id="helpFiles">
+		
+          <script>
+            directorybrowser0Toggled = true
+            function fvToggleIconFordirectorybrowser0()
+            {
+              if(directorybrowser0Toggled)
+            {
+              directorybrowser0Toggled = false
+              document.getElementById("fvIconFordirectorybrowser0").className = "glyphicon glyphicon-folder-close"
+            }
+            else
+            {
+              directorybrowser0Toggled = true
+              document.getElementById("fvIconFordirectorybrowser0").className = "glyphicon glyphicon-folder-open"
+            }
+            }
+          </script>
+          
+          <a data-toggle="collapse" href="#directorybrowser0" onclick="fvToggleIconFordirectorybrowser0()">
+            <strong>
+            <span class="glyphicon glyphicon-folder-open" aria-hidden="true" id="fvIconFordirectorybrowser0 helpFiles" ></span>
+            Class Files
+            <span class="caret"></span>
+            </strong>
+          </a>
+          <div></div>
+          </li>
+          <div id="directorybrowser0" class="accordian-collapse collapse in">
+            <li class="list-group-item hoverable-thing">
+            |----
+              <a target="_blank" href="https://www.cs.kzoo.edu/CSShared/HelpFiles/Kit/">
+                <span class="glyphicon glyphicon-link" aria-alt="(Link)"></span> Kit Help Files 
+  </a>						
+              <div class="pull-right">
+              
+                
+                <a target="_blank" href="#">
+                  <span class="glyphicon glyphicon-globe" aria-hidden="true" style="display:inline;top:0"></span>
+  </a>						  
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+              </div>
+            
+          </li>
+            <li class="list-group-item hoverable-thing">
+            |----
+              <a title="View" target="_blank" href="#">
+              <span class="glyphicon glyphicon-file" aria-alt="(File)"></span>
+              LinksToReflectiveResponseTemplates.html
+  </a>					  
+              <div class="pull-right">
+                <a title="View" target="_blank" href="/repos/641/view_file?dir%5B%5D=student&amp;dir%5B%5D=LinksToReflectiveResponseTemplates.html">
+                  <span class="glyphicon glyphicon-eye-open" style="display:inline;top:0" aria-alt="View"></span>
+  </a>						
+              &nbsp; &nbsp; &nbsp; &nbsp;
+              <a title="Download" href="/repos/641/download?dir%5B%5D=student&amp;dir%5B%5D=LinksToReflectiveResponseTemplates.html">
+                <span class="glyphicon glyphicon-save" style="display:inline;top:0" aria-alt="Download"></span>
+  </a>					    
+              &nbsp; &nbsp; &nbsp; &nbsp;
+              </div>
+          </li>
+      </div>
+      
+	</div>
       </div>
 
       <div class="mt-4">

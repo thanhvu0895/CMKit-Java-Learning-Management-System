@@ -137,3 +137,10 @@ form p {
 #singleGrade {
   background-color: #0EFF00;
 }
+
+.list-group-item {
+  outline: 1px solid lightgrey;
+  height: 48px;
+  width: auto;
+  box-sizing: border-box;
+}
