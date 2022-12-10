@@ -1,0 +1,89 @@
+<html lang="en">
+  <head>
+    <title>SSH Keys page</title>
+    <link rel="stylesheet" href="./CSS/ssh.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <script src="https://kit.fontawesome.com/2912a97a77.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <nav class="navbar bg-light">
+      <div class="container-fluid">
+        <div class="d-flex align-items-center">
+          <div class="logo">
+            <img src="../Images/CM_Kit.png" alt="" />
+          </div>
+          <a href="home.html" class="navbar-brand">My Classes</a>
+        </div>
+        <div>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User</button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">
+                <span><i class="fa-solid fa-gear"></i></span>
+                Account Settings
+              </a>
+              <a class="dropdown-item" href="#">
+                <span><i class="fa-solid fa-bell"></i></span>
+                Notification Settings
+              </a>
+              <a class="dropdown-item" href="#">
+                <span><i class="fa-solid fa-lock"></i></span>
+                SSH Keys
+              </a>
+              <hr />
+              <button class="dropdown-item" href="#">
+                <span><i class="fa-solid fa-right-to-bracket"></i></span>
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+      <h1>SSH Keys</h1>
+
+      <p>
+        SSH keys are used to authenticate your connection when working with git repositories. Once you enter your public key here, you will be able to use that command line to run git commands that
+        connect to the Kit system.
+        <br />
+        A link to a help page will go here once we have added help pages. In the meantime, there are plenty of tutorials on generating SSH keys online. GitHub in particular has excellent tutorials for
+        this because it does almost exactly what Kit does with SSH keys.
+      </p>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Week 1 Key</td>
+            <td><a data-confirm="Are you sure?" class="btn btn-danger" rel="nofollow" data-method="delete" href="/ssh_keys/112">Remove</a></td>
+          </tr>
+          <tr>
+            <td>Thanh's PC</td>
+            <td><a data-confirm="Are you sure?" class="btn btn-danger" rel="nofollow" data-method="delete" href="/ssh_keys/384">Remove</a></td>
+          </tr>
+          <tr>
+            <td>Kevin's Mac</td>
+            <td><a data-confirm="Are you sure?" class="btn btn-danger" rel="nofollow" data-method="delete" href="/ssh_keys/410">Remove</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br />
+
+      <a class="btn btn-primary" href="add_ssh_key.html">Add SSH Key</a>
+    </div>
+  </body>
+</html>
