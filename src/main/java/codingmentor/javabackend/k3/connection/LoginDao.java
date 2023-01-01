@@ -7,6 +7,8 @@ import java.sql.SQLException;
 
 import codingmentor.javabackend.k3.bean.LoginBean;
 public class LoginDao {
+	
+	
     public boolean validate(LoginBean loginbean) throws ClassNotFoundException {
         boolean status = false;
         Class.forName("com.mysql.cj.jdbc.Driver");
