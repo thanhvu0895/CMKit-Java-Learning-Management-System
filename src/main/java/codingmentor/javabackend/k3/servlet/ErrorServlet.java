@@ -27,6 +27,4 @@ public class ErrorServlet extends HttpServlet {
 				case UrlUtils.INTERNAL_ERROR -> resp.sendRedirect(JspUtils.INTERNAL_ERROR);
 			}
 		}
-
-
 }

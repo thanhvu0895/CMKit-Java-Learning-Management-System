@@ -8,4 +8,5 @@ public class UrlUtils {
 	public static final String HOME = "/home";
 	public static final String NOT_FOUND = "/404";
     public static final String INTERNAL_ERROR = "/500";
+    public static final String ALL = "/*";	
 }

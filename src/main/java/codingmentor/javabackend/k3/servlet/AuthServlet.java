@@ -7,9 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
+import cybersoft.javabackend.java18.game.model.Player;
 
 @WebServlet(name = "authServlet", urlPatterns = {
 	UrlUtils.SIGN_IN,
@@ -42,6 +44,12 @@ public class AuthServlet extends HttpServlet{
 			req.getRequestDispatcher(req.getContextPath() + UrlUtils.NOT_FOUND)
             .forward(req, resp);
 		}
-		
 	}
+	
+	 private void processLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	        String username = request.getParameter("username");
+	        String password = request.getParameter("password");
+	      
+
+	    }
 }
