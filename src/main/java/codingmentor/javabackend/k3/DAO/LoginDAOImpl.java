@@ -1,13 +1,11 @@
 package codingmentor.javabackend.k3.DAO;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import codingmentor.javabackend.k3.connection.DBConnect;
 public class LoginDAOImpl {
-	
 	
     public boolean validate(LoginDAO loginDAO) throws ClassNotFoundException {
         try {
@@ -22,9 +20,10 @@ public class LoginDAOImpl {
             System.out.println(stmt);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-            	return true;
+            	return true;     
             }      
             conn.close(); // close dbconnection to save resources
+            
         } catch (SQLException e) {
             // process sql exception
             printSQLException(e);

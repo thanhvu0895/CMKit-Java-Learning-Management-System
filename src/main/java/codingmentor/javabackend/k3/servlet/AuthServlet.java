@@ -64,16 +64,16 @@ public class AuthServlet extends HttpServlet{
         String password = req.getParameter("password");
         
         LoginDAO loginDAO = new LoginDAO(email, password);
-        
         try {
             if (loginDAOImpl.validate(loginDAO)) {
                 HttpSession session = req.getSession();
-                 session.setAttribute("email",email);
+                session.setAttribute("LOGIN_USER", loginDAO);
                 resp.sendRedirect(req.getContextPath() + UrlUtils.HOME);
             } else {
-                HttpSession session = req.getSession();
-                session.setAttribute("email", email);
-                resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
+            	req.setAttribute("error", "Wrong email or password!");
+                req.getRequestDispatcher(UrlUtils.SIGN_IN)
+                	.forward(req, resp);
+                return;
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

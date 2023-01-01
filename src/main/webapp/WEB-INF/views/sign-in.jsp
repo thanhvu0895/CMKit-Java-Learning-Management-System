@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page contentType="text/html;charset=UTF-8" session="false"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <html lang="en">
   <head>
     <title>Login page</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/login.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/sign-in.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -33,10 +33,18 @@
     <div class="wrapper">
       <form action="" method ="post">
         <h1 class="mt-4 mb-4">Please Login</h1>
+         <input type="hidden" name="origin" value="${LOGIN_USER}">
+            <c:if test="${not empty error}">
+                <div>* redirected to login from: ${LOGIN_USER}</div>
+            </c:if>
+            
+            <c:if test="${not empty message}">
+                <div>* error: ${message}</div>
+            </c:if>
         <p>Email</p>
-        <input type="email" name="email" id="emailAddress" class="form-control" />
+        <input type="email" name="email" class="form-control" />
         <p>Password</p>
-        <input type="password" name="password" id="password" class="form-control" />
+        <input type="password" name="password"  class="form-control" />
         <button class="btn mt-3">Login</button><br />
         <button class="btn" id="forgotPassword">Forgot password</button>
       </form>
