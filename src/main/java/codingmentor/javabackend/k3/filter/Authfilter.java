@@ -13,7 +13,7 @@
 //
 //import codingmentor.javabackend.k3.Utils.UrlUtils;
 //
-//@WebFilter(urlPatterns = "/*")
+//@WebFilter(urlPatterns = {UrlUtils.ALL})
 //public class Authfilter implements Filter{
 //	
 //	@Override

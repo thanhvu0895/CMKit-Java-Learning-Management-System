@@ -1,31 +1,38 @@
-package codingmentor.javabackend.k3.connection;
+package codingmentor.javabackend.k3.DAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import codingmentor.javabackend.k3.bean.LoginBean;
-public class LoginDao {
+import codingmentor.javabackend.k3.connection.DBConnect;
+public class LoginDAOImpl {
 	
 	
-    public boolean validate(LoginBean loginbean) throws ClassNotFoundException {
-        boolean status = false;
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        try (
-            Connection connection = DriverManager.getConnection("jdbc:mysql://kit-database-do-user-12351930-0.b.db.ondigitalocean.com:25060/db_kit?useSSL=false", "doadmin", "AVNS_3gPXYc_UWokHhj9cFQL");
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM users where email = ? and password_digest = ?")) {
-            stmt.setString(1, loginbean.getEmail());
-            stmt.setString(2, loginbean.getPassword_digest());          
+    public boolean validate(LoginDAO loginDAO) throws ClassNotFoundException {
+        try {
+        	// Open connection to database;
+        	Connection conn = DBConnect.getConnection();
+        	String sql = "SELECT * FROM users where email = ? and password_digest = ?";
+        	
+        	// Query database
+            PreparedStatement stmt = conn.prepareStatement(sql); 
+            stmt.setString(1, loginDAO.getEmail());
+            stmt.setString(2, loginDAO.getPassword_digest());          
             System.out.println(stmt);
             ResultSet rs = stmt.executeQuery();
-            status = rs.next();
+            while (rs.next()) {
+            	return true;
+            }      
+            conn.close(); // close dbconnection to save resources
         } catch (SQLException e) {
             // process sql exception
             printSQLException(e);
         }
-        return status;
+        return false;
     }
+    
+    
     private void printSQLException(SQLException ex) {
          for (Throwable e: ex) {
             if (e instanceof SQLException) {

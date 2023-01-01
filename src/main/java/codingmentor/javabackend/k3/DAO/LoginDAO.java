@@ -1,8 +1,8 @@
-package codingmentor.javabackend.k3.bean;
+package codingmentor.javabackend.k3.DAO;
 import java.io.Serializable;
 
 
-public class LoginBean implements Serializable {
+public class LoginDAO implements Serializable {
     /**
      * 
      */
@@ -10,7 +10,13 @@ public class LoginBean implements Serializable {
     private String email;
     private String password_digest;
 	
-    public String getEmail() {
+    public LoginDAO(String email, String password_digest) {
+		super();
+		this.email = email;
+		this.password_digest = password_digest;
+	}
+    
+	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
