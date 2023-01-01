@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <title>Register page</title>
-    <link rel="stylesheet" href="../assets/css/register.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/register.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -17,7 +17,7 @@
       <div class="container-fluid">
         <div class="d-flex align-items-center">
           <div class="logo">
-            <img src="../assets/images/logo.png" alt="" />
+            <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="" />
           </div>
           <a class="navbar-brand">Kit</a>
         </div>
