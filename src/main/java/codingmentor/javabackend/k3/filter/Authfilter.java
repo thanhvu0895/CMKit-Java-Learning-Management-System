@@ -27,8 +27,6 @@ public class Authfilter implements Filter{
 		
 		HttpServletRequest req = (HttpServletRequest) request;
 	    HttpServletResponse resp = (HttpServletResponse) response;
-	    
-	    req.setAttribute("origin", req.getRequestURI());
 		
 		if (isLoginRequest(req) || isLoggedIn(req) || isResourceRequest(req)) {
 			if (!isResourceRequest(req)) { // Prevent restricted pages from being cached.
@@ -38,9 +36,7 @@ public class Authfilter implements Filter{
 			}
 			chain.doFilter(request, response);
 		} else {
-			req.getRequestDispatcher(req.getContextPath() + UrlUtils.SIGN_IN).forward(req, resp);			
-			// we return here so the original servlet is not processed
-			return;
+			resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
 		}
 	}	
 	
