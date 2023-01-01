@@ -13,7 +13,8 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 @WebServlet(name = "authServlet", urlPatterns = {
 	UrlUtils.SIGN_IN,
-	UrlUtils.SIGN_UP
+	UrlUtils.SIGN_UP,
+	UrlUtils.SIGN_OUT,
 })
 public class AuthServlet extends HttpServlet{
 
@@ -33,6 +34,13 @@ public class AuthServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.SIGN_UP)
 				.forward(req,  resp);
 			break;
+		case UrlUtils.SIGN_OUT:
+			req.getRequestDispatcher(JspUtils.SIGN_IN)
+				.forward(req,  resp);
+			break;
+		default:
+			req.getRequestDispatcher(req.getContextPath() + UrlUtils.NOT_FOUND)
+            .forward(req, resp);
 		}
 		
 	}
