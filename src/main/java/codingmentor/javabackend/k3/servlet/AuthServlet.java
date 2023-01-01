@@ -11,7 +11,9 @@ import javax.servlet.http.HttpSession;
 
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
-import cybersoft.javabackend.java18.game.model.Player;
+import codingmentor.javabackend.k3.bean.LoginBean;
+import codingmentor.javabackend.k3.connection.LoginDao;
+
 
 @WebServlet(name = "authServlet", urlPatterns = {
 	UrlUtils.SIGN_IN,
@@ -24,6 +26,12 @@ public class AuthServlet extends HttpServlet{
 	 * 
 	 */
 	private static final long serialVersionUID = -3801412244941307670L;
+    private LoginDao loginDao;
+
+    public void init() {
+        loginDao = new LoginDao();
+    }
+
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,10 +54,33 @@ public class AuthServlet extends HttpServlet{
 		}
 	}
 	
-	 private void processLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-	        String username = request.getParameter("username");
-	        String password = request.getParameter("password");
-	      
-
-	    }
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		switch(req.getServletPath()) {
+		case UrlUtils.SIGN_IN:
+			processLogin(req, resp);	
+		}
+	}
+	
+	private void processLogin(HttpServletRequest req, HttpServletResponse resp) 
+			throws IOException, ServletException {
+		String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        LoginBean loginBean = new LoginBean();
+        loginBean.setEmail(email);
+        loginBean.setPassword_digest(password);
+        try {
+            if (loginDao.validate(loginBean)) {
+                HttpSession session = req.getSession();
+                 session.setAttribute("email",email);
+                resp.sendRedirect(req.getContextPath() + UrlUtils.HOME);
+            } else {
+                HttpSession session = req.getSession();
+                session.setAttribute("email", email);
+                resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+	}
 }

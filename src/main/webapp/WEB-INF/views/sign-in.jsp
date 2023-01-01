@@ -31,12 +31,12 @@
     </nav>
 
     <div class="wrapper">
-      <form action="POST">
+      <form action="" method ="post">
         <h1 class="mt-4 mb-4">Please Login</h1>
         <p>Email</p>
-        <input type="email" id="emailAddress" class="form-control" />
+        <input type="email" name="email" id="emailAddress" class="form-control" />
         <p>Password</p>
-        <input type="password" id="password" class="form-control" />
+        <input type="password" name="password" id="password" class="form-control" />
         <button class="btn mt-3">Login</button><br />
         <button class="btn" id="forgotPassword">Forgot password</button>
       </form>
