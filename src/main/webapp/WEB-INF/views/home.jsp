@@ -51,6 +51,16 @@
         </div>
       </div>
     </nav>
+    <div class="container">
+    <!-- SHOW NOTICE AND ALERT-->
+ 	<div class="container">
+	   
+	 <% if (request.getSession().getAttribute("notice") != null){%>
+		 <div class="alert alert-success">Logged in! Welcome, ${LOGIN_USER}</div>
+		<%}		
+		request.getSession().removeAttribute("notice"); %>
+   	<!-- END -->
+    
 
     <section class="container justify-content-center mt-4">
       <h1>Classes</h1>
@@ -156,5 +166,6 @@
         </div>
       </div>
     </section>
+    <div class="container">
   </body>
 </html>

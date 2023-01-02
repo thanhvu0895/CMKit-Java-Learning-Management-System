@@ -24,9 +24,10 @@
         </div>
       </div>
     </nav>
-	
+    
+	<div class="container">
 	<!-- SHOW NOTICE AND ALERT-->
- 	<div class="container">
+ 
 	   	   
 	   <c:if test="${not empty notice}">
 	       <div class="alert alert-success">${notice}</div>
