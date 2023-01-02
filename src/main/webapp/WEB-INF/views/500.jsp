@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+ MY INTERNAL ERROR JSP PAGE
 </body>
 </html>
