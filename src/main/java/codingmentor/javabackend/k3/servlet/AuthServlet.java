@@ -94,9 +94,9 @@ public class AuthServlet extends HttpServlet{
 			 session.invalidate();
 		 }
 	     session = req.getSession(true);
-	     String s = new String("hello");
+
 		// TODO: IMPROVE LOG OUT USING SESSION OR COOKIES TO DISPLAY MESSAGE
-		session.setAttribute("notice", s);
+		session.setAttribute("notice", "");
 		resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
 	}
 }

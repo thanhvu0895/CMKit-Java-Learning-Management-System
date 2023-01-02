@@ -24,6 +24,7 @@
     ></script>
   </head>
   <body>
+  
   <section>
   <!-- SHOW USER NAME IF LOGGED IN -->
     <c:if test="${not empty LOGIN_USER}">
@@ -67,12 +68,7 @@
         </div>
       </div>
     </nav>
-    
-    <c:if test="${not empty notice}">
-        <div>User EMAIL:  ${notice}</div>
-    </c:if>
-    
- 
+
     <section class="container justify-content-center mt-4">
       <h1>Classes</h1>
       <div class="panel panel-default" id="student">
