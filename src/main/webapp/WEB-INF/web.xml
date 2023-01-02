@@ -11,11 +11,14 @@
   </welcome-file-list>
   <error-page>
     <error-code>404</error-code>
-    <location>/WEB-INF/views/404.jsp</location>
+    <location>/public/404.html</location>
    </error-page>
 	<error-page>
-	    <error-code>500</error-code>
-	    <location>/WEB-INF/views/500.jsp</location>
+    <error-code>500</error-code>
+    	<location>/public/500.html</location>
 	</error-page>
-	
+	<error-page>
+    <error-code>402</error-code>
+    	<location>/public/402.html</location>
+	</error-page>
 </web-app>
