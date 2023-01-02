@@ -40,9 +40,8 @@ public class AuthServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.SIGN_UP)
 				.forward(req,  resp);
 			break;
-		case UrlUtils.SIGN_OUT:
-			req.getSession().invalidate();
-			resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
+		case UrlUtils.SIGN_OUT:			
+			processLogout(req, resp);			
 			break;
 		default:
 			resp.sendRedirect(req.getContextPath() + UrlUtils.NOT_FOUND);
@@ -72,11 +71,11 @@ public class AuthServlet extends HttpServlet{
 		String email = req.getParameter("email");
         String password = req.getParameter("password");
         LoginDAO loginDAO = new LoginDAO(email, password);
-       // ERROR = NULL => not empty = false
+  
         try {
             if (loginDAOImpl.validate(loginDAO)) {
                 HttpSession session = req.getSession();
-                session.setAttribute("LOGIN_USER", email); // LOGINUSER = email we typed in
+                session.setAttribute("LOGIN_USER", email);
                 req.removeAttribute("alert"); 
                 resp.sendRedirect(req.getContextPath() + UrlUtils.HOME);
             } else { 	
@@ -86,5 +85,13 @@ public class AuthServlet extends HttpServlet{
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+	}
+	
+	private void processLogout(HttpServletRequest req, HttpServletResponse resp) 
+			throws IOException, ServletException {
+		req.getSession().invalidate();
+		// TODO: IMPROVE LOG OUT USING SESSION OR COOKIES TO DISPLAY MESSAGE
+		req.setAttribute("notice", "You are now logged out. Have a nice day!");
+		req.getRequestDispatcher(JspUtils.SIGN_IN).forward(req, resp);
 	}
 }

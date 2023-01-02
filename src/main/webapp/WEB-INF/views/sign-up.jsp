@@ -4,13 +4,7 @@
   <head>
     <title>Register page</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/register.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-      crossorigin="anonymous"
-    />
-    <script src="https://kit.fontawesome.com/2912a97a77.js" crossorigin="anonymous"></script>
+    <%@include file="components/css-js.jsp"%>
   </head>
   <body>
     <nav class="navbar bg-light">

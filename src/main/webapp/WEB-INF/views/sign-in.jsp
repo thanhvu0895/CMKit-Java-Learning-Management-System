@@ -4,21 +4,13 @@
   <head>
     <title>Login page</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/sign-in.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-      crossorigin="anonymous"
-    />
-    <script src="https://kit.fontawesome.com/2912a97a77.js" crossorigin="anonymous"></script>
+   	<%@include file="components/css-js.jsp"%> 
   </head>
   <body>
-  
     <nav class="navbar bg-light">
-    
       <div class="container-fluid">
         <div class="d-flex align-items-center">
-        <a href="/home">
+        <a href="${pageContext.request.contextPath}">
           <div class="logo">
             <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt=""/>
           </div>
@@ -55,16 +47,12 @@
         <p>Password</p>
         <input type="password" name="password"  class="form-control"/>
         <button class="btn mt-3">Login</button><br />
-        <button class="btn" id="forgotPassword">Forgot password</button>
       </form>
+      <button class="btn" id="forgotPassword">Forgot password</button>
     </div>
     </div>
-    <footer>
-    <script>
-    if ( window.history.replaceState ) {
-    	  window.history.replaceState( null, null, window.location.href );
-    	}
-    </script>
-    </footer>
+  <footer>
+	<%@include file="components/_fix_refresh_resubmission.jsp"%> 
+  </footer>
   </body>
 </html>
