@@ -56,10 +56,10 @@
                 SSH Keys
               </a>
               <hr />
-              <button class="dropdown-item" href="#">
+              <a href="${pageContext.request.contextPath}/logout"><button class="dropdown-item">
                 <span><i class="fa-solid fa-right-to-bracket"></i></span>
                 Logout
-              </button>
+              </button></a>
             </div>
           </div>
         </div>
