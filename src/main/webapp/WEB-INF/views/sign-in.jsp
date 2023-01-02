@@ -13,14 +13,9 @@
     <script src="https://kit.fontawesome.com/2912a97a77.js" crossorigin="anonymous"></script>
   </head>
   <body>
-  <section>
- <c:if test="${not empty ERROR}">
-        <div>User EMAIL:  ${ERROR}</div>
-    </c:if>
-    
-   </section>
-   
+  
     <nav class="navbar bg-light">
+    
       <div class="container-fluid">
         <div class="d-flex align-items-center">
         <a href="/home">
@@ -37,21 +32,39 @@
         </div>
       </div>
     </nav>
-
-    <div class="wrapper">
+	
+	<!-- SHOW NOTICE AND ALERT-->
+ 	<div class="container">
+	   <c:if test="${not empty notice}">
+	       <div class="alert alert-success">${notice}</div>
+	   </c:if>
+		<c:if test="${not empty alert}">
+	       <div class="alert alert-danger">${alert}</div>
+		</c:if>
+   	<!-- END -->
+    
+	<div class="wrapper">
       <form action="" method ="post">
-        <h1 class="mt-4 mb-4">Please Login</h1>
+        <h1 class="mt-4 mb-4">Log In</h1>
          <input type="hidden" name="origin" value="${LOGIN_USER}">
             <c:if test="${not empty error}">
                 <div>* SHOW ERROR: ${error}</div>
             </c:if>
         <p>Email</p>
-        <input type="email" name="email" class="form-control" />
+        <input type="email" name="email" class="form-control"/>
         <p>Password</p>
-        <input type="password" name="password"  class="form-control" />
+        <input type="password" name="password"  class="form-control"/>
         <button class="btn mt-3">Login</button><br />
         <button class="btn" id="forgotPassword">Forgot password</button>
       </form>
     </div>
+    </div>
+    <footer>
+    <script>
+    if ( window.history.replaceState ) {
+    	  window.history.replaceState( null, null, window.location.href );
+    	}
+    </script>
+    </footer>
   </body>
 </html>

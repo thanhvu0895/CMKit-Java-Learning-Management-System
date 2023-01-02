@@ -153,3 +153,7 @@ form p {
 #student_classes_div {
     display: none;
 }
+
+.navbar {
+	margin-bottom: 20px;
+}

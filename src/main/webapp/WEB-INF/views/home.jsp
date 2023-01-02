@@ -31,6 +31,8 @@
     </c:if>
     
    </section>
+
+   	
     <nav class="navbar bg-light">
       <div class="container-fluid">
         <div class="d-flex align-items-center">
@@ -65,7 +67,12 @@
         </div>
       </div>
     </nav>
-
+    
+    <c:if test="${not empty notice}">
+        <div>User EMAIL:  ${notice}</div>
+    </c:if>
+    
+ 
     <section class="container justify-content-center mt-4">
       <h1>Classes</h1>
       <div class="panel panel-default" id="student">
