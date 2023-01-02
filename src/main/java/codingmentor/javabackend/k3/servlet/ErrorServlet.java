@@ -22,13 +22,15 @@ public class ErrorServlet extends HttpServlet {
 
 	@Override
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-			switch (req.getServletPath()) {
-				case UrlUtils.NOT_FOUND:
-					resp.sendRedirect(JspUtils.NOT_FOUND);
-					break;
-				case UrlUtils.INTERNAL_ERROR:
-					resp.sendRedirect(JspUtils.INTERNAL_ERROR);
-					break;
-			}
+		switch(req.getServletPath()) {
+			case UrlUtils.NOT_FOUND:
+				req.getRequestDispatcher(JspUtils.NOT_FOUND)
+					.forward(req, resp);
+				break;
+			case UrlUtils.INTERNAL_ERROR:
+				req.getRequestDispatcher(JspUtils.INTERNAL_ERROR)
+					.forward(req, resp);
+				break;
 		}
+	}
 }
