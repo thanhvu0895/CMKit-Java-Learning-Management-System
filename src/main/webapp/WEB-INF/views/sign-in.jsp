@@ -17,7 +17,7 @@
           <a class="navbar-brand">Kit</a>
         </div></a>
         <div class="d-flex align-items-center">
-          <a class="dropdown-item" href="#">
+          <a class="dropdown-item" href="${pageContext.request.contextPath}/login">
             <span><i class="fa-solid fa-right-to-bracket"></i></span>
             Login
           </a>
