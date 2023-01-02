@@ -13,6 +13,13 @@
     <script src="https://kit.fontawesome.com/2912a97a77.js" crossorigin="anonymous"></script>
   </head>
   <body>
+  <section>
+ <c:if test="${not empty ERROR}">
+        <div>User EMAIL:  ${ERROR}</div>
+    </c:if>
+    
+   </section>
+   
     <nav class="navbar bg-light">
       <div class="container-fluid">
         <div class="d-flex align-items-center">
@@ -35,11 +42,7 @@
         <h1 class="mt-4 mb-4">Please Login</h1>
          <input type="hidden" name="origin" value="${LOGIN_USER}">
             <c:if test="${not empty error}">
-                <div>* redirected to login from: ${LOGIN_USER}</div>
-            </c:if>
-            
-            <c:if test="${not empty message}">
-                <div>* error: ${message}</div>
+                <div>* SHOW ERROR: ${error}</div>
             </c:if>
         <p>Email</p>
         <input type="email" name="email" class="form-control" />

@@ -25,26 +25,12 @@
   </head>
   <body>
   <section>
-            <h2>user info</h2>
-            <div>
-                <span>name: ${user.name}</span>
-            </div>
+  <!-- SHOW USER NAME IF LOGGED IN -->
+    <c:if test="${not empty LOGIN_USER}">
+        <div>User EMAIL:  ${LOGIN_USER}</div>
+    </c:if>
     
-            <div>
-                <span>logins:</span>
-                <ul>
-                    <c:forEach var="login" items="${user.logins}">
-                        <li>${login}</li>
-                    </c:forEach>
-                </ul>
-            </div>
-    
-            <div>
-                <a href="${pageContext.request.contextPath}/user-check/logout">
-                    logout
-                </a>
-            </div>
-        </section>
+   </section>
     <nav class="navbar bg-light">
       <div class="container-fluid">
         <div class="d-flex align-items-center">

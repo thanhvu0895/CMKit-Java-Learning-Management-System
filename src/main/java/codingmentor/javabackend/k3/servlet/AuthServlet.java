@@ -45,8 +45,7 @@ public class AuthServlet extends HttpServlet{
 				.forward(req,  resp);
 			break;
 		default:
-			req.getRequestDispatcher(req.getContextPath() + UrlUtils.NOT_FOUND)
-            .forward(req, resp);
+			resp.sendRedirect(req.getContextPath() + UrlUtils.NOT_FOUND);
 		}
 	}
 	
@@ -54,7 +53,8 @@ public class AuthServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch(req.getServletPath()) {
 		case UrlUtils.SIGN_IN:
-			processLogin(req, resp);	
+			processLogin(req, resp);
+			break;
 		}
 	}
 	
@@ -62,18 +62,17 @@ public class AuthServlet extends HttpServlet{
 			throws IOException, ServletException {
 		String email = req.getParameter("email");
         String password = req.getParameter("password");
-        
         LoginDAO loginDAO = new LoginDAO(email, password);
+       // ERROR = NULL => not empty = false
         try {
             if (loginDAOImpl.validate(loginDAO)) {
                 HttpSession session = req.getSession();
-                session.setAttribute("LOGIN_USER", loginDAO);
+                session.setAttribute("LOGIN_USER", email); // LOGINUSER = email we typed in
+                req.removeAttribute("ERROR"); 
                 resp.sendRedirect(req.getContextPath() + UrlUtils.HOME);
-            } else {
-            	req.setAttribute("error", "Wrong email or password!");
-                req.getRequestDispatcher(UrlUtils.SIGN_IN)
-                	.forward(req, resp);
-                return;
+            } else { 	
+                req.setAttribute("ERROR", "INVALID USERNAME OR PASSWORD");
+            	req.getRequestDispatcher(JspUtils.SIGN_IN).forward(req, resp);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
