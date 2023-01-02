@@ -37,7 +37,7 @@
           <div class="logo">
             <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="" />
           </div>
-          <a href="home.html" class="navbar-brand">My Classes</a>
+          <a href="${pageContext.request.contextPath}/home" class="navbar-brand">My Classes</a>
         </div>
         <div>
           <div class="dropdown">
@@ -51,7 +51,7 @@
                 <span><i class="fa-solid fa-bell"></i></span>
                 Notification Settings
               </a>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="${pageContext.request.contextPath}/ssh_keys">
                 <span><i class="fa-solid fa-lock"></i></span>
                 SSH Keys
               </a>
@@ -115,7 +115,7 @@
 
                   <tbody>
                     <tr>
-                      <td><a href="/klasses/6">Backend Super Intensive</a></td>
+                      <td><a href="${pageContext.request.contextPath}/klasses">Backend Super Intensive</a></td>
                       <td>BE101</td>
                       <td>Autumn 2022</td>
                       <td>1</td>
@@ -127,7 +127,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td><a href="/klasses/18">Data Structures (Online)</a></td>
+                      <td><a href="${pageContext.request.contextPath}/klasses">Data Structures (Online)</a></td>
                       <td>COMP 210</td>
                       <td>Fall 2019</td>
                       <td>1</td>
@@ -139,7 +139,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td><a href="/klasses/62">Design and Analysis of Algorithms</a></td>
+                      <td><a href="${pageContext.request.contextPath}/klasses">Design and Analysis of Algorithms</a></td>
                       <td>COMP 215</td>
                       <td>Spring 2022</td>
                       <td></td>
@@ -151,7 +151,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td><a href="/klasses/68">Web Development</a></td>
+                      <td><a href="${pageContext.request.contextPath}/klasses">Web Development</a></td>
                       <td>COMP 487/490</td>
                       <td>Fall 2022</td>
                       <td>1</td>

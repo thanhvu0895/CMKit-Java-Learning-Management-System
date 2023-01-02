@@ -23,11 +23,12 @@
     <nav class="navbar bg-light">
       <div class="container-fluid">
         <div class="d-flex align-items-center">
+        <a href="/home">
           <div class="logo">
-            <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="" />
+            <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt=""/>
           </div>
           <a class="navbar-brand">Kit</a>
-        </div>
+        </div></a>
         <div class="d-flex align-items-center">
           <a class="dropdown-item" href="#">
             <span><i class="fa-solid fa-right-to-bracket"></i></span>
