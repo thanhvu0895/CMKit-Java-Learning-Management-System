@@ -25,10 +25,23 @@ public class Authfilter implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
-		HttpServletRequest req = (HttpServletRequest) request;
-	    HttpServletResponse resp = (HttpServletResponse) response;
+		if (!(request instanceof HttpServletRequest)) {
+            throw new ServletException("Can only process HttpServletRequest");
+        }
+
+        if (!(response instanceof HttpServletResponse)) {
+            throw new ServletException("Can only process HttpServletResponse");
+        }
 		
-		if (isLoginRequest(req) || isLoggedIn(req) || isResourceRequest(req)) {
+        HttpServletRequest req = (HttpServletRequest) request;
+	    HttpServletResponse resp = (HttpServletResponse) response;
+	    
+	    if (isInSession(req) && isLoginPage(req)) {
+			resp.sendRedirect(req.getContextPath() + UrlUtils.HOME);
+			return;
+		}
+	    
+		if (isInSession(req) || isLoginPage(req) || isResourceRequest(req)) {
 			if (!isResourceRequest(req)) { // Prevent restricted pages from being cached.
 				resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 				resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
@@ -36,20 +49,24 @@ public class Authfilter implements Filter{
 			}
 			chain.doFilter(request, response);
 		} else {
+			// If not at home page nor logged in, send to /login
 			resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
+			
+			// we return here so the original servlet is not processed
+			return;
 		}
 	}	
 	
-	private boolean isLoginRequest(HttpServletRequest request) {
+	private boolean isLoginPage(HttpServletRequest request) { // if url = /login
         String path = request.getServletPath();
         return path.startsWith(UrlUtils.SIGN_IN);
     }
 	
-	private boolean isLoggedIn (HttpServletRequest req) {
+	private boolean isInSession (HttpServletRequest req) { // if no user logged in yet
 		return req.getSession().getAttribute("LOGIN_USER") != null;
 	}
 	
-	private boolean isResourceRequest(HttpServletRequest request) {
+	private boolean isResourceRequest(HttpServletRequest request) { // if request to /assets
         String path = request.getRequestURI();
         return path.startsWith(request.getContextPath() + "/assets");
     }
