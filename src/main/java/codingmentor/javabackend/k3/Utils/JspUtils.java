@@ -9,8 +9,6 @@ public class JspUtils {
 	public static final String KLASSES = "/WEB-INF/views/klasses.jsp";
 	public static final String SUBMISSIONS = "/WEB-INF/views/submissions.jsp";
 	
-	
-	public static final String NOT_FOUND = "/WEB-INF/views/404.jsp";
-	public static final String INTERNAL_ERROR = "/WEB-INF/views/500.jsp";
+
 
 }
