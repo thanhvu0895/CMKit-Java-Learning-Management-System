@@ -41,14 +41,15 @@ public class AuthServlet extends HttpServlet{
 				.forward(req,  resp);
 			break;
 		case UrlUtils.SIGN_OUT:
-			req.getRequestDispatcher(JspUtils.SIGN_IN)
-				.forward(req,  resp);
+			req.getSession().invalidate();
+			resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
 			break;
 		default:
 			resp.sendRedirect(req.getContextPath() + UrlUtils.NOT_FOUND);
 		}
 	}
 	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch(req.getServletPath()) {
@@ -58,6 +59,14 @@ public class AuthServlet extends HttpServlet{
 		}
 	}
 	
+	/***
+	 * Implement processLogin method
+	 * Date: 31/12/2022
+	 * @param req
+	 * @param resp
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	private void processLogin(HttpServletRequest req, HttpServletResponse resp) 
 			throws IOException, ServletException {
 		String email = req.getParameter("email");
