@@ -89,9 +89,14 @@ public class AuthServlet extends HttpServlet{
 	
 	private void processLogout(HttpServletRequest req, HttpServletResponse resp) 
 			throws IOException, ServletException {
-		req.getSession().invalidate();
+		 HttpSession session = req.getSession(false);
+		 if (session != null) {
+			 session.invalidate();
+		 }
+	     session = req.getSession(true);
+	     String s = new String("hello");
 		// TODO: IMPROVE LOG OUT USING SESSION OR COOKIES TO DISPLAY MESSAGE
-		req.setAttribute("notice", "You are now logged out. Have a nice day!");
-		req.getRequestDispatcher(JspUtils.SIGN_IN).forward(req, resp);
+		session.setAttribute("notice", s);
+		resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
 	}
 }

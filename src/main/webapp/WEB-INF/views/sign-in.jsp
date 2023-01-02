@@ -30,9 +30,16 @@
 	   <c:if test="${not empty notice}">
 	       <div class="alert alert-success">${notice}</div>
 	   </c:if>
+	   
+		<% if (request.getSession().getAttribute("notice") != null){%>
+		 <div class="alert alert-success">You are now logged out. Have a nice day!</div>
+		<%}else {} %>
+		<% request.getSession().removeAttribute("notice"); %>
+		
 		<c:if test="${not empty alert}">
 	       <div class="alert alert-danger">${alert}</div>
 		</c:if>
+		
    	<!-- END -->
     
 	<div class="wrapper">
