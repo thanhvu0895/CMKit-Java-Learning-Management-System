@@ -12,9 +12,11 @@
       <div class="container-fluid">
         <div class="d-flex align-items-center">
           <div class="logo">
+          <a href="${pageContext.request.contextPath}/" class="navbar-brand">
             <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="" />
+           </a>
           </div>
-          <a href="home.html" class="navbar-brand">My Classes</a>
+          <a href="${pageContext.request.contextPath}/" class="navbar-brand">My Classes</a>
         </div>
         <div>
           <div class="dropdown">
@@ -28,15 +30,15 @@
                 <span><i class="fa-solid fa-bell"></i></span>
                 Notification Settings
               </a>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="${pageContext.request.contextPath}/ssh_keys">
                 <span><i class="fa-solid fa-lock"></i></span>
                 SSH Keys
               </a>
               <hr />
-              <button class="dropdown-item" href="#">
+              <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">
                 <span><i class="fa-solid fa-right-to-bracket"></i></span>
                 Logout
-              </button>
+              </a>
             </div>
           </div>
         </div>

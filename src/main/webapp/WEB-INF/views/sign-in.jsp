@@ -10,12 +10,11 @@
     <nav class="navbar bg-light">
       <div class="container-fluid">
         <div class="d-flex align-items-center">
-        <a href="${pageContext.request.contextPath}">
           <div class="logo">
-            <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt=""/>
+            <a href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/assets/images/logo.png" alt=""/></a>
           </div>
-          <a class="navbar-brand">Kit</a>
-        </div></a>
+          <a class="navbar-brand" href="${pageContext.request.contextPath}">Kit</a>
+        </div>
         <div class="d-flex align-items-center">
           <a class="dropdown-item" href="${pageContext.request.contextPath}/login">
             <span><i class="fa-solid fa-right-to-bracket"></i></span>
@@ -28,20 +27,19 @@
 	<div class="container">
 	<!-- SHOW NOTICE AND ALERT-->
  
-	   	   
 	   <c:if test="${not empty notice}">
 	       <div class="alert alert-success">${notice}</div>
 	   </c:if>
-		
+	
 		<% if (request.getSession().getAttribute("notice") != null){%>
 		 <div class="alert alert-success">You are now logged out. Have a nice day!</div>
 		<%}		
-		request.getSession().invalidate(); %>
+		request.getSession().removeAttribute("notice"); %>
 		
 		<c:if test="${not empty alert}">
 	       <div class="alert alert-danger">${alert}</div>
 		</c:if>
-		
+		 
    	<!-- END -->
     
 	<div class="wrapper">
