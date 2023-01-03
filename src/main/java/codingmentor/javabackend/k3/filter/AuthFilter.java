@@ -37,7 +37,7 @@ public class AuthFilter implements Filter{
 	    HttpServletResponse resp = (HttpServletResponse) response;
 	    
 	    if (isInSession(req) && isLoginPage(req)) {
-			resp.sendRedirect(req.getContextPath() + UrlUtils.HOME);
+			resp.sendRedirect("./");
 			return;
 		}
 	    

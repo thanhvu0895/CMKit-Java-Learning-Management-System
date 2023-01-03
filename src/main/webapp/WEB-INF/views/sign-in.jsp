@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" session="false"%>
-<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
   <head>
     <title>Login page</title>
@@ -43,15 +43,16 @@
     
 	<div class="container">
 	<!-- SHOW NOTICE AND ALERT-->
- 
-	   <c:if test="${not empty notice}">
-	       <div class="alert alert-success">${notice}</div>
-	   </c:if>
-	
 		<% if (request.getSession().getAttribute("notice") != null){%>
 		 <div class="alert alert-success">You are now logged out. Have a nice day!</div>
 		<%}		
 		request.getSession().removeAttribute("notice"); %>
+		
+		<c:set var="notice2" 
+			value='<%=request.getSession().getAttribute("notice")%>'/>
+		<c:if test='${not empty notice2}'>
+	   		 <div class="alert alert-success">Testing successful</div>
+	   </c:if>
 		
 		<c:if test="${not empty alert}">
 	       <div class="alert alert-danger">${alert}</div>
