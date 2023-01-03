@@ -47,6 +47,7 @@ public class AuthFilter implements Filter{
 				resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 				resp.setDateHeader("Expires", 0); // Proxies.
 			}
+
 			chain.doFilter(request, response);
 		} else {
 			// If not at home page nor logged in, send to /login
