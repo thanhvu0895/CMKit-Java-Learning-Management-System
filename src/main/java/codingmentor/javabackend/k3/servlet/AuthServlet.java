@@ -75,8 +75,9 @@ public class AuthServlet extends HttpServlet{
         try {
             if (loginDAOImpl.validate(loginDAO)) {
                 HttpSession session = req.getSession();
-                session.setAttribute("LOGIN_USER", email);
-                req.removeAttribute("alert"); 
+                session.setAttribute("LOGIN_USER", loginDAOImpl.getFirstNameFromUser(loginDAO));
+                session.setAttribute("notice", "");
+
                 resp.sendRedirect(req.getContextPath() + UrlUtils.HOME);
             } else { 	
                 req.setAttribute("alert", "Invalid email or password, please try again.");

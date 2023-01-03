@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 @WebFilter(urlPatterns = {UrlUtils.ALL})
-public class Authfilter implements Filter{
+public class AuthFilter implements Filter{
    /*
     process before the request get in servlet
     chain.doFilter(request,response)

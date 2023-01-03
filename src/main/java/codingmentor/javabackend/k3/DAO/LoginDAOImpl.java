@@ -17,7 +17,6 @@ public class LoginDAOImpl {
             PreparedStatement stmt = conn.prepareStatement(sql); 
             stmt.setString(1, loginDAO.getEmail());
             stmt.setString(2, loginDAO.getPassword_digest());          
-            System.out.println(stmt);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
             	return true;     
@@ -30,6 +29,30 @@ public class LoginDAOImpl {
         }
         return false;
     }
+    
+    public String getFirstNameFromUser(LoginDAO loginDAO) throws ClassNotFoundException {
+    	String result = "";
+    	String sql = "SELECT first_name FROM users where email = ?";
+    	try {
+        	Connection conn = DBConnect.getConnection();
+        	// Query database
+            PreparedStatement stmt = conn.prepareStatement(sql); 
+            stmt.setString(1, loginDAO.getEmail());
+
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+            	return rs.getString(1); 
+            };
+            conn.close(); // close dbconnection to save resources
+        } catch (SQLException e) {
+            // process sql exception
+            printSQLException(e);
+        }
+        return result;
+    }
+    
+    
     
     
     private void printSQLException(SQLException ex) {
