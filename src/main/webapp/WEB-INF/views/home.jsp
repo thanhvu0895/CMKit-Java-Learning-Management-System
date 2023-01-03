@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <html lang="en">
   <head>
     <title>Student home page</title>
@@ -21,7 +22,9 @@
       <div class="container-fluid">
         <div class="d-flex align-items-center">
           <div class="logo">
+          <a href="${pageContext.request.contextPath}/" class="navbar-brand">
             <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="" />
+           </a>
           </div>
           <a href="${pageContext.request.contextPath}/" class="navbar-brand">My Classes</a>
         </div>
@@ -53,8 +56,6 @@
     </nav>
     <div class="container">
     <!-- SHOW NOTICE AND ALERT-->
- 	<div class="container">
-	   
 	 <% if (request.getSession().getAttribute("notice") != null){%>
 		 <div class="alert alert-success">Logged in! Welcome, ${LOGIN_USER}</div>
 		<%}		
@@ -166,6 +167,6 @@
         </div>
       </div>
     </section>
-    <div class="container">
+    </div>
   </body>
 </html>
