@@ -29,11 +29,11 @@
       <div class="container-fluid">
         <div class="d-flex align-items-center">
           <div class="logo">
-          <a href="${pageContext.request.contextPath}/home" class="navbar-brand">
+          <a href="${pageContext.request.contextPath}/" class="navbar-brand">
             <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="" />
            </a>
           </div>
-          <a href="${pageContext.request.contextPath}/home" class="navbar-brand">My Classes</a>
+          <a href="${pageContext.request.contextPath}/" class="navbar-brand">My Classes</a>
         </div>
         <div>
           <div class="dropdown">
@@ -63,7 +63,7 @@
     </nav>
     <section class="container justify-content-center">
       <div class="d-flex p-2 align-items-center mt-4 bg-light">
-        <a href="classes.html">Classes</a>
+        <a href="">Classes</a>
         <p>/</p>
         <p>Backend Super Intensive Class 3: Winter 2022</p>
         <p>/</p>

@@ -28,9 +28,9 @@
       <div class="container-fluid">
         <div class="d-flex align-items-center">
           <div class="logo">
-            <a href="${pageContext.request.contextPath}"><img src="${pageContext.request.contextPath}/assets/images/logo.png" alt=""/></a>
+            <a href="${pageContext.request.contextPath}/"><img src="${pageContext.request.contextPath}/assets/images/logo.png" alt=""/></a>
           </div>
-          <a class="navbar-brand" href="${pageContext.request.contextPath}">Kit</a>
+          <a class="navbar-brand" href="${pageContext.request.contextPath}/">Kit</a>
         </div>
         <div class="d-flex align-items-center">
           <a class="dropdown-item" href="${pageContext.request.contextPath}/login">
