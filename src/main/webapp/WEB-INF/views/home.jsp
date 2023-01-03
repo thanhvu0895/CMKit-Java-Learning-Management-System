@@ -8,14 +8,12 @@
    	<%@include file="components/css-js.jsp"%>
   </head>
   <body>
-  	
     <nav class="navbar bg-light">
       <div class="container-fluid">
         <div class="d-flex align-items-center">
           <div class="logo">
           <a href="${pageContext.request.contextPath}/" class="navbar-brand">
-            <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="" />
-           </a>
+            <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="" />           </a>
           </div>
           <a href="${pageContext.request.contextPath}/" class="navbar-brand">My Classes</a>
         </div>
