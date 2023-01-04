@@ -153,3 +153,20 @@ form p {
 #student_classes_div {
     display: none;
 }
+
+table, th, td, .panel-default {
+  border: 1px solid lightgrey;
+}
+
+.dropdownHeader {
+  text-decoration: none;
+  color: black;
+}
+
+.dropdownHeader:hover {
+  text-decoration: underline;
+}
+
+.panel-heading {
+  background-color: #F5F5F5;
+}
