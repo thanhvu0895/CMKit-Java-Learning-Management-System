@@ -1,8 +1,8 @@
 <html lang="en">
   <head>
-    <title>Account Settings</title>
+    <title>Add SSH Keys</title>
     <link rel="icon" href="../../../assets/images/favicon.ico" />
-    <link rel="stylesheet" href="../../../assets/css/ssh.css" />
+    <link rel="stylesheet" href="../assets/css/ssh.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -10,17 +10,6 @@
       crossorigin="anonymous"
     />
     <script src="https://kit.fontawesome.com/2912a97a77.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
   </head>
   <body>
     <nav class="navbar bg-light">
@@ -58,25 +47,26 @@
       </div>
     </nav>
 
-    <div class="container mt-4">
-      <form action="/users/98" accept-charset="UTF-8" method="post">
-        <input name="utf8" type="hidden" value="✓" /><input type="hidden" name="_method" value="patch" /><input
-          type="hidden"
-          name="authenticity_token"
-          value="JMOXlzfuNu012y04TJ97UGnVZaND/zODw2mHtD/0d91j/sqZoPZR6gPP1kFRQmgPmj22+YltU2n0RJI2MUX3UA=="
-        />
+    <div class="container">
+      <h1>Add Ssh Key</h1>
+
+      <form action="/ssh_keys" accept-charset="UTF-8" method="post">
+        <input name="utf8" type="hidden" value="✓" /><input type="hidden" name="authenticity_token" value="d/dKj6aJ4e3kyXbthENGr8QiVqq/kX3imsn4cqw/dT2BLQKpftOxaHdykie20f9m9cZJyarCuFe973JvfMqKrQ==" />
 
         <div class="form-group">
-          <label for="user_Preferred Name / Nickname (optional):"><strong>Preferred name / nickname (optional):</strong></label>
-          <input class="form-control mt-4" type="text" value="" name="user[preferred_name]" id="user_preferred_name" />
+          <label for="ssh_key_Label (to help you remember which computer the key is from)">Label (to help you remember which computer the key is from)</label>
+          <input class="form-control" type="text" name="ssh_key[label]" id="ssh_key_label" />
+        </div>
+
+        <div class="form-group">
+          <label for="ssh_key_Paste Key Here:">Paste key here:</label>
+          <input class="form-control" type="text" name="ssh_key[key]" id="ssh_key_key" />
         </div>
 
         <div class="actions">
-          <input type="submit" name="commit" value="Save" class="btn btn-success" data-disable-with="Save" />
+          <input type="submit" name="commit" value="Add Key" class="btn btn-success" data-disable-with="Add Key" />
         </div>
       </form>
-      <br /><br /><br />
-      <a class="btn btn-primary" href="/change_password">Change Password</a>
     </div>
   </body>
 </html>

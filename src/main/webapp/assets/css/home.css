@@ -154,6 +154,22 @@ form p {
     display: none;
 }
 
+table, th, td, .panel-default {
+  border: 1px solid lightgrey;
+}
+
+.dropdownHeader {
+  text-decoration: none;
+  color: black;
+}
+
+.dropdownHeader:hover {
+  text-decoration: underline;
+}
+
+.panel-heading {
+  background-color: #F5F5F5;
+=======
 .navbar {
 	margin-bottom: 20px;
 }
