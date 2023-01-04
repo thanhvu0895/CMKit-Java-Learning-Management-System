@@ -169,4 +169,7 @@ table, th, td, .panel-default {
 
 .panel-heading {
   background-color: #F5F5F5;
+=======
+.navbar {
+	margin-bottom: 20px;
 }

@@ -1,23 +1,40 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <html lang="en">
   <head>
     <title>Class page</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/class.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-      crossorigin="anonymous"
-    />
-    <script src="https://kit.fontawesome.com/2912a97a77.js" crossorigin="anonymous"></script>
+   	<link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+  crossorigin="anonymous"
+/>
+<script src="https://kit.fontawesome.com/2912a97a77.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+  crossorigin="anonymous"
+></script>
   </head>
   <body>
-    <nav class="navbar bg-light">
+    
+ <nav class="navbar bg-light">
       <div class="container-fluid">
         <div class="d-flex align-items-center">
           <div class="logo">
+          <a href="${pageContext.request.contextPath}/" class="navbar-brand">
             <img src="${pageContext.request.contextPath}/assets/images/logo.png" alt="" />
+           </a>
           </div>
-          <a href="student_home.html" class="navbar-brand">My Classes</a>
+          <a href="${pageContext.request.contextPath}/" class="navbar-brand">My Classes</a>
         </div>
         <div>
           <div class="dropdown">
@@ -31,15 +48,15 @@
                 <span><i class="fa-solid fa-bell"></i></span>
                 Notification Settings
               </a>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="${pageContext.request.contextPath}/ssh_keys">
                 <span><i class="fa-solid fa-lock"></i></span>
                 SSH Keys
               </a>
               <hr />
-              <button class="dropdown-item" href="#">
+              <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">
                 <span><i class="fa-solid fa-right-to-bracket"></i></span>
                 Logout
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -92,7 +109,7 @@
           <div id="directorybrowser0" class="accordian-collapse collapse in">
             <li class="list-group-item hoverable-thing">
             |----
-              <a target="_blank" href="https://www.cs.kzoo.edu/CSShared/HelpFiles/Kit/">
+              <a target="_blank" href="">
                 <span class="glyphicon glyphicon-link" aria-alt="(Link)"></span> Kit Help Files 
   </a>						
               <div class="pull-right">
@@ -393,17 +410,5 @@
         </table>
       </div>
     </section>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
   </body>
 </html>

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 @WebFilter(urlPatterns = {UrlUtils.ALL})
-public class Authfilter implements Filter{
+public class AuthFilter implements Filter{
    /*
     process before the request get in servlet
     chain.doFilter(request,response)
@@ -37,7 +37,7 @@ public class Authfilter implements Filter{
 	    HttpServletResponse resp = (HttpServletResponse) response;
 	    
 	    if (isInSession(req) && isLoginPage(req)) {
-			resp.sendRedirect(req.getContextPath() + UrlUtils.HOME);
+			resp.sendRedirect("./");
 			return;
 		}
 	    
@@ -47,6 +47,7 @@ public class Authfilter implements Filter{
 				resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 				resp.setDateHeader("Expires", 0); // Proxies.
 			}
+
 			chain.doFilter(request, response);
 		} else {
 			// If not at home page nor logged in, send to /login

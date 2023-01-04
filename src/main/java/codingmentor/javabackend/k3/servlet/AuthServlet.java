@@ -40,9 +40,8 @@ public class AuthServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.SIGN_UP)
 				.forward(req,  resp);
 			break;
-		case UrlUtils.SIGN_OUT:
-			req.getSession().invalidate();
-			resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
+		case UrlUtils.SIGN_OUT:			
+			processLogout(req, resp);			
 			break;
 		default:
 			resp.sendRedirect(req.getContextPath() + UrlUtils.NOT_FOUND);
@@ -72,19 +71,32 @@ public class AuthServlet extends HttpServlet{
 		String email = req.getParameter("email");
         String password = req.getParameter("password");
         LoginDAO loginDAO = new LoginDAO(email, password);
-       // ERROR = NULL => not empty = false
+  
         try {
             if (loginDAOImpl.validate(loginDAO)) {
                 HttpSession session = req.getSession();
-                session.setAttribute("LOGIN_USER", email); // LOGINUSER = email we typed in
-                req.removeAttribute("ERROR"); 
-                resp.sendRedirect(req.getContextPath() + UrlUtils.HOME);
+                session.setAttribute("LOGIN_USER", loginDAOImpl.getFirstNameFromUser(loginDAO));
+                session.setAttribute("notice", "");
+                resp.sendRedirect("./");
             } else { 	
-                req.setAttribute("ERROR", "INVALID USERNAME OR PASSWORD");
+                req.setAttribute("alert", "Invalid email or password, please try again.");
             	req.getRequestDispatcher(JspUtils.SIGN_IN).forward(req, resp);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+	}
+	
+	private void processLogout(HttpServletRequest req, HttpServletResponse resp) 
+			throws IOException, ServletException {
+		 HttpSession session = req.getSession(false);
+		 if (session != null) {
+			 session.invalidate();
+		 }
+	     session = req.getSession(true);
+
+		// TODO: IMPROVE LOG OUT USING SESSION OR COOKIES TO DISPLAY MESSAGE
+		session.setAttribute("notice", "");
+		resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
 	}
 }
