@@ -8,6 +8,7 @@ public class UrlUtils {
 	public static final String SSH_KEYS = "/ssh_keys";
 	public static final String KLASSES = "/klasses";
 	public static final String SUBMISSIONS = "/submissions";
+	public static final String REQUEST_PASSWORD_RESET = "/request_password_reset";
 	
 	public static final String NOT_FOUND = "/404";
     public static final String INTERNAL_ERROR = "/500";

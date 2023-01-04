@@ -19,6 +19,7 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 	UrlUtils.SIGN_IN,
 	UrlUtils.SIGN_UP,
 	UrlUtils.SIGN_OUT,
+	UrlUtils.REQUEST_PASSWORD_RESET
 })
 public class AuthServlet extends HttpServlet{
 
@@ -36,15 +37,15 @@ public class AuthServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.SIGN_IN)
 				.forward(req, resp);
 			break;
-		case UrlUtils.SIGN_UP:
-			req.getRequestDispatcher(JspUtils.SIGN_UP)
-				.forward(req,  resp);
+		case UrlUtils.REQUEST_PASSWORD_RESET:
+			req.getRequestDispatcher(JspUtils.REQUEST_PASSWORD_RESET)
+				.forward(req, resp);
 			break;
 		case UrlUtils.SIGN_OUT:			
 			processLogout(req, resp);			
 			break;
 		default:
-			resp.sendRedirect(req.getContextPath() + UrlUtils.NOT_FOUND);
+			resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
 		}
 	}
 	

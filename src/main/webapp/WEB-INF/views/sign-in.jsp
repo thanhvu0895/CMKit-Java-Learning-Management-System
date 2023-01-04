@@ -12,7 +12,6 @@
 	<script src="https://kit.fontawesome.com/2912a97a77.js"></script>
   </head>
   <body>
-
     <nav class="navbar bg-light">
       <div class="container-fluid">
         <div class="d-flex align-items-center">
@@ -49,7 +48,11 @@
         <input type="password" name="password"  class="form-control"/>
         <button class="btn mt-3">Login</button><br />
       </form>
-      <button class="btn" id="forgotPassword">Forgot password</button>
+      
+      <a href="${pageContext.request.contextPath}/request_password_reset">
+  		<button class="btn" id="forgotPassword">Forgot password</button>
+	  </a>
+	  
     </div>
     </div>
   <footer>

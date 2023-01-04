@@ -8,4 +8,5 @@ public class JspUtils {
 	public static final String HOME = "/WEB-INF/views/home.jsp";
 	public static final String KLASSES = "/WEB-INF/views/klasses.jsp";
 	public static final String SUBMISSIONS = "/WEB-INF/views/submissions.jsp";
+	public static final String REQUEST_PASSWORD_RESET = "/WEB-INF/views/password-reset.jsp";
 }
