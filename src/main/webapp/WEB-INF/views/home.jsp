@@ -43,13 +43,15 @@
         </div>
       </div>
     </nav>
+    
     <div class="container">
     <!-- SHOW NOTICE AND ALERT-->
-	 <% if (request.getSession().getAttribute("notice") != null){%>
-		 <div class="alert alert-success">Logged in! Welcome, ${LOGIN_USER}</div>
-		<%}		
-		request.getSession().removeAttribute("notice"); %>
-   	<!-- END -->
+			<!--  c:if test-->
+			<c:if test = "${not empty sessionScope.notice}">
+			 	<div class="alert alert-success">${sessionScope.notice}</div>
+			 </c:if>
+			 <% session.removeAttribute("notice"); %>
+   	<!-- END SHOW NOTICE AND ALERT -->
     
 
     <section class="container justify-content-center mt-4">

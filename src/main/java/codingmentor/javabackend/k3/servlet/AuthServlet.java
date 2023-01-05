@@ -77,7 +77,18 @@ public class AuthServlet extends HttpServlet{
             if (loginDAOImpl.validate(loginDAO)) {
                 HttpSession session = req.getSession();
                 session.setAttribute("LOGIN_USER", loginDAOImpl.getFirstNameFromUser(loginDAO));
-                session.setAttribute("notice", "");
+                
+                /**
+                 *  Test sending Welcome message to Home
+                 *  Comment out session.setAttribute("notice", "");
+                 *  In home.jsp, comment out 
+                 *  Result: Should show Welcome message + name
+                 *  Step 1: input login user name + pw
+                 *  Step 2: Look at home to see "Welcome John" 
+                 */
+ 
+                session.setAttribute("notice", "Logged in! Welcome, " + loginDAOImpl.getFirstNameFromUser(loginDAO) + "!");
+//              session.setAttribute("notice", "");
                 resp.sendRedirect("./");
             } else { 	
                 req.setAttribute("alert", "Invalid email or password, please try again.");
@@ -97,7 +108,7 @@ public class AuthServlet extends HttpServlet{
 	     session = req.getSession(true);
 
 		// TODO: IMPROVE LOG OUT USING SESSION OR COOKIES TO DISPLAY MESSAGE
-		session.setAttribute("notice", "");
+		session.setAttribute("notice", "You are now logged out. Have a nice day!");
 		resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
 	}
 }
