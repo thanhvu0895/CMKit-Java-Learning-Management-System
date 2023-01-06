@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-<t:layoutjava pageTitle="Log In">
+<t:layout pageTitle="Log In">
     <jsp:body>
       <div class="wrapper">
 	      <form action="" method ="post">
@@ -20,4 +20,4 @@
 		  </a>
 		</div>
     </jsp:body>
-</t:layoutjava>
+</t:layout>
