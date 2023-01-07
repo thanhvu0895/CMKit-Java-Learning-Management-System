@@ -76,7 +76,7 @@ public class AuthServlet extends HttpServlet{
         try {
             if (loginDAOImpl.validate(loginDAO)) {
                 HttpSession session = req.getSession();
-                session.setAttribute("LOGIN_USER", loginDAOImpl.getFirstNameFromUser(loginDAO));
+                session.setAttribute("current_user", loginDAOImpl.getFirstNameFromUser(loginDAO));
                 
                 /**
                  *  Test sending Welcome message to Home
