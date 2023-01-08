@@ -38,20 +38,33 @@
 				<div class="nav navbar-nav navbar-right">
 					<div class="dropdown">
 						<a class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown button</a>
-						<div class="dropdown-menu">
- 								<a class="dropdown-item" href="#">
- 									<i class="fa-solid fa-gear"></i>
- 									Account Settings
+						<ul class="dropdown-menu">
+							<li>
+								<a class="dropdown-item" href="#">
+									<i class="fa-solid fa-gear"></i>
+									Account Settings
 								</a>
+							</li>
+							<li>
 								<a class="dropdown-item" href="#">
 									<i class="fa-solid fa-bell"></i>
 									Notification Settings
 								</a>
+							</li>
+							<li>
 								<a class="dropdown-item" href="${pageContext.request.contextPath}/ssh_keys">
 									<i class="fa-solid fa-lock"></i>
 									SSH Keys
 								</a>
-  						</div>
+							</li>
+							<li><div class="dropdown-divider"></div></li>
+							<li>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/logout">
+									<i class="fa-solid fa-right-to-bracket"></i>
+									Logout
+								</a>
+							</li>
+						</ul>
 					</div>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="#">Separated link</a>
