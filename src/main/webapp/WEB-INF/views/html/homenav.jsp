@@ -1,4 +1,4 @@
-<%@include file="css-js.jsp"%>
+<%@include file="../html/css-js.jsp"%>
 	
 	 <nav class="navbar bg-light">
       <div class="container-fluid">
