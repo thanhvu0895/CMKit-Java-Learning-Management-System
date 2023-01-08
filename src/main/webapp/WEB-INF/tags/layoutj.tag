@@ -14,6 +14,7 @@
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
 <script src="https://kit.fontawesome.com/2912a97a77.js"></script>
+
 <!-- Viewport,  refresh resubmission fix-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%@include file="../views/components/_fix_refresh_resubmission.jsp"%>

@@ -17,13 +17,16 @@ public class UrlUtils {
 	public static final String KLASSES_DETAILS = "/klasses_details";
 	public static final String SUBMISSIONS = "/submissions";
 
-	
+
 	//USERS API	
 	public static final String EDIT_SELF = "/users/edit_self";
 	public static final String NOTIFICATION_SETTINGS = "/users/notification_settings";
 	
+	
+	
+	
+	
 	public static final String NOT_FOUND = "/404";
     public static final String INTERNAL_ERROR = "/500";
-    
     public static final String ALL = "/*";	
 }

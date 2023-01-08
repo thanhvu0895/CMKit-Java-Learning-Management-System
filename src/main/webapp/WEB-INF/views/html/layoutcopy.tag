@@ -12,7 +12,7 @@
 	<script src="https://kit.fontawesome.com/2912a97a77.js"></script>        
     <!-- Viewport,  refresh resubmission fix-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <%@include file="../views/components/_fix_refresh_resubmission.jsp"%>
+    <%@include file="../../views/components/_fix_refresh_resubmission.jsp"%>
   </head>
   <body>
 

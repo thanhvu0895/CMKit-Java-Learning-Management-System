@@ -3,7 +3,6 @@ package codingmentor.javabackend.k3.Utils;
 public class JspUtils {
 	//AUTH API
 	public static final String SIGN_IN = "/WEB-INF/views/login.jsp";
-	public static final String SIGN_UP = "/WEB-INF/views/sign-up.jsp";
 	
 	// HOME API
 	public static final String HOME = "/WEB-INF/views/klasses.jsp";
