@@ -33,7 +33,7 @@ public class HomeServlet extends HttpServlet {
 				.forward(req, resp);
 			break;
 		case UrlUtils.SSH_KEYS:
-			req.getRequestDispatcher(JspUtils.SSH_KEYS)
+			req.getRequestDispatcher(JspUtils.SSH_KEYS_INDEX)
 				.forward(req, resp);
 			break;
 		case UrlUtils.KLASSES_DETAILS:
@@ -41,7 +41,7 @@ public class HomeServlet extends HttpServlet {
 				.forward(req, resp);
 			break;
 		case UrlUtils.CHANGE_PASSWORD:
-			req.getRequestDispatcher(JspUtils.CHANGE_PASSWORD)
+			req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD)
 				.forward(req, resp);
 			break;
 		}	

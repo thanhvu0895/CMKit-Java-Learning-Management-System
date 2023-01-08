@@ -5,10 +5,9 @@ public class UrlUtils {
 	//AUTH API
 	public static final String SIGN_IN = "/login";
 	public static final String SIGN_OUT = "/logout";
-	
-	// HOME API
-	public static final String HOME = "";
 	public static final String KLASSES = "/klasses";
+	
+	// SESSION API
 	public static final String CHANGE_PASSWORD = "/change_password";
 	public static final String REQUEST_PASSWORD_RESET = "/request_password_reset";
 	
@@ -17,7 +16,9 @@ public class UrlUtils {
 	public static final String KLASSES_DETAILS = "/klasses_details";
 	public static final String SUBMISSIONS = "/submissions";
 
-
+	//HOME API
+	public static final String HOME = "";
+	
 	//USERS API	
 	public static final String EDIT_SELF = "/users/edit_self";
 	public static final String NOTIFICATION_SETTINGS = "/users/notification_settings";

@@ -25,11 +25,11 @@ public class UsersServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch(req.getServletPath()) {
 		case UrlUtils.EDIT_SELF:
-			req.getRequestDispatcher(JspUtils.EDIT_SELF)
+			req.getRequestDispatcher(JspUtils.USERS_EDIT_SELF)
 			.forward(req, resp);
 			break;
 		case UrlUtils.NOTIFICATION_SETTINGS:
-			req.getRequestDispatcher(JspUtils.NOTIFICATION_SETTINGS)
+			req.getRequestDispatcher(JspUtils.USERS_NOTIFICATION_SETTINGS)
 			.forward(req, resp);
 			break;
 		}

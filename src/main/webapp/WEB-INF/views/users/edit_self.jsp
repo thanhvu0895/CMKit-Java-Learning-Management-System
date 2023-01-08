@@ -15,7 +15,3 @@
 	</form><br><br><br>
 	<a class="btn btn-primary" href="${pageContext.request.contextPath}/change_password">Change Password</a>
 </t:layoutj>
-
-
-
-
