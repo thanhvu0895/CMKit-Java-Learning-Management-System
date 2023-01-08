@@ -38,14 +38,20 @@
 				<div class="nav navbar-nav navbar-right">
 					<div class="dropdown">
 						<a class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown button</a>
-						<ul class="dropdown-menu">
- 							<li>
+						<div class="dropdown-menu">
  								<a class="dropdown-item" href="#">
  									<i class="fa-solid fa-gear"></i>
  									Account Settings
 								</a>
- 							</li>
-  						</ul>
+								<a class="dropdown-item" href="#">
+									<i class="fa-solid fa-bell"></i>
+									Notification Settings
+								</a>
+								<a class="dropdown-item" href="${pageContext.request.contextPath}/ssh_keys">
+									<i class="fa-solid fa-lock"></i>
+									SSH Keys
+								</a>
+  						</div>
 					</div>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="#">Separated link</a>
