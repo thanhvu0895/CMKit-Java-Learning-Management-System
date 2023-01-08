@@ -17,7 +17,6 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 @WebServlet(name = "authServlet", urlPatterns = {
 	UrlUtils.SIGN_IN,
-	UrlUtils.SIGN_UP,
 	UrlUtils.SIGN_OUT,
 	UrlUtils.REQUEST_PASSWORD_RESET
 })
