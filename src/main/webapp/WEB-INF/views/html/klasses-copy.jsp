@@ -6,7 +6,7 @@
   <head>
     <title>Student home page</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home.css" />
-   	<%@include file="components/css-js.jsp"%>
+   	<%@include file="../components/css-js.jsp"%>
   </head>
   <body>
     <nav class="navbar bg-light">

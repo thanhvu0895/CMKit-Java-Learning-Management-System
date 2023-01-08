@@ -7,11 +7,11 @@
 	<form action="" accept-charset="UTF-8"
 		data-remote="true" method="post">
 		<div class="form-group">
-			<label for="email">Email</label> <input class="form-control"
+			<label for="email">Email</label> 
+			<input class="form-control"
 				type="email" name="email" id="email" />
 		</div>
 		<input type="submit" name="commit" value="Next"
 			class="btn btn-primary" data-disable-with="Next" />
 	</form>
 </t:layoutj>
-

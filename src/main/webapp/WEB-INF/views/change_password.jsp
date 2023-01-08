@@ -2,7 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 
-<t:layoutj pageTitle="Log In">
+<t:layoutj pageTitle="Change Password">
 	<form action="${pageContext.request.contextPath}/change_password" accept-charset="UTF-8" data-remote="true" method="post">
 		<div class="form-group">
     		<label for="Old Password">Old password</label>

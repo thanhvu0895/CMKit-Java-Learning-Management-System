@@ -2,7 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 
-<t:layoutj pageTitle="Log In">
+<t:layoutj pageTitle="Settings">
 	<form action="/users/98" accept-charset="UTF-8" method="post">
 		<div class="form-group">
 			<label for="user_Preferred Name / Nickname (optional):">Preferred name / nickname (optional):</label>

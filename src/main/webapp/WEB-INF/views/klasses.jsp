@@ -2,7 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 
-<t:layoutj pageTitle="Log In">
+<t:layoutj pageTitle="Classes">
 	<h1>Classes</h1>
 
 	<div class="panel-group">

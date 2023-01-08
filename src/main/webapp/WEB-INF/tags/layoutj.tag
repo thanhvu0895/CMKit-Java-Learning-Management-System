@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
 <title>Kit | ${pageTitle}</title>
-<!-- Favicon, CSS, Bootstrap CSS  -->
+<!-- Favicon, Bootstrap CSS, Font-Awesome  -->
 <link rel="icon"
 	href="${pageContext.request.contextPath}/assets/images/favicon.ico" />
 <link rel="stylesheet"
