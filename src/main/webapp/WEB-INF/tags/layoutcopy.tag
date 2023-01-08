@@ -1,5 +1,5 @@
-<%@ tag language="java" pageEncoding="ISO-8859-1"%>
-<%@attribute name="pageTitle" required="true"%>
+<%@ tag import="codingmentor.javabackend.k3.Utils.UrlUtils" language="java" pageEncoding="ISO-8859-1"%>
+<%@ attribute name="pageTitle" required="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html lang="en">
@@ -8,7 +8,8 @@
     <!-- Favicon, CSS, Bootstrap CSS  -->
 	<link rel="icon" href="${pageContext.request.contextPath}/assets/images/favicon.ico" />
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/cmkit.css"/>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">        
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<script src="https://kit.fontawesome.com/2912a97a77.js"></script>        
     <!-- Viewport,  refresh resubmission fix-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%@include file="../views/components/_fix_refresh_resubmission.jsp"%>
@@ -28,42 +29,42 @@
 			<button class="navbar-toggler flex-wrap mr-auto" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-expanded="false">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			
-			<!--  If LOGGED IN -->
-			<c:choose> 
-				<c:when test="${not empty sessionScope.current_user}">
-				<div class="collapse navbar-collapse justify-content-end" id="top-navbar">
-					<ul class="nav navbar-nav">
-					<!-- If currentuser.admin || currentuser.departmentProfessors  -->
-					</ul>
-					
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown">
-							<a href="" class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${sessionScope.current_user}<span class="caret"></span></a>
-							<ul class="dropdown-menu">
-								<li><a href="#"></a>
-							</ul>
-						</li>
-					</ul>
-					
+  <c:choose>
+	<c:when test="${not empty sessionScope.current_user}">
+			<div class="collapse navbar-collapse justify-content-between" id="top-navbar">
+				<ul class="nav navbar-nav navbar-brand">
+					<li><a href=".${UrlUtils.KLASSES}">My Classes</a></li>
+				</ul>
+				<div class="nav navbar-nav navbar-right">
+					<div class="dropdown">
+						<a class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown button</a>
+						<ul class="dropdown-menu">
+ 							<li>
+ 								<a class="dropdown-item" href="#">
+ 									<i class="fa-solid fa-gear"></i>
+ 									Account Settings
+								</a>
+ 							</li>
+  						</ul>
+					</div>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">Separated link</a>
+					</div>
 				</div>
-				</c:when>
-				
-				<c:otherwise>
-				NOT LOGGED IN
-			<!-- Collapse items to be displayed-->
+			</div>
+	</c:when>
+	<c:otherwise>		
 			<div class="collapse navbar-collapse justify-content-end" id="top-navbar-nouser">
-				<ul class="navbar-nav"> 
-					<li class="nav-item"><a href="${pageContext.request.contextPath}/login" class="nav-link">
+				<ul class="navbar-nav navbar-right"> 
+					<li class="nav-item"><a href=".${UrlUtils.SIGN_IN}" class="nav-link">
 						<img src="${pageContext.request.contextPath}/assets/images/right-to-bracket-solid.png" width="16px" height="16px"/> Log In</a>
 					</li>
 				</ul>
 			</div>
-		</div><!-- /.container-fluid -->
+	</c:otherwise>
+  </c:choose>
+  		</div><!-- /.container-fluid -->
 	</nav> 
-				</c:otherwise>
-			</c:choose>
-			
 			
 
 <!-- End Login Navigation bar -->
@@ -86,8 +87,6 @@
 	
 	   	 <jsp:doBody/>   	 
   	</div>
-  	<p>${UrlUtils.SSH_KEYS} Hello WORLD</p>
-			<a href="${UrlUtils.SSH_KEYS}">Test</a>
   	<!-- End Body -->
   <!-- jQuery first, then Bootstrap JS, then Popper.js, then FontAwesome -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
