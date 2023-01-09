@@ -7,21 +7,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class CoursesServlet
- */
-@WebServlet("/CoursesServlet")
-public class CoursesServlet extends HttpServlet {
+import codingmentor.javabackend.k3.Utils.JspUtils;
+import codingmentor.javabackend.k3.Utils.UrlUtils;
+
+
+@WebServlet(urlPatterns = {
+		UrlUtils.ROOT
+})
+public class RootServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+      
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+		switch(req.getServletPath()) {
+		case UrlUtils.ROOT:
+			req.getRequestDispatcher(JspUtils.KLASSES_INDEX)
+			.forward(req, resp);
+			break;
+		}	
 	}
 }

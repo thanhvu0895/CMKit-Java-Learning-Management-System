@@ -12,8 +12,8 @@ public class UrlUtils {
 	public static final String KLASSES_DETAILS = "/klasses_details";
 	public static final String SUBMISSIONS = "/submissions";
 
-	//HOME API
-	public static final String HOME = "";
+	//ROOT
+	public static final String ROOT = "";
 	
 	//USERS API
 	public static final String USERS_EDIT_SELF = "/users/edit_self";

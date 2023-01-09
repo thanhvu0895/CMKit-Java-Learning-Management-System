@@ -101,6 +101,7 @@ public class JspUtils {
 	public static final String KLASSES_SHOW_INVITE = "/WEB-INF/views/klasses/show_invite.jsp";
 	public static final String KLASSES_NOTIFICATION_TOGGLE_BUTTON = "/WEB-INF/views/klasses/notification_toggle_button.jsp";
 	
+	
 	//NOTIFICATION_MAILERS
 	public static final String NOTIFICATION_MAILER_NOTIFICATION_EXPLANATION  = "/WEB-INF/views/notification_mailer/_notification_explanation.jsp";
 	public static final String NOTIFICATION_MAILER_ASSIGNMENT_ASSIGNED  = "/WEB-INF/views/notification_mailer/assignment_assigned.jsp";
@@ -155,9 +156,6 @@ public class JspUtils {
 	public static final String USERS_NOTIFICATION_SETTINGS = "/WEB-INF/views/users/notification_settings.jsp";
 	public static final String USERS_SHOW_INVITE = "/WEB-INF/views/users/show_invite.jsp";
 	
-	// HOME API
-	public static final String HOME = "/WEB-INF/views/klasses.jsp";
-	public static final String KLASSES = "/WEB-INF/views/klasses.jsp";
 	
 	// SSH_KEYS
 	public static final String SSH_KEYS_INDEX  = "/WEB-INF/views/ssh_keys/index.jsp";

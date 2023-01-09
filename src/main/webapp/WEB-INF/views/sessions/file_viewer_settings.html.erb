@@ -11,6 +11,6 @@
     <%= form.label "When there are multiple files, pick a file containing this in the name if possible:" %>
     <%= form.text_field :filter, class: "form-control", value: session[:file_viewer_filter] %>
   </div>
-  
+
   <%= form.submit "Save", class: "btn btn-primary" %>
 <% end %>

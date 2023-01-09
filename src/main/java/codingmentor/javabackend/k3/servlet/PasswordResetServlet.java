@@ -12,19 +12,17 @@ import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 @WebServlet(urlPatterns = {
-	UrlUtils.KLASSES,
-	
+		UrlUtils.REQUEST_PASSWORD_RESET
 })
-public class KlassesServlet extends HttpServlet {
+public class PasswordResetServlet extends HttpServlet{
 
-	private static final long serialVersionUID = -290278653216172056L;
-
+	private static final long serialVersionUID = 391478459100214707L;
+	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		switch(req.getServletPath()) {
-		case UrlUtils.KLASSES:
-			req.getRequestDispatcher(JspUtils.KLASSES_INDEX)
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		switch (req.getServletPath()) {
+		case UrlUtils.REQUEST_PASSWORD_RESET:
+			req.getRequestDispatcher(JspUtils.PASSWORD_RESET_SHOW_PASSWORD_RESET_REQUEST)
 				.forward(req, resp);
 			break;
 		}
