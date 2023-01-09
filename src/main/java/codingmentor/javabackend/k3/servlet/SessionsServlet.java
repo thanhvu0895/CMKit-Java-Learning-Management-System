@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import codingmentor.javabackend.k3.DAO.LoginDAO;
+import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.DAO.LoginDAOImpl;
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
+
 
 @WebServlet(name = "authServlet", urlPatterns = { 
 	UrlUtils.SIGN_IN, 
@@ -75,7 +76,7 @@ public class SessionsServlet extends HttpServlet {
 	private void processLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
-		LoginDAO loginDAO = new LoginDAO(email, password);
+		User loginDAO = new User(email, password);
 
 		try {
 			if (loginDAOImpl.validate(loginDAO)) {

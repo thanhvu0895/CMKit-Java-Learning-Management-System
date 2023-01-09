@@ -5,9 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import codingmentor.javabackend.k3.connection.DBConnect;
+import codingmentor.javabackend.k3.model.User;
 public class LoginDAOImpl {
 	
-    public boolean validate(LoginDAO loginDAO) throws ClassNotFoundException {
+    public boolean validate(User user) throws ClassNotFoundException {
         try {
         	// Open connection to database;
         	Connection conn = DBConnect.getConnection();
@@ -15,8 +16,8 @@ public class LoginDAOImpl {
         	
         	// Query database
             PreparedStatement stmt = conn.prepareStatement(sql); 
-            stmt.setString(1, loginDAO.getEmail());
-            stmt.setString(2, loginDAO.getPassword_digest());          
+            stmt.setString(1, user.getEmail());
+            stmt.setString(2, user.getPassword_digest());          
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
             	return true;     
@@ -30,14 +31,14 @@ public class LoginDAOImpl {
         return false;
     }
     
-    public String getFirstNameFromUser(LoginDAO loginDAO) throws ClassNotFoundException {
+    public String getFirstNameFromUser(User user) throws ClassNotFoundException {
     	String result = "";
     	String sql = "SELECT first_name FROM users where email = ?";
     	try {
         	Connection conn = DBConnect.getConnection();
         	// Query database
             PreparedStatement stmt = conn.prepareStatement(sql); 
-            stmt.setString(1, loginDAO.getEmail());
+            stmt.setString(1, user.getEmail());
 
             ResultSet rs = stmt.executeQuery();
             
