@@ -1,13 +1,13 @@
-package codingmentor.javabackend.k3.Utils;
+package codingmentor.javabackend.k3.DAO;
 
-public class Course {
+public class CourseDAO {
 	private String name;
 	private String code;
 	private String semester;
 	private int section;
 	private double progress;
 	
-	public Course(String name, String code, String semester, int section, double progress) {
+	public CourseDAO(String name, String code, String semester, int section, double progress) {
 		super();
 		this.name = name;
 		this.code = code;

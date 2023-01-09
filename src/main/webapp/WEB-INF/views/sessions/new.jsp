@@ -7,7 +7,7 @@
 		<h1> Log In </h1>
 	</div>
 	
-	<form action=".${UrlUtils.SIGN_IN}" method="post">
+	<form action="./login" method="post">
 	 	<div class="form-group">
 			<label for="email">Email</label>
 			<input class="form-control" type="email" name="email" id="email" />

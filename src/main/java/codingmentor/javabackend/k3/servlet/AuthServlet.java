@@ -18,7 +18,6 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 @WebServlet(name = "authServlet", urlPatterns = {
 	UrlUtils.SIGN_IN,
 	UrlUtils.SIGN_OUT,
-	UrlUtils.REQUEST_PASSWORD_RESET
 })
 public class AuthServlet extends HttpServlet{
 
@@ -33,11 +32,7 @@ public class AuthServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch(req.getServletPath()) {
 		case UrlUtils.SIGN_IN:
-			req.getRequestDispatcher(JspUtils.SIGN_IN)
-				.forward(req, resp);
-			break;
-		case UrlUtils.REQUEST_PASSWORD_RESET:
-			req.getRequestDispatcher(JspUtils.REQUEST_PASSWORD_RESET)
+			req.getRequestDispatcher(JspUtils.SESSIONS_NEW)
 				.forward(req, resp);
 			break;
 		case UrlUtils.SIGN_OUT:			
@@ -87,11 +82,10 @@ public class AuthServlet extends HttpServlet{
                  */
  
                 session.setAttribute("notice", "Logged in! Welcome, " + loginDAOImpl.getFirstNameFromUser(loginDAO) + "!");
-//              session.setAttribute("notice", "");
                 resp.sendRedirect("./");
             } else { 	
                 req.setAttribute("alert", "Invalid email or password, please try again.");
-            	req.getRequestDispatcher(JspUtils.SIGN_IN).forward(req, resp);
+            	req.getRequestDispatcher(JspUtils.SESSIONS_NEW).forward(req, resp);
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

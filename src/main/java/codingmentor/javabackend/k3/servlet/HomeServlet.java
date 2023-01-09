@@ -16,7 +16,6 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 		UrlUtils.KLASSES,	
 		UrlUtils.SSH_KEYS,
 		UrlUtils.KLASSES_DETAILS,
-		UrlUtils.CHANGE_PASSWORD
 })
 public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,15 +32,11 @@ public class HomeServlet extends HttpServlet {
 				.forward(req, resp);
 			break;
 		case UrlUtils.SSH_KEYS:
-			req.getRequestDispatcher(JspUtils.SSH_KEYS)
+			req.getRequestDispatcher(JspUtils.SSH_KEYS_INDEX)
 				.forward(req, resp);
 			break;
 		case UrlUtils.KLASSES_DETAILS:
 			req.getRequestDispatcher(JspUtils.KLASS_DETAILS)
-				.forward(req, resp);
-			break;
-		case UrlUtils.CHANGE_PASSWORD:
-			req.getRequestDispatcher(JspUtils.CHANGE_PASSWORD)
 				.forward(req, resp);
 			break;
 		}	
