@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import codingmentor.javabackend.k3.model.User;
+import codingmentor.javabackend.k3.repository.UserRepository;
+import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 import codingmentor.javabackend.k3.DAO.LoginDAOImpl;
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
@@ -25,9 +27,11 @@ public class SessionsServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -3801412244941307670L;
 	private LoginDAOImpl loginDAOImpl = null;
+	private UserRepository userR = null;
 
 	public SessionsServlet() {
 		loginDAOImpl = new LoginDAOImpl();
+		userR = UserRepositoryImpl.getInstance();
 	}
 
 	@Override
@@ -69,11 +73,11 @@ public class SessionsServlet extends HttpServlet {
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
 		User current_user = new User(email, password);
-
+		User current_user_full = userR.findUserByEmail(email);
 		try {
 			if (loginDAOImpl.validate(current_user)) {
 				HttpSession session = req.getSession();
-				session.setAttribute("current_user", current_user);
+				session.setAttribute("current_user", current_user_full);
 
 				/**
 				 * Test sending Welcome message to Home Comment out
