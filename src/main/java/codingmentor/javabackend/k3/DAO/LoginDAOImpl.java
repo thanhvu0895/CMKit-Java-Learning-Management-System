@@ -66,7 +66,7 @@ public class LoginDAOImpl {
             ResultSet rs = stmt.executeQuery();
             
             if (rs.next()) {
-            	return user.intToBooleanValue(rs.getInt(1)); 
+            	return rs.getBoolean(1); 
             };
             conn.close(); // close dbconnection to save resources
         } catch (SQLException e) {

@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
+    private int id;
     private String email;
     private boolean admin;
     private String first_name;
@@ -29,7 +30,35 @@ public class User implements Serializable {
 		this.password_digest = password_digest;
 		this.first_name = first_name;
 	}
-    
+	
+	public User(String email, boolean admin, String first_name, String last_name, String password_digest,
+			boolean set_up) {
+		this.email = email;
+		this.admin = admin;
+		this.first_name = first_name;
+		this.last_name = last_name;
+		this.password_digest = password_digest;
+		this.set_up = set_up;
+	}
+
+	
+	public String getLast_name() {
+		return last_name;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public boolean isSet_up() {
+		return set_up;
+	}
+
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+
 	public String getEmail() {
 		return email;
 	}
@@ -53,13 +82,26 @@ public class User implements Serializable {
 	public void setFirst_name(String first_name) {
 		this.first_name = first_name;
 	}
-    
-    public String toBooleanValueString(boolean bool) {
-        return bool ? "1" : "0";
+
+    // fluent style api
+    public User email(String email) {
+        this.email = email;
+        return this;
     }
     
-    public boolean intToBooleanValue(int boolInt) {
-        return (boolInt == 1) ? true : false;
+    public User first_name(String first_name) {
+        this.first_name = first_name;
+        return this;
+    }
+    
+    public User admin(boolean admin) {
+        this.admin = admin;
+        return this;
+    }
+    
+    public User password_digest(String password_digest) {
+        this.password_digest= password_digest;
+        return this;
     }
 }
 
