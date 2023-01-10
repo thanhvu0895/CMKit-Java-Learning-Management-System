@@ -15,8 +15,8 @@
 	<h1>Classes</h1>
 
 	<div class="panel-group">
-		<div class="panel panel-default">
-			<div class="panel-heading">
+		<div class="panel panel-default" style="border: 1px solid">
+			<div class="panel-heading" style="border-bottom: 1px solid">
 				<h4 class="panel-title">
 					<a data-toggle="collapse" href="#student_classes"><strong>Student
 							Classes<span class="caret"></span>
@@ -27,7 +27,7 @@
 
 				<!-- Create a new current class table to separate from past classes -->
 
-				<div class="panel-body">
+				<div style="padding: 0" class="panel-body">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
@@ -42,15 +42,15 @@
 							<table class="table table-hover table-responsive table-bordered">
 								<thead>
 									<tr>
-										<th class="text-center">Course Title</th>
-										<th class="text-center">Course code</th>
-										<th class="text-center">Semester</th>
-										<th class="text-center">Section</th>
-										<th class="text-center" style="width: 20%">Grade</th>
-										<th class="text-center" style="width: 20%">Assignment
+										<th>Course Title</th>
+										<th>Course code</th>
+										<th>Semester</th>
+										<th>Section</th>
+										<th style="width: 20%">Assignment
 											Status</th>
-										<th class="text-center" style="width: 20%">Next
+										<th style="width: 20%">Next
 											Assignment Due</th>
+										<th style="width: 20%">Grade</th>
 									</tr>
 								</thead>
 
@@ -61,6 +61,8 @@
 										<td>COMP 110</td>
 										<td>Spring 2019</td>
 										<td>1</td>
+										<td>1 not submitted</td>
+										<td>Assignment 1: due in 5 days - 11pm 22/01/2023</td>
 										<td>
 
 											<div class="progress"
@@ -81,7 +83,7 @@
 
 				<!-- Current classes table end here -->
 
-				<div class="panel-body">
+				<div style="padding: 0" class="panel-body">
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
@@ -93,7 +95,7 @@
 						<div id="prev_student_classes" class="panel-collapse collapse">
 
 
-							<table class="table table-hover">
+							<table class="table table-hover table-responsive table-bordered">
 								<thead>
 									<tr>
 										<th>Course Title</th>
