@@ -10,6 +10,7 @@ public class Main {
 		try {
 			System.out.println(login.validate(user));
 			System.out.println(login.getFirstNameFromUser(user));
+			System.out.println(login.isAdmin(user));
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

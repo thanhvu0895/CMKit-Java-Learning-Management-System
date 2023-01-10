@@ -1,13 +1,12 @@
 package codingmentor.javabackend.k3.model;
 import java.io.Serializable;
-import java.time.LocalTime;
 import java.util.Date;
 
 
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     private String email;
-    private Boolean admin;
+    private boolean admin;
     private String first_name;
     private String last_name;
     private String preferred_name;
@@ -16,7 +15,10 @@ public class User implements Serializable {
     private Date reset_expires;
     private boolean set_up;
     private boolean disabled;
-    	
+    
+    public User() {	
+    }
+    
 	public User(String email, String password_digest) {
 		this.email = email;
 		this.password_digest = password_digest;
@@ -51,26 +53,13 @@ public class User implements Serializable {
 	public void setFirst_name(String first_name) {
 		this.first_name = first_name;
 	}
-	
-	 // fluent style api
-    public User email(String email) {
-        this.email = email;
-        return this;
-    }
-    
-    public User password_digest(String password_digest) {
-        this.password_digest = password_digest;
-        return this;
-    }
-    
-    public User first_name (String first_name) {
-        this.first_name = first_name;
-        return this;
-    }
-    
     
     public String toBooleanValueString(boolean bool) {
         return bool ? "1" : "0";
+    }
+    
+    public boolean intToBooleanValue(int boolInt) {
+        return (boolInt == 1) ? true : false;
     }
 }
 

@@ -1,7 +1,8 @@
-<%@ tag import="codingmentor.javabackend.k3.Utils.UrlUtils"
-	language="java" pageEncoding="ISO-8859-1"%>
+<%@ tag language="java" pageEncoding="ISO-8859-1"%>
 <%@ attribute name="pageTitle" required="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@tag import="codingmentor.javabackend.k3.Utils.UrlUtils"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <html lang="en">
 <head>
@@ -17,7 +18,7 @@
 
 <!-- Viewport,  refresh resubmission fix-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<%@include file="../views/components/_fix_refresh_resubmission.jsp"%>
+<%@include file="./_fix_refresh_resubmission.jsp"%>
 </head>
 <body>
 	<!-- Login Navigation bar -->
@@ -31,7 +32,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="./">Kit</a>
+				<a class="navbar-brand" href="${pageContext.request.contextPath}">Kit</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
   <c:choose>
@@ -41,29 +42,29 @@
 			<!-- IF CURRENT USER IS ADMIN -->
 			
 			<!-- END IF USER IS ADMIN -->
-			<li><a href=${pageContext.request.contextPath}/klasses>My Classes</a></li>
+			<li><t:link_to path="${UrlUtils.KLASSES_PATH}">My Classes</t:link_to></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Thanh <span class="caret"></span></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${current_user.getFirst_name()} <span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><a href="${pageContext.request.contextPath}/users/edit_self">
+					<li><t:link_to path="${UrlUtils.USER_EDIT_SELF_PATH}">
 						<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 						Account Settings
-					</a></li>
-					<li><a href="${pageContext.request.contextPath}/users/notification_settings">
+					</t:link_to></li>
+					<li><t:link_to path="${UrlUtils.NOTIFICATION_SETTINGS_PATH}"> 
 						<span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
 						Notification Settings
-					</a></li>
-					<li><a href="${pageContext.request.contextPath}/ssh_keys">
+					</t:link_to></li>
+					<li><t:link_to path="${UrlUtils.SSH_KEYS_PATH}">
 						<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
 						SSH Keys
-					</a></li>
+					</t:link_to></li>
 					<li role="separator" class="divider"></li>
-					<li><a href="${pageContext.request.contextPath}/logout">
+					<li><t:link_to path="${UrlUtils.LOGOUT_PATH}">
 						<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
 						Log Out
-					</a></li>
+					</t:link_to></li>
  				</ul>
 			</li>
   		</ul>
@@ -74,10 +75,10 @@
 			<div class="collapse navbar-collapse" id="top-navbar-nouser">
 			    <ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href=".${UrlUtils.SIGN_IN}">
+						<t:link_to path="${UrlUtils.LOGIN_PATH}">
 						<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
 						Log In
-						</a>
+						</t:link_to>
 					</li>
 				</ul>
 			</div> 	  	

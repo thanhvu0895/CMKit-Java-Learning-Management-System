@@ -51,7 +51,7 @@
 //			chain.doFilter(request, response);
 //		} else {
 //			// If not at home page nor logged in, send to /login
-//			resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
+//			resp.sendRedirect(req.getContextPath() + UrlUtils.LOGIN_PATH);
 //			
 //			// we return here so the original servlet is not processed
 //			return;
@@ -60,7 +60,7 @@
 //	
 //	private boolean isLoginPage(HttpServletRequest request) { // if url = /login
 //        String path = request.getServletPath();
-//        return path.startsWith(UrlUtils.SIGN_IN) || path.startsWith(UrlUtils.REQUEST_PASSWORD_RESET);
+//        return path.startsWith(UrlUtils.LOGIN_PATH) || path.startsWith(UrlUtils.SHOW_REQUEST_PASSWORD_RESET_PATH);
 //    }
 //	
 //	private boolean isInSession (HttpServletRequest req) { // if no user logged in yet

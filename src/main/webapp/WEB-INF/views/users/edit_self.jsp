@@ -1,6 +1,8 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page 
+	language="java" pageEncoding="UTF-8" 
+	import="codingmentor.javabackend.k3.Utils.UrlUtils" 
+%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 
 <t:layoutj pageTitle="Settings">
 	<form action="/users/98" accept-charset="UTF-8" method="post">
@@ -13,5 +15,5 @@
 			<input type="submit" name="commit" value="Save" class="btn btn-success" data-disable-with="Save" />
 		</div>
 	</form><br><br><br>
-	<a class="btn btn-primary" href="${pageContext.request.contextPath}/change_password">Change Password</a>
+	<a class="btn btn-primary" href="${pageContext.request.contextPath}${UrlUtils.CHANGE_PASSWORD_PATH}">Change Password</a>
 </t:layoutj>

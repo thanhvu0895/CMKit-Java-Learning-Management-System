@@ -1,31 +1,68 @@
 package codingmentor.javabackend.k3.Utils;
 
 public class UrlUtils {
-	
-	//AUTH API
-	public static final String SIGN_IN = "/login";
-	public static final String SIGN_OUT = "/logout";
-	
-	//KLASSES API
-	public static final String KLASSES = "/klasses";
-	public static final String SSH_KEYS = "/ssh_keys";
-	public static final String KLASSES_DETAILS = "/klasses_details";
-	public static final String SUBMISSIONS = "/submissions";
 
-	//ROOT
-	public static final String ROOT = "";
+	public static final String DEPARTMENTS_PATH = "/departments";
+	public static final String NEW_DEPARTMENT_PATH = "/departments/new";
 	
-	//USERS API
-	public static final String USERS_EDIT_SELF = "/users/edit_self";
-	public static final String USERS_NOTIFICATION_SETTINGS = "/users/notification_settings";
-	public static final String USERS_CHANGE_PASSWORD = "/change_password";
-	public static final String USERS_CREATE = "/users/create";
+	public static final String EXTENSIONS_PATH = "/extensions";
+	public static final String NEW_EXTENSIONS_PATH = "/extensions/new";
 	
-	public static final String USERS = "/users/*";
+	public static final String SSH_KEYS_PATH = "/ssh_keys";
+	public static final String NEW_SSH_KEYS_PATH = "/ssh_keys/new";
 	
-	//PASSWORD RESET API
-	public static final String REQUEST_PASSWORD_RESET = "/request_password_reset";
-	public static final String USE_PASSWORD_RESET = "/use_password_reset";
+	public static final String CONTRIBUTOR_INVITES_PATH = "/contributor_invites";
+	public static final String CONTRIBUTORS_PATH = "/contributors";
+	
+	public static final String SUBMISSIONS_PATH = "/submissions";
+	public static final String NEW_SUBMISSION_PATH = "/submissions/new";
+	public static final String SUBMISSION_PROFESSOR_NEW_UPLOAD_PATH = "/submission/new_professor";
+	
+	public static final String ASSIGNMENT_PATH = "/assignments";
+	public static final String NEW_ASSIGNMENT_PATH = "/assignments/new";
+	public static final String SHOW_COPY_ASSIGNMENT_PATH = "/copy_assignment";
+	
+	public static final String GRADERS_PATH = "/graders";
+	public static final String ADD_GRADER_PATH = "/add_grader";
+	
+	public static final String GRADE_CATEGORIES_PATH = "/grade_categories";
+	public static final String NEW_GRADE_CATEGORY_PATH = "/grade_categories/new";
+	
+	public static final String STUDENTS_PATH = "/students";
+	public static final String PROFESSORS_PATH = "/professors";
+	
+	public static final String USERS_ALL_PATH = "/users/*";
+	public static final String USERS_PATH = "/users";
+	public static final String USER_EDIT_SELF_PATH = "/users/edit_self";
+	public static final String CHANGE_PASSWORD_PATH = "/change_password";
+	public static final String CREATE_USER_INVITE_PATH = "/users/create";
+	public static final String SHOW_REQUEST_PASSWORD_RESET_PATH = "/request_password_reset";
+	public static final String SHOW_USE_PASSWORD_RESET_PATH = "/use_password_reset";
+	public static final String NOTIFICATION_SETTINGS_PATH = "/users/notification_settings";
+	
+	public static final String KLASSES_PATH = "/klasses";
+	public static final String NEW_KLASS_PATH = "/klasses/new";
+	
+	public static final String COURSES_PATH = "/courses";
+	public static final String NEW_COURSE_PATH = "/courses/new";
+	
+	public static final String LOGIN_PATH = "/login";
+	public static final String LOGOUT_PATH = "/logout";
+	
+	public static final String FILE_VIEWER_SETTINGS_PATH = "/file_viewer_settings";
+	public static final String ENABLE_FILE_VIEWER_PATH = "/enable_file_viewer";
+	public static final String DISABLE_FILE_VIEWER_PATH = "/disable_file_viewer";
+	
+	public static final String ROOT_PATH = "";
+	
+
+	
+
+
+	
+	
+	
+
 	
 	
 	

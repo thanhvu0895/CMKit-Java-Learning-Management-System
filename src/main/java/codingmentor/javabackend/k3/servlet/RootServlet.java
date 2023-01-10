@@ -12,7 +12,7 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 
 @WebServlet(urlPatterns = {
-		UrlUtils.ROOT
+		UrlUtils.ROOT_PATH
 })
 public class RootServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -20,7 +20,7 @@ public class RootServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch(req.getServletPath()) {
-		case UrlUtils.ROOT:
+		case UrlUtils.ROOT_PATH:
 			req.getRequestDispatcher(JspUtils.KLASSES_INDEX)
 			.forward(req, resp);
 			break;

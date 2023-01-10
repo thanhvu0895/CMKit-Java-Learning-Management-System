@@ -31,6 +31,7 @@ public class LoginDAOImpl {
         return false;
     }
     
+    
     public String getFirstNameFromUser(User user) throws ClassNotFoundException {
     	String result = "";
     	String sql = "SELECT first_name FROM users where email = ?";
@@ -53,6 +54,27 @@ public class LoginDAOImpl {
         return result;
     }
     
+    
+    public boolean isAdmin(User user) throws ClassNotFoundException {
+    	String sql = "SELECT admin FROM users where email = ?";
+    	try {
+        	Connection conn = DBConnect.getConnection();
+        	// Query database
+            PreparedStatement stmt = conn.prepareStatement(sql); 
+            stmt.setString(1, user.getEmail());
+
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+            	return user.intToBooleanValue(rs.getInt(1)); 
+            };
+            conn.close(); // close dbconnection to save resources
+        } catch (SQLException e) {
+            // process sql exception
+            printSQLException(e);
+        }
+        return false;
+    }
     
     
     

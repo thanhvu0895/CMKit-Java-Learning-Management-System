@@ -12,7 +12,7 @@ import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 @WebServlet(urlPatterns = {
-		UrlUtils.REQUEST_PASSWORD_RESET
+		UrlUtils.SHOW_REQUEST_PASSWORD_RESET_PATH
 })
 public class PasswordResetServlet extends HttpServlet{
 
@@ -21,7 +21,7 @@ public class PasswordResetServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch (req.getServletPath()) {
-		case UrlUtils.REQUEST_PASSWORD_RESET:
+		case UrlUtils.SHOW_REQUEST_PASSWORD_RESET_PATH:
 			req.getRequestDispatcher(JspUtils.PASSWORD_RESET_SHOW_PASSWORD_RESET_REQUEST)
 				.forward(req, resp);
 			break;

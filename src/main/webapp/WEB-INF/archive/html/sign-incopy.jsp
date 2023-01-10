@@ -8,9 +8,7 @@
 	<script src="https://kit.fontawesome.com/2912a97a77.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   </head>
-  <body>
-  <%@include file="../../views/components/_fix_refresh_resubmission.jsp"%> 
-	
+  <body>	
 	<!-- Login Navigation bar -->
     <nav class="navbar bg-light">
       <div class="container-fluid">

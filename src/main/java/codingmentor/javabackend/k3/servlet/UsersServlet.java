@@ -12,9 +12,9 @@ import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 @WebServlet(urlPatterns = {
-		UrlUtils.USERS_EDIT_SELF,
-		UrlUtils.USERS_NOTIFICATION_SETTINGS,
-		UrlUtils.USERS_CHANGE_PASSWORD,
+		UrlUtils.USER_EDIT_SELF_PATH,
+		UrlUtils.NOTIFICATION_SETTINGS_PATH,
+		UrlUtils.CHANGE_PASSWORD_PATH,
 		"/users/*"
 	})
 public class UsersServlet extends HttpServlet{
@@ -26,15 +26,15 @@ public class UsersServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch(req.getServletPath()) {
-		case UrlUtils.USERS_EDIT_SELF:
+		case UrlUtils.USER_EDIT_SELF_PATH:
 			req.getRequestDispatcher(JspUtils.USERS_EDIT_SELF)
 			.forward(req, resp);
 			break;
-		case UrlUtils.USERS_NOTIFICATION_SETTINGS:
+		case UrlUtils.NOTIFICATION_SETTINGS_PATH:
 			req.getRequestDispatcher(JspUtils.USERS_NOTIFICATION_SETTINGS)
 			.forward(req, resp);
 			break;
-		case UrlUtils.USERS_CHANGE_PASSWORD:
+		case UrlUtils.CHANGE_PASSWORD_PATH:
 			req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD)
 				.forward(req, resp);
 			break;

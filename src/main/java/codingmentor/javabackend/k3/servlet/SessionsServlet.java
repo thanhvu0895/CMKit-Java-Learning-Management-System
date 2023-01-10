@@ -16,10 +16,10 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 
 @WebServlet(name = "authServlet", urlPatterns = { 
-	UrlUtils.SIGN_IN, 
-	UrlUtils.SIGN_OUT, 
-	"/enable_file_viewer",
-	"/disable_file_viewer" 
+	UrlUtils.LOGIN_PATH, 
+	UrlUtils.LOGOUT_PATH, 
+	UrlUtils.ENABLE_FILE_VIEWER_PATH,
+	UrlUtils.FILE_VIEWER_SETTINGS_PATH 
 })
 public class SessionsServlet extends HttpServlet {
 
@@ -33,34 +33,26 @@ public class SessionsServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch (req.getServletPath()) {
-		case UrlUtils.SIGN_IN:
+		case UrlUtils.LOGIN_PATH:
 			req.getRequestDispatcher(JspUtils.SESSIONS_NEW)
 				.forward(req, resp);
 			break;
-		case UrlUtils.SIGN_OUT:
+		case UrlUtils.LOGOUT_PATH:
 			processLogout(req, resp);
 			break;
-		case "/file_viewer_settings":
+		case UrlUtils.ENABLE_FILE_VIEWER_PATH:
 			req.getRequestDispatcher(JspUtils.SESSIONS_FILE_VIEWER_SETTINGS).forward(req, resp);
 			break;
 		default:
-			resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
+			resp.sendRedirect(req.getContextPath() + UrlUtils.LOGIN_PATH);
 		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch (req.getServletPath()) {
-		case UrlUtils.SIGN_IN:
+		case UrlUtils.LOGIN_PATH:
 			processLogin(req, resp);
-			break;
-		case "/enable_file_viewer":
-			req.getRequestDispatcher(JspUtils.SESSIONS_FILE_VIEWER_SETTINGS)
-				.forward(req, resp);
-			break;
-		case "/disable_file_viewer":
-			req.getRequestDispatcher(JspUtils.SESSIONS_FILE_VIEWER_SETTINGS)
-				.forward(req, resp);
 			break;
 		}
 	}
@@ -76,12 +68,12 @@ public class SessionsServlet extends HttpServlet {
 	private void processLogin(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
-		User loginDAO = new User(email, password);
+		User current_user = new User(email, password);
 
 		try {
-			if (loginDAOImpl.validate(loginDAO)) {
+			if (loginDAOImpl.validate(current_user)) {
 				HttpSession session = req.getSession();
-				session.setAttribute("current_user", loginDAOImpl.getFirstNameFromUser(loginDAO));
+				session.setAttribute("current_user", current_user);
 
 				/**
 				 * Test sending Welcome message to Home Comment out
@@ -91,7 +83,7 @@ public class SessionsServlet extends HttpServlet {
 				 */
 
 				session.setAttribute("notice",
-						"Logged in! Welcome, " + loginDAOImpl.getFirstNameFromUser(loginDAO) + "!");
+						"Logged in! Welcome, " + loginDAOImpl.getFirstNameFromUser(current_user) + "!");
 				resp.sendRedirect("./");
 			} else {
 				req.setAttribute("alert", "Invalid email or password, please try again.");
@@ -111,6 +103,6 @@ public class SessionsServlet extends HttpServlet {
 
 		// TODO: IMPROVE LOG OUT USING SESSION OR COOKIES TO DISPLAY MESSAGE
 		session.setAttribute("notice", "You are now logged out. Have a nice day!");
-		resp.sendRedirect(req.getContextPath() + UrlUtils.SIGN_IN);
+		resp.sendRedirect(req.getContextPath() + UrlUtils.LOGIN_PATH);
 	}
 }

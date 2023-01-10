@@ -12,7 +12,7 @@ import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 @WebServlet(urlPatterns = {
-	UrlUtils.KLASSES,
+	UrlUtils.KLASSES_PATH,
 	
 })
 public class KlassesServlet extends HttpServlet {
@@ -23,7 +23,7 @@ public class KlassesServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		switch(req.getServletPath()) {
-		case UrlUtils.KLASSES:
+		case UrlUtils.KLASSES_PATH:
 			req.getRequestDispatcher(JspUtils.KLASSES_INDEX)
 				.forward(req, resp);
 			break;

@@ -156,7 +156,6 @@ public class JspUtils {
 	public static final String USERS_NOTIFICATION_SETTINGS = "/WEB-INF/views/users/notification_settings.jsp";
 	public static final String USERS_SHOW_INVITE = "/WEB-INF/views/users/show_invite.jsp";
 	
-	
 	// SSH_KEYS
 	public static final String SSH_KEYS_INDEX  = "/WEB-INF/views/ssh_keys/index.jsp";
 	public static final String SSH_KEYS_NEW  = "/WEB-INF/views/ssh_keys/new.jsp";
@@ -181,8 +180,4 @@ public class JspUtils {
 	public static final String SUBMISSIONS_NEW_PROFESSOR = "/WEB-INF/views/submissions/new_professor.jsp";
 	public static final String SUBMISSIONS_RENDER_FILE = "/WEB-INF/views/submissions/render_file.jsp";
 	public static final String SUBMISSIONS_SHOW = "/WEB-INF/views/submissions/show.jsp";
-	
-	public static final String KLASS_DETAILS = "/WEB-INF/views/klasses_details.jsp";
-	public static final String SUBMISSIONS = "/WEB-INF/views/submissions.jsp";
-	public static final String FEEDBACK = "/WEB-INF/views/feedback.jsp";
 }
