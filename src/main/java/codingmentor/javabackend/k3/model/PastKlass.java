@@ -1,19 +1,19 @@
 package codingmentor.javabackend.k3.model;
 
-public class Course {
+public class PastKlass {
 	private String name;
 	private String code;
 	private String semester;
 	private int section;
-	private double progress;
+	private double grade;
 	
-	public Course(String name, String code, String semester, int section, double progress) {
+	public PastKlass(String name, String code, String semester, int section, double grade) {
 		super();
 		this.name = name;
 		this.code = code;
 		this.semester = semester;
 		this.section = section;
-		this.progress = progress;
+		this.grade = grade;
 	}
 	
 	public String getName() {
@@ -41,12 +41,12 @@ public class Course {
 		this.section = section;
 	}
 
-	public double getProgress() {
-		return progress;
+	public double getGrade() {
+		return grade;
 	}
 
-	public void setProgress(double progress) {
-		this.progress = progress;
+	public void setGrade(double grade) {
+		this.grade = grade;
 	}
 	
 	
