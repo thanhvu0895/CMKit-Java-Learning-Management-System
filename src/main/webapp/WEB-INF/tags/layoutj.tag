@@ -39,10 +39,24 @@
   	<c:when test="${not empty sessionScope.current_user}">
   	<div class="collapse navbar-collapse" id="top-navbar">
 		<ul class="nav navbar-nav">
-			<!-- IF CURRENT USER IS ADMIN -->
-			
+			<!-- IF CURRENT USER IS ADMIN OR DEPARTMENT PROFESSOR-->
+		  <c:if test = "${current_user.admin}">
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Departments <span class="caret"></span></a>
+				<ul class="dropdown-menu">
+				<!--  IF IS DEPARTMENT PROFESSOR -->
+				<!--  END IF IS DEPARTMENT PROFESSOR -->
+					<li role="separator" class="divider"></li>
+					<li><t:link_to path="${UrlUtils.DEPARTMENTS_PATH}">All Departments</t:link_to></li>				
+				</ul>
+			</li>
+		  </c:if>
 			<!-- END IF USER IS ADMIN -->
 			<li><t:link_to path="${UrlUtils.KLASSES_PATH}">My Classes</t:link_to></li>
+			  <c:if test = "${current_user.admin}">
+				<li><t:link_to path="${UrlUtils.USERS_PATH}">Users<span class="sr-only">(current)</span></t:link_to></li>
+			
+			  </c:if>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li class="dropdown">

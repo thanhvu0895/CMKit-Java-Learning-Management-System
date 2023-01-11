@@ -55,17 +55,6 @@ public class UrlUtils {
 	
 	public static final String ROOT_PATH = "";
 	
-
-	
-
-
-	
-	
-	
-
-	
-	
-	
 //	public static final String NOT_FOUND = "/404";
 //	public static final String INTERNAL_ERROR = "/500";
     public static final String ALL = "/*";	

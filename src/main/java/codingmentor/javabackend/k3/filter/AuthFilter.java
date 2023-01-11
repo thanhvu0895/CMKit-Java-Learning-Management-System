@@ -32,9 +32,16 @@ public class AuthFilter implements Filter{
         if (!(response instanceof HttpServletResponse)) {
             throw new ServletException("Can only process HttpServletResponse");
         }
-		
+        	
         HttpServletRequest req = (HttpServletRequest) request;
 	    HttpServletResponse resp = (HttpServletResponse) response;
+	    
+	    if (hasSlashEnd(req)) {
+	    	String path = req.getServletPath();
+	    	path = path.substring(0, path.length() - 1);
+	    	req.getRequestDispatcher(path).forward(req, resp);
+	    	return;
+	    }
 	    
 	    if (isInSession(req) && isLoginPage(req)) {
 			resp.sendRedirect("./");
@@ -71,4 +78,9 @@ public class AuthFilter implements Filter{
         String path = request.getRequestURI();
         return path.startsWith(request.getContextPath() + "/assets");
     }
+	
+	private boolean hasSlashEnd(HttpServletRequest request) {
+		String path = request.getServletPath();
+		return path.endsWith("/");
+	}
 }

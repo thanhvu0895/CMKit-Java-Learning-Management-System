@@ -6,8 +6,7 @@
 	<div class="page-header">
 		<h1> Log In </h1>
 	</div>
-	
-	<form action="./login" method="post">
+	<t:form_with url="${UrlUtils.LOGIN_PATH}">
 	 	<div class="form-group">
 			<label for="email">Email</label>
 			<input class="form-control" type="email" name="email" id="email" />
@@ -17,7 +16,8 @@
 			<input class="form-control" type="password" name="password" id="password" />
 		</div>
 		<input type="submit" name="commit" value="Log In" class="btn btn-primary" data-disable-with="Log In" />
-	</form>
+	</t:form_with>
 	<br><br>
-	<a class="btn btn-default" href="./request_password_reset">Forgot Password</a>
+	
+	<t:link_to path="${UrlUtils.SHOW_REQUEST_PASSWORD_RESET_PATH}" classBS="btn btn-default">Forgot Password</t:link_to>
 </t:layoutj>

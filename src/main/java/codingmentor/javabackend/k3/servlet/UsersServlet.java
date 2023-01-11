@@ -12,6 +12,7 @@ import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 @WebServlet(urlPatterns = {
+		UrlUtils.USERS_PATH,
 		UrlUtils.USER_EDIT_SELF_PATH,
 		UrlUtils.NOTIFICATION_SETTINGS_PATH,
 		UrlUtils.CHANGE_PASSWORD_PATH,
@@ -38,7 +39,7 @@ public class UsersServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD)
 				.forward(req, resp);
 			break;
-		case "/users":
+		case UrlUtils.USERS_PATH:
 			// LENGTH MAX IS 3
 			// if length is greater than 3 => 404
 			// If Path[2] != edit+admin || other valid paths, redirect to 404.
@@ -48,13 +49,22 @@ public class UsersServlet extends HttpServlet{
 			// 		If user ID does not exists, says user id is not found
 			
 			
-			String pathInfo = req.getPathInfo(); // /{value}/test
-			String[] pathParts = pathInfo.split("/");
+			String pathInfo = req.getPathInfo();
+			
+			if (pathInfo == null || pathInfo.equals("/")) { // path is users/
+				System.out.println("Path info is: " + pathInfo);
+				req.getRequestDispatcher(JspUtils.USERS_INDEX)
+				.forward(req, resp);
+				return;
+			}
+			String[] pathParts =  pathInfo.split("/");
 			int length = pathParts.length;
 			if (pathParts[2].equals("edit_admin")) {
 				resp.getWriter().format("Length is %d", length);
 			}
+			
 			int index = 0;
+			
 			for (String string : pathParts) {
 				System.out.println(string + (index++));
 			}
