@@ -1,5 +1,9 @@
 package codingmentor.javabackend.k3.Utils;
 
+/**
+ * @author Thanh Vu
+ *
+ */
 public class UrlUtils {
 
 	public static final String DEPARTMENTS_PATH = "/departments";
@@ -39,6 +43,8 @@ public class UrlUtils {
 	public static final String SHOW_REQUEST_PASSWORD_RESET_PATH = "/request_password_reset";
 	public static final String SHOW_USE_PASSWORD_RESET_PATH = "/use_password_reset";
 	public static final String NOTIFICATION_SETTINGS_PATH = "/users/notification_settings";
+	public static final String RESEND_USER_INVITE_PATH = "/users/:id/resend_invite";
+	public static final String USER_EDIT_ADMIN_PATH = "/users/:id/edit_admin";
 	
 	public static final String KLASSES_PATH = "/klasses";
 	public static final String NEW_KLASS_PATH = "/klasses/new";
@@ -55,9 +61,20 @@ public class UrlUtils {
 	
 	public static final String ROOT_PATH = "";
 	
+	
 //	public static final String NOT_FOUND = "/404";
 //	public static final String INTERNAL_ERROR = "/500";
     public static final String ALL = "/*";	
+    
+    
+   public static String hello() {
+	   return "Hello World";
+   }
+
+    public static String putIdInPath(String path, int id) {
+    	path = path.replaceFirst("\\:id", String.valueOf(id));
+    	return path;
+    }
 }
 
 

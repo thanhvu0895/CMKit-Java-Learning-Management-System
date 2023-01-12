@@ -1,5 +1,7 @@
 package codingmentor.javabackend.k3.service.Impl;
 
+import java.util.List;
+
 import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.repository.UserRepository;
 import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
@@ -39,6 +41,11 @@ public class UserServiceImpl implements UserService {
 	public User register(String email, String password, String firstName, String lastName) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<User> getUsers() {
+		return userRepository.getUsers();
 	}
 	
 	

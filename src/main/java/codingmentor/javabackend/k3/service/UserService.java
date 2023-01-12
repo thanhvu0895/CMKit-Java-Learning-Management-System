@@ -1,5 +1,7 @@
 package codingmentor.javabackend.k3.service;
 
+import java.util.List;
+
 import codingmentor.javabackend.k3.model.User;
 
 public interface UserService {
@@ -24,10 +26,18 @@ public interface UserService {
     /**
      * Sign up method to add new player to database if not existed
      *
-     * @param username player username
-     * @param password player password
-     * @param name     player name
-     * @return a Player instance if user input is valid and not duplicate or null
+     * @param email: user's email
+     * @param password user's password
+     * @param first_name user's first name
+     * @return last_name user's last name
      */
     User register(String email, String password, String firstName, String lastName);
+    
+    /**
+     * 
+     * @return list of users from database
+     */
+    
+    List<User> getUsers();
+    
 }

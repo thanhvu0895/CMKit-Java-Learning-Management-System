@@ -1,6 +1,7 @@
 package codingmentor.javabackend.k3.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
+import codingmentor.javabackend.k3.model.User;
+import codingmentor.javabackend.k3.service.UserService;
+import codingmentor.javabackend.k3.service.Impl.UserServiceImpl;
 
 @WebServlet(urlPatterns = {
 		UrlUtils.USERS_PATH,
@@ -19,10 +23,14 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 		"/users/*"
 	})
 public class UsersServlet extends HttpServlet{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8801001997853031448L;
+	private UserService userService = null;
+	
+	@Override
+	public void init() throws ServletException {
+	    super.init();
+	    userService = UserServiceImpl.getInstance();
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,25 +56,33 @@ public class UsersServlet extends HttpServlet{
 			// 		If user ID exists in db, save id in session then redirect to next edit_admin page
 			// 		If user ID does not exists, says user id is not found
 			
-			
+			System.out.println("req.getServletPath():  " + req.getServletPath());
 			String pathInfo = req.getPathInfo();
+			System.out.println("pathInfo: " +pathInfo);
 			
-			if (pathInfo == null || pathInfo.equals("/")) { // path is users/
-				System.out.println("Path info is: " + pathInfo);
+			if (pathInfo == null) { // path is /users
+				List<User> users = userService.getUsers();
+				req.setAttribute("users", users);
 				req.getRequestDispatcher(JspUtils.USERS_INDEX)
-				.forward(req, resp);
+					.forward(req, resp);
 				return;
 			}
+			
 			String[] pathParts =  pathInfo.split("/");
+			
 			int length = pathParts.length;
+			System.out.println("length: " + length);
+			 
 			if (pathParts[2].equals("edit_admin")) {
-				resp.getWriter().format("Length is %d", length);
+				
+				req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN)
+					.forward(req, resp);
 			}
 			
 			int index = 0;
 			
 			for (String string : pathParts) {
-				System.out.println(string + (index++));
+				System.out.println("PATH" + (index++) +": " + string);
 			}
 			break;
 		}

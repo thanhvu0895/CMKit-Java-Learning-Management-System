@@ -2,6 +2,8 @@ package codingmentor.javabackend.k3.repository.Impl;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import codingmentor.javabackend.k3.mapper.UserMapper;
 import codingmentor.javabackend.k3.model.User;
@@ -37,7 +39,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     	return executeQuerySingle(connection -> {
 
     		// Query to find user by email
-    		final String query = "SELECT email, admin, first_name, password_digest FROM users WHERE email = ?;";
+    		final String query = "SELECT * FROM users WHERE email = ?;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, email);
             ResultSet results = statement.executeQuery();
@@ -77,5 +79,26 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 ResultSet results = statement.executeQuery();
 			 return (results.next() && results.getString("email").equals(email)) ? new User() : null;
 		}) != null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @return 
+	 */
+
+	@Override
+	public List<User> getUsers() {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM users";
+			PreparedStatement statement = connection.prepareStatement(query);
+			
+			ResultSet results = statement.executeQuery();
+			List<User> usersList = new ArrayList<>();
+			while(results.next()) {
+				usersList.add(mapper.map(results));
+			}
+			return usersList;
+		});
 	}
 }

@@ -1,5 +1,7 @@
 package codingmentor.javabackend.k3.repository;
 
+import java.util.List;
+
 import codingmentor.javabackend.k3.model.User;
 
 public interface UserRepository {
@@ -14,16 +16,31 @@ public interface UserRepository {
 	/**
      * Check if user exists by email 
      *
-     * @param username player username
-     * @return true if player existed or false
+     * @param email: users's email
+     * @return true if user existed or false
      */
     boolean existedByEmail(String email);
     
 	/**
-	 * Find player by username
+	 * Find user by email
 	 *
-	 * @param username player username
-	 * @return a player instance if found or null
+	 * @param email: user's email
+	 * @return a user instance if found or null
 	 */
     User findUserByEmail(String email);
+    
+	/**
+	 * Find user by email
+	 *
+	 * @param id: user's id
+	 * @return a user instance if found or null
+	 */
+    User findUserById(int id);
+    
+    /**
+	 * Find list of users
+	 *
+	 * @return a list of all users if found or null
+	 */
+    List<User> getUsers();
 }
