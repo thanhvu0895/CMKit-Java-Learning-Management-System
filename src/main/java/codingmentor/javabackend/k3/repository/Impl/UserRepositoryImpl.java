@@ -157,4 +157,17 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 return statement.executeUpdate();
 		}) != 0;
 	}
+	
+	@Override
+	public boolean updatePreferredNameById(String preferred_name, int id) {
+		// TODO Auto-generated method stub
+		return executeUpdate(connection -> {
+			 final String query = "UPDATE users SET preferred_name = ? WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, preferred_name);
+			 statement.setInt(2, id);
+			 System.out.println(statement);
+			 return statement.executeUpdate();
+		}) != 0;
+	}
 }

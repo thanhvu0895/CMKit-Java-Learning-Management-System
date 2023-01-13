@@ -57,4 +57,6 @@ public interface UserRepository {
    	 * @return boolean if update successful or else false
    	 */
     boolean deleteUser(int id);
+    
+    boolean updatePreferredNameById(String preferred_name, int id);
 }

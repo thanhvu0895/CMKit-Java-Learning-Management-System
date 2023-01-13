@@ -60,5 +60,7 @@ public interface UserService {
 	 * @return true if successful deletion and false if error
 	 */
 	boolean deleteUser(int id);
+	
+	boolean updatePreferredNameById(String preferred_name, int id);
     
 }
