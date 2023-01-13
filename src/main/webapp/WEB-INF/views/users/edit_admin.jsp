@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <t:layoutj pageTitle="Edit User">
-<t:form_with action="${UrlUtils.USERS_PATH}/${user.id}">
+<t:form_with url="${UrlUtils.USERS_PATH}/${user.id}">
   <div class="form-group">
     <label for="user_First Name:">First name:</label>
     <input class="form-control" type="text" value="${user.first_name}" name="user[first_name]" id="user_first_name" />

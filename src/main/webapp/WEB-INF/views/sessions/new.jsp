@@ -6,7 +6,7 @@
 	<div class="page-header">
 		<h1> Log In </h1>
 	</div>
-	<t:form_with action="${UrlUtils.LOGIN_PATH}">
+	<t:form_with url="${UrlUtils.LOGIN_PATH}">
 	 	<div class="form-group">
 			<label for="email">Email</label>
 			<input class="form-control" type="email" name="email" id="email" />
