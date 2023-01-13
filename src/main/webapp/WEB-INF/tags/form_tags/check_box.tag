@@ -8,12 +8,12 @@
 	<c:when test="${not empty model}">
 		<c:choose>
 			<c:when test="${value}">
-				<input name="${model}[${check_box}]" type="hidden" value="0" />
+				<input name="${model}[${check_box}]" type="hidden" value="0" /> <%-- SENDING TO database --%>
 				<input type="checkbox" value="1" checked="checked" name="${model}[${check_box}]" id="${model}_${check_box}" />
 			</c:when>
 			<c:otherwise>	
-				<input name="${model}[${check_box}]" type="hidden" value="1" />
-				<input type="checkbox" value="0" name="${model}[${check_box}]" id="${model}_${check_box}" />
+				<input name="${model}[${check_box}]" type="hidden" value="0" />
+				<input type="checkbox" value="1" name="${model}[${check_box}]" id="${model}_${check_box}" />
 			</c:otherwise>
 		</c:choose>
 	</c:when>
@@ -23,8 +23,9 @@
 				<input type="checkbox" value="1" checked="checked" name="${check_box}" id="${check_box}" />
 			</c:when>
 			<c:otherwise>	
-				<input name="${check_box}" type="hidden" value="1" />
-				<input type="checkbox" value="0" name="${check_box}" id="${check_box}" />
+				<input name="${check_box}" type="hidden" value="0" />
+				<input type="checkbox" value="1" name="${check_box}" id="${check_box}" />
 			</c:otherwise>
 	</c:otherwise>
 </c:choose>
+

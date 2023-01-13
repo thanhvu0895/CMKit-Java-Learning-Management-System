@@ -24,6 +24,9 @@ public class User implements Serializable {
     
     public String getFull_name() {
     	full_name = first_name + " " + last_name;
+    	if (!preferred_name.isEmpty()) {
+    		full_name = first_name + " (" + preferred_name + ") " + last_name;
+    	}
 		return full_name;
 	}
     

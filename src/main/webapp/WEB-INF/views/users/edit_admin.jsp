@@ -6,6 +6,7 @@
 
 <t:layoutj pageTitle="Edit User">
 <t:form_with url="${UrlUtils.USERS_PATH}/${user.id}">
+
   <div class="form-group">
   	<f:label label="First Name:" model="user"></f:label>
   	<f:text_field text_field="first_name" classBS="form-control" model="user" value="${user.first_name}"></f:text_field>
