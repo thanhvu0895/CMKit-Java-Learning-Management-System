@@ -30,6 +30,7 @@ public class User implements Serializable {
 		return full_name;
 	}
     
+
 	public int getId() {
 		return id;
 	}
@@ -77,7 +78,7 @@ public class User implements Serializable {
     // fluent style api
 	public User() {
 	}
-
+	
     public User id(int id) {
         this.id = id;
         return this;

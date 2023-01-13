@@ -115,7 +115,6 @@ public class UsersServlet extends HttpServlet{
 			
 			// UPDATE PREFERRED NAME
 			if("Change Password".equals(req.getParameter("commit"))) {
-				
 			}
 			
 			//POST all users METHOD
