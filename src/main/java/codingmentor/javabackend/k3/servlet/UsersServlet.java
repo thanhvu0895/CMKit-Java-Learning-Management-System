@@ -97,7 +97,8 @@ public class UsersServlet extends HttpServlet{
 			String pathInfo = req.getPathInfo();
 			String[] pathParts =  pathInfo.split("/");
 			int length = pathParts.length;
-			if (length == 2 && StringUtils.isInteger(pathParts[1])) {
+			
+			if (length == 2 && StringUtils.isInteger(pathParts[1])) { // path is /users/:id
 				int userid = Integer.parseInt(pathParts[1]);
 				String first_name = req.getParameter("user[first_name]");
 				String last_name = req.getParameter("user[last_name]");

@@ -30,26 +30,6 @@ public class User implements Serializable {
 		return full_name;
 	}
     
-    
-	public User() {	
-    }
-    
-	public User(int id, String email, boolean admin, String first_name, String last_name, String preferred_name, String password_digest, String reset_digest,
-			boolean set_up, boolean disabled) {
-		this.id = id;
-		this.email = email;
-		this.admin = admin;
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.preferred_name = preferred_name;
-		this.password_digest = password_digest;
-		this.set_up = set_up;
-		this.reset_digest = reset_digest;
-		this.disabled = disabled;
-	}
-
-	
-	
 	public int getId() {
 		return id;
 	}
@@ -95,6 +75,8 @@ public class User implements Serializable {
 	}
 
     // fluent style api
+	public User() {
+	}
 
     public User id(int id) {
         this.id = id;
@@ -146,9 +128,6 @@ public class User implements Serializable {
         this.disabled= disabled;
         return this;
     }
-    
-    
-
 }
 
 
