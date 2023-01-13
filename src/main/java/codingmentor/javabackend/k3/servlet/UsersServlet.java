@@ -97,7 +97,19 @@ public class UsersServlet extends HttpServlet{
 		String pathInfo = req.getPathInfo();
 		String[] pathParts =  pathInfo.split("/");
 		int length = pathParts.length;
-		if (req.getServletPath().equals(UrlUtils.USERS_PATH) && length == 2 && StringUtils.isInteger(pathParts[1])) {	// path is /users/:id/edit_admin
+
+		if (req.getServletPath().equals(UrlUtils.USERS_PATH) && length == 2 && StringUtils.isInteger(pathParts[1])) {	// path is /users/:id
+			//DELETE METHOD
+			if("delete".equals(req.getParameter("method"))) {
+				int userid = Integer.parseInt(pathParts[1]);
+				userService.deleteUser(userid);
+				HttpSession session = req.getSession(false);
+				session.setAttribute("notice", "User was successfully destroyed.");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+				return;
+			}
+			
+			//POST METHOD
 			int userid = Integer.parseInt(pathParts[1]);
 			String first_name = req.getParameter("user[first_name]");
 			String last_name = req.getParameter("user[last_name]");
@@ -121,21 +133,5 @@ public class UsersServlet extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 			return;
 		}	
-	}
-	
-	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String pathInfo = req.getPathInfo();
-		String[] pathParts =  pathInfo.split("/");
-		int length = pathParts.length;
-		System.out.println(req.getServletPath());
-		if (req.getServletPath().equals(UrlUtils.USERS_PATH) && length == 2 && StringUtils.isInteger(pathParts[1])) {	// path is /users/:id
-			int userid = Integer.parseInt(pathParts[1]);
-			userService.deleteUser(userid);
-			HttpSession session = req.getSession(false);
-			session.setAttribute("notice", "User was successfully destroyed.");
-			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
-			return;
-		}
 	}
 }

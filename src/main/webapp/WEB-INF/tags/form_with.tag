@@ -1,12 +1,14 @@
 <%@ tag trimDirectiveWhitespaces="true" language="java" pageEncoding="ISO-8859-1"%>
 <%@ attribute name="url" required="true"%>
 <%@ attribute name="id" required="false"%>
+<%@ attribute name="confirm" required="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ tag import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 
-<c:set var="url" value="${pageContext.request.contextPath}${url}"/> 												<!-- ADD CONTEXT PATH TO url URL  -->
+<c:set var="url" value="${pageContext.request.contextPath}${url}"/> <!-- ADD CONTEXT PATH TO url URL  -->
 <c:set var="url" value ="${UrlUtils.putIdInPath(pageContext.getAttribute('url'), pageContext.getAttribute('id'))}"/> <!-- If url has :id pattern, it will replace with value of id -->
-<form action="${url}" method="post" accept-charset="UTF-8" data-remote="true" method="post">
+
+<form action="${url}" method="post" accept-charset="UTF-8" data-remote="true">
 	<jsp:doBody/>
 </form>
 

@@ -66,9 +66,8 @@
 									class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li><t:link_to path="${UrlUtils.USER_EDIT_SELF_PATH}">
-											<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-						Account Settings
-					</t:link_to></li>
+									<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+						Account Settings</t:link_to></li>
 									<li><t:link_to
 											path="${UrlUtils.NOTIFICATION_SETTINGS_PATH}">
 											<span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
