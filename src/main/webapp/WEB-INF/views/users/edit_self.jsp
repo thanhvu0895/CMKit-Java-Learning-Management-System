@@ -5,7 +5,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:layoutj pageTitle="Settings">
-	<form action="/users/98" accept-charset="UTF-8" method="post">
+	<form action="cmkit/users/98" accept-charset="UTF-8" method="post">
 		<div class="form-group">
 			<label for="user_Preferred Name / Nickname (optional):">Preferred name / nickname (optional):</label>
 			<input class="form-control" type="text" value="Thanh" name="user[preferred_name]" id="user_preferred_name" />

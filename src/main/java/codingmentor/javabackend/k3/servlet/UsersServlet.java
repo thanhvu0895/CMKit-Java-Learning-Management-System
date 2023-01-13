@@ -109,7 +109,16 @@ public class UsersServlet extends HttpServlet{
 				return;
 			}
 			
-			//POST METHOD
+			// UPDATE PREFERRED NAME
+			if("Save".equals(req.getParameter("commit"))) {
+			}
+			
+			// UPDATE PREFERRED NAME
+			if("Change Password".equals(req.getParameter("commit"))) {
+				
+			}
+			
+			//POST all users METHOD
 			int userid = Integer.parseInt(pathParts[1]);
 			String first_name = req.getParameter("user[first_name]");
 			String last_name = req.getParameter("user[last_name]");
