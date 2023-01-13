@@ -58,4 +58,9 @@ public class UserServiceImpl implements UserService {
 			boolean disabled, int id) {
 		return userRepository.updateUser(first_name, last_name, preferred_name, admin, disabled, id);
 	}
+
+	@Override
+	public boolean deleteUser(int id) {
+		return userRepository.deleteUser(id);
+	}
 }

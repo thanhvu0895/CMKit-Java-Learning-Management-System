@@ -58,9 +58,9 @@ public class UsersServlet extends HttpServlet{
 			// 		If user ID exists in db, save id in session then redirect to next edit_admin page
 			// 		If user ID does not exists, says user id is not found
 			
-//			System.out.println("req.getServletPath():  " + req.getServletPath());
+			System.out.println("req.getServletPath():  " + req.getServletPath());
 			String pathInfo = req.getPathInfo();
-//			System.out.println("pathInfo: " +pathInfo);
+			System.out.println("pathInfo: " + pathInfo);
 			
 			// IS GET REQUEST /user/
 			if (pathInfo == null || pathInfo.equals("/") ) {
@@ -72,8 +72,10 @@ public class UsersServlet extends HttpServlet{
 			}
 			
 			String[] pathParts =  pathInfo.split("/");
-			
 			int length = pathParts.length;
+			System.out.println("length: " + length);
+			
+			System.out.println(pathParts[1]);
 			
 			// IS GET REQUEST LONG /users/:id/*
 			if (length == 3 && StringUtils.isInteger(pathParts[1])) {
@@ -92,38 +94,48 @@ public class UsersServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		switch(req.getServletPath()) {
-		case UrlUtils.USERS_PATH:
-			String pathInfo = req.getPathInfo();
-			String[] pathParts =  pathInfo.split("/");
-			int length = pathParts.length;
+		String pathInfo = req.getPathInfo();
+		String[] pathParts =  pathInfo.split("/");
+		int length = pathParts.length;
+		if (req.getServletPath().equals(UrlUtils.USERS_PATH) && length == 2 && StringUtils.isInteger(pathParts[1])) {	// path is /users/:id/edit_admin
+			int userid = Integer.parseInt(pathParts[1]);
+			String first_name = req.getParameter("user[first_name]");
+			String last_name = req.getParameter("user[last_name]");
 			
-			if (length == 2 && StringUtils.isInteger(pathParts[1])) { // path is /users/:id
-				int userid = Integer.parseInt(pathParts[1]);
-				String first_name = req.getParameter("user[first_name]");
-				String last_name = req.getParameter("user[last_name]");
-				if (first_name == "" || last_name == "")  {
-					req.setAttribute("alert", "First name and last name must not be blank");
-					req.setAttribute("user", userService.findUserById(userid));
-					req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN)
-						.forward(req, resp);
-				}
-				
-				String preferred_name = req.getParameter("user[preferred_name]");
-				
-				boolean admin = (req.getParameterValues("user[admin]").length == 2);
-				boolean disabled = (req.getParameterValues("user[disabled]").length == 2);
-				
-				boolean success = userService.updateUser(first_name, last_name, preferred_name, admin, disabled, userid);
-
-				if (success) {
-					HttpSession session = req.getSession(false);
-					session.setAttribute("notice", "User was successfully updated.");
-					resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
-					break;
-				}  
+			if (first_name == "" || last_name == "")  {
+				req.setAttribute("alert", "First name and last name must not be blank");
+				req.setAttribute("user", userService.findUserById(userid));
+				req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN)
+					.forward(req, resp);
 			}
-			break;		
+			
+			String preferred_name = req.getParameter("user[preferred_name]");
+			
+			boolean admin = (req.getParameterValues("user[admin]").length == 2);
+			boolean disabled = (req.getParameterValues("user[disabled]").length == 2);
+
+			userService.updateUser(first_name, last_name, preferred_name, admin, disabled, userid);
+
+			HttpSession session = req.getSession(false);
+			session.setAttribute("notice", "User was successfully updated.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+			return;
+		}	
+	}
+	
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String pathInfo = req.getPathInfo();
+		String[] pathParts =  pathInfo.split("/");
+		int length = pathParts.length;
+		System.out.println(req.getServletPath());
+		if (req.getServletPath().equals(UrlUtils.USERS_PATH) && length == 2 && StringUtils.isInteger(pathParts[1])) {	// path is /users/:id
+			int userid = Integer.parseInt(pathParts[1]);
+			userService.deleteUser(userid);
+			HttpSession session = req.getSession(false);
+			session.setAttribute("notice", "User was successfully destroyed.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+			return;
 		}
 	}
 }

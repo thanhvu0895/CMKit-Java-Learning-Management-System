@@ -107,9 +107,8 @@
 		<c:if test="${not empty sessionScope.notice}">
 			<div class="alert alert-success">${sessionScope.notice}</div>
 		</c:if>
-		<%
-		session.removeAttribute("notice");
-		%>
+		<c:remove var="notice"/>
+
 		<c:if test="${not empty notice}">
 			<div class="alert alert-success">${notice}</div>
 		</c:if>

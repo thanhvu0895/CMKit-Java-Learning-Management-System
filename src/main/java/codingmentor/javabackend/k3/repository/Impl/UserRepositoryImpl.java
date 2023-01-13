@@ -43,7 +43,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, email);
             ResultSet results = statement.executeQuery();
-            
+            System.out.println(statement);
             return (results.next()) ? mapper.map(results) : null;
     	});
     }
@@ -65,7 +65,8 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			statement.setBoolean(2, user.isAdmin());
 			statement.setString(3, user.getFirst_name());
 			statement.setString(4, user.getLast_name());
-			statement.setString(4, user.getPassword_digest());
+			statement.setString(5, user.getPassword_digest());
+			System.out.println(statement);
 			return statement.executeUpdate();
 		}) != 0;
 	}
@@ -84,6 +85,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, email);
 			 ResultSet results = statement.executeQuery();
+			 System.out.println(statement);
 			 return (results.next() && results.getString("email").equals(email)) ? new User() : null;
 		}) != null;
 	}
@@ -99,8 +101,8 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		return executeQuery(connection -> {
 			final String query = "SELECT * FROM users";
 			PreparedStatement statement = connection.prepareStatement(query);
-			
 			ResultSet results = statement.executeQuery();
+			System.out.println(statement);
 			List<User> usersList = new ArrayList<>();
 			while(results.next()) {
 				usersList.add(mapper.map(results));
@@ -124,7 +126,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet results = statement.executeQuery();
-            
+            System.out.println(statement);
             return (results.next()) ? mapper.map(results) : null;
     	});
 	}
@@ -140,6 +142,17 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setBoolean(4, admin);
 			 statement.setBoolean(5, disabled);
 			 statement.setInt(6, id);
+			 System.out.println(statement);
+			 return statement.executeUpdate();
+		}) != 0;
+	}
+
+	@Override
+	public boolean deleteUser(int id) {
+		return executeUpdate(connection -> {
+			 final String query = "DELETE FROM users WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, id);
 			 System.out.println(statement);
 			 return statement.executeUpdate();
 		}) != 0;

@@ -48,12 +48,17 @@ public interface UserService {
 	User findUserById(int id);
 	
 	/**
-	 * 
-	 * @param 
+	 *  
 	 * @return true if successful and false if error
 	 */
 	
 	boolean updateUser(String first_name, String last_name, String preferred_name, boolean admin, boolean disabled, int id);
 	
+	/**
+	 * 
+	 * 
+	 * @return true if successful deletion and false if error
+	 */
+	boolean deleteUser(int id);
     
 }
