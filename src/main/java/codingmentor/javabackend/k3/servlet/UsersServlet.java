@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import codingmentor.javabackend.k3.Utils.JspUtils;
+import codingmentor.javabackend.k3.Utils.StringUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.service.UserService;
@@ -20,7 +22,7 @@ import codingmentor.javabackend.k3.service.Impl.UserServiceImpl;
 		UrlUtils.USER_EDIT_SELF_PATH,
 		UrlUtils.NOTIFICATION_SETTINGS_PATH,
 		UrlUtils.CHANGE_PASSWORD_PATH,
-		"/users/*"
+		UrlUtils.USERS_ALL_PATH
 	})
 public class UsersServlet extends HttpServlet{
 	private static final long serialVersionUID = -8801001997853031448L;
@@ -60,7 +62,8 @@ public class UsersServlet extends HttpServlet{
 			String pathInfo = req.getPathInfo();
 			System.out.println("pathInfo: " +pathInfo);
 			
-			if (pathInfo == null) { // path is /users
+			// IS GET REQUEST /user/
+			if (pathInfo == null || pathInfo.equals("/") ) {
 				List<User> users = userService.getUsers();
 				req.setAttribute("users", users);
 				req.getRequestDispatcher(JspUtils.USERS_INDEX)
@@ -71,20 +74,47 @@ public class UsersServlet extends HttpServlet{
 			String[] pathParts =  pathInfo.split("/");
 			
 			int length = pathParts.length;
-			System.out.println("length: " + length);
-			 
-			if (pathParts[2].equals("edit_admin")) {
+			
+			// IS GET REQUEST LONG /users/:id/*
+			if (length == 3 && StringUtils.isInteger(pathParts[1])) {
+				switch (pathParts[2]) {
+				case "edit_admin":
+					int id = Integer.parseInt(pathParts[1]);
+					req.setAttribute("user", userService.findUserById(id));
+					
+					req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN)
+						.forward(req, resp);
+					break;
+				}
+			}
+		}
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		switch(req.getServletPath()) {
+		case UrlUtils.USERS_PATH:
+			String pathInfo = req.getPathInfo();
+			String[] pathParts =  pathInfo.split("/");
+			int length = pathParts.length;
+			if (length == 2 && StringUtils.isInteger(pathParts[1])) {
+				String first_name = req.getParameter("user[first_name]");
+				String last_name = req.getParameter("user[last_name]");
+				String preferred_name = req.getParameter("user[preferred_name]");
+				boolean admin = "1".equals(req.getParameter("user[admin]"));
+				boolean disabled = "1".equals(req.getParameter("user[disabled]"));
+				int id = Integer.parseInt(pathParts[1]);
 				
-				req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN)
-					.forward(req, resp);
+				boolean success = userService.updateUser(first_name, last_name, preferred_name, admin, disabled, id);
+				
+				if (success) {
+					HttpSession session = req.getSession(false);
+					session.setAttribute("notice", "User was successfully updated.");
+					resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+					break;
+				}
 			}
-			
-			int index = 0;
-			
-			for (String string : pathParts) {
-				System.out.println("PATH" + (index++) +": " + string);
-			}
-			break;
+			break;		
 		}
 	}
 }

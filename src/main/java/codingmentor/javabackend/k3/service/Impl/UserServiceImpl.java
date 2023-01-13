@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
 		}
 		return userService;
 	}
-
+	
 	@Override
 	public User validateLogin(String email, String password) {
 		User user = userRepository.findUserByEmail(email);
@@ -47,16 +47,15 @@ public class UserServiceImpl implements UserService {
 	public List<User> getUsers() {
 		return userRepository.getUsers();
 	}
-	
-	
-    /**
-     * Validate user input
-     *
-     * @param email: user's email
-     * @param password user's password
-     * @param first_name user's  name
-     * @return true if valid or false
-     */
-	
-	
+
+	@Override
+	public User findUserById(int id) {
+		return userRepository.findUserById(id);
+	}
+
+	@Override
+	public boolean updateUser(String first_name, String last_name, String preferred_name, boolean admin,
+			boolean disabled, int id) {
+		return userRepository.updateUser(first_name, last_name, preferred_name, admin, disabled, id);
+	}
 }

@@ -9,12 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.service.UserService;
 import codingmentor.javabackend.k3.service.Impl.UserServiceImpl;
 
-@WebServlet("/link")
+@WebServlet(urlPatterns = {
+		"/link",
+		"/form"
+	})
 public class LinkToServlet extends HttpServlet{
 	private static final long serialVersionUID = -8801001997853031448L;
 	private UserService userService = null;
@@ -27,10 +30,19 @@ public class LinkToServlet extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<User> users = userService.getUsers();
-		req.setAttribute("users", users);
-		req.getRequestDispatcher("/link_to.jsp")
-		.forward(req, resp);
-		return;
+		switch(req.getServletPath()) {
+		case "/link":
+			List<User> users = userService.getUsers();
+			req.setAttribute("users", users);
+			req.getRequestDispatcher("/link_to.jsp")
+				.forward(req, resp);
+			return;
+		case "/form":
+			User user = userService.findUserById(1);
+			req.setAttribute("user", user);
+			req.getRequestDispatcher("/form.jsp")
+			.forward(req, resp);
+			return;
+		}
 	}
 }

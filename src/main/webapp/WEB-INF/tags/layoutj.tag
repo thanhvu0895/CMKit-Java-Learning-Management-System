@@ -91,7 +91,7 @@
 				<c:otherwise>
 					<div class="collapse navbar-collapse" id="top-navbar-nouser">
 						<ul class="nav navbar-nav navbar-right">
-							<li><t:link_to path="${UrlUtils.LOGIN_PATH}"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>Log In</t:link_to></li>
+							<li><t:link_to path="${UrlUtils.LOGIN_PATH}"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Log In</t:link_to></li>
 						</ul>
 					</div>
 				</c:otherwise>

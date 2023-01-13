@@ -40,4 +40,20 @@ public interface UserService {
     
     List<User> getUsers();
     
+	/**
+	 * 
+	 * @param email user's email
+	 * @return an user if found or null
+	 */
+	User findUserById(int id);
+	
+	/**
+	 * 
+	 * @param 
+	 * @return true if successful and false if error
+	 */
+	
+	boolean updateUser(String first_name, String last_name, String preferred_name, boolean admin, boolean disabled, int id);
+	
+    
 }

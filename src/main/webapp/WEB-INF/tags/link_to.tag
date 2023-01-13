@@ -11,7 +11,7 @@
 <c:choose>
 	<c:when test="${not empty classBS && not empty method && not empty id && empty confirm}"><a class="${classBS}" rel="nofollow" data-method="${method}" href="${path}"><jsp:doBody/></a></c:when>
 	<c:when test="${not empty confirm}"><a data-confirm="${confirm}" class="${classBS}" rel="nofollow" data-method="${method}" href="${path}"><jsp:doBody/></a></c:when>
-	<c:when test="${not empty classBS && not empty id}"><a class="${classBS}" href="${path}"><jsp:doBody/></a></c:when> 
+	<c:when test="${not empty classBS}"><a class="${classBS}" href="${path}"><jsp:doBody/></a></c:when>
 	<c:when test="${not empty method}"><a href="${path}" rel="nofollow" data-method="${method}" class="${classBS}"><jsp:doBody/></a></c:when>
 	<c:otherwise><a href="${path}"><jsp:doBody/></a></c:otherwise>
 </c:choose>

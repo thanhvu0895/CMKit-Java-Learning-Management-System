@@ -47,10 +47,17 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
             return (results.next()) ? mapper.map(results) : null;
     	});
     }
+    
+    /**
+     * {@inheritDoc}
+     *
+     * @param User: user object
+     * returns nothing
+     */
 
 	@Override
-	public void insert(User user) {
-		executeUpdate(connection -> {
+	public boolean insert(User user) {
+		return executeUpdate(connection -> {
 			final String query = "INSERT INTO users(email, admin, first_name, last_name, set_up, password_digest)"
 					+ "VALUES (?, ?, ?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -60,7 +67,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			statement.setString(4, user.getLast_name());
 			statement.setString(4, user.getPassword_digest());
 			return statement.executeUpdate();
-		});
+		}) != 0;
 	}
 
 	
@@ -84,7 +91,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @return 
+	 * @return list of all users
 	 */
 
 	@Override
@@ -100,5 +107,41 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			}
 			return usersList;
 		});
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @param id: user's id
+	 * @return 
+	 */
+	@Override
+	public User findUserById(int id) {
+		return executeQuerySingle(connection -> {
+
+    		// Query to find user by email
+    		final String query = "SELECT * FROM users WHERE id = ?;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet results = statement.executeQuery();
+            
+            return (results.next()) ? mapper.map(results) : null;
+    	});
+	}
+
+	@Override
+	public boolean updateUser(String first_name, String last_name, String preferred_name, boolean admin, boolean disabled, int id) {
+		return executeUpdate(connection -> {
+			 final String query = "UPDATE users SET first_name = ?, last_name = ?, preferred_name = ?, admin = ?, disabled = ? WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, first_name);
+			 statement.setString(2, last_name);
+			 statement.setString(3, preferred_name);
+			 statement.setBoolean(4, admin);
+			 statement.setBoolean(5, disabled);
+			 statement.setInt(6, id);
+			 System.out.println(statement);
+			 return statement.executeUpdate();
+		}) != 0;
 	}
 }

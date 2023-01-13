@@ -9,9 +9,9 @@ public interface UserRepository {
 	 * Insert data of user to database
 	 *
 	 * @param user data will insert to database
-	 * @return true if insert successful or false
+	 * true if successful or false
 	 */
-	void insert(User user);
+	boolean insert(User user);
     
 	/**
      * Check if user exists by email 
@@ -43,4 +43,13 @@ public interface UserRepository {
 	 * @return a list of all users if found or null
 	 */
     List<User> getUsers();
+    
+    /**
+	 * Update users
+	 *
+	 * @return boolean if update successful or else false
+	 */
+    boolean updateUser(String first_name, String last_name, String preferred_name, boolean admin, boolean disabled, int id);
+    
+    
 }

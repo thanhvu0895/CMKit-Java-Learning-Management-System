@@ -7,5 +7,7 @@
 
 <c:set var ="action" value="${pageContext.request.contextPath}${action}"/>
 <form action="${action}" method="post" accept-charset="UTF-8" data-remote="true" method="post">
-<jsp:doBody/>
+	<jsp:doBody/>
 </form>
+
+
