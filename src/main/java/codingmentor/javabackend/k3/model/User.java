@@ -29,7 +29,6 @@ public class User implements Serializable {
     	}
 		return full_name;
 	}
-    
 
 	public int getId() {
 		return id;

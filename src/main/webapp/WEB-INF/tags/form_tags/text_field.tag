@@ -6,7 +6,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:choose>
-
 <c:when test="${not empty model}">
 	<input class="${classBS}" type="text" value="${value}" name="${model}[${text_field}]" id="${model}_${text_field}"/>
 </c:when>

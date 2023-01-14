@@ -96,9 +96,9 @@ public class UsersServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String pathInfo = req.getPathInfo();
 		String[] pathParts =  pathInfo.split("/");
-		int length = pathParts.length;
+		int pathInfoLength = pathParts.length;
 
-		if (req.getServletPath().equals(UrlUtils.USERS_PATH) && length == 2 && StringUtils.isInteger(pathParts[1])) {	// path is /users/:id
+		if (req.getServletPath().equals(UrlUtils.USERS_PATH) && pathInfoLength == 2 && StringUtils.isInteger(pathParts[1])) {	// path is /users/:id
 			//DELETE METHOD
 			if("delete".equals(req.getParameter("method"))) {
 				int userid = Integer.parseInt(pathParts[1]);
@@ -111,10 +111,18 @@ public class UsersServlet extends HttpServlet{
 			
 			// UPDATE PREFERRED NAME
 			if("Save".equals(req.getParameter("commit"))) {
+				int userid = Integer.parseInt(pathParts[1]);
+				String preferred_name = req.getParameter("user[preferred_name]");
+				
+				userService.updatePreferredNameById(preferred_name, userid);
+				req.getSession(false).setAttribute("notice", "User was successfully updated.");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+				return;
 			}
 			
-			// UPDATE PREFERRED NAME
+			// CHANGE PASSWORD
 			if("Change Password".equals(req.getParameter("commit"))) {
+				
 			}
 			
 			//POST all users METHOD
