@@ -20,15 +20,24 @@ public class User implements Serializable {
     private Date reset_expires;
     private boolean set_up;
     private boolean disabled;
-    private String full_name;
     
     public String getFull_name() {
-    	full_name = first_name + " " + last_name;
+    	String full_name = first_name + " " + last_name;
     	if (!preferred_name.isEmpty()) {
     		full_name = first_name + " (" + preferred_name + ") " + last_name;
     	}
 		return full_name;
 	}
+    
+    
+	public String getPreferred_first_name() {
+		if (!this.set_up) {
+    		return this.email;
+    	} 
+    	return (!preferred_name.isEmpty()) ? this.preferred_name : this.first_name;
+	}
+
+
 
 	public int getId() {
 		return id;

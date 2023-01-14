@@ -47,7 +47,7 @@
 										</c:choose>
 									</td>
 									<td>
-									  ${user.full_name}
+									  ${user.getFull_name()}
 									</td>
 									<td><t:link_to path="${UrlUtils.USER_EDIT_ADMIN_PATH}" id="${user.id}" classBS="btn btn-primary">Edit</t:link_to></td>
 									<td><t:link_to path="${UrlUtils.USERS_PATH}/:id" id="${user.id}" confirm="Are you sure you want to delete this user?"  classBS="btn btn-danger">Delete</t:link_to></td>

@@ -115,6 +115,7 @@ public class UsersServlet extends HttpServlet{
 				String preferred_name = req.getParameter("user[preferred_name]");
 				
 				userService.updatePreferredNameById(preferred_name, userid);
+				req.getSession(false).setAttribute("current_user", userService.findUserById(userid));
 				req.getSession(false).setAttribute("notice", "User was successfully updated.");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 				return;
@@ -146,6 +147,7 @@ public class UsersServlet extends HttpServlet{
 
 			HttpSession session = req.getSession(false);
 			session.setAttribute("notice", "User was successfully updated.");
+			
 			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 			return;
 		}	

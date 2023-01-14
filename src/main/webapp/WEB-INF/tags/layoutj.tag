@@ -62,7 +62,7 @@
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">${current_user.getFirst_name()} <span
+								aria-expanded="false">${current_user.preferred_first_name} <span
 									class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li><t:link_to path="${UrlUtils.USER_EDIT_SELF_PATH}">
