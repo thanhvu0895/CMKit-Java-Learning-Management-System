@@ -127,7 +127,11 @@ public class User implements Serializable {
 		return disabled;
 	}
 
-    // fluent style api
+    public void setPassword_digest(String password_digest) {
+		this.password_digest = password_digest;
+	}
+
+	// fluent style api
 	public User() {
 	}
 	

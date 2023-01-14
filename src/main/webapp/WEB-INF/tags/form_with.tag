@@ -1,7 +1,6 @@
 <%@ tag trimDirectiveWhitespaces="true" language="java" pageEncoding="ISO-8859-1"%>
 <%@ attribute name="url" required="true"%>
 <%@ attribute name="id" required="false"%>
-<%@ attribute name="confirm" required="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ tag import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 
