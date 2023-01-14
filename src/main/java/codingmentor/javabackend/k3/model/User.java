@@ -20,24 +20,68 @@ public class User implements Serializable {
     private Date reset_expires;
     private boolean set_up;
     private boolean disabled;
-    
-    public String getFull_name() {
-    	String full_name = first_name + " " + last_name;
-    	if (!preferred_name.isEmpty()) {
-    		full_name = first_name + " (" + preferred_name + ") " + last_name;
-    	}
-		return full_name;
-	}
-    
-    
+     
+    //#----- Name methods ------ #
+    /**
+     * @return Preferred first name of user
+     */
 	public String getPreferred_first_name() {
 		if (!this.set_up) {
     		return this.email;
     	} 
     	return (!preferred_name.isEmpty()) ? this.preferred_name : this.first_name;
 	}
+	
+    /**
+     * @return Preferred first name and last name of user
+     */
+	public String getFull_preferred_name() {
+		if (!this.set_up) {
+    		return this.email;
+    	} 
+    	return getPreferred_first_name() + " " + last_name;
+	}
+	
+	/**
+	 * @return  Official first/last of user
+	 */
+    public String getFull_real_name() {
+    	if (!this.set_up) {
+    		return this.email;
+    	} 
+    	return first_name + " " + last_name;
+	}
+	
+	
+	/**
+	 * @return  Official first/last name plus nickname
+	 */
+    public String getFull_name() {
+    	if (!this.set_up) {
+    		return this.email;
+    	} 
+    	String full_name = first_name + " " + last_name;
+    	if (!preferred_name.isEmpty()) {
+    		full_name = first_name + " (" + preferred_name + ") " + last_name;
+    	}
+		return full_name;
+	}
+	
+	/**
+	 * @return Official name in reverse
+	 */
 
+	public String getFull_real_name_reverse() {
+		if (!this.set_up) {
+    		return this.email;
+    	} 
+		
+		return last_name+ ", " + first_name ;
+	}
 
+	public String downcaseEmail() {
+		return email.toLowerCase();
+	}
 
 	public int getId() {
 		return id;
