@@ -94,12 +94,43 @@ public class UsersServlet extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		switch (req.getServletPath()) {
+		case UrlUtils.CHANGE_PASSWORD_PATH:
+			User current_user = (User) req.getSession(false).getAttribute("current_user");
+			String old_password = req.getParameter("old_password");
+			String new_password = req.getParameter("new_password");
+			String new_password_confirmation = req.getParameter("new_password_confirmation");
+			
+			if (!current_user.getPassword_digest().equals(old_password)) {
+				req.setAttribute("alert", "Incorrect old password");
+				req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD)
+					.forward(req, resp);
+				return;
+			}
+			
+			if (!new_password.equals(new_password_confirmation)) {
+				req.setAttribute("alert", "New password and confirm password must match.");
+				req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD)
+					.forward(req, resp);
+				return;
+			}
+			
+			userService.updatePassword(new_password_confirmation, current_user);
+			HttpSession session = req.getSession();
+			session.setAttribute("notice", "Password changed.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH);	
+			return;
+		}
+		
 		String pathInfo = req.getPathInfo();
+		if (pathInfo == null || pathInfo.equals("/") ) {
+			return; // Do nothing yet since we have not needed this.
+		}
 		String[] pathParts =  pathInfo.split("/");
 		int pathInfoLength = pathParts.length;
-
-		if (req.getServletPath().equals(UrlUtils.USERS_PATH) && pathInfoLength == 2 && StringUtils.isInteger(pathParts[1])) {	// path is /users/:id
-			//DELETE METHOD
+		if (req.getServletPath().equals(UrlUtils.USERS_PATH) && pathInfoLength == 2 && StringUtils.isInteger(pathParts[1])) {	
+			// DELETE users/:id 
 			if("delete".equals(req.getParameter("method"))) {
 				int userid = Integer.parseInt(pathParts[1]);
 				userService.deleteUser(userid);
@@ -109,24 +140,21 @@ public class UsersServlet extends HttpServlet{
 				return;
 			}
 			
-			// UPDATE PREFERRED NAME
+			// POST users/:id
 			if("Save".equals(req.getParameter("commit"))) {
 				int userid = Integer.parseInt(pathParts[1]);
 				String preferred_name = req.getParameter("user[preferred_name]");
 				
 				userService.updatePreferredNameById(preferred_name, userid);
+				//TODO: INVESTIGATE SAVING USER IN SESSION WITHOUT STORING PASSWORD (MAYBE TOKEN)
 				req.getSession(false).setAttribute("current_user", userService.findUserById(userid));
 				req.getSession(false).setAttribute("notice", "User was successfully updated.");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 				return;
 			}
 			
-			// CHANGE PASSWORD
-			if("Change Password".equals(req.getParameter("commit"))) {
-				
-			}
 			
-			//POST all users METHOD
+			//POST /users/:id
 			int userid = Integer.parseInt(pathParts[1]);
 			String first_name = req.getParameter("user[first_name]");
 			String last_name = req.getParameter("user[last_name]");
@@ -147,7 +175,6 @@ public class UsersServlet extends HttpServlet{
 
 			HttpSession session = req.getSession(false);
 			session.setAttribute("notice", "User was successfully updated.");
-			
 			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 			return;
 		}	

@@ -76,7 +76,7 @@ public class SessionsServlet extends HttpServlet {
 			HttpSession session = req.getSession();
 			session.setAttribute("current_user", current_user);
 			session.setAttribute("notice",
-					"Logged in! Welcome, " + current_user.getFirst_name() + "!");
+					"Logged in! Welcome, " + current_user.getPreferred_first_name() + "!");
 			
 			resp.sendRedirect("./");
 		} else {

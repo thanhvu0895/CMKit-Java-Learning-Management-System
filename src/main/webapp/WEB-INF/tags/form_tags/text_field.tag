@@ -13,3 +13,17 @@
 	<input class="${classBS}" type="text" name="${text_field}"  value="${value}">
 </c:otherwise>
 </c:choose>
+
+<%--
+ 
+/**
+ *	Constructor with text_field and classBS required 
+ * @param: text_field: String that represents 
+ * @param: classBS: String that represents Bootstrap styling 
+ * @return: this form accept url with :id in path, then replace :id to url  
+ * 
+/ 
+<t:link_to path="${}" id="${}"> 
+ 	LINK BODY GOES HERE
+</t:link_to>
+ --%> 

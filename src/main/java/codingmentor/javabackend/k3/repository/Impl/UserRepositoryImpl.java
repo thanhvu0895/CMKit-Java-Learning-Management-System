@@ -170,4 +170,16 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 return statement.executeUpdate();
 		}) != 0;
 	}
+
+	@Override
+	public boolean updatePassword(String new_password, User user) {
+		return executeUpdate(connection -> {
+			 final String query = "UPDATE users SET password_digest = ? WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, new_password);
+			 statement.setInt(2, user.getId());
+			 System.out.println(statement);
+			 return statement.executeUpdate();
+		}) != 0;
+	}
 }
