@@ -82,7 +82,7 @@ public class UsersServlet extends HttpServlet{
 		switch (req.getServletPath()) {
 		case UrlUtils.CHANGE_PASSWORD_PATH:
 			processChangePassword(req, resp);
-			resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH);
+			resp.sendRedirect("./");
 			break;
 		case UrlUtils.USERS_PATH:
 			String pathInfo = req.getPathInfo();
@@ -137,6 +137,8 @@ public class UsersServlet extends HttpServlet{
 	 */
 	private void processChangePassword(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		User current_user = (User) req.getSession(false).getAttribute("current_user");
+		int userid = current_user.getId();
+		current_user = userService.findUserById(userid);
 		String old_password = req.getParameter("old_password");
 		String new_password = req.getParameter("new_password");
 		String new_password_confirmation = req.getParameter("new_password_confirmation");
@@ -172,7 +174,7 @@ public class UsersServlet extends HttpServlet{
 	private void updateUserPreferredName(HttpServletRequest req, HttpServletResponse resp, int userid) throws IOException, ServletException {
 		String preferred_name = req.getParameter("user[preferred_name]");
 		userService.updatePreferredNameById(preferred_name, userid);
-		//TODO: INVESTIGATE SAVING USER IN SESSION WITHOUT STORING PASSWORD (MAYBE TOKEN)
+
 		req.getSession(false).setAttribute("current_user", userService.findUserById(userid));
 		req.getSession(false).setAttribute("notice", "User was successfully updated.");
 		resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);

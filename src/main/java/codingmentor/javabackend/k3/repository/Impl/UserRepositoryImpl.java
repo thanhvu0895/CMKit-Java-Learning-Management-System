@@ -39,7 +39,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     	return executeQuerySingle(connection -> {
 
     		// Query to find user by email
-    		final String query = "SELECT * FROM users WHERE email = ?;";
+    		final String query = "SELECT * FROM users WHERE email = ? LIMIT 1;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, email);
             ResultSet results = statement.executeQuery();
@@ -81,7 +81,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean existedByEmail(String email) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT email FROM users WHERE email = ?;";
+			 final String query = "SELECT email FROM users WHERE email = ?  LIMIT 1;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, email);
 			 ResultSet results = statement.executeQuery();
@@ -122,7 +122,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		return executeQuerySingle(connection -> {
 
     		// Query to find user by email
-    		final String query = "SELECT * FROM users WHERE id = ?;";
+    		final String query = "SELECT * FROM users WHERE id = ?  LIMIT 1;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet results = statement.executeQuery();

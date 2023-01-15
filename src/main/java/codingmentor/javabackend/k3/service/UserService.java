@@ -6,6 +6,7 @@ import codingmentor.javabackend.k3.model.User;
 
 public interface UserService {
 
+	
 	/**
 	 * Sign in method to get a user from database by username and password
 	 *

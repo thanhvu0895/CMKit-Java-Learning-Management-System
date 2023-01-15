@@ -72,14 +72,22 @@ public class SessionsServlet extends HttpServlet {
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
 		User current_user = userService.validateLogin(email, password);
-		if (current_user != null) {
-			HttpSession session = req.getSession();
-			session.setAttribute("current_user", current_user);
-			session.setAttribute("notice",
+		
+		if (current_user != null && current_user.isDisabled()) {
+			//Re-render page with error
+			req.setAttribute("alert", "Your account has been disabled. Please contact your system administrator.");
+			req.getRequestDispatcher(JspUtils.SESSIONS_NEW).forward(req, resp);
+		}
+		
+		// not null and password correct, log in
+		if (current_user != null && current_user.isSet_up() && !current_user.isDisabled()) {
+	    	current_user.setPassword_digest("[FILTERED]");
+	    	req.getSession().setAttribute("current_user", current_user);
+	    	req.getSession().setAttribute("notice",
 					"Logged in! Welcome, " + current_user.getPreferred_first_name() + "!");
-			
-			resp.sendRedirect("./");
+			resp.sendRedirect(req.getContextPath());
 		} else {
+			//Re-render page with error
 			req.setAttribute("alert", "Invalid email or password, please try again.");
 			req.getRequestDispatcher(JspUtils.SESSIONS_NEW).forward(req, resp);
 		}

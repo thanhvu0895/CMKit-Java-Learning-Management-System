@@ -13,10 +13,21 @@ import javax.servlet.http.HttpServletResponse;
 
 
 import codingmentor.javabackend.k3.Utils.UrlUtils;
+import codingmentor.javabackend.k3.model.User;
+import codingmentor.javabackend.k3.service.UserService;
+import codingmentor.javabackend.k3.service.Impl.UserServiceImpl;
 
 @WebFilter(urlPatterns = {UrlUtils.ALL})
 public class AuthFilter implements Filter{
-   /*
+   
+	private UserService userService = null;
+	
+	public AuthFilter() {    
+	    userService = UserServiceImpl.getInstance();
+	}
+	
+	
+	/*
     process before the request get in servlet
     chain.doFilter(request,response)
     process response from servlet
