@@ -68,4 +68,10 @@ public class UserServiceImpl implements UserService {
 	public boolean updatePreferredNameById(String preferred_name, int id) {
 		return userRepository.updatePreferredNameById(preferred_name, id);
 	}
+
+	@Override
+	public boolean updatePassword(String new_password, User user) {
+		return userRepository.updatePassword(new_password, user);
+	}
+	
 }

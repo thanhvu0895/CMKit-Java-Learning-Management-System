@@ -52,11 +52,23 @@ public interface UserRepository {
     boolean updateUser(String first_name, String last_name, String preferred_name, boolean admin, boolean disabled, int id);
     
     /**
-   	 * Update users
+   	 * Delete users
    	 * @param: id: userId
    	 * @return boolean if update successful or else false
    	 */
     boolean deleteUser(int id);
     
+    /**
+   	 * Update user's preferred name by id 
+   	 * @param: id: userId
+   	 * @return boolean if update successful or else false
+   	 */
     boolean updatePreferredNameById(String preferred_name, int id);
+    
+    /**
+   	 * Update user's password 
+   	 * @param: User user
+   	 * @return boolean if update successful or else false
+   	 */
+     boolean updatePassword(String new_password, User user);
 }

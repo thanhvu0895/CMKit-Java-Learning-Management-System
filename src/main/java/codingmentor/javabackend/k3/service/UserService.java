@@ -62,5 +62,6 @@ public interface UserService {
 	boolean deleteUser(int id);
 	
 	boolean updatePreferredNameById(String preferred_name, int id);
-    
+	
+	boolean updatePassword(String new_password, User user);
 }
