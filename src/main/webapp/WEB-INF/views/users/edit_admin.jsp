@@ -5,7 +5,7 @@
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 
 <t:layoutj pageTitle="Edit User">
-<t:form_with url="${UrlUtils.USERS_PATH}/${user.id}" method="edit_admin" }>
+<t:form_with url="${UrlUtils.USERS_PATH}/${user.id}" method="edit_admin">
 
   <div class="form-group">
   	<f:label label="First Name:" model="user"></f:label>
