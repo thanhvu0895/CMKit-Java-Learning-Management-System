@@ -84,6 +84,15 @@ public class SessionsServlet extends HttpServlet {
 			req.getRequestDispatcher(JspUtils.SESSIONS_NEW).forward(req, resp);
 		}
 	}
+	
+	/***
+	 * Implement processLogout method Date: 1/1/2023
+	 * 
+	 * @param req
+	 * @param resp
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 
 	private void processLogout(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		HttpSession session = req.getSession(false);

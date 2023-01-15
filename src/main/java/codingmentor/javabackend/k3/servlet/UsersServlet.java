@@ -49,20 +49,8 @@ public class UsersServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD)
 				.forward(req, resp);
 			break;
-		case UrlUtils.USERS_PATH:
-			// LENGTH MAX IS 3
-			// if length is greater than 3 => 404
-			// If Path[2] != edit+admin || other valid paths, redirect to 404.
-			// IF PATH[2] = edit_admin, get pathParts[1]
-			// 	if pathParts[1] is not a number, sends 404
-			// 		If user ID exists in db, save id in session then redirect to next edit_admin page
-			// 		If user ID does not exists, says user id is not found
-			
-			System.out.println("req.getServletPath():  " + req.getServletPath());
+		case UrlUtils.USERS_PATH:			
 			String pathInfo = req.getPathInfo();
-			System.out.println("pathInfo: " + pathInfo);
-			
-			// IS GET REQUEST /user/
 			if (pathInfo == null || pathInfo.equals("/") ) {
 				List<User> users = userService.getUsers();
 				req.setAttribute("users", users);
@@ -70,13 +58,9 @@ public class UsersServlet extends HttpServlet{
 					.forward(req, resp);
 				return;
 			}
-			
+	
 			String[] pathParts =  pathInfo.split("/");
 			int length = pathParts.length;
-			System.out.println("length: " + length);
-			
-			System.out.println(pathParts[1]);
-			
 			// IS GET REQUEST LONG /users/:id/*
 			if (length == 3 && StringUtils.isInteger(pathParts[1])) {
 				switch (pathParts[2]) {
@@ -97,86 +81,130 @@ public class UsersServlet extends HttpServlet{
 		
 		switch (req.getServletPath()) {
 		case UrlUtils.CHANGE_PASSWORD_PATH:
-			User current_user = (User) req.getSession(false).getAttribute("current_user");
-			String old_password = req.getParameter("old_password");
-			String new_password = req.getParameter("new_password");
-			String new_password_confirmation = req.getParameter("new_password_confirmation");
-			
-			if (!current_user.getPassword_digest().equals(old_password)) {
-				req.setAttribute("alert", "Incorrect old password");
-				req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD)
-					.forward(req, resp);
-				return;
+			processChangePassword(req, resp);
+			resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH);
+			break;
+		case UrlUtils.USERS_PATH:
+			String pathInfo = req.getPathInfo();
+
+			if (pathInfo == null || pathInfo.equals("/") ) { // AVOID pathInfo.spilit error
+				return; // TODO: RETURN 404
 			}
+
+			String[] pathParts =  pathInfo.split("/");
+			int pathInfoLength = pathParts.length;
 			
-			if (!new_password.equals(new_password_confirmation)) {
-				req.setAttribute("alert", "New password and confirm password must match.");
-				req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD)
-					.forward(req, resp);
-				return;
-			}
-			
-			userService.updatePassword(new_password_confirmation, current_user);
-			HttpSession session = req.getSession();
-			session.setAttribute("notice", "Password changed.");
-			resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH);	
+			if (pathInfoLength == 2 && StringUtils.isInteger(pathParts[1])) {
+				int userid = Integer.parseInt(pathParts[1]);
+				switch (req.getParameter("method")) {
+				case "delete":
+					processDeleteUser(req, resp, userid);
+					break;
+				case "update_preferred_name":
+					updateUserPreferredName(req, resp, userid);
+					break;
+				case "edit_admin":
+					processEditAdmin(req, resp, userid);
+					return;
+				}	
+			}		
+		}
+	}
+	
+
+	/***
+	 * Implement processDeletePassword method Date: 1/14/2023
+	 * 
+	 * @param req
+	 * @param resp
+	 * @param userid user's id
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	private void processDeleteUser(HttpServletRequest req, HttpServletResponse resp, int userid) throws IOException, ServletException {
+		userService.deleteUser(userid);
+		req.getSession(false).setAttribute("notice", "User was successfully deleted.");
+		resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+	}
+
+	/***
+	 * Implement processChangePassword method Date: 1/14/2023
+	 * 
+	 * @param req
+	 * @param resp
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	private void processChangePassword(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		User current_user = (User) req.getSession(false).getAttribute("current_user");
+		String old_password = req.getParameter("old_password");
+		String new_password = req.getParameter("new_password");
+		String new_password_confirmation = req.getParameter("new_password_confirmation");
+		
+		if (!current_user.getPassword_digest().equals(old_password)) {
+			req.setAttribute("alert", "Incorrect old password");
+			req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD)
+				.forward(req, resp);
 			return;
 		}
 		
-		String pathInfo = req.getPathInfo();
-		if (pathInfo == null || pathInfo.equals("/") ) {
-			return; // Do nothing yet since we have not needed this.
-		}
-		String[] pathParts =  pathInfo.split("/");
-		int pathInfoLength = pathParts.length;
-		if (req.getServletPath().equals(UrlUtils.USERS_PATH) && pathInfoLength == 2 && StringUtils.isInteger(pathParts[1])) {	
-			// DELETE users/:id 
-			if("delete".equals(req.getParameter("method"))) {
-				int userid = Integer.parseInt(pathParts[1]);
-				userService.deleteUser(userid);
-				HttpSession session = req.getSession(false);
-				session.setAttribute("notice", "User was successfully destroyed.");
-				resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
-				return;
-			}
-			
-			// POST users/:id
-			if("Save".equals(req.getParameter("commit"))) {
-				int userid = Integer.parseInt(pathParts[1]);
-				String preferred_name = req.getParameter("user[preferred_name]");
-				
-				userService.updatePreferredNameById(preferred_name, userid);
-				//TODO: INVESTIGATE SAVING USER IN SESSION WITHOUT STORING PASSWORD (MAYBE TOKEN)
-				req.getSession(false).setAttribute("current_user", userService.findUserById(userid));
-				req.getSession(false).setAttribute("notice", "User was successfully updated.");
-				resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
-				return;
-			}
-			
-			
-			//POST /users/:id
-			int userid = Integer.parseInt(pathParts[1]);
-			String first_name = req.getParameter("user[first_name]");
-			String last_name = req.getParameter("user[last_name]");
-			
-			if (first_name == "" || last_name == "")  {
-				req.setAttribute("alert", "First name and last name must not be blank");
-				req.setAttribute("user", userService.findUserById(userid));
-				req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN)
-					.forward(req, resp);
-			}
-			
-			String preferred_name = req.getParameter("user[preferred_name]");
-			
-			boolean admin = (req.getParameterValues("user[admin]").length == 2);
-			boolean disabled = (req.getParameterValues("user[disabled]").length == 2);
-
-			userService.updateUser(first_name, last_name, preferred_name, admin, disabled, userid);
-
-			HttpSession session = req.getSession(false);
-			session.setAttribute("notice", "User was successfully updated.");
-			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+		if (!new_password.equals(new_password_confirmation)) {
+			req.setAttribute("alert", "New password and confirm password must match.");
+			req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD)
+				.forward(req, resp);
 			return;
-		}	
+		}
+		
+		userService.updatePassword(new_password_confirmation, current_user);
+		HttpSession session = req.getSession();
+		session.setAttribute("notice", "Password changed.");
+	}
+	
+	/***
+	 * Implement updateUserPreferredName method Date: 1/14/2023
+	 * 
+	 * @param req
+	 * @param resp
+	 * @param userid user'id
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	private void updateUserPreferredName(HttpServletRequest req, HttpServletResponse resp, int userid) throws IOException, ServletException {
+		String preferred_name = req.getParameter("user[preferred_name]");
+		userService.updatePreferredNameById(preferred_name, userid);
+		//TODO: INVESTIGATE SAVING USER IN SESSION WITHOUT STORING PASSWORD (MAYBE TOKEN)
+		req.getSession(false).setAttribute("current_user", userService.findUserById(userid));
+		req.getSession(false).setAttribute("notice", "User was successfully updated.");
+		resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+	}
+	
+	/***
+	 * Implement processEditAdmin method Date: 1/14/2023
+	 * 
+	 * @param req
+	 * @param resp
+	 * @param userid user'id
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	private void processEditAdmin(HttpServletRequest req, HttpServletResponse resp, int userid) throws IOException, ServletException {
+		String first_name = req.getParameter("user[first_name]");
+		String last_name = req.getParameter("user[last_name]");
+		
+		if (first_name == "" || last_name == "")  {
+			req.setAttribute("alert", "First name and last name must not be blank");
+			req.setAttribute("user", userService.findUserById(userid));
+			req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN)
+				.forward(req, resp);
+		}
+		
+		String preferred_name = req.getParameter("user[preferred_name]");
+		
+		boolean admin = (req.getParameterValues("user[admin]").length == 2);
+		boolean disabled = (req.getParameterValues("user[disabled]").length == 2);
+
+		userService.updateUser(first_name, last_name, preferred_name, admin, disabled, userid);
+		req.getSession(false).setAttribute("notice", "User was successfully updated.");
+		resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 	}
 }
