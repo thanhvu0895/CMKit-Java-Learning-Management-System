@@ -85,7 +85,7 @@ public class SessionsServlet extends HttpServlet {
 	    	req.getSession().setAttribute("current_user", current_user);
 	    	req.getSession().setAttribute("notice",
 					"Logged in! Welcome, " + current_user.getPreferred_first_name() + "!");
-			resp.sendRedirect(req.getContextPath());
+			resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH + "/");
 		} else {
 			//Re-render page with error
 			req.setAttribute("alert", "Invalid email or password, please try again.");

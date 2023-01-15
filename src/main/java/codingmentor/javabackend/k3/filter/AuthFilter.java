@@ -14,18 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.User;
-import codingmentor.javabackend.k3.service.UserService;
-import codingmentor.javabackend.k3.service.Impl.UserServiceImpl;
 
 @WebFilter(urlPatterns = {UrlUtils.ALL})
 public class AuthFilter implements Filter{
-   
-	private UserService userService = null;
-	
-	public AuthFilter() {    
-	    userService = UserServiceImpl.getInstance();
-	}
-	
 	
 	/*
     process before the request get in servlet
@@ -54,10 +45,11 @@ public class AuthFilter implements Filter{
 	    	return;
 	    }
 	    
-	    if (isInSession(req) && isLoginPage(req)) {
-			resp.sendRedirect("./");
+	    if (isInSession(req) && isLoginPage(req) || isUnauthorized(req)) {
+	        resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
+	    
 	    
 		if (isInSession(req) || isLoginPage(req) || isResourceRequest(req)) {
 			if (!isResourceRequest(req)) { // Prevent restricted pages from being cached.
@@ -70,12 +62,12 @@ public class AuthFilter implements Filter{
 		} else {
 			// If not at home page nor logged in, send to /login
 			resp.sendRedirect(req.getContextPath() + UrlUtils.LOGIN_PATH);
-			
 			// we return here so the original servlet is not processed
 			return;
 		}
 	}	
 	
+
 	private boolean isLoginPage(HttpServletRequest request) { // if url = /login
         String path = request.getServletPath();
         return path.startsWith(UrlUtils.LOGIN_PATH) || path.startsWith(UrlUtils.SHOW_REQUEST_PASSWORD_RESET_PATH);
@@ -93,5 +85,11 @@ public class AuthFilter implements Filter{
 	private boolean hasSlashEnd(HttpServletRequest request) {
 		String path = request.getServletPath();
 		return path.endsWith("/");
+	}
+	
+	private boolean isUnauthorized(HttpServletRequest request) {
+		User current_user = (User) request.getSession(false).getAttribute("current_user");
+		String path = request.getServletPath();
+		return  (current_user != null && !current_user.isAdmin() && path.startsWith(UrlUtils.USERS_PATH));
 	}
 }

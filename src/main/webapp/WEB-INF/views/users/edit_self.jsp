@@ -6,7 +6,7 @@
 <%@taglib prefix="f" tagdir="/WEB-INF/tags/form_tags" %>
 
 <t:layoutj pageTitle="Settings">
-	<t:form_with url="${UrlUtils.USERS_PATH}/:id" id="${current_user.id}" method="update_preferred_name"> 
+	<t:form_with url="${UrlUtils.USER_EDIT_SELF_PATH}" id="${current_user.id}" method="update_preferred_name"> 
 	  <div class="form-group">
 	  	<f:label model="user" label="Preferred name / nickname (optional):"></f:label>
 	  	<f:text_field model="user" value="${current_user.preferred_name}" text_field="preferred_name" classBS="form-control"></f:text_field>

@@ -82,7 +82,12 @@ public class UsersServlet extends HttpServlet{
 		switch (req.getServletPath()) {
 		case UrlUtils.CHANGE_PASSWORD_PATH:
 			processChangePassword(req, resp);
-			resp.sendRedirect("./");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH + "/");
+			break;
+		case UrlUtils.USER_EDIT_SELF_PATH:
+			User current_user = (User) req.getSession(false).getAttribute("current_user");
+			int current_user_id = current_user.getId();
+			updateUserPreferredName(req, resp, current_user_id);
 			break;
 		case UrlUtils.USERS_PATH:
 			String pathInfo = req.getPathInfo();
@@ -99,9 +104,6 @@ public class UsersServlet extends HttpServlet{
 				switch (req.getParameter("method")) {
 				case "delete":
 					processDeleteUser(req, resp, userid);
-					break;
-				case "update_preferred_name":
-					updateUserPreferredName(req, resp, userid);
 					break;
 				case "edit_admin":
 					processEditAdmin(req, resp, userid);
@@ -174,10 +176,16 @@ public class UsersServlet extends HttpServlet{
 	private void updateUserPreferredName(HttpServletRequest req, HttpServletResponse resp, int userid) throws IOException, ServletException {
 		String preferred_name = req.getParameter("user[preferred_name]");
 		userService.updatePreferredNameById(preferred_name, userid);
-
-		req.getSession(false).setAttribute("current_user", userService.findUserById(userid));
-		req.getSession(false).setAttribute("notice", "User was successfully updated.");
-		resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+		User current_user = userService.findUserById(userid);
+		current_user.setPassword_digest("[FILTERED]");
+		req.getSession(false).setAttribute("current_user", current_user);
+		if (current_user.isAdmin()) {
+			req.getSession(false).setAttribute("notice", "User was successfully updated.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+		} else {
+			req.getSession(false).setAttribute("notice", "Your settings have been successfully updated.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH + "/");
+		}
 	}
 	
 	/***
