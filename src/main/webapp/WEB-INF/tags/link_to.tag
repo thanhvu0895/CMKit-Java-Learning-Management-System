@@ -33,7 +33,6 @@
 		<a href="${path}"><jsp:doBody /></a>
 	</c:otherwise>
 </c:choose>
-
 <%-- 
 /**
  *	Constructor with path and id used at the same time 

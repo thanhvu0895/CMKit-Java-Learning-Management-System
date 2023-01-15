@@ -1,5 +1,6 @@
 <%@ tag trimDirectiveWhitespaces="true" language="java" pageEncoding="ISO-8859-1"%>
 <%@ attribute name="url" required="true"%>
+<%@ attribute name="method" required="false"%>
 <%@ attribute name="id" required="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ tag import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
@@ -8,7 +9,10 @@
 <c:set var="url" value ="${UrlUtils.putIdInPath(pageContext.getAttribute('url'), pageContext.getAttribute('id'))}"/> <!-- If url has :id pattern, it will replace with value of id -->
 
 <form action="${url}" method="post" accept-charset="UTF-8" data-remote="true">
-	<jsp:doBody/>
+  <c:if test ="${not empty method}">
+	<input type="hidden" name="method" value="${method}"/>
+  </c:if>
+<jsp:doBody/>
 </form>
 
 <%-- 
