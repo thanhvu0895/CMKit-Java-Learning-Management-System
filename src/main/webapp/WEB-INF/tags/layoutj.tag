@@ -114,6 +114,8 @@
 		<c:if test="${not empty alert}">
 			<div class="alert alert-danger">${alert}</div>
 		</c:if>
+		<c:remove var="alert"/>
+
 		<!-- END Notice and Alert-->
 
 		<jsp:doBody />

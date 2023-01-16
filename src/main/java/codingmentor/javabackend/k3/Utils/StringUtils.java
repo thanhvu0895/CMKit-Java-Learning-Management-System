@@ -31,9 +31,7 @@ public class StringUtils {
 	public static boolean isValidRequest(String str) {
 		if (str == null || str.equals("/")) {
 			return true;
-	} 
-		
-		
+		} 
 		return false;
 	}
 	

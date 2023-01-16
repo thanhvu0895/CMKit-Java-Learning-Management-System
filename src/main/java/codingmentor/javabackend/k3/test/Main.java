@@ -7,7 +7,6 @@ public class Main {
 	public static void main(String[] args) {
 		
 		String password = RandomUtils.unique64();
-    	
     	PBKDF2Hasher hasher = new PBKDF2Hasher();
     	String hashedPass = hasher.hash(password.toCharArray());
     	System.out.println(hashedPass);

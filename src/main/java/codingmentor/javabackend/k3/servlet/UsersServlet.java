@@ -1,6 +1,7 @@
 package codingmentor.javabackend.k3.servlet;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import codingmentor.javabackend.k3.Utils.JspUtils;
+import codingmentor.javabackend.k3.Utils.RandomUtils;
 import codingmentor.javabackend.k3.Utils.StringUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.User;
@@ -50,7 +52,7 @@ public class UsersServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD)
 				.forward(req, resp);
 			break;
-		case UrlUtils.USERS_PATH:			
+		case UrlUtils.USERS_PATH:
 			String pathInfo = req.getPathInfo();
 			if (pathInfo == null || pathInfo.equals("/") ) {
 				List<User> users = userRepository.getUsers();
@@ -91,7 +93,26 @@ public class UsersServlet extends HttpServlet{
 			updateUserPreferredName(req, resp, current_user_id);
 			break;
 		case UrlUtils.CREATE_USER_INVITE_PATH:
-			System.out.println("Creating user 2");
+			String token = RandomUtils.unique64();
+			String email = req.getParameter("email");
+			boolean admin = (req.getParameterValues("admin").length == 2);
+			
+			if (userRepository.findUserByEmail(email) != null) {
+				req.getSession().setAttribute("alert", "User not invited: Email has already been taken");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+				return;
+			}
+			
+			userRepository.createUser(email, admin);
+			int new_user_id = userRepository.findUserByEmail(email).getId();
+			try {
+				userRepository.updateResetDigest(new_user_id, RandomUtils.SHA256Base64(token));
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			req.getSession(false).setAttribute("notice", "User invited");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 			break;
 		case UrlUtils.USERS_PATH:
 			String pathInfo = req.getPathInfo();

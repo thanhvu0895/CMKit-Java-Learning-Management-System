@@ -29,6 +29,4 @@ public class UserServiceImpl implements UserService {
 		
 		return user.getPassword_digest().equals(password) ? user : null;
 	}
-
-	
 }

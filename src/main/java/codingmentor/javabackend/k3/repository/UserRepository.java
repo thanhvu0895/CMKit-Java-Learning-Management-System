@@ -11,7 +11,7 @@ public interface UserRepository {
 	 * @param user data will insert to database
 	 * true if successful or false
 	 */
-	boolean createUser(String email, boolean admin, String password_digest);
+	boolean createUser(String email, boolean admin);
     
 	/**
      * Check if user exists by email 
@@ -73,10 +73,17 @@ public interface UserRepository {
      boolean updatePassword(String new_password, User user);
      
      
-     /**
-    	 * Update user's password 
-    	 * @param: User user
-    	 * @return boolean if update successful or else false
-    	 */
+ 	/**
+	 * Update user's password 
+	 * @param: User user
+	 * @return boolean if update successful or else false
+	 */
       boolean sendInvite(String new_password, User user);
+      
+  	/**
+  	 * Update user's password 
+  	 * @param: User user
+  	 * @return boolean if update successful or else false
+  	 */
+     boolean updateResetDigest(int userid, String reset_digest);
 }

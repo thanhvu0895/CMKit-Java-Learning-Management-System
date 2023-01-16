@@ -12,6 +12,5 @@ public interface UserService {
 	 * @return an user if found or null
 	 */
 	User validateLogin(String email, String password);
-	
 
 }
