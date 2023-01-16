@@ -47,6 +47,7 @@ public class UrlUtils {
 	public static final String USER_EDIT_ADMIN_PATH = "/users/:id/edit_admin";
 	
 	public static final String KLASSES_PATH = "/klasses";
+	public static final String KLASS_PATH = "/klasses/:id";
 	public static final String NEW_KLASS_PATH = "/klasses/new";
 	
 	public static final String COURSES_PATH = "/courses";

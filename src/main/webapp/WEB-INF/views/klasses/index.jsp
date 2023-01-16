@@ -85,7 +85,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<h4 class="panel-title">
-								<a data-toggle="collapse" href="#prev_student_classes"><strong>Past
+								<a data-toggle="colpse" href="#prev_student_classes"><strong>Past
 										Classes<span class="caret"></span>
 								</strong></a>
 							</h4>
@@ -107,7 +107,9 @@
 								<tbody>
 									<c:forEach var="klass" items="${pastKlassList}">
 										<tr>
-											<td><a
+											<td>
+											<t:link_to path="${UrlUtils.KLASS_PATH}" id="${klass.id}" classBS="btn btn-primary">${klass.code}</t:link_to>
+											<a
 												href="${pageContext.request.contextPath}/klasses_details.jsp?name=${klass.name}&code=${klass.code}&semester=${klass.semester}&section=${klass.section}">${klass.name}</a></td>
 											<td>${klass.code}</td>
 											<td>${klass.semester}</td>

@@ -97,6 +97,7 @@ public class JspUtils {
 	public static final String KLASSES_EDIT_ADMIN = "/WEB-INF/views/klasses/edit_admin.jsp";
 	public static final String KLASSES_EDIT_SELF = "/WEB-INF/views/klasses/edit_self.jsp";
 	public static final String KLASSES_INDEX = "/WEB-INF/views/klasses/index.jsp";
+	public static final String KLASSES_DETAILS = "/WEB-INF/views/klasses/klasses_details.jsp";
 	public static final String KLASSES_NOTIFICATION_SETTINGS = "/WEB-INF/views/klasses/notification_settings.jsp";
 	public static final String KLASSES_SHOW_INVITE = "/WEB-INF/views/klasses/show_invite.jsp";
 	public static final String KLASSES_NOTIFICATION_TOGGLE_BUTTON = "/WEB-INF/views/klasses/notification_toggle_button.jsp";
