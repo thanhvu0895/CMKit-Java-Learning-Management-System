@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+
 /**
  * @author Thanh Vu
  *
@@ -20,7 +21,7 @@ public class User implements Serializable {
     private Date reset_expires;
     private boolean set_up;
     private boolean disabled;
-    
+
      
     //#----- Name methods ------ #
     /**
@@ -89,7 +90,7 @@ public class User implements Serializable {
 	}
 
 	public String getEmail() {
-		return email;
+		return email.toLowerCase();
 	}
 
 	public boolean isAdmin() {

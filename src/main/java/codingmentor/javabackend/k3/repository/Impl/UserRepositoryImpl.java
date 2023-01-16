@@ -56,16 +56,14 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
      */
 
 	@Override
-	public boolean insert(User user) {
+	public boolean createUser(String email, boolean admin, String password_digest) {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO users(email, admin, first_name, last_name, set_up, password_digest)"
-					+ "VALUES (?, ?, ?, ?, ?, ?);";
+			final String query = "INSERT INTO users(email, admin, password_digest)"
+					+ "VALUES (?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setString(1, user.getEmail());
-			statement.setBoolean(2, user.isAdmin());
-			statement.setString(3, user.getFirst_name());
-			statement.setString(4, user.getLast_name());
-			statement.setString(5, user.getPassword_digest());
+			statement.setString(1, email);
+			statement.setBoolean(2, admin);
+			statement.setString(3, password_digest);
 			System.out.println(statement);
 			return statement.executeUpdate();
 		}) != 0;
@@ -181,5 +179,11 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 System.out.println(statement);
 			 return statement.executeUpdate();
 		}) != 0;
+	}
+
+	@Override
+	public boolean sendInvite(String new_password, User user) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -14,24 +14,25 @@ import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.StringUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.User;
-import codingmentor.javabackend.k3.service.UserService;
-import codingmentor.javabackend.k3.service.Impl.UserServiceImpl;
+import codingmentor.javabackend.k3.repository.UserRepository;
+import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 
 @WebServlet(urlPatterns = {
 		UrlUtils.USERS_PATH,
 		UrlUtils.USER_EDIT_SELF_PATH,
 		UrlUtils.NOTIFICATION_SETTINGS_PATH,
 		UrlUtils.CHANGE_PASSWORD_PATH,
-		UrlUtils.USERS_ALL_PATH
+		UrlUtils.USERS_ALL_PATH,
+		UrlUtils.CREATE_USER_INVITE_PATH
 	})
 public class UsersServlet extends HttpServlet{
 	private static final long serialVersionUID = -8801001997853031448L;
-	private UserService userService = null;
+	private UserRepository userRepository = null;
 	
 	@Override
 	public void init() throws ServletException {
 	    super.init();
-	    userService = UserServiceImpl.getInstance();
+	    userRepository = UserRepositoryImpl.getInstance();
 	}
 
 	@Override
@@ -52,7 +53,7 @@ public class UsersServlet extends HttpServlet{
 		case UrlUtils.USERS_PATH:			
 			String pathInfo = req.getPathInfo();
 			if (pathInfo == null || pathInfo.equals("/") ) {
-				List<User> users = userService.getUsers();
+				List<User> users = userRepository.getUsers();
 				req.setAttribute("users", users);
 				req.getRequestDispatcher(JspUtils.USERS_INDEX)
 					.forward(req, resp);
@@ -66,7 +67,7 @@ public class UsersServlet extends HttpServlet{
 				switch (pathParts[2]) {
 				case "edit_admin":
 					int id = Integer.parseInt(pathParts[1]);
-					req.setAttribute("user", userService.findUserById(id));
+					req.setAttribute("user", userRepository.findUserById(id));
 					
 					req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN)
 						.forward(req, resp);
@@ -89,6 +90,9 @@ public class UsersServlet extends HttpServlet{
 			int current_user_id = current_user.getId();
 			updateUserPreferredName(req, resp, current_user_id);
 			break;
+		case UrlUtils.CREATE_USER_INVITE_PATH:
+			System.out.println("Creating user 2");
+			break;
 		case UrlUtils.USERS_PATH:
 			String pathInfo = req.getPathInfo();
 
@@ -109,6 +113,8 @@ public class UsersServlet extends HttpServlet{
 					processEditAdmin(req, resp, userid);
 					return;
 				}	
+			} else if ("create".equals(pathParts[1])) {
+				System.out.println("I am creating user");
 			}		
 		}
 	}
@@ -124,7 +130,13 @@ public class UsersServlet extends HttpServlet{
 	 * @throws ServletException
 	 */
 	private void processDeleteUser(HttpServletRequest req, HttpServletResponse resp, int userid) throws IOException, ServletException {
-		userService.deleteUser(userid);
+		User current_user = (User) req.getSession(false).getAttribute("current_user");
+		int current_user_id = current_user.getId();
+		if (current_user_id == userid) {
+			req.getSession(false).setAttribute("alert", "Admin cannot remove themselves!.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+		}
+		userRepository.deleteUser(userid);
 		req.getSession(false).setAttribute("notice", "User was successfully deleted.");
 		resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 	}
@@ -140,7 +152,7 @@ public class UsersServlet extends HttpServlet{
 	private void processChangePassword(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		User current_user = (User) req.getSession(false).getAttribute("current_user");
 		int userid = current_user.getId();
-		current_user = userService.findUserById(userid);
+		current_user = userRepository.findUserById(userid);
 		String old_password = req.getParameter("old_password");
 		String new_password = req.getParameter("new_password");
 		String new_password_confirmation = req.getParameter("new_password_confirmation");
@@ -159,7 +171,7 @@ public class UsersServlet extends HttpServlet{
 			return;
 		}
 		
-		userService.updatePassword(new_password_confirmation, current_user);
+		userRepository.updatePassword(new_password_confirmation, current_user);
 		HttpSession session = req.getSession();
 		session.setAttribute("notice", "Password changed.");
 	}
@@ -175,8 +187,8 @@ public class UsersServlet extends HttpServlet{
 	 */
 	private void updateUserPreferredName(HttpServletRequest req, HttpServletResponse resp, int userid) throws IOException, ServletException {
 		String preferred_name = req.getParameter("user[preferred_name]");
-		userService.updatePreferredNameById(preferred_name, userid);
-		User current_user = userService.findUserById(userid);
+		userRepository.updatePreferredNameById(preferred_name, userid);
+		User current_user = userRepository.findUserById(userid);
 		current_user.setPassword_digest("[FILTERED]");
 		req.getSession(false).setAttribute("current_user", current_user);
 		if (current_user.isAdmin()) {
@@ -203,7 +215,7 @@ public class UsersServlet extends HttpServlet{
 		
 		if (first_name == "" || last_name == "")  {
 			req.setAttribute("alert", "First name and last name must not be blank");
-			req.setAttribute("user", userService.findUserById(userid));
+			req.setAttribute("user", userRepository.findUserById(userid));
 			req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN)
 				.forward(req, resp);
 		}
@@ -213,8 +225,19 @@ public class UsersServlet extends HttpServlet{
 		boolean admin = (req.getParameterValues("user[admin]").length == 2);
 		boolean disabled = (req.getParameterValues("user[disabled]").length == 2);
 
-		userService.updateUser(first_name, last_name, preferred_name, admin, disabled, userid);
+		userRepository.updateUser(first_name, last_name, preferred_name, admin, disabled, userid);
 		req.getSession(false).setAttribute("notice", "User was successfully updated.");
+		
+		
+		User current_user = (User) req.getSession(false).getAttribute("current_user");
+		int current_user_id = current_user.getId();
+		if (current_user_id == userid) {
+			current_user = userRepository.findUserById(current_user_id);
+			current_user.setPassword_digest("[FILTERED]");
+			req.getSession(false).setAttribute("current_user", current_user);
+		}
+		
 		resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 	}
+	
 }

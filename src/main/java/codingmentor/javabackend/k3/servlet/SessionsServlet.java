@@ -81,7 +81,7 @@ public class SessionsServlet extends HttpServlet {
 		
 		// not null and password correct, log in
 		if (current_user != null && current_user.isSet_up() && !current_user.isDisabled()) {
-	    	current_user.setPassword_digest("[FILTERED]");
+			current_user.setPassword_digest("[FILTERED]");
 	    	req.getSession().setAttribute("current_user", current_user);
 	    	req.getSession().setAttribute("notice",
 					"Logged in! Welcome, " + current_user.getPreferred_first_name() + "!");
