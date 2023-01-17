@@ -45,6 +45,7 @@ public class UrlUtils {
 	public static final String NOTIFICATION_SETTINGS_PATH = "/notification_settings";
 	public static final String RESEND_USER_INVITE_PATH = "/users/:id/resend_invite";
 	public static final String USER_EDIT_ADMIN_PATH = "/users/:id/edit_admin";
+	public static final String SHOW_USER_INVITE_PATH ="/users/:id/set_up";
 	
 	public static final String KLASSES_PATH = "/klasses";
 	public static final String NEW_KLASS_PATH = "/klasses/new";
@@ -70,6 +71,33 @@ public class UrlUtils {
     	path = path.replaceFirst("\\:id", String.valueOf(id));
     	return path;
     }
+    
+    public static boolean isInteger(String str) {
+	    if (str == null) {
+	        return false;
+	    }
+	    
+	    int length = str.length();
+	    if (length == 0) {
+	        return false;
+	    }
+	    
+	    int i = 0;
+	    if (str.charAt(0) == '-') {
+	        if (length == 1) {
+	            return false;
+	        }
+	        i = 1;
+	    }
+	    
+	    for (; i < length; i++) {
+	        char c = str.charAt(i);
+	        if (c < '0' || c > '9') {
+	            return false;
+	        }
+	    }
+	    return true;
+	}
 }
 
 

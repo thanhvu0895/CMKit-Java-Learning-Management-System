@@ -1,6 +1,8 @@
 package codingmentor.javabackend.k3.model;
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import codingmentor.javabackend.k3.Utils.RandomUtils;
 
 
 
@@ -23,6 +25,16 @@ public class User implements Serializable {
     private boolean disabled;
 
      
+    /**
+     * 
+     * @param token stored in user's password_digest
+     * @return true if token is valid and false if token is invalid
+     * @throws NoSuchAlgorithmException
+     */
+    public boolean validateInviteToken(String token) throws NoSuchAlgorithmException {
+    	return (token != null) && this.reset_digest.equals(RandomUtils.SHA256Base64(token));
+    }
+    
     //#----- Name methods ------ #
     /**
      * @return Preferred first name of user
@@ -79,10 +91,6 @@ public class User implements Serializable {
     	} 
 		
 		return last_name+ ", " + first_name ;
-	}
-
-	public String downcaseEmail() {
-		return email.toLowerCase();
 	}
 
 	public int getId() {

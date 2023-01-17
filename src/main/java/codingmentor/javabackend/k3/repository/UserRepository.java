@@ -72,13 +72,6 @@ public interface UserRepository {
    	 */
      boolean updatePassword(String new_password, User user);
      
-     
- 	/**
-	 * Update user's password 
-	 * @param: User user
-	 * @return boolean if update successful or else false
-	 */
-      boolean sendInvite(String new_password, User user);
       
   	/**
   	 * Update user's password 

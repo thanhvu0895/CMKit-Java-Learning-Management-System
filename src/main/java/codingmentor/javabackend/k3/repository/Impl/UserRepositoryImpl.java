@@ -52,14 +52,20 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     	});
     }
     
-    /**
-     * {@inheritDoc}
-     *
-     * @param User: user object
-     * returns nothing
-     */
-//	# IMPORTANT: Accounts get a random password when they are first created.
-//	# This password cannot actually be used as the set_up boolean is false, which prevents logins
+ 
+  	/*
+  	 * # IMPORTANT: Accounts get a random password when they are first created. #
+  	 * # This password cannot actually be used as the set_up boolean is false, and
+  	 * # using a default password would be dumb # if set_up ever stopped working
+  	 */
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @param email: user's email
+	 * @param admin: where user is admin
+	 * @return true if user is created and false if not
+	 */
+    
 	@Override
 	public boolean createUser(String email, boolean admin) {
 		return executeUpdate(connection -> {
@@ -185,12 +191,6 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 System.out.println(statement);
 			 return statement.executeUpdate();
 		}) != 0;
-	}
-
-	@Override
-	public boolean sendInvite(String new_password, User user) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
