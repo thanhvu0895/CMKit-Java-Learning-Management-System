@@ -11,6 +11,8 @@ import java.net.URL;
 
 import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
+import codingmentor.javabackend.k3.repository.UserRepository;
+import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 
 public class Main {
 	public static void main(String[] args) throws IOException, URISyntaxException  {
@@ -19,13 +21,27 @@ public class Main {
     	String hashedPass = hasher.hash(password.toCharArray());
     	System.out.println(hashedPass);
     	System.out.println(hasher.checkPassword(password.toCharArray(), hashedPass));
-    	File f = new File("MailLog.txt");
-    	String path = f.getAbsolutePath();
-		FileWriter fw = new FileWriter(path);
-		BufferedWriter writer = new BufferedWriter(fw);
-		writer.write("WHY?");
-		writer.close();
-//    	writer.write(emailBody);
-//    	writer.close();
+    	
+    	String emailBody = "<p>\r\n"
+    			+ "    Dear,\r\n"
+    			+ "<br><br>\r\n"
+    			+ "    You have been invited to create an account on the Kit platform. To create your account, please follow the link below:\r\n"
+    			+ "<br>\r\n"
+    			+ "    <a href=>  </a>\r\n"
+    			+ "<br><br>\r\n"
+    			+ "    You will be prompted for your name and asked to create a password. Once you have set up your account, you can log in using your email () and password at .\r\n"
+    			+ "<br><br>\r\n"
+    			+ "    If you have any trouble setting up an account or have a question, please contact your professor.\r\n"
+    			+ "<br><br>\r\n"
+    			+ "    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.\r\n"
+    			+ "</p>\r\n"
+    			+ "\r\n"
+    			+ "";
+    	System.out.println("Body of email: " + emailBody);
+    	UserRepository userRepository = UserRepositoryImpl.getInstance();
+    	userRepository.findUserById(123124809);
+    	
+    	
+    	
 	}
 }

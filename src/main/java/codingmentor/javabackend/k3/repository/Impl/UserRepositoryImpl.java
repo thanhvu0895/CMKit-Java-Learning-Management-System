@@ -1,7 +1,10 @@
 package codingmentor.javabackend.k3.repository.Impl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,19 +42,38 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
      */
     
     @Override
-    public User findUserByEmail(String email) {
-    	return executeQuerySingle(connection -> {
+    public User findUserByEmail(String email) { 
+		return executeQuerySingle(connection -> {
 
     		// Query to find user by email
-    		final String query = "SELECT * FROM users WHERE email = ? LIMIT 1;";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, email);
-            ResultSet results = statement.executeQuery();
-            System.out.println(statement);
-            return (results.next()) ? mapper.map(results) : null;
+		final String query = "SELECT * FROM users WHERE email = ? LIMIT 1;";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, email);
+        ResultSet results = statement.executeQuery();
+        System.out.println(statement);
+        User user = (results.next()) ? mapper.map(results) : null;
+        close(connection, statement, results);
+        return user;
     	});
     }
     
+    private void close (Connection connection, Statement ps, ResultSet rs) {
+    	try {
+    		if (rs != null) {
+    			rs.close();
+    		}
+    		if (ps != null) {
+    			ps.close();
+    		}
+    		
+    		if (connection != null) {
+    			connection.close();
+    		}
+
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	}
+    }
  
   	/*
   	 * # IMPORTANT: Accounts get a random password when they are first created. #
@@ -77,7 +99,14 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			String password_digest = hasher.hash(RandomUtils.unique64().toCharArray());
 			statement.setString(3, password_digest);
 			System.out.println(statement);
-			return statement.executeUpdate();
+			int createUser = statement.executeUpdate();
+    		if (statement != null) {
+    			statement.close();
+    		}    		
+    		if (connection != null) {
+    			connection.close();
+    		}
+			return createUser;
 		}) != 0;
 	}
 
@@ -96,7 +125,9 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setString(1, email);
 			 ResultSet results = statement.executeQuery();
 			 System.out.println(statement);
-			 return (results.next() && results.getString("email").equals(email)) ? new User() : null;
+			 User user = (results.next() && results.getString("email").equals(email)) ? new User() : null;
+			 close(connection, statement, results);
+			 return user;
 		}) != null;
 	}
 	
@@ -117,6 +148,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			while(results.next()) {
 				usersList.add(mapper.map(results));
 			}
+			close(connection, statement, results);
 			return usersList;
 		});
 	}
@@ -137,23 +169,36 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
             statement.setInt(1, id);
             ResultSet results = statement.executeQuery();
             System.out.println(statement);
-            return (results.next()) ? mapper.map(results) : null;
+            User user = (results.next()) ? mapper.map(results) : null;
+            close(connection, statement, results);
+            return user;
     	});
 	}
 
 	@Override
 	public boolean updateUser(String first_name, String last_name, String preferred_name, boolean admin, boolean disabled, int id) {
 		return executeUpdate(connection -> {
-			 final String query = "UPDATE users SET first_name = ?, last_name = ?, preferred_name = ?, admin = ?, disabled = ? WHERE id = ?;";
-			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setString(1, first_name);
-			 statement.setString(2, last_name);
-			 statement.setString(3, preferred_name);
-			 statement.setBoolean(4, admin);
-			 statement.setBoolean(5, disabled);
-			 statement.setInt(6, id);
-			 System.out.println(statement);
-			 return statement.executeUpdate();
+			final String query = "UPDATE users SET first_name = ?, last_name = ?, preferred_name = ?, admin = ?, disabled = ? WHERE id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, first_name);
+			statement.setString(2, last_name);
+			statement.setString(3, preferred_name);
+			statement.setBoolean(4, admin);
+			statement.setBoolean(5, disabled);
+			statement.setInt(6, id);
+			System.out.println(statement);
+			int updateUser = statement.executeUpdate();
+		 
+			 if (statement != null) {
+				 statement.close();
+    		}
+    		
+    		if (connection != null) {
+    			connection.close();
+    		}
+			 
+			 
+			 return updateUser;
 		}) != 0;
 	}
 
@@ -164,7 +209,16 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, id);
 			 System.out.println(statement);
-			 return statement.executeUpdate();
+			 int deleteUser = statement.executeUpdate();
+			 if (statement != null) {
+				 statement.close();
+			 }
+    		
+			 if (connection != null) {
+				 connection.close();
+			 }
+    		
+			 return deleteUser;
 		}) != 0;
 	}
 	
@@ -177,7 +231,16 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setString(1, preferred_name);
 			 statement.setInt(2, id);
 			 System.out.println(statement);
-			 return statement.executeUpdate();
+			 int result = statement.executeUpdate();
+			 if (statement != null) {
+				 statement.close();
+			 }
+    		
+			 if (connection != null) {
+				 connection.close();
+			 }
+    		
+			 return result;
 		}) != 0;
 	}
 
@@ -189,7 +252,16 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setString(1, new_password);
 			 statement.setInt(2, user.getId());
 			 System.out.println(statement);
-			 return statement.executeUpdate();
+			 int result = statement.executeUpdate();
+			 if (statement != null) {
+				 statement.close();
+			 }
+    		
+			 if (connection != null) {
+				 connection.close();
+			 }
+    		
+			 return result;
 		}) != 0;
 	}
 
@@ -201,7 +273,16 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setString(1, reset_digest);
 			 statement.setInt(2, userid);
 			 System.out.println(statement);
-			 return statement.executeUpdate();
+			 int result = statement.executeUpdate();
+			 if (statement != null) {
+				 statement.close();
+			 }
+    		
+			 if (connection != null) {
+				 connection.close();
+			 }
+    		
+			 return result;
 		}) != 0;
 	}
 }

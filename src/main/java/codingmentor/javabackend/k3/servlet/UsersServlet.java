@@ -168,6 +168,7 @@ public class UsersServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		req.getSession(false).setAttribute("notice", "User invited");
 		resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 	}

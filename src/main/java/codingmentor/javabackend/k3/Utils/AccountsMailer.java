@@ -17,11 +17,11 @@ public class AccountsMailer {
 	
 	
 	public static void invite_user_email(HttpServletRequest request, User user, String token) throws IOException, URISyntaxException{
-		BufferedWriter writer = new BufferedWriter(new FileWriter("MailLog.txt"));
+		BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\xampp\\htdocs\\cmkit\\src\\main\\webapp\\log\\MailLog.txt"));
     	String servletPath = UrlUtils.putIdInPath(UrlUtils.SHOW_USER_INVITE_PATH, user.getId());
     	String baseUrl = request.getRequestURL().substring(0, request.getRequestURL().length() - request.getRequestURI().length()) + request.getContextPath();
     	String show_user_invite_url = baseUrl + servletPath + "?token=" + token;
-    	String emailBody = String.join("<p>\r\n"
+    	String emailBody = "<p>\r\n"
     			+ "    Dear " + user.getEmail() +",\r\n"
     			+ "<br><br>\r\n"
     			+ "    You have been invited to create an account on the Kit platform. To create your account, please follow the link below:\r\n"
@@ -35,13 +35,13 @@ public class AccountsMailer {
     			+ "    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.\r\n"
     			+ "</p>\r\n"
     			+ "\r\n"
-    			+ ""
-    			);
-    	writer.write(emailBody);
+    			+ "";
+    	mail(user.getEmail(), "Kit Account Setup", emailBody);
+    	writer.append(emailBody);
     	writer.close();
 	}
 	
-	public static void mail(String to, String subject) {
+	public static void mail(String to, String subject, String body) {
 		// Recipient's email ID needs to be mentioned.
 		String from = "thanh.vu15@kzoo.edu";
 
@@ -77,7 +77,7 @@ public class AccountsMailer {
 			message.setSubject(subject);
 
 			// Send the actual HTML message.
-			message.setContent("<h1>This is actual message embedded in HTML tags</h1>", "text/html");
+			message.setContent(body, "text/html");
 
 			System.out.println("sending...");
 			// Send message
