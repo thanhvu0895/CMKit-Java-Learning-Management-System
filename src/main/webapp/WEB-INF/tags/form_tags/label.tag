@@ -1,4 +1,4 @@
-<%@ tag language="java" pageEncoding="ISO-8859-1"%>
+<%@ tag trimDirectiveWhitespaces="true" language="java" pageEncoding="ISO-8859-1"%>
 <%@ attribute name="model" required="false"%>
 <%@ attribute name="label" required="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>

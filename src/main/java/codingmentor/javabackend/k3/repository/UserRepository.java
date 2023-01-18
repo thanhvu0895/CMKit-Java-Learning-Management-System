@@ -11,7 +11,7 @@ public interface UserRepository {
 	 * @param user data will insert to database
 	 * true if successful or false
 	 */
-	boolean createUser(String email, boolean admin);
+	boolean createUserSendInvite(String email, boolean admin);
     
 	/**
      * Check if user exists by email 
@@ -49,7 +49,7 @@ public interface UserRepository {
 	 *
 	 * @return boolean if update successful or else false
 	 */
-    boolean updateUser(String first_name, String last_name, String preferred_name, boolean admin, boolean disabled, int id);
+    boolean updateUserEditAdmin(String first_name, String last_name, String preferred_name, boolean admin, boolean disabled, int id);
     
     /**
    	 * Delete users
@@ -79,4 +79,12 @@ public interface UserRepository {
   	 * @return boolean if update successful or else false
   	 */
      boolean updateResetDigest(int userid, String reset_digest);
+     
+   	/**
+   	 * Update user's password 
+   	 * @param: User user
+   	 * @return boolean if update successful or else false
+   	 */
+     boolean updateUserInviteParams(String first_name, String last_name, String preferred_name, String password);
+     //TODO: HANDLE PATH WHEN OPEN URL FOR ACCEPT INVITE SO: LOGGED IN USER MUST LOGOUT TO ACCEPT INVITE AND PAGE ENDS WITH set_up in path does not get filtered
 }

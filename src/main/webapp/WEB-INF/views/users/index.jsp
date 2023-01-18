@@ -66,7 +66,7 @@
 	<div id="new_user" class="collapse">
 	  <div class="panel panel-default">
 		<div class="panel-body">
-			<t:form_with url="${UrlUtils.CREATE_USER_INVITE_PATH}" authenticity_token="123">
+			<t:form_with url="${UrlUtils.CREATE_USER_INVITE_PATH}">
 				<div class="form-group">
 					<label for="Email">Email</label>
 					<input class="form-control" type="email" name="email" id="email" />

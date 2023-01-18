@@ -54,9 +54,9 @@ public class UsersServlet extends HttpServlet {
 			}
 			
 			String[] pathParts = pathInfo.split("/");
-			int length = pathParts.length;
+			int pathInfoLength = pathParts.length;
 			
-			if (length == 3 && UrlUtils.isInteger(pathParts[1])) { // If request pattern is /users/:id/*
+			if (pathInfoLength == 3 && UrlUtils.isInteger(pathParts[1])) { // If request pattern is /users/:id/*
 				int id = Integer.parseInt(pathParts[1]);
 				switch (pathParts[2]) {
 				case "edit_admin": // If request is /users/:id/edit_admin
@@ -105,7 +105,28 @@ public class UsersServlet extends HttpServlet {
 					processEditAdmin(req, resp, userid);
 					return;
 				}
-			} 
+			}
+			
+			if (pathInfoLength == 3 && UrlUtils.isInteger(pathParts[1])) { // If request pattern is PATH: /users/:id/* 
+				int id = Integer.parseInt(pathParts[1]);
+				switch (pathParts[2]) {
+				case "accept_invite": // FROM_PATH: SHOW_USER_INVITE_PATH | TO_PATH: ACCEPT_USER_INVITE_PATH  |  JSP: USERS_SHOW_INVITE
+					System.out.println("Trying to accept invite");
+					String token = req.getParameter("user[token]");
+					System.out.println(token);
+					String password = req.getParameter("user[password]");
+					System.out.println(password);
+					System.out.println(req.getAttribute("javax.servlet.forward.request_uri"));
+					String password_confirmation = req.getParameter("user[password_confirmation]");
+					if (password == "" || password_confirmation == "") {
+						req.getSession(false).setAttribute("alert", "Please create a password for your account.");
+						resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.SHOW_USER_INVITE_PATH, id) + "?token=" + token);
+						return;
+					}
+					
+					break;
+				}
+			}
 		}
 	}
 	
@@ -120,6 +141,8 @@ public class UsersServlet extends HttpServlet {
 			String token = req.getParameter("token");
 			User user = userRepository.findUserById(id);
 			if (user != null && userRepository.findUserById(id).validateInviteToken(token)) {
+				req.setAttribute("userid", id);
+				req.setAttribute("token", token);
 				req.getRequestDispatcher(JspUtils.USERS_SHOW_INVITE).forward(req, resp);
 				return;
 			} else {
@@ -150,21 +173,13 @@ public class UsersServlet extends HttpServlet {
 			return;
 		}
 
-		userRepository.createUser(email, admin);
+		userRepository.createUserSendInvite(email, admin);
 		User user =  userRepository.findUserByEmail(email);
 		int new_user_id = user.getId();
 		try {
 			userRepository.updateResetDigest(new_user_id, RandomUtils.SHA256Base64(token));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		
-		try {
 			AccountsMailer.invite_user_email(req, user, token);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -284,7 +299,7 @@ public class UsersServlet extends HttpServlet {
 		boolean admin = (req.getParameterValues("user[admin]").length == 2);
 		boolean disabled = (req.getParameterValues("user[disabled]").length == 2);
 
-		userRepository.updateUser(first_name, last_name, preferred_name, admin, disabled, userid);
+		userRepository.updateUserEditAdmin(first_name, last_name, preferred_name, admin, disabled, userid);
 		req.getSession(false).setAttribute("notice", "User was successfully updated.");
 
 		User current_user = (User) req.getSession(false).getAttribute("current_user");

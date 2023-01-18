@@ -1,11 +1,11 @@
 <p>
-    Dear thanhvu0895@gmail.com,
+    Dear test@1234,
 <br><br>
     You have been invited to create an account on the Kit platform. To create your account, please follow the link below:
 <br>
-    <a href=http://localhost:8080/cmkit/users/76/set_up?token=8d3747e6f712db38dee30a31171899fbbdd4ddeb087c9ceba2ba231dd6889cb2> http://localhost:8080/cmkit/users/76/set_up?token=8d3747e6f712db38dee30a31171899fbbdd4ddeb087c9ceba2ba231dd6889cb2 </a>
+    <a href=http://localhost:8080/cmkit/users/5/set_up?token=eed3ecf940c5b1c8c4615f1dfcc965c1eb3edc6eb639d45ec3dfbc01e8ecda0f> http://localhost:8080/cmkit/users/5/set_up?token=eed3ecf940c5b1c8c4615f1dfcc965c1eb3edc6eb639d45ec3dfbc01e8ecda0f </a>
 <br><br>
-    You will be prompted for your name and asked to create a password. Once you have set up your account, you can log in using your email (thanhvu0895@gmail.com) and password at http://localhost:8080/cmkit.
+    You will be prompted for your name and asked to create a password. Once you have set up your account, you can log in using your email (test@1234) and password at http://localhost:8080/cmkit.
 <br><br>
     If you have any trouble setting up an account or have a question, please contact your professor.
 <br><br>

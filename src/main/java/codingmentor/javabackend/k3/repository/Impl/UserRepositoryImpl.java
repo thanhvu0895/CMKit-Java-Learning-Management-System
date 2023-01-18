@@ -89,7 +89,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	 */
     
 	@Override
-	public boolean createUser(String email, boolean admin) {
+	public boolean createUserSendInvite(String email, boolean admin) {
 		return executeUpdate(connection -> {
 			final String query = "INSERT INTO users(email, admin, password_digest)"
 					+ "VALUES (?, ?, ?);";
@@ -99,14 +99,14 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			String password_digest = hasher.hash(RandomUtils.unique64().toCharArray());
 			statement.setString(3, password_digest);
 			System.out.println(statement);
-			int createUser = statement.executeUpdate();
+			int result = statement.executeUpdate();
     		if (statement != null) {
     			statement.close();
     		}    		
     		if (connection != null) {
     			connection.close();
     		}
-			return createUser;
+			return result;
 		}) != 0;
 	}
 
@@ -176,7 +176,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	}
 
 	@Override
-	public boolean updateUser(String first_name, String last_name, String preferred_name, boolean admin, boolean disabled, int id) {
+	public boolean updateUserEditAdmin(String first_name, String last_name, String preferred_name, boolean admin, boolean disabled, int id) {
 		return executeUpdate(connection -> {
 			final String query = "UPDATE users SET first_name = ?, last_name = ?, preferred_name = ?, admin = ?, disabled = ? WHERE id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -187,7 +187,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			statement.setBoolean(5, disabled);
 			statement.setInt(6, id);
 			System.out.println(statement);
-			int updateUser = statement.executeUpdate();
+			int result = statement.executeUpdate();
 		 
 			 if (statement != null) {
 				 statement.close();
@@ -198,10 +198,12 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     		}
 			 
 			 
-			 return updateUser;
+			 return result;
 		}) != 0;
 	}
 
+	
+	
 	@Override
 	public boolean deleteUser(int id) {
 		return executeUpdate(connection -> {
@@ -284,5 +286,11 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     		
 			 return result;
 		}) != 0;
+	}
+
+	@Override
+	public boolean updateUserInviteParams(String first_name, String last_name, String preferred_name, String password) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

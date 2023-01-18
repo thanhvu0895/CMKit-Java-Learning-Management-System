@@ -2,7 +2,6 @@
 <%@ attribute name="url" required="true"%>
 <%@ attribute name="method" required="false"%>
 <%@ attribute name="id" required="false"%>
-<%@ attribute name="authenticity_token" required="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ tag import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 <c:set var="url" value="${pageContext.request.contextPath}${url}"/> <!-- ADD CONTEXT PATH TO url URL  -->
@@ -12,9 +11,6 @@
     <c:when test ="${not empty method}">
 	  <input type="hidden" name="method" value="${method}"  />
     </c:when>
-  <c:when test ="${not empty authenticity_token}">
-	<input type="hidden" name="authenticity_token" value="${authenticity_token}"/>
-  </c:when>  	
 	</c:choose>  
 <jsp:doBody/>
 </form>

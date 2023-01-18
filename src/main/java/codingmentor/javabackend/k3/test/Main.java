@@ -1,14 +1,9 @@
 package codingmentor.javabackend.k3.test;
 
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
 import codingmentor.javabackend.k3.repository.UserRepository;
@@ -40,8 +35,5 @@ public class Main {
     	System.out.println("Body of email: " + emailBody);
     	UserRepository userRepository = UserRepositoryImpl.getInstance();
     	userRepository.findUserById(123124809);
-    	
-    	
-    	
 	}
 }
