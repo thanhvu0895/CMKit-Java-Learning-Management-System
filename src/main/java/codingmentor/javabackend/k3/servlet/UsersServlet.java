@@ -1,7 +1,6 @@
 package codingmentor.javabackend.k3.servlet;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
@@ -116,13 +115,15 @@ public class UsersServlet extends HttpServlet {
 					System.out.println(token);
 					String password = req.getParameter("user[password]");
 					System.out.println(password);
-					System.out.println(req.getAttribute("javax.servlet.forward.request_uri"));
 					String password_confirmation = req.getParameter("user[password_confirmation]");
 					if (password == "" || password_confirmation == "") {
 						req.getSession(false).setAttribute("alert", "Please create a password for your account.");
 						resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.SHOW_USER_INVITE_PATH, id) + "?token=" + token);
 						return;
 					}
+					
+					
+					
 					
 					break;
 				}

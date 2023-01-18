@@ -45,10 +45,15 @@ public class AuthFilter implements Filter{
 	    	return;
 	    }
 	    
-	    if (isInSession(req) && isLoginPage(req) || isUnauthorized(req)) {
-	        resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+	    if (isInSession(req) && isLoginPage(req)) {
+	    	resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH + "/");
 			return;
 		}
+	    
+	    if (isInSession(req) && isUnauthorized(req)) {
+	    	resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+	    	return;
+	    }
 	    
 	    
 		if (isInSession(req) || isLoginPage(req) || isResourceRequest(req)) {
