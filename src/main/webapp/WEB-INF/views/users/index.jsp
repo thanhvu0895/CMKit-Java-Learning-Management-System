@@ -30,6 +30,7 @@
 						</thead>
 						<tbody>
 						  <c:forEach var="user" items="${users}">
+						  <c:if test="${!user.deleted}">
 						  	<tr>
 							<td>${user.email}</td>
 							<td>
@@ -52,6 +53,7 @@
 									<td><t:link_to path="${UrlUtils.USER_EDIT_ADMIN_PATH}" id="${user.id}" classBS="btn btn-primary">Edit</t:link_to></td>
 									<td><t:link_to path="${UrlUtils.USERS_PATH}/:id" id="${user.id}" confirm="Are you sure you want to delete this user?"  classBS="btn btn-danger">Delete</t:link_to></td>
 								</tr>
+							</c:if>
 							</c:forEach>
 						</tbody>
 					</table>

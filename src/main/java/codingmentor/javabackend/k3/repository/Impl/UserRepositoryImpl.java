@@ -207,20 +207,20 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean deleteUser(int id) {
 		return executeUpdate(connection -> {
-			 final String query = "DELETE FROM users WHERE id = ?;";
+			 final String query = " UPDATE users SET deleted = 1 WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, id);
 			 System.out.println(statement);
-			 int deleteUser = statement.executeUpdate();
+			 int result = statement.executeUpdate();
 			 if (statement != null) {
 				 statement.close();
 			 }
-    		
+ 		
 			 if (connection != null) {
 				 connection.close();
 			 }
-    		
-			 return deleteUser;
+ 		
+			 return result;
 		}) != 0;
 	}
 	

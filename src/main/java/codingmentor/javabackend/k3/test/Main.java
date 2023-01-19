@@ -4,6 +4,13 @@ package codingmentor.javabackend.k3.test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.security.SecureRandom;
+import java.security.spec.KeySpec;
+import java.util.Base64;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+
 import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
 import codingmentor.javabackend.k3.repository.UserRepository;

@@ -18,6 +18,7 @@ public class UserMapper implements RowMapper<User> {
 				.password_digest(results.getString("password_digest"))
 				.reset_digest(results.getString("reset_digest"))
 				.set_up(results.getBoolean("set_up"))
-				.disabled(results.getBoolean("disabled"));
+				.disabled(results.getBoolean("disabled"))
+				.deleted(results.getBoolean("deleted"));
 	}
 }

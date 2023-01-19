@@ -23,9 +23,10 @@ public class User implements Serializable {
     private Date reset_expires;
     private boolean set_up;
     private boolean disabled;
+    private boolean deleted;
 
-     
-    /**
+ 
+	/**
      * 
      * @param token stored in user's password_digest
      * @return true if token is valid and false if token is invalid
@@ -93,6 +94,17 @@ public class User implements Serializable {
 		return last_name+ ", " + first_name ;
 	}
 
+	
+	
+    
+    public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -193,6 +205,11 @@ public class User implements Serializable {
     
     public User disabled(boolean disabled) {
         this.disabled= disabled;
+        return this;
+    }
+    
+    public User deleted(boolean deleted) {
+        this.deleted = deleted;
         return this;
     }
 }
