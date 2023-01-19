@@ -11,7 +11,7 @@ import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 
 public class Main {
 	public static void main(String[] args) throws IOException, URISyntaxException  {
-		String password = RandomUtils.unique64();
+		String password = "1234";
     	PBKDF2Hasher hasher = new PBKDF2Hasher();
     	String hashedPass = hasher.hash(password.toCharArray());
     	System.out.println(hashedPass);

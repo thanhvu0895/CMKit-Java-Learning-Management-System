@@ -251,7 +251,8 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		return executeUpdate(connection -> {
 			 final String query = "UPDATE users SET password_digest = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setString(1, new_password);
+			 String password_digest = hasher.hash(new_password.toCharArray());
+			 statement.setString(1, password_digest);
 			 statement.setInt(2, user.getId());
 			 System.out.println(statement);
 			 int result = statement.executeUpdate();
@@ -289,8 +290,49 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	}
 
 	@Override
-	public boolean updateUserInviteParams(String first_name, String last_name, String preferred_name, String password) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean updateUserInviteParams(int userid, String first_name, String last_name, String preferred_name, String password) {
+		return executeUpdate(connection -> {
+			 final String query = " UPDATE users SET first_name = ?, last_name = ?, preferred_name = ?, password_digest = ? WHERE id = ?;";
+			 
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, first_name);
+			 statement.setString(2, last_name);
+			 statement.setString(3, preferred_name);
+			 String password_digest = hasher.hash(password.toCharArray());
+			 statement.setString(4, password_digest);
+			 statement.setInt(5, userid);
+			 System.out.println(statement);
+			 int result = statement.executeUpdate();
+			 
+			 if (statement != null) {
+				 statement.close();
+			 }
+   		
+			 if (connection != null) {
+				 connection.close();
+			 }
+   		
+			 return result;
+		}) != 0;
+	}
+
+	@Override
+	public boolean updateSetUpUser(int userid) {
+		return executeUpdate(connection -> {
+			 final String query = " UPDATE users SET set_up = 1 WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userid);
+			 System.out.println(statement);
+			 int result = statement.executeUpdate();
+			 if (statement != null) {
+				 statement.close();
+			 }
+  		
+			 if (connection != null) {
+				 connection.close();
+			 }
+  		
+			 return result;
+		}) != 0;
 	}
 }

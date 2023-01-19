@@ -17,17 +17,17 @@ Welcome to Kit! To create your account, please fill in the following and click "
   
   <div class="form-group">
   	<f:label label="First name (as registered)" model="user"></f:label>
-    <f:text_field text_field="first_name" classBS="form-control" model="user"></f:text_field>
+    <f:text_field text_field="first_name" value="${user.first_name}" classBS="form-control" model="user"></f:text_field>
   </div>
   
   <div class="form-group">
   	<f:label label="Last name" model="user"></f:label>
-	<f:text_field text_field="last_name" classBS="form-control" model="user"></f:text_field>
+	<f:text_field text_field="last_name" value="${user.last_name}" classBS="form-control" model="user"></f:text_field>
   </div>
   
   <div class="form-group">
   	<f:label label="Preferred Name/Nickname (optional- for those who do not go by their full first name)" model="user"></f:label>
-  	<f:text_field text_field="preferred_name" classBS="form-control" model="user"></f:text_field>
+  	<f:text_field text_field="preferred_name" value="${user.preferred_name}" classBS="form-control" model="user"></f:text_field>
   </div>
   
   <div class="form-group">

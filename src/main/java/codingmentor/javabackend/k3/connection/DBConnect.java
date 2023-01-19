@@ -33,6 +33,7 @@ public class DBConnect {
 	        }
         }
         catch (SQLException e) {
+        	e.printStackTrace();
             // log some useful data here
         }
         return false;

@@ -17,7 +17,7 @@ public class AccountsMailer {
 	
 	
 	public static void invite_user_email(HttpServletRequest request, User user, String token) throws IOException, URISyntaxException{
-		BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\xampp\\htdocs\\cmkit\\src\\main\\webapp\\log\\MailLog.txt"));
+		
     	String servletPath = UrlUtils.putIdInPath(UrlUtils.SHOW_USER_INVITE_PATH, user.getId());
     	String baseUrl = request.getRequestURL().substring(0, request.getRequestURL().length() - request.getRequestURI().length()) + request.getContextPath();
     	String show_user_invite_url = baseUrl + servletPath + "?token=" + token;
@@ -36,9 +36,28 @@ public class AccountsMailer {
     			+ "</p>\r\n"
     			+ "\r\n"
     			+ "";
-    	mail(user.getEmail(), "Kit Account Setup", emailBody);
-    	writer.append(emailBody);
-    	writer.close();
+
+//		// Specify the file name and path here:
+//		File file = new File("C:\\xampp\\htdocs\\cmkit\\src\\main\\webapp\\log\\MailLog.txt");
+//	 	
+//		/* This logic is to create the file if the
+//		 * file is not already present
+//		 */
+//		
+//		if(!file.exists()){
+//			file.createNewFile();
+//		}
+//		
+//    	// Here true is to append the content to file		
+//		BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+//
+//
+//    	bw.write(emailBody);
+//    	// Closing BufferedWriter Stream
+//    	bw.close();
+    	
+    	mail(user.getEmail(), "Kit Account Setup", emailBody);    	
+
 	}
 	
 	public static void mail(String to, String subject, String body) {
@@ -55,7 +74,7 @@ public class AccountsMailer {
 		properties.put("mail.smtp.auth", true);
 		properties.put("mail.smtp.starttls.enable", "true");
 		properties.put("mail.smtp.host", host);
-		properties.put("mail.smtp.port", "25");
+		properties.put("mail.smtp.port", "587");
 		properties.put("mail.smtp.ssl.trust", host);
 		// Get the Session object.// and pass username and password
 		Session session = Session.getInstance(properties, new javax.mail.Authenticator() {

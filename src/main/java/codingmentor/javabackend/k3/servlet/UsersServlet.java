@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import codingmentor.javabackend.k3.Utils.AccountsMailer;
 import codingmentor.javabackend.k3.Utils.JspUtils;
+import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.User;
@@ -24,11 +25,13 @@ import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 public class UsersServlet extends HttpServlet {
 	private static final long serialVersionUID = -8801001997853031448L;
 	private UserRepository userRepository = null;
+	private PBKDF2Hasher hasher = null;
 
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		userRepository = UserRepositoryImpl.getInstance();
+    	hasher = new PBKDF2Hasher();
 	}
 
 	@Override
@@ -63,7 +66,7 @@ public class UsersServlet extends HttpServlet {
 					req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN).forward(req, resp);
 					break;
 				case "set_up": // If request is /users/:id/set_up
-					processSetUpUser(req, resp, id);
+					getSetUpUserPage(req, resp, id);
 					break;
 				}
 			}
@@ -81,7 +84,7 @@ public class UsersServlet extends HttpServlet {
 			updateUserPreferredName(req, resp);
 			break;
 		case UrlUtils.CREATE_USER_INVITE_PATH:		
-			processCreateUserInvite(req, resp);
+			postSetUpUserPage(req, resp);
 			break;
 		case UrlUtils.USERS_PATH:
 			String pathInfo = req.getPathInfo();
@@ -106,16 +109,32 @@ public class UsersServlet extends HttpServlet {
 				}
 			}
 			
-			if (pathInfoLength == 3 && UrlUtils.isInteger(pathParts[1])) { // If request pattern is PATH: /users/:id/* 
+			if (pathInfoLength == 3 && UrlUtils.isInteger(pathParts[1])) { // If request pattern is PATH: /users/:id/*
+				System.out.println("Value of req.getRequestURL() is: " + req.getRequestURL());
+				System.out.println("Value of req.getServletPath() is: " + req.getServletPath());
 				int id = Integer.parseInt(pathParts[1]);
 				switch (pathParts[2]) {
 				case "accept_invite": // FROM_PATH: SHOW_USER_INVITE_PATH | TO_PATH: ACCEPT_USER_INVITE_PATH  |  JSP: USERS_SHOW_INVITE
-					System.out.println("Trying to accept invite");
 					String token = req.getParameter("user[token]");
-					System.out.println(token);
 					String password = req.getParameter("user[password]");
-					System.out.println(password);
 					String password_confirmation = req.getParameter("user[password_confirmation]");
+					String preferred_name = req.getParameter("user[preferred_name]");
+					String first_name = req.getParameter("user[first_name]");
+					String last_name = req.getParameter("user[last_name]");
+					
+					System.out.println("Value of token is: " + token);
+					System.out.println("Value of first_name is: " + first_name);
+					System.out.println("Value of last_name is: " + last_name);
+					System.out.println("Value of preferred_name is: " + preferred_name);
+					System.out.println("Value of password is: " + password);
+					System.out.println("Value of password_confirmation is: " + password_confirmation);
+					
+					if (first_name == "" || last_name == "") {
+						req.getSession(false).setAttribute("alert", "Failed to create account: First name and last name are required.");
+						resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.SHOW_USER_INVITE_PATH, id) + "?token=" + token);
+						return;
+					}
+					
 					if (password == "" || password_confirmation == "") {
 						req.getSession(false).setAttribute("alert", "Please create a password for your account.");
 						resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.SHOW_USER_INVITE_PATH, id) + "?token=" + token);
@@ -123,8 +142,39 @@ public class UsersServlet extends HttpServlet {
 					}
 					
 					
+					if (!password.equals(password_confirmation)) {
+						req.getSession(false).setAttribute("alert", "Failed to create account: Password confirmation doesn't match Password.");
+						resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.SHOW_USER_INVITE_PATH, id) + "?token=" + token);
+						return;
+					}
 					
+					boolean set_up = userRepository.updateUserInviteParams(id, first_name, last_name, preferred_name, password_confirmation);
 					
+					if (!set_up) {
+						req.getSession(false).setAttribute("alert", "Failed to create account");
+						resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.SHOW_USER_INVITE_PATH, id) + "?token=" + token);
+						return;
+					}
+					
+					userRepository.updateSetUpUser(id);
+					req.getSession(false).setAttribute("notice", "Accout created!");
+					resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH + "/");
+
+					// PSEUDO CODE FOR THIS
+					// If password and password_confirmation is empty
+					// 		set session attribute "Please create a password for your account."
+					//		redirect_to SHOW_USER_INVITE_PATH with ?token = 
+					// 		stop function
+					// If password and password confirmation is not equal
+					//		set session attribute "Failed to create account: Password confirmation doesn't match Password."
+					//		redirect_to SHOW_USER_INVITE_PATH with ?token =
+					// If First Name or Last Name is empty
+					// 		set session attribute "set req attribute "Failed to create account: First name and last name are required."
+					//		redirect_to SHOW_USER_INVITE_PATH with ?token =
+					// Send update request to user with params: first_name, last_name, preferred_name, password
+					// if (update request is successful) 
+					//		Set_up = true
+					//		redirect_to root 
 					break;
 				}
 			}
@@ -137,21 +187,21 @@ public class UsersServlet extends HttpServlet {
 	 * @throws IOException 
 	 * @throws ServletException 
 	 */
-	private void processSetUpUser (HttpServletRequest req, HttpServletResponse resp, int id) throws ServletException, IOException {
+	private void getSetUpUserPage (HttpServletRequest req, HttpServletResponse resp, int id) throws ServletException, IOException {
 		try {
 			String token = req.getParameter("token");
 			User user = userRepository.findUserById(id);
-			if (user != null && userRepository.findUserById(id).validateInviteToken(token)) {
+			if (user != null && user.validateInviteToken(token)) {
 				req.setAttribute("userid", id);
 				req.setAttribute("token", token);
+				req.setAttribute("user", user);
 				req.getRequestDispatcher(JspUtils.USERS_SHOW_INVITE).forward(req, resp);
 				return;
 			} else {
-				System.out.println("token does not match or user id does not exist");
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 				return;
 			}
-		} catch (NoSuchAlgorithmException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -162,18 +212,20 @@ public class UsersServlet extends HttpServlet {
 	 * @param resp
 	 * @throws IOException
 	 */
-	private void processCreateUserInvite(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	private void postSetUpUserPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String token = RandomUtils.unique64();
-		System.out.println(token);
 		String email = req.getParameter("email");
 		boolean admin = (req.getParameterValues("admin").length == 2);
-
+		if (email == "") {
+			req.getSession().setAttribute("alert", "User not invited: Email can't be blank");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+			return;
+		}
 		if (userRepository.findUserByEmail(email) != null) {
 			req.getSession().setAttribute("alert", "User not invited: Email has already been taken");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 			return;
 		}
-
 		userRepository.createUserSendInvite(email, admin);
 		User user =  userRepository.findUserByEmail(email);
 		int new_user_id = user.getId();
@@ -181,14 +233,11 @@ public class UsersServlet extends HttpServlet {
 			userRepository.updateResetDigest(new_user_id, RandomUtils.SHA256Base64(token));
 			AccountsMailer.invite_user_email(req, user, token);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		req.getSession(false).setAttribute("notice", "User invited");
 		resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 	}
-	
 	
 
 	/***
@@ -229,13 +278,19 @@ public class UsersServlet extends HttpServlet {
 		String old_password = req.getParameter("old_password");
 		String new_password = req.getParameter("new_password");
 		String new_password_confirmation = req.getParameter("new_password_confirmation");
-
-		if (!current_user.getPassword_digest().equals(old_password)) {
+		
+		if (!hasher.checkPassword(old_password.toCharArray(), current_user.getPassword_digest())) {
 			req.setAttribute("alert", "Incorrect old password");
 			req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD).forward(req, resp);
 			return;
 		}
-
+		
+		if (new_password == "" || new_password_confirmation == "") {
+			req.setAttribute("alert", "New Password cannot be empty");
+			req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD).forward(req, resp);
+			return;
+		}
+		
 		if (!new_password.equals(new_password_confirmation)) {
 			req.setAttribute("alert", "New password and confirm password must match.");
 			req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD).forward(req, resp);
@@ -269,10 +324,11 @@ public class UsersServlet extends HttpServlet {
 		if (current_user.isAdmin()) {
 			req.getSession(false).setAttribute("notice", "User was successfully updated.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
-		} else {
-			req.getSession(false).setAttribute("notice", "Your settings have been successfully updated.");
-			resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH + "/");
-		}
+			return;
+		} 
+		
+		req.getSession(false).setAttribute("notice", "Your settings have been successfully updated.");
+		resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH + "/");
 	}
 
 	/***

@@ -1,11 +1,39 @@
 <p>
-    Dear test@1234,
+    Dear test@12345,
 <br><br>
     You have been invited to create an account on the Kit platform. To create your account, please follow the link below:
 <br>
-    <a href=http://localhost:8080/cmkit/users/5/set_up?token=eed3ecf940c5b1c8c4615f1dfcc965c1eb3edc6eb639d45ec3dfbc01e8ecda0f> http://localhost:8080/cmkit/users/5/set_up?token=eed3ecf940c5b1c8c4615f1dfcc965c1eb3edc6eb639d45ec3dfbc01e8ecda0f </a>
+    <a href=http://localhost:8080/cmkit/users/9/set_up?token=abaf3c346dcb63b4a63daa9aa85fde8deec208ee18b895a6fdba6ace1e6eaa58> http://localhost:8080/cmkit/users/9/set_up?token=abaf3c346dcb63b4a63daa9aa85fde8deec208ee18b895a6fdba6ace1e6eaa58 </a>
 <br><br>
-    You will be prompted for your name and asked to create a password. Once you have set up your account, you can log in using your email (test@1234) and password at http://localhost:8080/cmkit.
+    You will be prompted for your name and asked to create a password. Once you have set up your account, you can log in using your email (test@12345) and password at http://localhost:8080/cmkit.
+<br><br>
+    If you have any trouble setting up an account or have a question, please contact your professor.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>
+
+<p>
+    Dear newuser@3,
+<br><br>
+    You have been invited to create an account on the Kit platform. To create your account, please follow the link below:
+<br>
+    <a href=http://localhost:8080/cmkit/users/10/set_up?token=a94b928f536cd83f8232f562dd9b45cbb2ada19505a53093ae0cb9341da8c05f> http://localhost:8080/cmkit/users/10/set_up?token=a94b928f536cd83f8232f562dd9b45cbb2ada19505a53093ae0cb9341da8c05f </a>
+<br><br>
+    You will be prompted for your name and asked to create a password. Once you have set up your account, you can log in using your email (newuser@3) and password at http://localhost:8080/cmkit.
+<br><br>
+    If you have any trouble setting up an account or have a question, please contact your professor.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>
+
+<p>
+    Dear testuser@test,
+<br><br>
+    You have been invited to create an account on the Kit platform. To create your account, please follow the link below:
+<br>
+    <a href=http://localhost:8080/cmkit/users/12/set_up?token=ff1348b9618aa277d4d8acacfd168721b7ca42270d619769b66ff44acdff06d6> http://localhost:8080/cmkit/users/12/set_up?token=ff1348b9618aa277d4d8acacfd168721b7ca42270d619769b66ff44acdff06d6 </a>
+<br><br>
+    You will be prompted for your name and asked to create a password. Once you have set up your account, you can log in using your email (testuser@test) and password at http://localhost:8080/cmkit.
 <br><br>
     If you have any trouble setting up an account or have a question, please contact your professor.
 <br><br>

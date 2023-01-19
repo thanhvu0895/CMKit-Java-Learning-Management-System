@@ -51,7 +51,7 @@ public class AuthFilter implements Filter{
 		}
 	    
 	    if (isInSession(req) && isUnauthorized(req)) {
-	    	resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+	    	resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH + "/");
 	    	return;
 	    }
 	    
@@ -74,8 +74,10 @@ public class AuthFilter implements Filter{
 	
 
 	private boolean isLoginPage(HttpServletRequest request) { // if url = /login
-        String path = request.getServletPath();
-        return path.startsWith(UrlUtils.LOGIN_PATH) || path.startsWith(UrlUtils.SHOW_REQUEST_PASSWORD_RESET_PATH);
+		String servletPathpath = request.getServletPath(); 
+		String requestUrl = request.getRequestURL().toString();
+		return servletPathpath.startsWith(UrlUtils.LOGIN_PATH) || servletPathpath.startsWith(UrlUtils.SHOW_REQUEST_PASSWORD_RESET_PATH) 
+				|| requestUrl.endsWith("set_up") || requestUrl.endsWith("accept_invite") ;
     }
 	
 	private boolean isInSession (HttpServletRequest req) { // if no user logged in yet
@@ -94,7 +96,7 @@ public class AuthFilter implements Filter{
 	
 	private boolean isUnauthorized(HttpServletRequest request) {
 		User current_user = (User) request.getSession(false).getAttribute("current_user");
-		String path = request.getServletPath();
+		String path =  request.getServletPath();
 		return  (current_user != null && !current_user.isAdmin() && path.startsWith(UrlUtils.USERS_PATH));
 	}
 }

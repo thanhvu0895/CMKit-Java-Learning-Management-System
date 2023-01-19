@@ -1,5 +1,6 @@
 package codingmentor.javabackend.k3.service.Impl;
 
+import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
 import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.repository.UserRepository;
 import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
@@ -7,10 +8,12 @@ import codingmentor.javabackend.k3.service.UserService;
 
 public class UserServiceImpl implements UserService {
 	private static UserService userService = null;
+	private PBKDF2Hasher hasher = null;
 	private final UserRepository userRepository;
 	
 	private UserServiceImpl( ) {
 		this.userRepository = UserRepositoryImpl.getInstance();
+    	hasher = new PBKDF2Hasher();
 	}
 	
 	public static UserService getInstance() {
@@ -23,12 +26,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User validateLogin(String email, String password) {
 		User user = userRepository.findUserByEmail(email);
+		
 		if (user == null) {
 			return null;
 		}
 		
-		return user.getPassword_digest().equals(password) ? user : null;
+		return hasher.checkPassword(password.toCharArray(), user.getPassword_digest()) ? user : null;
+//		return user.getPassword_digest().equals(password) ? user : null;
 	}
-
-
 }
