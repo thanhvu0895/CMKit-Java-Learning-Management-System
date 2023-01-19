@@ -41,7 +41,7 @@ public class UrlUtils {
 	public static final String CHANGE_PASSWORD_PATH = "/change_password";
 	public static final String CREATE_USER_INVITE_PATH = "/users/create";
 	public static final String SHOW_REQUEST_PASSWORD_RESET_PATH = "/request_password_reset";
-	public static final String SHOW_USE_PASSWORD_RESET_PATH = "/use_password_reset";
+	public static final String SHOW_USER_PASSWORD_RESET_PATH = "/use_password_reset";
 	public static final String NOTIFICATION_SETTINGS_PATH = "/notification_settings";
 	public static final String RESEND_USER_INVITE_PATH = "/users/:id/resend_invite";
 	public static final String USER_EDIT_ADMIN_PATH = "/users/:id/edit_admin";

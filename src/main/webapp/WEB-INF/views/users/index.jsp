@@ -30,31 +30,29 @@
 						</thead>
 						<tbody>
 						  <c:forEach var="user" items="${users}">
-						  <c:if test="${!user.deleted}">
-						  	<tr>
-							<td>${user.email}</td>
-							<td>
-						      <c:if test="${user.admin}"><span class="glyphicon glyphicon-wrench" title="Admin"aria-label="Admin"></span></c:if>
-							</td>
-									<td>
-									  <c:choose>
-										<c:when test="${user.disabled}">
-										  <span class="glyphicon glyphicon-ban-circle"title="Disabled" aria-label="Disabled"></span>
-										</c:when>
-										<c:when test="${!user.set_up}">
-										  <span class="glyphicon glyphicon-off" title="Not Set Up" aria-label="Not Set Up"></span>
-										  <t:link_to path="${UrlUtils.RESEND_USER_INVITE_PATH}" id="${user.id}" method="post" classBS="btn btn-default">Resend Invite</t:link_to>
-										</c:when>
-										</c:choose>
-									</td>
-									<td>
-									  ${user.getFull_name()}
-									</td>
-									<td><t:link_to path="${UrlUtils.USER_EDIT_ADMIN_PATH}" id="${user.id}" classBS="btn btn-primary">Edit</t:link_to></td>
-									<td><t:link_to path="${UrlUtils.USERS_PATH}/:id" id="${user.id}" confirm="Are you sure you want to delete this user?"  classBS="btn btn-danger">Delete</t:link_to></td>
-								</tr>
+						    <c:if test="${!user.deleted}">
+							  <tr>
+							    <td>${user.email}</td>
+								<td>
+							      <c:if test="${user.admin}"><span class="glyphicon glyphicon-wrench" title="Admin"aria-label="Admin"></span></c:if>
+								</td>
+								<td>
+								  <c:choose>
+									<c:when test="${user.disabled}">
+									  <span class="glyphicon glyphicon-ban-circle"title="Disabled" aria-label="Disabled"></span>
+									</c:when>
+									<c:when test="${!user.set_up}">
+									  <span class="glyphicon glyphicon-off" title="Not Set Up" aria-label="Not Set Up"></span>
+									  <t:link_to path="${UrlUtils.RESEND_USER_INVITE_PATH}" id="${user.id}" method="resend_invite" classBS="btn btn-default">Resend Invite</t:link_to>
+									</c:when>
+									</c:choose>
+								</td>
+								  <td>${user.getFull_name()}</td>
+								  <td><t:link_to path="${UrlUtils.USER_EDIT_ADMIN_PATH}" id="${user.id}" classBS="btn btn-primary">Edit</t:link_to></td>
+								<td><t:link_to path="${UrlUtils.USERS_PATH}/:id" id="${user.id}" confirm="Are you sure you want to delete this user?"  classBS="btn btn-danger">Delete</t:link_to></td>
+							  </tr>
 							</c:if>
-							</c:forEach>
+						   </c:forEach>
 						</tbody>
 					</table>
 				</div>

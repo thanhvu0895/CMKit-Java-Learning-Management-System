@@ -13,8 +13,9 @@
 <!-- If url has :id pattern, it will replace with value of id -->
 <c:choose>
 	<c:when test="${not empty classBS && not empty method}">
-		<a class="${classBS}" rel="nofollow" data-method="${method}"
-			href="${path}"><jsp:doBody /></a>
+		<form method="post" action="${path}" style="display: inline-block">
+			<a href="${path}"><button type="submit" class="${classBS}"><jsp:doBody /></button></a>
+		</form>
 	</c:when>
 	<c:when test="${not empty confirm}">
 		<form method="post" action="${path}" onsubmit="return confirm('${confirm}');">
@@ -26,8 +27,10 @@
 		<a class="${classBS}" href="${path}"><jsp:doBody /></a>
 	</c:when>
 	<c:when test="${not empty method}">
-		<a href="${path}" rel="nofollow" data-method="${method}"
-			class="${classBS}"><jsp:doBody /></a>
+		<form method="post" action="${path}" style="display: inline-block">
+		<input type="hidden" name="method" value="${method}"/>
+		<a href="${path}" rel="nofollow" data-method="${method}"><jsp:doBody /></a>
+		</form>
 	</c:when>
 	<c:otherwise>
 		<a href="${path}"><jsp:doBody /></a>

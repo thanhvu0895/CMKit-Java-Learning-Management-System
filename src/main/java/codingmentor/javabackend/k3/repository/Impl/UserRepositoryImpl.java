@@ -5,7 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+
 import java.util.List;
 
 import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
@@ -131,6 +135,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		}) != null;
 	}
 	
+	
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -207,7 +212,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean deleteUser(int id) {
 		return executeUpdate(connection -> {
-			 final String query = " UPDATE users SET deleted = 1 WHERE id = ?;";
+			 final String query = " UPDATE users SET deleted = 1, set_up = 0 WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, id);
 			 System.out.println(statement);
@@ -223,6 +228,28 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 return result;
 		}) != 0;
 	}
+	
+	
+	@Override
+	public boolean recoverUser(int id) {
+		return executeUpdate(connection -> {
+			 final String query = " UPDATE users SET deleted = 0 WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, id);
+			 System.out.println(statement);
+			 int result = statement.executeUpdate();
+			 if (statement != null) {
+				 statement.close();
+			 }
+ 		
+			 if (connection != null) {
+				 connection.close();
+			 }
+ 		
+			 return result;
+		}) != 0;
+	}
+	
 	
 	@Override
 	public boolean updatePreferredNameById(String preferred_name, int id) {
@@ -288,6 +315,31 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 return result;
 		}) != 0;
 	}
+	
+	
+	@Override
+	public boolean updateResetExpires(int userid, LocalDateTime reset_expires) {
+		return executeUpdate(connection -> {
+			 final String query = " UPDATE users SET reset_expires = ?, deleted = 0 WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setTimestamp(1, Timestamp.from(reset_expires.toInstant(ZoneOffset.of("-00:00"))));
+			 statement.setInt(2, userid);
+			 System.out.println(statement);
+			 int result = statement.executeUpdate();
+			 if (statement != null) {
+				 statement.close();
+			 }
+    		
+			 if (connection != null) {
+				 connection.close();
+			 }
+    		
+			 return result;
+		}) != 0;
+	}
+	
+	
+	
 
 	@Override
 	public boolean updateUserInviteParams(int userid, String first_name, String last_name, String preferred_name, String password) {

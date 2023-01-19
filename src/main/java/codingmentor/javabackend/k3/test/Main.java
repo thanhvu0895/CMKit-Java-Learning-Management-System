@@ -6,7 +6,15 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.Date;
+import java.util.TimeZone;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -42,5 +50,30 @@ public class Main {
     	System.out.println("Body of email: " + emailBody);
     	UserRepository userRepository = UserRepositoryImpl.getInstance();
     	userRepository.findUserById(123124809);
+    	
+    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+	    LocalDateTime now = LocalDateTime.now();    
+	    System.out.println(now.toInstant(ZoneOffset.of("-00:00")));
+	    
+	  
+	    int offsetInSeconds = TimeZone.getTimeZone("EST").getRawOffset() / 1000;
+
+	    ZoneOffset zoneOffset = ZoneOffset.ofTotalSeconds(offsetInSeconds);
+
+	    String zoneOffsetString = zoneOffset.toString();
+	    System.out.println(zoneOffsetString);
+	     //  LocalDateTime to Timestamp
+        Timestamp timestamp = Timestamp.valueOf("2023-01-19 19:36:23.770611");
+        System.out.println(timestamp);
+        LocalDateTime localDateTime = timestamp.toLocalDateTime();
+        System.out.println(localDateTime);  // 2019-06-14T15:50:36.068076300
+        
+        
+	}
+	
+	public static Date convertLocalDateTimeToDateUsingInstant(LocalDateTime dateToConvert) {
+	    return java.util.Date
+	      .from(dateToConvert.atZone(ZoneId.systemDefault())
+	      .toInstant());
 	}
 }

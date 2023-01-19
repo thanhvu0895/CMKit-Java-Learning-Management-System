@@ -1,6 +1,6 @@
 <%@ tag trimDirectiveWhitespaces="true" language="java" pageEncoding="ISO-8859-1"%>
 <%@ attribute name="text_field" required="true"%>
-<%@ attribute name="classBS" required="true"%>
+<%@ attribute name="classBS" required="false"%>
 <%@ attribute name="model" required="false"%>
 <%@ attribute name="value" required="required"%>
 <%@ attribute name="hidden" required="false"%>
@@ -9,7 +9,7 @@
 
 <c:choose>
 <c:when test="${not empty model && not empty hidden}">
-	<input value="${value}" class="${classBS}" type="hidden" name="${model}[${text_field}]" id="${model}_${text_field}"/>
+	<input value="${value}" <c:if test="${not empty classBS}">value="${classBS}"</c:if> type="hidden" name="${model}[${text_field}]" id="${model}_${text_field}"/>
 </c:when>
 <c:when test="${not empty model && not empty type}">
 	<input class="${classBS}" type="${type}" <c:if test="${not empty value}">value="${value}"</c:if> name="${model}[${text_field}]" id="${model}_${text_field}"/>
@@ -18,8 +18,12 @@
 <c:when test="${not empty model && empty type}">
 	<input class="${classBS}" type="text" <c:if test="${not empty value}">value="${value}"</c:if> name="${model}[${text_field}]" id="${model}_${text_field}"/>
 </c:when>
+
+<c:when test="${not empty hidden}">
+	<input value="${value}" <c:if test="${not empty classBS}">value="${classBS}"</c:if> type="hidden" name="${text_field}" id="${text_field}"/>
+</c:when>
 <c:otherwise>
-	<input class="${classBS}" type="text" name="${text_field}"  value="${value}">
+	<input <c:if test="${not empty classBS}">value="${classBS}"</c:if> type="text" name="${text_field}"  value="${value}">
 </c:otherwise>
 </c:choose>
 

@@ -1,6 +1,7 @@
 package codingmentor.javabackend.k3.model;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.Date;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
 
@@ -20,12 +21,15 @@ public class User implements Serializable {
     private String preferred_name;
     private String password_digest;
     private String reset_digest;
-    private Date reset_expires;
+    private LocalDateTime reset_expires;
     private boolean set_up;
     private boolean disabled;
     private boolean deleted;
 
- 
+    public boolean validateResetToken(String token) throws NoSuchAlgorithmException {
+    	return (this.reset_digest != null) && LocalDateTime.now().isBefore(reset_expires) && this.reset_digest.equals(RandomUtils.SHA256Base64(token));
+    }
+    
 	/**
      * 
      * @param token stored in user's password_digest
@@ -33,7 +37,7 @@ public class User implements Serializable {
      * @throws NoSuchAlgorithmException
      */
     public boolean validateInviteToken(String token) throws NoSuchAlgorithmException {
-    	return (token != null) && this.reset_digest.equals(RandomUtils.SHA256Base64(token));
+    	return (this.reset_digest != null) && this.reset_digest.equals(RandomUtils.SHA256Base64(token));
     }
     
     //#----- Name methods ------ #
@@ -44,7 +48,7 @@ public class User implements Serializable {
 		if (!this.set_up) {
     		return this.email;
     	} 
-    	return (!preferred_name.isEmpty()) ? this.preferred_name : this.first_name;
+    	return (this.preferred_name != null && !this.preferred_name.isEmpty()) ? this.preferred_name : this.first_name;
 	}
 	
     /**
@@ -76,7 +80,7 @@ public class User implements Serializable {
     		return this.email;
     	} 
     	String full_name = first_name + " " + last_name;
-    	if (!preferred_name.isEmpty()) {
+    	if (this.preferred_name != null && !preferred_name.isEmpty()) {
     		full_name = first_name + " (" + preferred_name + ") " + last_name;
     	}
 		return full_name;
@@ -137,7 +141,7 @@ public class User implements Serializable {
 		return reset_digest;
 	}
 
-	public Date getReset_expires() {
+	public LocalDateTime getReset_expires() {
 		return reset_expires;
 	}
 
@@ -202,6 +206,13 @@ public class User implements Serializable {
         this.set_up= set_up;
         return this;
     }
+    
+    public User reset_expires(LocalDateTime reset_expires) {
+        this.reset_expires = reset_expires;
+        return this;
+    }
+    
+    
     
     public User disabled(boolean disabled) {
         this.disabled= disabled;

@@ -51,12 +51,12 @@ public class AuthFilter implements Filter{
 		}
 	    
 	    if (isInSession(req) && isUnauthorized(req)) {
-	    	resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH + "/");
+	    	resp.sendError(HttpServletResponse.SC_FORBIDDEN);
 	    	return;
 	    }
-	    
-	    
-		if (isInSession(req) || isLoginPage(req) || isResourceRequest(req)) {
+	    	  
+
+		if (isInSession(req) || isLoginPage(req) || isResourceRequest(req) || isSetUpPage(req))  {
 			if (!isResourceRequest(req)) { // Prevent restricted pages from being cached.
 				resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 				resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
@@ -65,6 +65,7 @@ public class AuthFilter implements Filter{
 
 			chain.doFilter(request, response);
 		} else {
+			
 			// If not at home page nor logged in, send to /login
 			resp.sendRedirect(req.getContextPath() + UrlUtils.LOGIN_PATH);
 			// we return here so the original servlet is not processed
@@ -75,9 +76,12 @@ public class AuthFilter implements Filter{
 
 	private boolean isLoginPage(HttpServletRequest request) { // if url = /login
 		String servletPathpath = request.getServletPath(); 
+		return servletPathpath.startsWith(UrlUtils.LOGIN_PATH) || servletPathpath.startsWith(UrlUtils.SHOW_REQUEST_PASSWORD_RESET_PATH) || servletPathpath.startsWith(UrlUtils.SHOW_USER_PASSWORD_RESET_PATH);
+    }
+	
+	private boolean isSetUpPage(HttpServletRequest request) { // if url = /login
 		String requestUrl = request.getRequestURL().toString();
-		return servletPathpath.startsWith(UrlUtils.LOGIN_PATH) || servletPathpath.startsWith(UrlUtils.SHOW_REQUEST_PASSWORD_RESET_PATH) 
-				|| requestUrl.endsWith("set_up") || requestUrl.endsWith("accept_invite") ;
+		return  requestUrl.endsWith("set_up") || requestUrl.endsWith("accept_invite");
     }
 	
 	private boolean isInSession (HttpServletRequest req) { // if no user logged in yet

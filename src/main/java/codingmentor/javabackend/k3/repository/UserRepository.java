@@ -1,5 +1,7 @@
 package codingmentor.javabackend.k3.repository;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import codingmentor.javabackend.k3.model.User;
@@ -74,7 +76,7 @@ public interface UserRepository {
      
       
   	/**
-  	 * Update user's password 
+  	 * Update user's reset_digest 
   	 * @param: User user
   	 * @return boolean if update successful or else false
   	 */
@@ -93,4 +95,20 @@ public interface UserRepository {
     	 * @return boolean if update successful or else false
     	 */
       boolean updateSetUpUser(int userid);
+      
+      
+      /**
+       * updateResetExpires
+       * @param userid
+       * @param reset_expires
+       * @return
+       */
+      public boolean updateResetExpires(int userid, LocalDateTime reset_expires);
+      
+      /**
+       * 
+       * @param id
+       * @return
+       */
+      public boolean recoverUser(int id);
 }

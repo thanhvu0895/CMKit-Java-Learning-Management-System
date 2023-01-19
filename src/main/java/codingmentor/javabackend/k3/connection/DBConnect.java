@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnect {
-	 private static final String URL = "jdbc:mysql://kit-database-do-user-12351930-0.b.db.ondigitalocean.com:25060/db_kit?useSSL=false";
+	 private static final String URL = "jdbc:mysql://kit-database-do-user-12351930-0.b.db.ondigitalocean.com:25060/db_kit?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=America/New_York";
 	 private static final String USERNAME = "doadmin"; // mysql username
-	 private static final String PASSWORD = "AVNS_3gPXYc_UWokHhj9cFQL"; //mysql password
+	 private static final String PASSWORD = "Colen321!"; //mysql password
 	
 	 public static Connection getConnection() {
 		Connection conn = null;

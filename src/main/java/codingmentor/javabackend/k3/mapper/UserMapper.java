@@ -16,6 +16,7 @@ public class UserMapper implements RowMapper<User> {
 				.last_name(results.getString("last_name"))
 				.preferred_name(results.getString("preferred_name"))
 				.password_digest(results.getString("password_digest"))
+				.reset_expires(results.getTimestamp("reset_expires").toLocalDateTime())
 				.reset_digest(results.getString("reset_digest"))
 				.set_up(results.getBoolean("set_up"))
 				.disabled(results.getBoolean("disabled"))
