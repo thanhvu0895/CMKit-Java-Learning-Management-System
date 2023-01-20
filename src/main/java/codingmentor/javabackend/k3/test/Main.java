@@ -4,23 +4,13 @@ package codingmentor.javabackend.k3.test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.security.SecureRandom;
-import java.security.spec.KeySpec;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.util.Base64;
 import java.util.Date;
 import java.util.TimeZone;
-
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
-
 import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
-import codingmentor.javabackend.k3.Utils.RandomUtils;
 import codingmentor.javabackend.k3.repository.UserRepository;
 import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 
@@ -50,8 +40,6 @@ public class Main {
     	System.out.println("Body of email: " + emailBody);
     	UserRepository userRepository = UserRepositoryImpl.getInstance();
     	userRepository.findUserById(123124809);
-    	
-    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	    LocalDateTime now = LocalDateTime.now();    
 	    System.out.println(now.toInstant(ZoneOffset.of("-00:00")));
 	    

@@ -220,7 +220,7 @@
         </table>
       </div>
     </div>
-  </div>
+  </div> 
   <hr>
 </t:layoutj>
 

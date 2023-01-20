@@ -2,7 +2,6 @@ package codingmentor.javabackend.k3.model;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
-import java.util.Date;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
 
 
@@ -211,8 +210,6 @@ public class User implements Serializable {
         this.reset_expires = reset_expires;
         return this;
     }
-    
-    
     
     public User disabled(boolean disabled) {
         this.disabled= disabled;

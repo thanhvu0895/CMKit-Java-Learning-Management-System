@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import codingmentor.javabackend.k3.model.Department;
-import codingmentor.javabackend.k3.model.User;
 
 public class DepartmentMapper  implements RowMapper<Department> {
 	@Override

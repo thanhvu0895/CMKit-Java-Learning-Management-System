@@ -11,7 +11,6 @@ import java.util.List;
 
 import codingmentor.javabackend.k3.mapper.DepartmentMapper;
 import codingmentor.javabackend.k3.model.Department;
-import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.repository.AbstractRepository;
 import codingmentor.javabackend.k3.repository.DepartmentRepository;
 
