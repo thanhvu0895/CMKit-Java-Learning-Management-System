@@ -9,21 +9,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import codingmentor.javabackend.k3.mapper.DepartmentMapper;
-import codingmentor.javabackend.k3.model.Department;
+import codingmentor.javabackend.k3.mapper.StudentMapper;
+import codingmentor.javabackend.k3.model.Student;
 import codingmentor.javabackend.k3.repository.AbstractRepository;
-import codingmentor.javabackend.k3.repository.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.StudentRepository;
 
-public class DepartmentRepositoryImpl extends AbstractRepository<Department> implements DepartmentRepository{
-	private static DepartmentRepository repository = null;
-	private final DepartmentMapper mapper;
-	private DepartmentRepositoryImpl() {
-		mapper = new DepartmentMapper();
+public class StudentRepositoryImpl extends AbstractRepository<Student> implements StudentRepository{
+	private static StudentRepository repository = null;
+	private final StudentMapper mapper;
+	private StudentRepositoryImpl() {
+		mapper = new StudentMapper();
 	}
 	 
-	public static DepartmentRepository getInstance() {
+	public static StudentRepository getInstance() {
     	if (repository == null) {
-    		repository = new DepartmentRepositoryImpl();
+    		repository = new StudentRepositoryImpl();
     	}
     	return repository;
     }
@@ -57,18 +57,18 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	 */
 
 	@Override
-	public List<Department> getDepartments() {
+	public List<Student> getStudents() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM departments";
+			final String query = "SELECT * FROM students";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println(statement);
-			List<Department> departmentsList = new ArrayList<>();
+			List<Student> studentsList = new ArrayList<>();
 			while(results.next()) {
-				departmentsList.add(mapper.map(results));
+				studentsList.add(mapper.map(results));
 			}
 			close(connection, statement, results);
-			return departmentsList;
+			return studentsList;
 		});
 	}
 
@@ -76,16 +76,16 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Department getDepartmentById(int id) {
+	public Student getStudentById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM departments WHERE id = ? LIMIT 1;";
+			final String query = "SELECT * FROM students WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
 		    System.out.println(statement);
-		    Department department = (results.next()) ? mapper.map(results) : null;
+		    Student student = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
-		    return department;
+		    return student;
     	});
 	}
 	    

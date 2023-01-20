@@ -9,21 +9,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import codingmentor.javabackend.k3.mapper.DepartmentMapper;
-import codingmentor.javabackend.k3.model.Department;
+import codingmentor.javabackend.k3.mapper.RubricItemMapper;
+import codingmentor.javabackend.k3.model.RubricItem;
 import codingmentor.javabackend.k3.repository.AbstractRepository;
-import codingmentor.javabackend.k3.repository.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.RubricItemRepository;
 
-public class DepartmentRepositoryImpl extends AbstractRepository<Department> implements DepartmentRepository{
-	private static DepartmentRepository repository = null;
-	private final DepartmentMapper mapper;
-	private DepartmentRepositoryImpl() {
-		mapper = new DepartmentMapper();
+public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> implements RubricItemRepository{
+	private static RubricItemRepository repository = null;
+	private final RubricItemMapper mapper;
+	private RubricItemRepositoryImpl() {
+		mapper = new RubricItemMapper();
 	}
 	 
-	public static DepartmentRepository getInstance() {
+	public static RubricItemRepository getInstance() {
     	if (repository == null) {
-    		repository = new DepartmentRepositoryImpl();
+    		repository = new RubricItemRepositoryImpl();
     	}
     	return repository;
     }
@@ -57,18 +57,18 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	 */
 
 	@Override
-	public List<Department> getDepartments() {
+	public List<RubricItem> getRubricItems() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM departments";
+			final String query = "SELECT * FROM rubricItems";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println(statement);
-			List<Department> departmentsList = new ArrayList<>();
+			List<RubricItem> rubricItemsList = new ArrayList<>();
 			while(results.next()) {
-				departmentsList.add(mapper.map(results));
+				rubricItemsList.add(mapper.map(results));
 			}
 			close(connection, statement, results);
-			return departmentsList;
+			return rubricItemsList;
 		});
 	}
 
@@ -76,16 +76,16 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Department getDepartmentById(int id) {
+	public RubricItem getRubricItemById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM departments WHERE id = ? LIMIT 1;";
+			final String query = "SELECT * FROM rubricItems WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
 		    System.out.println(statement);
-		    Department department = (results.next()) ? mapper.map(results) : null;
+		    RubricItem rubricItem = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
-		    return department;
+		    return rubricItem;
     	});
 	}
 	    

@@ -7,14 +7,14 @@ import codingmentor.javabackend.k3.model.Department;
 
 public interface DepartmentRepository {
     /**
-	 * Find list of departments
+	 * Get list of Departments
 	 *
-	 * @return a list of all departments if found or null
+	 * @return a list of all Departments if found or null
 	 */
     List<Department> getDepartments();
     
     /**
-     * Implement getDeparmentById 1/20/23
+     * Get department by Department's id
      * @return Department if exists and null if not
      */
     Department getDepartmentById(int id);
