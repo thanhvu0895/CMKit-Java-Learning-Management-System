@@ -22,7 +22,7 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 	UrlUtils.ENABLE_FILE_VIEWER_PATH,
 	UrlUtils.FILE_VIEWER_SETTINGS_PATH 
 })
-public class SessionsServlet extends HttpServlet {
+public class SessionServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -3801412244941307670L;
 	private UserService userService = null;

@@ -1,6 +1,5 @@
 package codingmentor.javabackend.k3.repository.Impl;
 
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,9 +22,8 @@ import codingmentor.javabackend.k3.repository.UserRepository;
 public class UserRepositoryImpl extends AbstractRepository<User> implements UserRepository {
 	private static UserRepository repository = null;
 	private PBKDF2Hasher hasher = null;
-	// Mapper will map data from result set to the domain object
+
     private final UserMapper mapper;
-    
     
     private UserRepositoryImpl() {
     	mapper = new UserMapper();
@@ -49,17 +47,17 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     @Override
     public User findUserByEmail(String email) { 
 		return executeQuerySingle(connection -> {
-
-    		// Query to find user by email
-		final String query = "SELECT * FROM users WHERE email = ? LIMIT 1;";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, email);
-        ResultSet results = statement.executeQuery();
-        System.out.println(statement);
-        User user = (results.next()) ? mapper.map(results) : null;
-        close(connection, statement, results);
-        return user;
-    	});
+	
+			// Query to find user by email
+			final String query = "SELECT * FROM users WHERE email = ? LIMIT 1;";
+	        PreparedStatement statement = connection.prepareStatement(query);
+	        statement.setString(1, email);
+	        ResultSet results = statement.executeQuery();
+	        System.out.println(statement);
+	        User user = (results.next()) ? mapper.map(results) : null;
+	        close(connection, statement, results);
+	        return user;
+	    });
     }
     
     private void close (Connection connection, Statement ps, ResultSet rs) {

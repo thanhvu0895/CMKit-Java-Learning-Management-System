@@ -1,6 +1,7 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page trimDirectiveWhitespaces="true" contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 
 <t:layoutj pageTitle="Departments">
 <h1>Departments</h1>
@@ -13,23 +14,16 @@
   </thead>
 
   <tbody>
+  <c:forEach var="department" items="${departments}">
       <tr>
-        <td><a href="/departments/1/courses">trét</a></td>
+        <td><t:link_to path="${UrlUtils.DEPARTMENTS_PATH}/:id" id="${department.id}">${department.title}</t:link_to></td>
       </tr>
-      <tr>
-        <td><a href="/departments/2/courses">abc</a></td>
-      </tr>
-      <tr>
-        <td><a href="/departments/3/courses">abc</a></td>
-      </tr>
-      <tr>
-        <td><a href="/departments/4/courses">test</a></td>
-      </tr>
+  </c:forEach>
   </tbody>
 </table>
 
 <br>
 
-<a class="btn btn-primary" href="/departments/new">New Department</a>
-	
+<t:link_to path="${UrlUtils.NEW_DEPARTMENT_PATH}" classBS="btn btn-primary" >New Department</t:link_to>
+
 </t:layoutj>

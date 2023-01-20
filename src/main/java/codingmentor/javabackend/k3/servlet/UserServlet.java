@@ -1,9 +1,6 @@
 package codingmentor.javabackend.k3.servlet;
 
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +15,6 @@ import codingmentor.javabackend.k3.Utils.AccountsMailer;
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
-import codingmentor.javabackend.k3.Utils.TimeUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.repository.UserRepository;
@@ -34,7 +30,7 @@ import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 		UrlUtils.SHOW_REQUEST_PASSWORD_RESET_PATH,
 		UrlUtils.SHOW_USER_PASSWORD_RESET_PATH
 })
-public class UsersServlet extends HttpServlet {
+public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = -8801001997853031448L;
 	private UserRepository userRepository = null;
 	private PBKDF2Hasher hasher = null;

@@ -35,24 +35,18 @@ public class AccountsMailer {
 //	    	
 //	    	/* BEGIN COMMENT FOR PRODUCTION */
 //			// Specify the file name and path here:
-//			File file = new File("C:\\xampp\\htdocs\\cmkit\\src\\main\\webapp\\log\\MailLog.txt");
-//		 	
+//			File file = new File("C:\\xampp\\htdocs\\cmkit\\src\\main\\webapp\\log\\MailLog.txt");	 	
 //			/* This logic is to create the file if the
 //			 * file is not already present
-//			 */
-//			
+//			 */			
 //			if(!file.exists()){
 //				file.createNewFile();
-//			}
-//			
+//			}	
 //	    	// Here true is to append the content to file		
 //			BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-//	
-//	
 //	    	bw.write(emailBody);
 //	    	// Closing BufferedWriter Stream
-//	    	bw.close();
-//	    	
+//	    	bw.close();  	
 //	    	/* END COMMENT FOR PRODUCTION */
 	    	
 	      	mail(user.getEmail(), "Kit Password Reset", emailBody);
@@ -94,11 +88,8 @@ public class AccountsMailer {
 //			if(!file.exists()){
 //				file.createNewFile();
 //			}
-//			
 //	    	// Here true is to append the content to file		
 //			BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-	//
-	//
 //	    	bw.write(emailBody);
 //	    	// Closing BufferedWriter Stream
 //	    	bw.close();
@@ -154,68 +145,5 @@ public class AccountsMailer {
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
 		}
-	}
-	
-	public static void main(String[] args) throws URISyntaxException, IOException {
-    	URL url = ClassLoader.getSystemResource("MailLog.txt");
-		File f = new File(url.toURI().getPath());
-		FileWriter fw = new FileWriter(f.getAbsoluteFile());
-		BufferedWriter writer = new BufferedWriter(fw);
-		String emailBody = "TESTTODOABV";
-    	writer.write(emailBody);
-    	writer.close();
-//		// Recipient's email ID needs to be mentioned.
-//		String to = "hongkhanhvu94@gmail.com";
-//
-//		// Sender's email ID needs to be mentioned
-//		String from = "thanh.vu15@kzoo.edu";
-//
-//		// Assuming you are sending email from gmail smtp
-//		String host = "email-smtp.us-east-1.amazonaws.com";
-//
-//		// Get system properties
-//		Properties properties = System.getProperties();
-//
-//		// Setup mail server
-//		properties.put("mail.smtp.auth", true);
-//		properties.put("mail.smtp.starttls.enable", "true");
-//		properties.put("mail.smtp.host", host);
-//		properties.put("mail.smtp.port", "25");
-//		properties.put("mail.smtp.ssl.trust", host);
-//
-//		// Get the Session object.// and pass username and password
-//		Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
-//
-//			protected PasswordAuthentication getPasswordAuthentication() {
-//
-//				return new PasswordAuthentication("AKIAQJEQ4YBALLTVKEJ5", "BAFv6bh/Th97fSyFC3oFtW7DX/R6jGErcC+HzRkSNtcP");
-//
-//			}
-//		});
-//
-//		try {
-//			// Create a default MimeMessage object.
-//			MimeMessage message = new MimeMessage(session);
-//
-//			// Set From: header field of the header.
-//			message.setFrom(new InternetAddress(from));
-//
-//			// Set To: header field of the header.
-//			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-//
-//			// Set Subject: header field
-//			message.setSubject("Hello World!!");
-//
-//			// Send the actual HTML message.
-//			message.setContent("<h1>This is actual message embedded in HTML tags</h1>", "text/html");
-//
-//			System.out.println("sending...");
-//
-//			// Send message
-//			Transport.send(message);
-//			System.out.println("Sent message successfully....");
-//		} catch (MessagingException mex) {
-//			mex.printStackTrace();
-//		}
 	}
 }

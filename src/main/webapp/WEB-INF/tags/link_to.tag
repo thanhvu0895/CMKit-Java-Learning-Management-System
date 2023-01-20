@@ -7,10 +7,9 @@
 <%@ attribute name="method" required="false"%>
 <%@ attribute name="confirm" required="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="path" value="${pageContext.request.contextPath}${path}" /> <!-- ADD CONTEXT PATH TO url URL  -->
-<c:set var="path"
-	value="${UrlUtils.putIdInPath(pageContext.getAttribute('path'), pageContext.getAttribute('id'))}" />
-<!-- If url has :id pattern, it will replace with value of id -->
+<c:set var="path" value="${pageContext.request.contextPath}${path}" /> <%-- ADD CONTEXT PATH TO url URL --%>  
+<c:set var="path" value="${UrlUtils.putIdInPath(pageContext.getAttribute('path'), pageContext.getAttribute('id'))}" />
+	<%-- If url has :id pattern, it will replace with value of id  --%>
 <c:choose>
 	<c:when test="${not empty classBS && not empty method}">
 		<form method="post" action="${path}" style="display: inline-block">
@@ -33,7 +32,7 @@
 		</form>
 	</c:when>
 	<c:otherwise>
-		<a href="${path}"><jsp:doBody /></a>
+		<a href="${path}"><jsp:doBody/></a>
 	</c:otherwise>
 </c:choose>
 <%-- 

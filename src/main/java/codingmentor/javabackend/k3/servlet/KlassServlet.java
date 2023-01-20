@@ -12,23 +12,21 @@ import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 @WebServlet(urlPatterns = {
-		UrlUtils.SSH_KEYS_PATH
-	})
-public class SshKeysServlet extends HttpServlet{
-	private static final long serialVersionUID = 2596892884110214787L;
+	UrlUtils.KLASSES_PATH,
+	
+})
+public class KlassServlet extends HttpServlet {
+
+	private static final long serialVersionUID = -290278653216172056L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		switch(req.getServletPath()) {
-		case UrlUtils.SSH_KEYS_PATH:
-			req.getRequestDispatcher(JspUtils.SSH_KEYS_INDEX)
+		case UrlUtils.KLASSES_PATH:
+			req.getRequestDispatcher(JspUtils.KLASSES_INDEX)
 				.forward(req, resp);
 			break;
 		}
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//SSH KEY ADD AND REMOVE
 	}
 }
