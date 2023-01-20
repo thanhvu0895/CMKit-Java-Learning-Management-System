@@ -10,7 +10,7 @@
 <h1> Kit Account Creation </h1>
 
 Welcome to Kit! To create your account, please fill in the following and click "Submit".
-<t:form_with url="${UrlUtils.ACCEPT_USER_INVITE_PATH}" id="${userid}">
+<t:form_with url="${UrlUtils.ACCEPT_USER_INVITE_PATH}" id="${user.id}">
   <div class="form-group">
   	<f:text_field text_field="token" classBS="form-control" model="user" value="${token}" hidden="true"></f:text_field>
   </div>

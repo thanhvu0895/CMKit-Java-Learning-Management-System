@@ -1,5 +1,6 @@
 package codingmentor.javabackend.k3.repository.Impl;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -253,7 +254,6 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	
 	@Override
 	public boolean updatePreferredNameById(String preferred_name, int id) {
-		// TODO Auto-generated method stub
 		return executeUpdate(connection -> {
 			 final String query = "UPDATE users SET preferred_name = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
@@ -322,7 +322,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		return executeUpdate(connection -> {
 			 final String query = " UPDATE users SET reset_expires = ?, deleted = 0 WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setTimestamp(1, Timestamp.from(reset_expires.toInstant(ZoneOffset.of("-00:00"))));
+			 statement.setTimestamp(1, Timestamp.from(reset_expires.toInstant(ZoneOffset.of("-05:00"))));
 			 statement.setInt(2, userid);
 			 System.out.println(statement);
 			 int result = statement.executeUpdate();

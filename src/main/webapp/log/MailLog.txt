@@ -150,3 +150,47 @@
 <br><br>
     Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
 </p>
+<p>
+    Dear 123,
+<br><br>
+    Here is the link to reset your Kit password:
+<br>
+    <a href=http://localhost:8080/cmkit/use_password_reset?token=fd684c453b5e37fbd73b8936c29b3bbaacdd9e569a9d7061dff589974778ee5e&user=35> http://localhost:8080/cmkit/use_password_reset?token=fd684c453b5e37fbd73b8936c29b3bbaacdd9e569a9d7061dff589974778ee5e&user=35 </a>
+<br><br>
+    If you did not request a password reset, you should disregard this email.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>
+<p>
+    Dear 123,
+<br><br>
+    Here is the link to reset your Kit password:
+<br>
+    <a href=http://localhost:8080/cmkit/use_password_reset?token=931cb6ac970a12639fdcb8ee08e2fd578dc556aaf520566682ed03258f3fffc0&user=35> http://localhost:8080/cmkit/use_password_reset?token=931cb6ac970a12639fdcb8ee08e2fd578dc556aaf520566682ed03258f3fffc0&user=35 </a>
+<br><br>
+    If you did not request a password reset, you should disregard this email.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>
+<p>
+    Dear 123,
+<br><br>
+    Here is the link to reset your Kit password:
+<br>
+    <a href=http://localhost:8080/cmkit/use_password_reset?token=c2c596c0cebc7e429589a34ad461ca9686cd5b9362c93ae2fef96952bb8eba6f&user=35> http://localhost:8080/cmkit/use_password_reset?token=c2c596c0cebc7e429589a34ad461ca9686cd5b9362c93ae2fef96952bb8eba6f&user=35 </a>
+<br><br>
+    If you did not request a password reset, you should disregard this email.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>
+<p>
+    Dear 123,
+<br><br>
+    Here is the link to reset your Kit password:
+<br>
+    <a href=http://localhost:8080/cmkit/use_password_reset?token=9e517afa64f0d54ad5d7afab1267843d92aa33b6a7cb3a8b895a3d5f1465d78b&user=35> http://localhost:8080/cmkit/use_password_reset?token=9e517afa64f0d54ad5d7afab1267843d92aa33b6a7cb3a8b895a3d5f1465d78b&user=35 </a>
+<br><br>
+    If you did not request a password reset, you should disregard this email.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>

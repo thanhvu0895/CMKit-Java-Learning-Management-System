@@ -101,6 +101,9 @@ public class UsersServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch (req.getServletPath()) {
+		case UrlUtils.SHOW_USER_PASSWORD_RESET_PATH:
+			postUserPasswordReset(req, resp);
+			break;
 		case UrlUtils.SHOW_REQUEST_PASSWORD_RESET_PATH:
 			postRequestPaswordReset(req, resp);
 			break;
@@ -155,22 +158,24 @@ public class UsersServlet extends HttpServlet {
 		try {
 			String token = req.getParameter("token");
 			String userid = req.getParameter("user");
-			System.out.println("Value of token is: " + token);
-			System.out.println("Value of userid is: " + userid);
+			if (userid == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
 			
 			if (UrlUtils.isInteger(userid)) {
 				int id = Integer.parseInt(userid);
 				User requestedUser = userRepository.findUserById(id);
 				if (requestedUser != null && requestedUser.validateResetToken(token)) {
+					req.getSession(false).setAttribute("token", token);
+					req.getSession(false).setAttribute("userid", id);
 					req.getRequestDispatcher(JspUtils.PASSWORD_RESET_SHOW_USE_PASSWORD_RESET)
-					.forward(req, resp);
+						.forward(req, resp);
 					return;
 				}
-
+				
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			}
-
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -200,6 +205,49 @@ public class UsersServlet extends HttpServlet {
 		}
 	}
 	
+	
+	/**
+	 * 
+	 * @param req
+	 * @param resp
+	 * @throws IOException
+	 */
+	private void postUserPasswordReset(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		try {
+			String new_password = req.getParameter("new_password");
+			String new_password_confirmation = req.getParameter("new_password_confirmation");
+			String baseUrl = req.getRequestURL().substring(0, req.getRequestURL().length() - req.getRequestURI().length()) + req.getContextPath();
+			String currentPath = baseUrl + UrlUtils.SHOW_USER_PASSWORD_RESET_PATH + "?token=" 
+					+ req.getSession(false).getAttribute("token") 
+					+  "&user=" + req.getSession(false).getAttribute("userid");
+			if (new_password == "" || new_password_confirmation == "") {
+				req.getSession(false).setAttribute("alert", "New Password cannot be empty");
+				resp.sendRedirect(currentPath);
+				return;
+			}
+			
+			if (!new_password.equals(new_password_confirmation)) {
+				req.getSession(false).setAttribute("alert", "New password and confirmation must match.");
+				resp.sendRedirect(currentPath);
+				return;
+			}
+			
+			int userid = (Integer) req.getSession(false).getAttribute("userid");
+			
+			System.out.println(userid);
+			
+			User user = userRepository.findUserById(userid);
+			System.out.println("Value of userid is: " + userid);
+			
+			if (user != null) {
+				userRepository.updatePassword(new_password_confirmation, user);
+				req.getSession(false).setAttribute("notice", "Password reset.");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.LOGIN_PATH);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * 
@@ -449,7 +497,7 @@ public class UsersServlet extends HttpServlet {
 			}
 			
 			if (!new_password.equals(new_password_confirmation)) {
-				req.setAttribute("alert", "New password and confirm password must match.");
+				req.setAttribute("alert", "New password and confirmation must match.");
 				req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD).forward(req, resp);
 				return;
 			}

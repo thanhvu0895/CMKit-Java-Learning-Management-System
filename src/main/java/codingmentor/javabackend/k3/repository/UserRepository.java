@@ -1,9 +1,8 @@
 package codingmentor.javabackend.k3.repository;
 
-import java.sql.Date;
+
 import java.time.LocalDateTime;
 import java.util.List;
-
 import codingmentor.javabackend.k3.model.User;
 
 public interface UserRepository {
@@ -111,4 +110,5 @@ public interface UserRepository {
        * @return
        */
       public boolean recoverUser(int id);
+
 }
