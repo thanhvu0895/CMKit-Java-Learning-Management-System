@@ -59,7 +59,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 	@Override
 	public List<RubricItem> getRubricItems() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM rubricItems";
+			final String query = "SELECT * FROM rubric_items";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println(statement);
@@ -78,7 +78,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 	@Override
 	public RubricItem getRubricItemById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM rubricItems WHERE id = ? LIMIT 1;";
+			final String query = "SELECT * FROM rubric_items WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();

@@ -1,16 +1,15 @@
 <%@page import="java.util.Arrays"%>
-<%@page import="codingmentor.javabackend.k3.model.PastKlass"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 
-<c:set var="pastKlassList"
+<%-- <c:set var="pastKlassList"
 	value='<%=Arrays.asList(new PastKlass("Backend Super Intensive", "BE101", "Autumn 2022", 1, 89),
 		new PastKlass("Data Structures and Algorithms", "COMP210", "Fall 2019", 1, 80.52),
 		new PastKlass("Class Diagram Design", "COMP215", "Spring 2022", 2, 95.61),
 		new PastKlass("Web Development", "COMP490", "Fall 2022", 1, 99.28))%>'></c:set>
-
+ --%>
 <t:layoutj pageTitle="Classes">
 	<h1>Classes</h1>
 

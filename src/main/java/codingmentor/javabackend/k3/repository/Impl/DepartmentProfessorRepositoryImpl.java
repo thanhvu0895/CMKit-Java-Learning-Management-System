@@ -59,7 +59,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 	@Override
 	public List<DepartmentProfessor> getDepartmentProfessors() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM departmentProfessors";
+			final String query = "SELECT * FROM department_professors";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println(statement);
@@ -78,7 +78,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 	@Override
 	public DepartmentProfessor getDepartmentProfessorById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM departmentProfessors WHERE id = ? LIMIT 1;";
+			final String query = "SELECT * FROM department_professors WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();

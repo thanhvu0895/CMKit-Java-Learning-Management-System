@@ -18,4 +18,18 @@ public interface DepartmentRepository {
      * @return Department if exists and null if not
      */
     Department getDepartmentById(int id);
+    
+    /**
+     * Add a new Department to DB
+     * @return newly inserted department id if inserted and -1 otherwise
+     */
+    int insertDepartment (String title, int repo_id);
+    
+    
+    /**Check if Department already exists by Department's title
+     * 
+     * @param title
+     * @return
+     */
+    public boolean existedByTitle(String title);
 }

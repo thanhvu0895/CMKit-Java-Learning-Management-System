@@ -15,5 +15,5 @@
 	  	<f:submit submitValue="Save" classBS="btn btn-success"></f:submit>
 	  </div>
 	</t:form_with><br><br><br>
-	<a class="btn btn-primary" href="${pageContext.request.contextPath}${UrlUtils.CHANGE_PASSWORD_PATH}">Change Password</a>
+	<t:link_to text="Change Password" path="${UrlUtils.CHANGE_PASSWORD_PATH}" classBS="btn btn-primary" ></t:link_to>
 </t:layoutj>

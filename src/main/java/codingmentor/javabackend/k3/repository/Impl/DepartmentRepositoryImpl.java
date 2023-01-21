@@ -88,5 +88,51 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 		    return department;
     	});
 	}
-	    
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int insertDepartment(String title, int repo_id) {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO departments (title, repo_id) VALUES (?, ?);";
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setString(1, title);
+			statement.setInt(2, repo_id);
+			System.out.println(statement);
+			ResultSet rs = statement.getGeneratedKeys();
+			rs.next();
+			int affectedRows = statement.executeUpdate();
+			
+			if (affectedRows == 0) {
+				throw new SQLException("Creating Department failed, no rows affected.");
+			}
+			
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+               return generatedKeys.getInt(1);
+            }
+            
+			close(connection, statement, generatedKeys);
+			return 0;
+		});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean existedByTitle(String title) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT title FROM departments WHERE title = ?  LIMIT 1;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, title);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println(statement);
+			 Department department = (results.next() && results.getString("title").equals(title)) ? new Department() : null;
+			 close(connection, statement, results);
+			 return department;
+		}) != null;
+	}
+	
 }

@@ -16,7 +16,7 @@
   <tbody>
   <c:forEach var="department" items="${departments}">
       <tr>
-        <td><t:link_to path="${UrlUtils.DEPARTMENTS_PATH}/:id" id="${department.id}">${department.title}</t:link_to></td>
+        <td><t:link_to path="${UrlUtils.DEPARTMENT_COURSES_PATH}" id="${department.id}">${department.title}</t:link_to></td>
       </tr>
   </c:forEach>
   </tbody>

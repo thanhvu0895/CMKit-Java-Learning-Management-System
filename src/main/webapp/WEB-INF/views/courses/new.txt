@@ -1,0 +1,12 @@
+<t:layoutj pageTitle="New Course">
+
+<ol class="breadcrumb">
+  <%@ include file="../departments/_department_crumbs.jsp" %>
+  <li class="active">New Course</li>
+</ol>
+
+<h1>New Course</h1>
+
+<%@ include file="/_form.jsp" %>
+
+</t:layoutj>

@@ -39,9 +39,6 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     
     /**
      * {@inheritDoc}
-     *
-     * @param email: user's email
-     * @return A User with email or null
      */
     
     @Override
@@ -85,10 +82,6 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
   	 */
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @param email: user's email
-	 * @param admin: where user is admin
-	 * @return true if user is created and false if not
 	 */
     
 	@Override
@@ -103,12 +96,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			statement.setString(3, password_digest);
 			System.out.println(statement);
 			int result = statement.executeUpdate();
-    		if (statement != null) {
-    			statement.close();
-    		}    		
-    		if (connection != null) {
-    			connection.close();
-    		}
+    		close(connection, statement, null);			
 			return result;
 		}) != 0;
 	}
@@ -116,9 +104,6 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @param email: user's email
-	 * @return 
 	 */
 	@Override
 	public boolean existedByEmail(String email) {
@@ -137,8 +122,6 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @return list of all users
 	 */
 
 	@Override
@@ -159,9 +142,6 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @param id: user's id
-	 * @return 
 	 */
 	@Override
 	public User findUserById(int id) {
@@ -191,18 +171,9 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			statement.setBoolean(5, disabled);
 			statement.setInt(6, id);
 			System.out.println(statement);
-			int result = statement.executeUpdate();
-		 
-			 if (statement != null) {
-				 statement.close();
-    		}
-    		
-    		if (connection != null) {
-    			connection.close();
-    		}
-			 
-			 
-			 return result;
+			int result = statement.executeUpdate();		 
+			close(connection, statement, null);
+			return result;
 		}) != 0;
 	}
 
@@ -216,14 +187,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setInt(1, id);
 			 System.out.println(statement);
 			 int result = statement.executeUpdate();
-			 if (statement != null) {
-				 statement.close();
-			 }
- 		
-			 if (connection != null) {
-				 connection.close();
-			 }
- 		
+			 close(connection, statement, null);
 			 return result;
 		}) != 0;
 	}
@@ -237,14 +201,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setInt(1, id);
 			 System.out.println(statement);
 			 int result = statement.executeUpdate();
-			 if (statement != null) {
-				 statement.close();
-			 }
- 		
-			 if (connection != null) {
-				 connection.close();
-			 }
- 		
+			 close(connection, statement, null);
 			 return result;
 		}) != 0;
 	}
@@ -259,14 +216,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setInt(2, id);
 			 System.out.println(statement);
 			 int result = statement.executeUpdate();
-			 if (statement != null) {
-				 statement.close();
-			 }
-    		
-			 if (connection != null) {
-				 connection.close();
-			 }
-    		
+			 close(connection, statement, null);
 			 return result;
 		}) != 0;
 	}
@@ -281,14 +231,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setInt(2, user.getId());
 			 System.out.println(statement);
 			 int result = statement.executeUpdate();
-			 if (statement != null) {
-				 statement.close();
-			 }
-    		
-			 if (connection != null) {
-				 connection.close();
-			 }
-    		
+			 close(connection, statement, null);
 			 return result;
 		}) != 0;
 	}
@@ -302,14 +245,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setInt(2, userid);
 			 System.out.println(statement);
 			 int result = statement.executeUpdate();
-			 if (statement != null) {
-				 statement.close();
-			 }
-    		
-			 if (connection != null) {
-				 connection.close();
-			 }
-    		
+			 close(connection, statement, null);
 			 return result;
 		}) != 0;
 	}
@@ -324,14 +260,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setInt(2, userid);
 			 System.out.println(statement);
 			 int result = statement.executeUpdate();
-			 if (statement != null) {
-				 statement.close();
-			 }
-    		
-			 if (connection != null) {
-				 connection.close();
-			 }
-    		
+			 close(connection, statement, null);
 			 return result;
 		}) != 0;
 	}
@@ -353,15 +282,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setInt(5, userid);
 			 System.out.println(statement);
 			 int result = statement.executeUpdate();
-			 
-			 if (statement != null) {
-				 statement.close();
-			 }
-   		
-			 if (connection != null) {
-				 connection.close();
-			 }
-   		
+			 close(connection, statement, null);
 			 return result;
 		}) != 0;
 	}
@@ -374,14 +295,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setInt(1, userid);
 			 System.out.println(statement);
 			 int result = statement.executeUpdate();
-			 if (statement != null) {
-				 statement.close();
-			 }
-  		
-			 if (connection != null) {
-				 connection.close();
-			 }
-  		
+			 close(connection, statement, null);
 			 return result;
 		}) != 0;
 	}

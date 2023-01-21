@@ -18,4 +18,10 @@ public interface RepoRepository {
      * @return Repo if exists and null if not
      */
     Repo getRepoById(int id);
+    
+    /**
+     * Add a new Repo to DB
+     * @return id of newly added repo or if failed return -1
+     */
+    int insertRepo ();
 }

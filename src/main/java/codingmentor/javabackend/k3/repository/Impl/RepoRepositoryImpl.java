@@ -81,12 +81,35 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
 			final String query = "SELECT * FROM repos WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
-		    ResultSet results = statement.executeQuery();
+		    ResultSet result = statement.executeQuery();
 		    System.out.println(statement);
-		    Repo repo = (results.next()) ? mapper.map(results) : null;
-		    close(connection, statement, results);
+		    Repo repo = (result.next()) ? mapper.map(result) : null;
+		    close(connection, statement, result);
 		    return repo;
     	});
 	}
-	    
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int insertRepo() {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO repos () VALUES ();";
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			System.out.println(statement);
+			ResultSet rs  = statement.getGeneratedKeys();
+			rs.next();
+			int affectedRows = statement.executeUpdate();
+			if (affectedRows == 0) {
+				throw new SQLException("Creating Repo failed, no rows affected.");
+			}
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+               return generatedKeys.getInt(1);
+            }
+			close(connection, statement, generatedKeys);
+			return 0;
+		});
+	}
 }

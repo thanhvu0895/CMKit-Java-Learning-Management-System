@@ -49,15 +49,15 @@ public class JspUtils {
 	public static final String CHECKED_RUBRIC_ITEMS_SHOW = "/WEB-INF/views/checked_rubric_items/show.jsp";
 	
 	// COURSES
-	public static final String COURSES_COURSE_CRUMBS = "/WEB-INF/views/_course_crumbs.jsp";
-	public static final String COURSES_FORM = "/WEB-INF/views/_form.jsp";
-	public static final String COURSES_TABS = "/WEB-INF/views/_tabs.jsp";
-	public static final String COURSES_EDIT = "/WEB-INF/views/edit.jsp";
-	public static final String COURSES_FILES = "/WEB-INF/views/files.jsp";
-	public static final String COURSES_GRADE_CATEGORIES = "/WEB-INF/views/grade_categories.jsp";
-	public static final String COURSES_INDEX = "/WEB-INF/views/index.jsp";
-	public static final String COURSES_NEW = "/WEB-INF/views/new.jsp";
-	public static final String COURSES_SHOW = "/WEB-INF/views/show.jsp";
+	public static final String COURSES_COURSE_CRUMBS = "/WEB-INF/views/courses/_course_crumbs.jsp";
+	public static final String COURSES_FORM = "/WEB-INF/views/courses/_form.jsp";
+	public static final String COURSES_TABS = "/WEB-INF/views/courses/_tabs.jsp";
+	public static final String COURSES_EDIT = "/WEB-INF/views/courses/edit.jsp";
+	public static final String COURSES_FILES = "/WEB-INF/views/courses/files.jsp";
+	public static final String COURSES_GRADE_CATEGORIES = "/WEB-INF/views/courses/grade_categories.jsp";
+	public static final String COURSES_INDEX = "/WEB-INF/views/courses/index.jsp";
+	public static final String COURSES_NEW = "/WEB-INF/views/courses/new.jsp";
+	public static final String COURSES_SHOW = "/WEB-INF/views/courses/show.jsp";
 	
 	
 	// DEPARTMENTS

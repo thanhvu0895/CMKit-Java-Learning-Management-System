@@ -7,7 +7,14 @@ package codingmentor.javabackend.k3.Utils;
 public class UrlUtils {
 
 	public static final String DEPARTMENTS_PATH = "/departments";
+	public static final String DEPARTMENTS_ALL_PATH = "/departments/*";
 	public static final String NEW_DEPARTMENT_PATH = "/departments/new";
+	public static final String DEPARTMENT_COURSES_PATH = "/departments/:id/courses";
+	public static final String DEPARTMENT_FILES_PATH = "/departments/:id/files";
+	public static final String DEPARTMENT_CLASSES_PATH = "/departments/:id/klasses";
+	public static final String EDIT_DEPARTMENT_PATH = "/departments/:id/edit";
+	public static final String DEPARTMENT_DEPARTMENT_PROFESSOR_PATH = "/departments/:department_id/department_professors/:id";
+	
 	
 	public static final String EXTENSIONS_PATH = "/extensions";
 	public static final String NEW_EXTENSIONS_PATH = "/extensions/new";
@@ -50,8 +57,10 @@ public class UrlUtils {
 	
 	public static final String KLASSES_PATH = "/klasses";
 	public static final String NEW_KLASS_PATH = "/klasses/new";
+	public static final String KLASS_ASSIGNMENTS_PATH = "/klasses/:klass_id/assignments";
 	
 	public static final String COURSES_PATH = "/courses";
+	public static final String COURSES_PATH_ALL = "/courses/*";
 	public static final String NEW_COURSE_PATH = "/courses/new";
 	
 	public static final String LOGIN_PATH = "/login";

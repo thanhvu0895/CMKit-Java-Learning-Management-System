@@ -59,16 +59,16 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 	@Override
 	public List<Course> getCourses() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM assignments";
+			final String query = "SELECT * FROM courses";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println(statement);
-			List<Course> assignmentsList = new ArrayList<>();
+			List<Course> coursesList = new ArrayList<>();
 			while(results.next()) {
-				assignmentsList.add(mapper.map(results));
+				coursesList.add(mapper.map(results));
 			}
 			close(connection, statement, results);
-			return assignmentsList;
+			return coursesList;
 		});
 	}
 
@@ -78,15 +78,66 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 	@Override
 	public Course getCourseById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM assignments WHERE id = ? LIMIT 1;";
+			final String query = "SELECT * FROM courses WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
 		    System.out.println(statement);
-		    Course assignment = (results.next()) ? mapper.map(results) : null;
+		    Course course = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
-		    return assignment;
+		    return course;
     	});
 	}
-	    
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Course> getCourseByDepartmentId(int departmentId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM courses where department_id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, departmentId);
+			ResultSet results = statement.executeQuery();
+			System.out.println(statement);
+			List<Course> coursesList = new ArrayList<>();
+			while(results.next()) {
+				coursesList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return coursesList;
+		});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int insertCourse(String title, String course_code, int repo_id, int department_id, boolean active) {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO courses (title, course_code, repo_id, department_id, active) VALUES (?, ?, ?, ?, ?);";
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setString(1, title);
+			statement.setString(2, course_code);
+			statement.setInt(3, repo_id);
+			statement.setInt(4, department_id);
+			statement.setBoolean(5, active);
+			System.out.println(statement);
+			ResultSet rs = statement.getGeneratedKeys();
+			rs.next();
+			int affectedRows = statement.executeUpdate();
+			
+			if (affectedRows == 0) {
+				throw new SQLException("Creating Course failed, no rows affected.");
+			}
+			
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+               return generatedKeys.getInt(1);
+            }
+            
+			close(connection, statement, generatedKeys);
+			return 0;
+		});
+	}
 }
