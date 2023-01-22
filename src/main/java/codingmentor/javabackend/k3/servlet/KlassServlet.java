@@ -10,12 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
-import codingmentor.javabackend.k3.repository.CourseRepository;
-import codingmentor.javabackend.k3.repository.DepartmentRepository;
-import codingmentor.javabackend.k3.repository.RepoRepository;
-import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
+
 
 @WebServlet(urlPatterns = {
 	UrlUtils.KLASSES_ALL_PATH,

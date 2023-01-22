@@ -42,6 +42,7 @@ public class CourseServlet extends HttpServlet{
 		switch(req.getServletPath()) {
 		case UrlUtils.COURSES_PATH:
 			String pathInfo = req.getPathInfo();
+			
 			if (pathInfo == null || pathInfo.equals("/")) {
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 				return; 
@@ -120,6 +121,7 @@ public class CourseServlet extends HttpServlet{
 			
 			if (pathInfo == null || pathInfo.equals("/")) { // if request is /users/ or /users
 				postCourseCreate(req, resp);
+				return;
 			}
 
 			
@@ -158,8 +160,10 @@ public class CourseServlet extends HttpServlet{
 			
 			if (repoId != -1) {
 				int courseId = courseRepository.insertCourse(courseTitle, courseCode, repoId, departmentId, courseActive);
+				req.getSession(false).setAttribute("department", departmentRepository.getDepartmentById(departmentId));
+				req.getSession(false).setAttribute("course", courseRepository.getCourseById(courseId));
 				req.getSession(false).setAttribute("notice", "Course was successfully created.");
-				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.COURSES_PATH, courseId));
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.COURSES_PATH +"/:id", courseId));
 				return;
 			}	
 		} catch (Exception e) {

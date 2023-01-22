@@ -4,6 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@taglib prefix="f" tagdir="/WEB-INF/tags/form_tags"%>
 
-
 <t:layoutj pageTitle="${department.title} | Classes">
+<ol class="breadcrumb">
+  <%@ include file="_department_crumbs.jsp" %>
+  <li class="active">Classes</li>
+</ol>
+<jsp:include page="_tabs.jsp"><jsp:param name="current" value=":klasses"/></jsp:include>
 </t:layoutj>

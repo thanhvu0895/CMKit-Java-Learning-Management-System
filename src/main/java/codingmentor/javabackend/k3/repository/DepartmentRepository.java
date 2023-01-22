@@ -32,4 +32,11 @@ public interface DepartmentRepository {
      * @return
      */
     public boolean existedByTitle(String title);
+    
+    /**Check if Department already exists by Department's title
+     * 
+     * @param title
+     * @return
+     */
+    public boolean updateDepartmentTitleById(String title, int id);
 }

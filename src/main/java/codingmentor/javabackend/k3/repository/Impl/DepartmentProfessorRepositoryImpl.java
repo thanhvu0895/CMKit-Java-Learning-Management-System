@@ -88,5 +88,25 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 		    return departmentProfessor;
     	});
 	}
-	    
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override   
+	public List<DepartmentProfessor>  getDepartmentProfessorsByDepartmentId(int id) {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM department_professors where department_id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, id);
+			ResultSet results = statement.executeQuery();
+			System.out.println(statement);
+			List<DepartmentProfessor> departmentProfessorsList = new ArrayList<>();
+			while(results.next()) {
+				departmentProfessorsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return departmentProfessorsList;
+		});
+	}
 }

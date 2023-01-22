@@ -5,8 +5,10 @@
 
 <t:layoutj pageTitle="${course.title} | Assignments">
 <ol class="breadcrumb">
-  
+  <%@ include file="_course_crumbs.jsp" %>
   <li class="active">Assignments</li>
 </ol>
+
+<jsp:include page="_tabs.jsp"><jsp:param name="current" value=":assignments"/></jsp:include>
 
 </t:layoutj>

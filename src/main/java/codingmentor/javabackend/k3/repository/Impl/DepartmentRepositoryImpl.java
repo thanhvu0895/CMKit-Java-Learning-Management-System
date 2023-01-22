@@ -135,4 +135,20 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 		}) != null;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean updateDepartmentTitleById(String title, int id) {
+		return executeUpdate(connection -> {
+			 final String query = "UPDATE departments SET title = ? WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, title);
+			 statement.setInt(2, id);
+			 System.out.println(statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}
 }

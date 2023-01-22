@@ -18,4 +18,12 @@ public interface DepartmentProfessorRepository {
      * @return DepartmentProfessor if exists and null if not
      */
     DepartmentProfessor getDepartmentProfessorById(int id);
+    
+    
+    /**
+     * Get department by DepartmentProfessor's id
+     * @return DepartmentProfessor if exists and null if not
+     */
+    List<DepartmentProfessor>  getDepartmentProfessorsByDepartmentId(int id);
+
 }

@@ -2,11 +2,16 @@
 <%@ attribute name="url" required="true"%>
 <%@ attribute name="method" required="false"%>
 <%@ attribute name="id" required="false"%>
+<%@ attribute name="secondId" required="false"%>
+<%@ attribute name="classBS" required="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ tag import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 <c:set var="url" value="${pageContext.request.contextPath}${url}"/> <!-- ADD CONTEXT PATH TO url URL  -->
-<c:set var="url" value ="${UrlUtils.putIdInPath(pageContext.getAttribute('url'), pageContext.getAttribute('id'))}"/> <!-- If url has :id pattern, it will replace with value of id -->
-<form action="${url}" method="post" accept-charset="UTF-8" data-remote="true">
+<c:set var="url" value ="${UrlUtils.putIdInPath(pageContext.getAttribute('url'), pageContext.getAttribute('id'))}"/>
+<c:set var="url" value="${UrlUtils.putSecondInPath(pageContext.getAttribute('url'), pageContext.getAttribute('secondId'))}" />
+
+
+<form action="${url}" method="post" <c:if test="${not empty classBS}">class="${classBS}"</c:if> accept-charset="UTF-8" data-remote="true">
   <c:choose>
     <c:when test ="${not empty method}">
 	  <input type="hidden" name="method" value="${method}"  />
@@ -25,7 +30,7 @@
  * @return: this form accept url with :id in path, then replace :id to url  
  * 
 / 
-<t:form_with url="${}" id="${}" authenticity_token="${}"> 
+<t:form_with url="${}" id="${}"> 
  	FORM BODY GOES HERE
 </t:form_with>
 

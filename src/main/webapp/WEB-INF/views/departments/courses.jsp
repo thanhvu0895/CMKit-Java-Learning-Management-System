@@ -6,10 +6,10 @@
 <t:layoutj pageTitle="${department.title} | Courses">
 
 <ol class="breadcrumb">
-	<%@ include file="_department_crumbs.jsp" %>
+  <%@ include file="_department_crumbs.jsp" %>
   <li class="active">Courses</li>
 </ol>
-<jsp:include page="_tabs.jsp"><jsp:param value=":courses" name="current"/></jsp:include>
+<jsp:include page="_tabs.jsp"><jsp:param name="current" value=":courses"/></jsp:include>
 
 <center>
   <input type="checkbox" id="showInactive" onchange="hideRows()">  Show Inactive Courses

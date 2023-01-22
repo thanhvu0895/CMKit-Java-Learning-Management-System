@@ -3,4 +3,10 @@
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <t:layoutj pageTitle="${course.title} | Grade Categories">
+<ol class="breadcrumb">
+  <%@ include file="_course_crumbs.jsp" %>
+  <li class="active">Grade Categories</li>
+</ol>
+
+<jsp:include page="_tabs.jsp"><jsp:param name="current" value=":grade_categories"/></jsp:include>
 </t:layoutj>

@@ -14,6 +14,7 @@ public class UrlUtils {
 	public static final String DEPARTMENT_CLASSES_PATH = "/departments/:id/klasses";
 	public static final String EDIT_DEPARTMENT_PATH = "/departments/:id/edit";
 	public static final String DEPARTMENT_DEPARTMENT_PROFESSOR_PATH = "/departments/:department_id/department_professors/:id";
+	public static final String DEPARTMENT_DEPARTMENT_PROFESSORS_PATH = "/departments/:department_id/department_professors/";
 	
 	
 	public static final String EXTENSIONS_PATH = "/extensions";
@@ -40,6 +41,9 @@ public class UrlUtils {
 	public static final String NEW_GRADE_CATEGORY_PATH = "/grade_categories/new";
 	
 	public static final String STUDENTS_PATH = "/students";
+	public static final String TOGGLE_ASSIGNED_NOTIFICATION_PATH = "/students/:id/toggle_assigned_notification";
+	
+	
 	public static final String PROFESSORS_PATH = "/professors";
 	
 	public static final String USERS_ALL_PATH = "/users/*";
@@ -63,6 +67,7 @@ public class UrlUtils {
 	public static final String COURSES_PATH = "/courses";
 	public static final String COURSES_PATH_ALL = "/courses/*";
 	public static final String NEW_COURSE_PATH = "/courses/new";
+	public static final String COURSE_FILES_PATH ="/courses/:id/files";
 	
 	public static final String LOGIN_PATH = "/login";
 	public static final String LOGOUT_PATH = "/logout";
@@ -80,6 +85,11 @@ public class UrlUtils {
     
     public static String putIdInPath(String path, int id) {
     	path = path.replaceFirst("\\:id", String.valueOf(id));
+    	return path;
+    }
+    
+    public static String putSecondInPath(String path, int secondId) {
+    	path = path.replaceFirst("\\:.*?id", String.valueOf(secondId));
     	return path;
     }
     

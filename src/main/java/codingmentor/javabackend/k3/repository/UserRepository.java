@@ -2,6 +2,7 @@ package codingmentor.javabackend.k3.repository;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import codingmentor.javabackend.k3.model.User;
 
@@ -110,5 +111,12 @@ public interface UserRepository {
        * @return
        */
       public boolean recoverUser(int id);
+      
+      /**
+       * 
+       * @param userList
+       * @return
+       */
+      public List<User> getUserFromIdList (ArrayList<String> userIdsList);
 
 }

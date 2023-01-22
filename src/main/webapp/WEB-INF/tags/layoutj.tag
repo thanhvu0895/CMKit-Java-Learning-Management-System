@@ -105,10 +105,7 @@
 			<div class="alert alert-success">${sessionScope.notice}</div>
 		</c:if>
 		<c:remove var="notice"/>
-
-		<c:if test="${not empty notice}">
-			<div class="alert alert-success">${notice}</div>
-		</c:if>
+		
 		<c:if test="${not empty alert}">
 			<div class="alert alert-danger">${alert}</div>
 		</c:if>

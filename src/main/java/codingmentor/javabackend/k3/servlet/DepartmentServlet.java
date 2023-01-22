@@ -1,6 +1,7 @@
 package codingmentor.javabackend.k3.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,12 +14,18 @@ import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.Course;
 import codingmentor.javabackend.k3.model.Department;
+import codingmentor.javabackend.k3.model.DepartmentProfessor;
+import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.repository.CourseRepository;
+import codingmentor.javabackend.k3.repository.DepartmentProfessorRepository;
 import codingmentor.javabackend.k3.repository.DepartmentRepository;
 import codingmentor.javabackend.k3.repository.RepoRepository;
+import codingmentor.javabackend.k3.repository.UserRepository;
 import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
+import codingmentor.javabackend.k3.repository.Impl.DepartmentProfessorRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
+import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 
 
 @WebServlet(urlPatterns = {
@@ -31,6 +38,8 @@ public class DepartmentServlet extends HttpServlet{
 	private DepartmentRepository departmentRepository = null;
 	private RepoRepository repoRepository = null;
 	private CourseRepository courseRepository = null;
+	private UserRepository userRepository = null;
+	private DepartmentProfessorRepository departmentProfessorRepository = null;
 	
 	@Override
 	public void init() throws ServletException {
@@ -38,14 +47,17 @@ public class DepartmentServlet extends HttpServlet{
 		departmentRepository = DepartmentRepositoryImpl.getInstance();
 		repoRepository = RepoRepositoryImpl.getInstance();
 		courseRepository = CourseRepositoryImpl.getInstance();
+		departmentProfessorRepository = DepartmentProfessorRepositoryImpl.getInstance();
+		userRepository = UserRepositoryImpl.getInstance();
 	}
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch(req.getServletPath()) {
 		case UrlUtils.DEPARTMENTS_PATH:
+			System.out.println("Value of req.getServletPath() is: " + req.getServletPath());
 			String pathInfo = req.getPathInfo();
-			if (pathInfo == null || pathInfo.equals("/")) { 		
+			if (pathInfo == null || pathInfo.equals("/")) {
 				getDepartmentsIndex(req, resp);
 				return;
 			}
@@ -69,6 +81,7 @@ public class DepartmentServlet extends HttpServlet{
 					break;
 				}
 			}
+			break;
 		case UrlUtils.NEW_DEPARTMENT_PATH: 					
 			getDepartmentsNew(req, resp);
 			break;
@@ -92,14 +105,17 @@ public class DepartmentServlet extends HttpServlet{
 			List<Course> courses = courseRepository.getCourseByDepartmentId(departmentId);
 			req.setAttribute("department", department);
 			req.setAttribute("courses", courses);
+			
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_COURSES)
 				.forward(req, resp);
 			
-			System.out.println("Value of department id is: " + departmentId);
-			System.out.println("GET DEPARTMENT BY departmentId"); // save to department
-			System.out.println("Get all department_professors where department_id = 12"); // save to courses list
-			System.out.println("Get all courses from courses table where department_id = 12"); // save to courses list
-			System.out.println("Get department_professors where department id = 12 and user_id = 3 and admin = true");
+			
+			
+//			System.out.println("Value of department id is: " + departmentId);
+//			System.out.println("GET DEPARTMENT BY departmentId"); // save to department
+//			System.out.println("Get all department_professors where department_id = 12"); // save to courses list
+//			System.out.println("Get all courses from courses table where department_id = 12"); // save to courses list
+//			System.out.println("Get department_professors where department id = 12 and user_id = 3 and admin = true");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -107,6 +123,19 @@ public class DepartmentServlet extends HttpServlet{
 	
 	private void getDepartmentEdit(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
+			Department department = departmentRepository.getDepartmentById(departmentId);
+			List<DepartmentProfessor> departmentProfessors = departmentProfessorRepository.getDepartmentProfessorsByDepartmentId(departmentId);
+			ArrayList<String> userIds = new ArrayList<String>();
+			
+			for (DepartmentProfessor dp : departmentProfessors) {
+				userIds.add(String.valueOf(dp.getUser_id()));
+			}
+			
+			List<User> departmentProfessorUsers = userRepository.getUserFromIdList(userIds);
+			
+			req.setAttribute("department", department);	
+			req.setAttribute("department_professors", departmentProfessors);
+			req.setAttribute("department_professor_users", departmentProfessorUsers);
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_EDIT)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -147,8 +176,30 @@ public class DepartmentServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch(req.getServletPath()) {
 		case UrlUtils.DEPARTMENTS_PATH:
-			postDepartmentsCreate(req, resp);
-			break;
+			String pathInfo = req.getPathInfo();
+			
+			if (pathInfo == null || pathInfo.equals("/")) { // if request is /users/ or /users
+				postDepartmentsCreate(req, resp);
+				break;
+			}
+
+			String[] pathParts = pathInfo.split("/");
+			int pathInfoLength = pathParts.length;
+			if (pathInfoLength == 2 && UrlUtils.isInteger(pathParts[1])) {
+				int departmentId = Integer.parseInt(pathParts[1]);
+				switch (req.getParameter("method")) {
+				case "PATCH":
+					System.out.println("Method is patch");
+					patchDepartmentUpdate(req, resp, departmentId);
+					break;
+				case "PUT":
+					putDepartmentUpdate(req, resp, departmentId);
+					break;
+				case "DELETE":
+					deleteDepartmentDestroy(req, resp, departmentId);
+					break;
+				}
+			}
 		}
 	}
 	
@@ -156,16 +207,14 @@ public class DepartmentServlet extends HttpServlet{
 		try {
 			String title = req.getParameter("department[title]");
 			if (title == "") {
-				req.setAttribute("alert", "Title can't be blank");
-				req.getRequestDispatcher(JspUtils.DEPARTMENTS_NEW)
-					.forward(req, resp);
+				req.getSession(false).setAttribute("alert", "Title can't be blank");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_DEPARTMENT_PATH);
 				return;
 			}
 			
 			if (departmentRepository.existedByTitle(title)) {
-				req.setAttribute("alert", "Department with the same title already existed");
-				req.getRequestDispatcher(JspUtils.DEPARTMENTS_NEW)
-					.forward(req, resp);
+				req.getSession(false).setAttribute("alert", "Department with the same title already existed");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_DEPARTMENT_PATH);
 				return;
 			}
 			
@@ -178,6 +227,43 @@ public class DepartmentServlet extends HttpServlet{
 				return;
 			}	
 			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void patchDepartmentUpdate(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws IOException {
+		try {
+			String title = req.getParameter("department[title]");
+			Department department = departmentRepository.getDepartmentById(departmentId);
+			List<Course> courses = courseRepository.getCourseByDepartmentId(departmentId);
+			if (title == "") {
+				req.getSession(false).setAttribute("department", department);
+				req.getSession(false).setAttribute("courses", courses);
+				req.getSession(false).setAttribute("alert", "Title can't be blank");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_DEPARTMENT_PATH, departmentId));
+				return;
+			}
+			departmentRepository.updateDepartmentTitleById(title, departmentId);
+			req.getSession(false).setAttribute("department", department);
+			req.getSession(false).setAttribute("courses", courses);
+			req.getSession(false).setAttribute("notice", "Department was successfully updated.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.DEPARTMENT_COURSES_PATH, departmentId));
+			return;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void putDepartmentUpdate(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws IOException {
+		try {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void deleteDepartmentDestroy(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws IOException {
+		try {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

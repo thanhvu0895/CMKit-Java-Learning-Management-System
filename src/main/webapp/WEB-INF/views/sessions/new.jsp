@@ -1,7 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
-
 <t:layoutj pageTitle="Log In">
 	<div class="page-header">
 		<h1> Log In </h1>

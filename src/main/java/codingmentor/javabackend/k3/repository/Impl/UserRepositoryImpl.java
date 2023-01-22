@@ -299,4 +299,37 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 return result;
 		}) != 0;
 	}
+	
+	@Override
+	public List<User> getUserFromIdList (ArrayList<String> userIdsList) {
+		return executeQuery(connection -> {
+			String query = "SELECT users.* FROM users WHERE users.id IN (";
+			
+			if (userIdsList.size() == 0) {
+				return null;
+			}
+			
+			for (int i = 0; i < userIdsList.size(); i++) {
+				query += (i == 0 ? "" :",") + "?";
+			}
+			query += ");";
+			
+			System.out.println(query);
+			PreparedStatement statement = connection.prepareStatement(query);
+			
+			for (int i = 0; i < userIdsList.size(); i++) {
+				statement.setInt(i + 1, Integer.parseInt(userIdsList.get(i)));
+			}
+			
+			ResultSet results = statement.executeQuery();
+			System.out.println(statement);
+			 
+			List<User> usersList = new ArrayList<>();
+			while(results.next()) {
+				usersList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return usersList;
+		 });
+	 }
 }
