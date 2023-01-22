@@ -52,7 +52,7 @@ public class CourseServlet extends HttpServlet{
 
 			if (pathInfoLength == 2 && UrlUtils.isInteger(pathParts[1])) { 
 				int courseId = Integer.parseInt(pathParts[1]); 
-				getCoursesShow(req, resp, courseId);			//CASE: courses#show
+				getCourseShow(req, resp, courseId);			//CASE: courses#show
 				break;
 			}
 			
@@ -60,7 +60,7 @@ public class CourseServlet extends HttpServlet{
 				int courseId = Integer.parseInt(pathParts[1]);
 				switch (pathParts[2]) {
 				case "edit":
-					getCoursesEdit(req, resp, courseId);
+					getCourseEdit(req, resp, courseId);
 					break;
 				case "files":
 					break;
@@ -70,13 +70,13 @@ public class CourseServlet extends HttpServlet{
 			}
 			break;
 		case UrlUtils.NEW_COURSE_PATH:
-			getCoursesNew(req, resp);
+			getCourseNew(req, resp);
 			break;
 		}
 	}
 	
 	
-	private void getCoursesShow(HttpServletRequest req, HttpServletResponse resp, int courseId) throws ServletException, IOException {
+	private void getCourseShow(HttpServletRequest req, HttpServletResponse resp, int courseId) throws ServletException, IOException {
 		try {
 			req.getRequestDispatcher(JspUtils.COURSES_SHOW)
 				.forward(req, resp);
@@ -85,7 +85,7 @@ public class CourseServlet extends HttpServlet{
 		}
 	}
 	
-	private void getCoursesEdit(HttpServletRequest req, HttpServletResponse resp, int courseId) throws ServletException, IOException {
+	private void getCourseEdit(HttpServletRequest req, HttpServletResponse resp, int courseId) throws ServletException, IOException {
 		try {
 			req.getRequestDispatcher(JspUtils.COURSES_EDIT)
 				.forward(req, resp);
@@ -94,7 +94,7 @@ public class CourseServlet extends HttpServlet{
 		}
 	}
 	
-	private void getCoursesNew(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	private void getCourseNew(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			String departmentIdString = req.getParameter("department");
 			if (UrlUtils.isInteger(departmentIdString)) {
@@ -119,7 +119,7 @@ public class CourseServlet extends HttpServlet{
 			String pathInfo = req.getPathInfo();
 			
 			if (pathInfo == null || pathInfo.equals("/")) { // if request is /users/ or /users
-				postCoursesCreate(req, resp);
+				postCourseCreate(req, resp);
 			}
 
 			
@@ -130,10 +130,10 @@ public class CourseServlet extends HttpServlet{
 				int courseId = Integer.parseInt(pathParts[1]);
 				switch (req.getParameter("method")) {
 				case "PATCH":
-					patchCoursesUpdate(req, resp, courseId);
+					patchCourseUpdate(req, resp, courseId);
 					break;
 				case "PUT":
-					putCoursesUpdate(req, resp, courseId);
+					putCourseUpdate(req, resp, courseId);
 					break;
 				case "DELETE":
 					deleteCourseDestroy(req, resp, courseId);
@@ -143,7 +143,7 @@ public class CourseServlet extends HttpServlet{
 		}	
 	}
 	
-	private void postCoursesCreate(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	private void postCourseCreate(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {
 			String departmentIdString = req.getParameter("department");
 			int departmentId = Integer.parseInt(departmentIdString);
@@ -168,14 +168,14 @@ public class CourseServlet extends HttpServlet{
 	}
 	
 
-	private void patchCoursesUpdate(HttpServletRequest req, HttpServletResponse resp, int courseId) throws IOException {
+	private void patchCourseUpdate(HttpServletRequest req, HttpServletResponse resp, int courseId) throws IOException {
 		try {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void putCoursesUpdate(HttpServletRequest req, HttpServletResponse resp, int courseId) throws IOException {
+	private void putCourseUpdate(HttpServletRequest req, HttpServletResponse resp, int courseId) throws IOException {
 		try {
 		} catch (Exception e) {
 			e.printStackTrace();

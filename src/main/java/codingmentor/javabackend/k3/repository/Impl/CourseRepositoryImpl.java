@@ -71,6 +71,26 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 			return coursesList;
 		});
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+
+	@Override
+	public List<Course> getCoursesOrderByCourseCode() {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM courses ORDER BY course_code";
+			PreparedStatement statement = connection.prepareStatement(query);
+			ResultSet results = statement.executeQuery();
+			System.out.println(statement);
+			List<Course> coursesList = new ArrayList<>();
+			while(results.next()) {
+				coursesList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return coursesList;
+		});
+	}
 
 	/**
 	 * {@inheritDoc}

@@ -56,6 +56,7 @@ public class UrlUtils {
 	public static final String ACCEPT_USER_INVITE_PATH = "/users/:id/accept_invite";
 	
 	public static final String KLASSES_PATH = "/klasses";
+	public static final String KLASSES_ALL_PATH = "/klasses/*";
 	public static final String NEW_KLASS_PATH = "/klasses/new";
 	public static final String KLASS_ASSIGNMENTS_PATH = "/klasses/:klass_id/assignments";
 	

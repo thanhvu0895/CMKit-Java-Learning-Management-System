@@ -2,7 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 
-<t:layoutj pageTitle="Log In">
+<t:layoutj pageTitle="SSH Keys">
 	<h1>SSH Keys</h1>
 		<p> 
 		 	SSH keys are used to authenticate your connection when working with git repositories. Once you enter your public key here, you will be able to use that command line to run git commands that connect to the Kit system.<br>

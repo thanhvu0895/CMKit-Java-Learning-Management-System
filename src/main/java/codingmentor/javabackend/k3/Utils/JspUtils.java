@@ -93,13 +93,12 @@ public class JspUtils {
 	public static final String GRADERS_INDEX = "/WEB-INF/views/graders/index.jsp";
 	
 	// KLASSES
-	public static final String KLASSES_CHANGE_PASSWORD = "/WEB-INF/views/klasses/change_password.jsp";
-	public static final String KLASSES_EDIT_ADMIN = "/WEB-INF/views/klasses/edit_admin.jsp";
-	public static final String KLASSES_EDIT_SELF = "/WEB-INF/views/klasses/edit_self.jsp";
 	public static final String KLASSES_INDEX = "/WEB-INF/views/klasses/index.jsp";
-	public static final String KLASSES_NOTIFICATION_SETTINGS = "/WEB-INF/views/klasses/notification_settings.jsp";
-	public static final String KLASSES_SHOW_INVITE = "/WEB-INF/views/klasses/show_invite.jsp";
-	public static final String KLASSES_NOTIFICATION_TOGGLE_BUTTON = "/WEB-INF/views/klasses/notification_toggle_button.jsp";
+	public static final String KLASSES_SHOW = "/WEB-INF/views/klasses/show.jsp";
+	public static final String KLASSES_NEW = "/WEB-INF/views/klasses/new.jsp";
+	public static final String KLASSES_EDIT = "/WEB-INF/views/klasses/edit.jsp";
+	public static final String KLASSES_FILES = "/WEB-INF/views/klasses/files.jsp";
+	public static final String KLASSES_GRADE_BOOK = "/WEB-INF/views/klasses/gradebook.jsp";
 	
 	
 	//NOTIFICATION_MAILERS

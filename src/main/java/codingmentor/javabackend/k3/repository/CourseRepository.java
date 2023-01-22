@@ -14,6 +14,13 @@ public interface CourseRepository {
     List<Course> getCourses();
     
     /**
+	 * Get list of Courses Order by Course Code
+	 *
+	 * @return a list of all Courses if found or null
+	 */
+    List<Course> getCoursesOrderByCourseCode();
+    
+    /**
      * Get course by Course's id
      * @return Course if exists and null if not
      */
