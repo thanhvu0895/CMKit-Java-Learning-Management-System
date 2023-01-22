@@ -15,15 +15,18 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.Course;
 import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.model.DepartmentProfessor;
+import codingmentor.javabackend.k3.model.Klass;
 import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.repository.CourseRepository;
 import codingmentor.javabackend.k3.repository.DepartmentProfessorRepository;
 import codingmentor.javabackend.k3.repository.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.KlassRepository;
 import codingmentor.javabackend.k3.repository.RepoRepository;
 import codingmentor.javabackend.k3.repository.UserRepository;
 import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.DepartmentProfessorRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
+import codingmentor.javabackend.k3.repository.Impl.KlassRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 
@@ -40,6 +43,7 @@ public class DepartmentServlet extends HttpServlet{
 	private CourseRepository courseRepository = null;
 	private UserRepository userRepository = null;
 	private DepartmentProfessorRepository departmentProfessorRepository = null;
+	private KlassRepository klassRepository = null;
 	
 	@Override
 	public void init() throws ServletException {
@@ -49,6 +53,7 @@ public class DepartmentServlet extends HttpServlet{
 		courseRepository = CourseRepositoryImpl.getInstance();
 		departmentProfessorRepository = DepartmentProfessorRepositoryImpl.getInstance();
 		userRepository = UserRepositoryImpl.getInstance();
+		klassRepository = KlassRepositoryImpl.getInstance();
 	}
 	
 	@Override
@@ -105,12 +110,8 @@ public class DepartmentServlet extends HttpServlet{
 			List<Course> courses = courseRepository.getCourseByDepartmentId(departmentId);
 			req.setAttribute("department", department);
 			req.setAttribute("courses", courses);
-			
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_COURSES)
 				.forward(req, resp);
-			
-			
-			
 //			System.out.println("Value of department id is: " + departmentId);
 //			System.out.println("GET DEPARTMENT BY departmentId"); // save to department
 //			System.out.println("Get all department_professors where department_id = 12"); // save to courses list
@@ -133,9 +134,14 @@ public class DepartmentServlet extends HttpServlet{
 			
 			List<User> departmentProfessorUsers = userRepository.getUserFromIdList(userIds);
 			
+			for (User user : departmentProfessorUsers) {
+				user.setPassword_digest("FILTERED");
+			}
+			
 			req.setAttribute("department", department);	
 			req.setAttribute("department_professors", departmentProfessors);
 			req.setAttribute("department_professor_users", departmentProfessorUsers);
+			
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_EDIT)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -147,6 +153,8 @@ public class DepartmentServlet extends HttpServlet{
 	
 	private void getDepartmentFiles(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
+			Department department = departmentRepository.getDepartmentById(departmentId);
+			req.setAttribute("department", department);	
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_FILES)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -156,6 +164,18 @@ public class DepartmentServlet extends HttpServlet{
 	
 	private void getDepartmentKlasses(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
+			Department department = departmentRepository.getDepartmentById(departmentId);
+			List<Course> coursesByDepartments = courseRepository.getCourseByDepartmentId(departmentId);
+			ArrayList<String> courseIds = new ArrayList<String>();
+			
+			for (Course c : coursesByDepartments) {
+				courseIds.add(String.valueOf(c.getId()));
+			}
+			
+			List<Klass> courseKlasses = klassRepository.getKlassFromCourseIdList(courseIds);
+			req.setAttribute("department", department);
+			req.setAttribute("courses", coursesByDepartments);	
+			req.setAttribute("klasses", courseKlasses);
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_KLASSES)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -185,11 +205,11 @@ public class DepartmentServlet extends HttpServlet{
 
 			String[] pathParts = pathInfo.split("/");
 			int pathInfoLength = pathParts.length;
+			
 			if (pathInfoLength == 2 && UrlUtils.isInteger(pathParts[1])) {
 				int departmentId = Integer.parseInt(pathParts[1]);
 				switch (req.getParameter("method")) {
 				case "PATCH":
-					System.out.println("Method is patch");
 					patchDepartmentUpdate(req, resp, departmentId);
 					break;
 				case "PUT":
@@ -197,6 +217,31 @@ public class DepartmentServlet extends HttpServlet{
 					break;
 				case "DELETE":
 					deleteDepartmentDestroy(req, resp, departmentId);
+					break;
+				}
+			}
+			
+			if (pathInfoLength == 3 && UrlUtils.isInteger(pathParts[1]) && pathParts[2].equals("department_professors")) {
+				int departmentId = Integer.parseInt(pathParts[1]);
+				postDepartmentProfessors(req, resp, departmentId);
+				
+				return;
+				
+			}
+			
+			
+			if (pathInfoLength == 4 && UrlUtils.isInteger(pathParts[1]) && pathParts[2].equals("department_professors") && UrlUtils.isInteger(pathParts[3])) { 
+				int departmentId = Integer.parseInt(pathParts[1]);
+				int departmentProfessorId = Integer.parseInt(pathParts[3]);
+				switch (req.getParameter("method")) {
+				case "PATCH":
+					patchDepartmentProfessorUpdate(req, resp, departmentId, departmentProfessorId);
+					break;
+				case "PUT":
+					putDepartmentProfessorUpdate(req, resp, departmentId, departmentProfessorId);
+					break;
+				case "DELETE":
+					deleteDepartmentProfessorDestroy(req, resp, departmentId, departmentProfessorId);
 					break;
 				}
 			}
@@ -268,4 +313,54 @@ public class DepartmentServlet extends HttpServlet{
 			e.printStackTrace();
 		}
 	}
+	
+	private void postDepartmentProfessors(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws IOException {
+		try {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void patchDepartmentProfessorUpdate(HttpServletRequest req, HttpServletResponse resp, int departmentId, int departmentProfessorId) throws IOException {
+		try {
+			boolean admin = (req.getParameterValues("department_professor[admin]").length == 2);
+			departmentProfessorRepository.updateAdminByDepartmentProfessorId(admin, departmentProfessorId);
+			Department department = departmentRepository.getDepartmentById(departmentId);
+			List<DepartmentProfessor> departmentProfessors = departmentProfessorRepository.getDepartmentProfessorsByDepartmentId(departmentId);
+			ArrayList<String> userIds = new ArrayList<String>();
+			
+			for (DepartmentProfessor dp : departmentProfessors) {
+				userIds.add(String.valueOf(dp.getUser_id()));
+			}
+			
+			List<User> departmentProfessorUsers = userRepository.getUserFromIdList(userIds);
+			
+			for (User user : departmentProfessorUsers) {
+				user.setPassword_digest("FILTERED");
+			}
+		
+			req.getSession(false).setAttribute("department", department);	
+			req.getSession(false).setAttribute("department_professors", departmentProfessors);
+			req.getSession(false).setAttribute("department_professor_users", departmentProfessorUsers);
+			req.getSession(false).setAttribute("notice", "Professor updated.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_DEPARTMENT_PATH, departmentId));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void putDepartmentProfessorUpdate(HttpServletRequest req, HttpServletResponse resp, int departmentId, int departmentProfessorId) throws IOException {
+		try {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void deleteDepartmentProfessorDestroy(HttpServletRequest req, HttpServletResponse resp, int departmentId, int departmentProfessorId) throws IOException {
+		try {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

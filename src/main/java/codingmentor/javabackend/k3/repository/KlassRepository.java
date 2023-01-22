@@ -1,5 +1,6 @@
 package codingmentor.javabackend.k3.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import codingmentor.javabackend.k3.model.Klass;
@@ -11,11 +12,19 @@ public interface KlassRepository {
 	 *
 	 * @return a list of all Klasss if found or null
 	 */
-    List<Klass> getKlasss();
+	public List<Klass> getklasses();
     
     /**
-     * Get department by Klass's id
+     * Get Klass by Klass's id
      * @return Klass if exists and null if not
      */
     Klass getKlassById(int id);
+    
+    
+    /**
+     * 
+     * @param courseIdsList
+     * @return
+     */
+    public List<Klass> getKlassFromCourseIdList (ArrayList<String> courseIdsList);
 }

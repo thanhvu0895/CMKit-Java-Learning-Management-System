@@ -26,4 +26,11 @@ public interface DepartmentProfessorRepository {
      */
     List<DepartmentProfessor>  getDepartmentProfessorsByDepartmentId(int id);
 
+    /**
+     * 
+     * @param admin
+     * @param id
+     * @return
+     */
+    public boolean updateAdminByDepartmentProfessorId(boolean admin, int id);
 }

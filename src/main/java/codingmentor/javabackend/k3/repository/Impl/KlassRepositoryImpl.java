@@ -57,18 +57,18 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 	 */
 
 	@Override
-	public List<Klass> getKlasss() {
+	public List<Klass> getklasses() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM klasss";
+			final String query = "SELECT * FROM klasses";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println(statement);
-			List<Klass> klasssList = new ArrayList<>();
+			List<Klass> klassesList = new ArrayList<>();
 			while(results.next()) {
-				klasssList.add(mapper.map(results));
+				klassesList.add(mapper.map(results));
 			}
 			close(connection, statement, results);
-			return klasssList;
+			return klassesList;
 		});
 	}
 
@@ -78,7 +78,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 	@Override
 	public Klass getKlassById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM klasss WHERE id = ? LIMIT 1;";
+			final String query = "SELECT * FROM klasses WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
@@ -88,5 +88,38 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 		    return klass;
     	});
 	}
-	    
+	
+	@Override
+	public List<Klass> getKlassFromCourseIdList (ArrayList<String> courseIdsList) {
+		return executeQuery(connection -> {
+			String query = "SELECT klasses.* FROM klasses WHERE klasses.id IN (";
+			
+			if (courseIdsList.size() == 0) {
+				return null;
+			}
+			
+			for (int i = 0; i < courseIdsList.size(); i++) {
+				query += (i == 0 ? "" :",") + "?";
+			}
+			query += ");";
+			
+			System.out.println(query);
+			PreparedStatement statement = connection.prepareStatement(query);
+			
+			for (int i = 0; i < courseIdsList.size(); i++) {
+				statement.setInt(i + 1, Integer.parseInt(courseIdsList.get(i)));
+			}
+			
+			ResultSet results = statement.executeQuery();
+			System.out.println(statement);
+			 
+			List<Klass> klasssList = new ArrayList<>();
+			while(results.next()) {
+				klasssList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return klasssList;
+		 });
+	 }
+	
 }

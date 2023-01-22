@@ -46,7 +46,6 @@
 			</tr>
 		  </thead>
 		  <tbody>
-		   <%-- //TODO: ADD department.department_professors.includes(:user) function in repository"> --%>
 		   <c:forEach var="dp" items="${department_professors}" varStatus="loop">
 			  <tr>
 			    <td>${department_professor_users[loop.index].getFull_preferred_name()}</td>
@@ -60,9 +59,9 @@
 			  </tr>
 			  <tr id="prof${dp.id}" class="collapse">
 			    <td colspan=3>
-			      <t:form_with url="${UrlUtils.DEPARTMENT_DEPARTMENT_PROFESSOR_PATH}" id="${dp.id}" secondId="${department.id}" method="patch" classBS="form-inline"> 
+			      <t:form_with url="${UrlUtils.DEPARTMENT_DEPARTMENT_PROFESSOR_PATH}" id="${dp.id}" secondId="${department.id}" method="PATCH" classBS="form-inline"> 
 			      	<div class="form-group">
-  					  <input name="department_professor[admin]" type="hidden" value="0"><input type="checkbox" value="${dp.admin}" checked="checked" name="department_professor[admin]" id="department_professor_admin">
+			      	  <f:check_box check_box="admin" model="department_professor" value="${dp.admin}"></f:check_box>
   					  <label for="department_professor_Admin">Admin?</label>
 					</div>
 					<div class="form-group">
@@ -100,5 +99,19 @@
     </div>
   </div>
 </div>
+
+<br><br><br>
+
+<c:if test="${current_user.admin}">
+  <div class="pull-right">
+    <a data-toggle="collapse" href="#delete_hidden" class="btn btn-danger">Delete Department</a>
+    <div id="delete_hidden" class="collapse collapse-in">
+      <a data-toggle="collapse" href="#delete_hidden2" class="btn btn-danger">Really Delete Department</a>
+	  <div id="delete_hidden2" class="collapse collapse-in">
+	    <t:link_to path="${UrlUtils.DEPARTMENTS_PATH}/:id" classBS="btn btn-warning" id="${department.id}" method="DELETE" confirm="Are you really, really, really sure you want to delete this department and all of its content? THIS CANNOT BE UNDONE!">Really, Really Delete Department</t:link_to>
+	  </div>
+	</div>
+  </div>
+</c:if>
 
 </t:layoutj>

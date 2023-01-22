@@ -88,5 +88,25 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		    return assignment;
     	});
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Assignment> getAssignmentsByCourseId(int courseId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM assignments where course_id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, courseId);
+			ResultSet results = statement.executeQuery();
+			System.out.println(statement);
+			List<Assignment> assignmentsList = new ArrayList<>();
+			while(results.next()) {
+				assignmentsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return assignmentsList;
+		});
+	}
 	    
 }

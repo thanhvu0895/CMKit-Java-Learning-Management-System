@@ -8,30 +8,29 @@
 <%@ attribute name="method" required="false"%>
 <%@ attribute name="confirm" required="false"%>
 <%@ attribute name="text" required="false"%>
-<%@ attribute name="hidden" required="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="path" value="${pageContext.request.contextPath}${path}" /> <%-- ADD CONTEXT PATH TO url URL --%>  
 <c:set var="path" value="${UrlUtils.putIdInPath(pageContext.getAttribute('path'), pageContext.getAttribute('id'))}" />
 <c:set var="path" value="${UrlUtils.putSecondInPath(pageContext.getAttribute('path'), pageContext.getAttribute('secondId'))}" />
 	<%-- If url has :id pattern, it will replace with value of id  --%>
 <c:choose>
+	<c:when test="${not empty confirm}">
+		<form method="post" action="${path}" onsubmit="return confirm('${confirm}');">
+		<input type="hidden" name="method" value="${method}"/>
+		<a href="${path}"><button type="submit" class="${classBS}">
+		<c:if test="${not empty text}">${text}</c:if><jsp:doBody /></button></a></form>
+	</c:when>
 	<c:when test="${not empty classBS && not empty method}">
 		<form method="post" action="${path}" style="display: inline-block">
 			<a href="${path}"><button type="submit" class="${classBS}"><c:if test="${not empty text}">${text}</c:if><jsp:doBody /></button></a>
 		</form>
-	</c:when>
-	<c:when test="${not empty confirm}">
-		<form method="post" action="${path}" onsubmit="return confirm('${confirm}');">
-		<input type="hidden" name="method" value="delete"/>
-		<a href="${path}"><button type="submit" class="${classBS}">
-		<c:if test="${not empty text}">${text}</c:if><jsp:doBody /></button></a></form>
 	</c:when>
 	<c:when test="${not empty classBS}">
 		<a class="${classBS}" href="${path}"><c:if test="${not empty text}">${text}</c:if><jsp:doBody /></a>
 	</c:when>
 	<c:when test="${not empty method}">
 		<form method="post" action="${path}" style="display: inline-block">
-		<c:if test="${empty hidden}"><input type="hidden" name="method" value="${method}"/></c:if>
+		<input type="hidden" name="method" value="${method}"/>
 		<a href="${path}" rel="nofollow" data-method="${method}"><c:if test="${not empty text}">${text}</c:if><jsp:doBody /></a>
 		</form>
 	</c:when>

@@ -109,4 +109,19 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			return departmentProfessorsList;
 		});
 	}
+	
+	
+	@Override
+	public boolean updateAdminByDepartmentProfessorId(boolean admin, int id) {
+		return executeUpdate(connection -> {
+			 final String query = "UPDATE department_professors SET admin = ? WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setBoolean(1, admin);
+			 statement.setInt(2, id);
+			 System.out.println(statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}
 }

@@ -18,4 +18,12 @@ public interface AssignmentRepository {
      * @return Assignment if exists and null if not
      */
     Assignment getAssignmentById(int id);
+    
+    /**
+	 * Get list of Assignments by CourseId
+	 *
+	 * @return a list of all Assignments if found or null
+	 */
+    List<Assignment> getAssignmentsByCourseId(int courseId);
+    
 }

@@ -1,7 +1,7 @@
 package codingmentor.javabackend.k3.servlet;
 
 import java.io.IOException;
-
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,10 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
+import codingmentor.javabackend.k3.model.Assignment;
+import codingmentor.javabackend.k3.model.Course;
 import codingmentor.javabackend.k3.model.Department;
+import codingmentor.javabackend.k3.repository.AssignmentRepository;
 import codingmentor.javabackend.k3.repository.CourseRepository;
 import codingmentor.javabackend.k3.repository.DepartmentRepository;
 import codingmentor.javabackend.k3.repository.RepoRepository;
+import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
@@ -29,12 +33,14 @@ public class CourseServlet extends HttpServlet{
 	private RepoRepository repoRepository = null;
 	private CourseRepository courseRepository = null;
 	private DepartmentRepository departmentRepository = null;
+	private AssignmentRepository assignmentRepository = null;
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		repoRepository = RepoRepositoryImpl.getInstance();
 		courseRepository = CourseRepositoryImpl.getInstance();
 		departmentRepository = DepartmentRepositoryImpl.getInstance();
+		assignmentRepository = AssignmentRepositoryImpl.getInstance();
 	}
 	
 	@Override
@@ -53,7 +59,7 @@ public class CourseServlet extends HttpServlet{
 
 			if (pathInfoLength == 2 && UrlUtils.isInteger(pathParts[1])) { 
 				int courseId = Integer.parseInt(pathParts[1]); 
-				getCourseShow(req, resp, courseId);			//CASE: courses#show
+				getCourseShow(req, resp, courseId);
 				break;
 			}
 			
@@ -79,6 +85,12 @@ public class CourseServlet extends HttpServlet{
 	
 	private void getCourseShow(HttpServletRequest req, HttpServletResponse resp, int courseId) throws ServletException, IOException {
 		try {
+			Course course = courseRepository.getCourseById(courseId);
+			Department department = departmentRepository.getDepartmentById(course.getDepartment_id());
+			List<Assignment> assignments = assignmentRepository.getAssignmentsByCourseId(courseId);
+			req.setAttribute("course", course);
+			req.setAttribute("department", department);
+			req.setAttribute("assignments", assignments);
 			req.getRequestDispatcher(JspUtils.COURSES_SHOW)
 				.forward(req, resp);
 		} catch (Exception e) {
