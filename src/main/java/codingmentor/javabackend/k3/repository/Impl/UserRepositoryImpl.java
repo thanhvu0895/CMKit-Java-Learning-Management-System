@@ -15,6 +15,7 @@ import java.util.List;
 import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
 import codingmentor.javabackend.k3.mapper.UserMapper;
+import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.repository.AbstractRepository;
 import codingmentor.javabackend.k3.repository.UserRepository;
@@ -332,4 +333,18 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			return usersList;
 		 });
 	 }
+
+	@Override
+	public boolean isDepartmentProfessor(int userId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT 1 AS one FROM department_professors WHERE user_id = ? LIMIT 1;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println(statement);
+			 User user = (results.next()) ? new User() : null;
+			 close(connection, statement, results);
+			 return user;
+		}) != null;
+	}
 }

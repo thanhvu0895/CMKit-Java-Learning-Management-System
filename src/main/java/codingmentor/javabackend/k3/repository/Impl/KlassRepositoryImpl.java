@@ -51,7 +51,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
     		e.printStackTrace();
     	}
     }
-
+    
 	/**
 	 * {@inheritDoc}
 	 */

@@ -1,10 +1,17 @@
+<%@tag import="java.util.Enumeration"%>
 <%@ tag trimDirectiveWhitespaces="true" language="java"
 	pageEncoding="ISO-8859-1"%>
 <%@ attribute name="pageTitle" required="true"%>
 <%@tag import="codingmentor.javabackend.k3.Utils.UrlUtils"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
-
+<%
+Enumeration<String> attributes = request.getSession().getAttributeNames();
+while (attributes.hasMoreElements()) {
+    String attribute = (String) attributes.nextElement();
+    System.out.println(attribute+" : "+request.getSession().getAttribute(attribute));
+}
+%> 
 <html lang="en">
 <head>
 <title>Kit | ${pageTitle}</title>

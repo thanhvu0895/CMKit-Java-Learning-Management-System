@@ -118,5 +118,13 @@ public interface UserRepository {
        * @return
        */
       public List<User> getUserFromIdList (ArrayList<String> userIdsList);
+      
+      
+      /**
+     	 * Check if user is department professor
+     	 * @param: id: userId
+     	 * @return boolean if update successful or else false
+     	 */
+      boolean isDepartmentProfessor(int id);
 
 }

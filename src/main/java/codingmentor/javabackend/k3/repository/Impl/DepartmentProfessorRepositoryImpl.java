@@ -111,6 +111,9 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 	}
 	
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean updateAdminByDepartmentProfessorId(boolean admin, int id) {
 		return executeUpdate(connection -> {
@@ -123,5 +126,36 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			 close(connection, statement, null);
 			 return result;
 		}) != 0;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int insertDepartmentProfessor(int user_id, int department_id, boolean admin) {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO department_professors (`user_id`, `department_id`, `admin`) VALUES (?, ?, ?);";
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setInt(1, user_id);
+			statement.setInt(2, department_id);
+			statement.setBoolean(3, admin);
+			System.out.println(statement);
+			ResultSet rs = statement.getGeneratedKeys();
+			rs.next();
+			int affectedRows = statement.executeUpdate();
+			
+			if (affectedRows == 0) {
+				throw new SQLException("Creating Department Professor failed, no rows affected.");
+			}
+			
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+			
+            if (generatedKeys.next()) {
+               return generatedKeys.getInt(1);
+            }
+            
+			close(connection, statement, generatedKeys);
+			return 0;
+		});
 	}
 }

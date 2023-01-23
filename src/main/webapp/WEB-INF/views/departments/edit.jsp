@@ -47,6 +47,7 @@
 		  </thead>
 		  <tbody>
 		   <c:forEach var="dp" items="${department_professors}" varStatus="loop">
+		   <c:if test="${!(department_professor_users[loop.index].deleted)}"> 
 			  <tr>
 			    <td>${department_professor_users[loop.index].getFull_preferred_name()}</td>
 			    <td><a href="mailto:${department_professor_users[loop.index].email}">${department_professor_users[loop.index].email}</a></td>
@@ -70,9 +71,10 @@
 			      </t:form_with>
 				</td>
 				<td>
-					<t:link_to path="${UrlUtils.DEPARTMENT_DEPARTMENT_PROFESSOR_PATH}" classBS="btn btn-danger" id="${dp.id}" secondId="${department.id}" confirm="Are you sure?">Remove</t:link_to>
+				  <t:link_to path="${UrlUtils.DEPARTMENT_DEPARTMENT_PROFESSOR_PATH}" classBS="btn btn-danger" id="${dp.id}" secondId="${department.id}" confirm="Are you sure?">Remove</t:link_to>
 				</td>
 			  </tr>
+			 </c:if>
 		   </c:forEach>
 		  </tbody>
 	    </table>

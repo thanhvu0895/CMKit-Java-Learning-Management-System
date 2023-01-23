@@ -2,6 +2,7 @@ package codingmentor.javabackend.k3.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import codingmentor.javabackend.k3.Utils.AccountsMailer;
 import codingmentor.javabackend.k3.Utils.JspUtils;
+import codingmentor.javabackend.k3.Utils.RandomUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.Course;
 import codingmentor.javabackend.k3.model.Department;
@@ -106,17 +109,14 @@ public class DepartmentServlet extends HttpServlet{
 	
 	private void getDepartmentCourses(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
+			req.getSession(false).removeAttribute("department");
+			req.getSession(false).removeAttribute("courses");
 			Department department = departmentRepository.getDepartmentById(departmentId);
 			List<Course> courses = courseRepository.getCourseByDepartmentId(departmentId);
 			req.setAttribute("department", department);
 			req.setAttribute("courses", courses);
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_COURSES)
 				.forward(req, resp);
-//			System.out.println("Value of department id is: " + departmentId);
-//			System.out.println("GET DEPARTMENT BY departmentId"); // save to department
-//			System.out.println("Get all department_professors where department_id = 12"); // save to courses list
-//			System.out.println("Get all courses from courses table where department_id = 12"); // save to courses list
-//			System.out.println("Get department_professors where department id = 12 and user_id = 3 and admin = true");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -124,6 +124,10 @@ public class DepartmentServlet extends HttpServlet{
 	
 	private void getDepartmentEdit(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
+			req.getSession(false).removeAttribute("department");
+			req.getSession(false).removeAttribute("courses");
+			req.getSession(false).removeAttribute("department_professor_users");
+			req.getSession(false).removeAttribute("department_professors");
 			Department department = departmentRepository.getDepartmentById(departmentId);
 			List<DepartmentProfessor> departmentProfessors = departmentProfessorRepository.getDepartmentProfessorsByDepartmentId(departmentId);
 			ArrayList<String> userIds = new ArrayList<String>();
@@ -171,11 +175,11 @@ public class DepartmentServlet extends HttpServlet{
 			for (Course c : coursesByDepartments) {
 				courseIds.add(String.valueOf(c.getId()));
 			}
-			
+
 			List<Klass> courseKlasses = klassRepository.getKlassFromCourseIdList(courseIds);
+			req.setAttribute("klasses", courseKlasses);
 			req.setAttribute("department", department);
 			req.setAttribute("courses", coursesByDepartments);	
-			req.setAttribute("klasses", courseKlasses);
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_KLASSES)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -228,7 +232,6 @@ public class DepartmentServlet extends HttpServlet{
 				return;
 				
 			}
-			
 			
 			if (pathInfoLength == 4 && UrlUtils.isInteger(pathParts[1]) && pathParts[2].equals("department_professors") && UrlUtils.isInteger(pathParts[3])) { 
 				int departmentId = Integer.parseInt(pathParts[1]);
@@ -316,6 +319,73 @@ public class DepartmentServlet extends HttpServlet{
 	
 	private void postDepartmentProfessors(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws IOException {
 		try {
+			//#Counters for success message
+			List<String> added = new ArrayList<>();
+			List<String> invited = new ArrayList<>();
+			List<String> failed = new ArrayList<>();
+			String token = RandomUtils.unique64();
+			
+			String[] departmentProfessorEmailList = req.getParameter("department_professor[emails]")
+					.replaceAll("[\\s]","")
+					.split(",");
+			boolean admin = (req.getParameterValues("department_professor[admin]").length == 2);
+			for (String email : departmentProfessorEmailList) {
+				email = email.toLowerCase();
+				User u = userRepository.findUserByEmail(email);
+				if (u != null  && !u.isDeleted() && !userRepository.isDepartmentProfessor(u.getId())) {
+					// User already exists and not a department professor
+					int newDpId = departmentProfessorRepository.insertDepartmentProfessor(u.getId(), departmentId, admin);
+					if (newDpId == 0) {
+						failed.add(email);
+					} else {
+						added.add(email);
+					}
+					break;
+				}
+				
+				if (u == null) {
+					boolean inviteSent = userRepository.createUserSendInvite(email, admin);
+					u =  userRepository.findUserByEmail(email);
+					int new_user_id = u.getId();
+					userRepository.updateResetDigest(new_user_id, RandomUtils.SHA256Base64(token));
+					AccountsMailer.inviteUserEmail(req, u, token);
+					if (inviteSent) {
+						int newDpId = departmentProfessorRepository.insertDepartmentProfessor(new_user_id, departmentId, admin);
+						if (newDpId != 0) {
+							invited.add(email);
+						} else {
+							failed.add(email);
+						}
+					} else {
+						failed.add(email);
+					}
+					break;		
+				}
+				
+				if (u.isDeleted()) {
+					boolean recoverUser = userRepository.recoverUser(u.getId());
+					if (recoverUser) {
+						userRepository.updateResetDigest(u.getId(), RandomUtils.SHA256Base64(token));
+						AccountsMailer.inviteUserEmail(req, u, token);
+						// TODO: CHECK IF USER IS ALREADY DEPARTMENT PROFESSOR
+						invited.add(email);
+						if (!userRepository.isDepartmentProfessor(u.getId())) {
+							int newDpId = departmentProfessorRepository.insertDepartmentProfessor(u.getId(), departmentId, admin);
+							if (newDpId != 0) {
+								invited.add(email);	
+							} else {
+								failed.add(email);
+							}
+						}
+					} else {
+						failed.add(email);
+					}
+					break;
+				}
+			}
+			req.getSession(false).setAttribute("notice", added.size() + " professors added; " + invited.size() + " professors invited");
+			req.getSession(false).setAttribute("alert", "Failed to add " + failed.size() + " professors");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_DEPARTMENT_PATH, departmentId));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

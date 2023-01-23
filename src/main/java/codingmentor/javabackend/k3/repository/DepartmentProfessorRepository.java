@@ -26,6 +26,7 @@ public interface DepartmentProfessorRepository {
      */
     List<DepartmentProfessor>  getDepartmentProfessorsByDepartmentId(int id);
 
+    
     /**
      * 
      * @param admin
@@ -33,4 +34,11 @@ public interface DepartmentProfessorRepository {
      * @return
      */
     public boolean updateAdminByDepartmentProfessorId(boolean admin, int id);
+    
+    
+    /**
+     * Add a new DepartmentProfessor to DB
+     * @return newly inserted department id if inserted and -1 otherwise
+     */
+    int insertDepartmentProfessor (int user_id, int department_id, boolean admin);
 }
