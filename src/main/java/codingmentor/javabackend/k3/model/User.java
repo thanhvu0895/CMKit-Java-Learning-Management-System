@@ -2,7 +2,13 @@ package codingmentor.javabackend.k3.model;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.util.List;
+
 import codingmentor.javabackend.k3.Utils.RandomUtils;
+import codingmentor.javabackend.k3.repository.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.UserRepository;
+import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
+import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 
 
 
@@ -24,8 +30,19 @@ public class User implements Serializable {
     private boolean set_up;
     private boolean disabled;
     private boolean deleted;
+    
+	private UserRepository userRepository =  UserRepositoryImpl.getInstance();
+	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
+	
+    public boolean isDepartmentProfessor() throws NoSuchAlgorithmException {
+    	return userRepository.isDepartmentProfessor(this.id);
+    }
+    
+    public List<Department> getDepartments() {
+    	return departmentRepository.getDepartmentsByUserId(this.id);
+	}
 
-    public boolean validateResetToken(String token) throws NoSuchAlgorithmException {
+	public boolean validateResetToken(String token) throws NoSuchAlgorithmException {
     	return (this.reset_digest != null) && LocalDateTime.now().isBefore(reset_expires) && this.reset_digest.equals(RandomUtils.SHA256Base64(token));
     }
     

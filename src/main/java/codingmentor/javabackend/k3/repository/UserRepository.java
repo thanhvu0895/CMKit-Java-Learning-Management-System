@@ -2,7 +2,6 @@ package codingmentor.javabackend.k3.repository;
 
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import codingmentor.javabackend.k3.model.User;
 
@@ -114,10 +113,10 @@ public interface UserRepository {
       
       /**
        * 
-       * @param userList
+       * @param departmentId
        * @return
        */
-      public List<User> getUserFromIdList (ArrayList<String> userIdsList);
+      public List<User> getUsersFromDepartmentId(int departmentId);
       
       
       /**
@@ -126,5 +125,12 @@ public interface UserRepository {
      	 * @return boolean if update successful or else false
      	 */
       boolean isDepartmentProfessor(int id);
+      
+      /**
+     	 * Check if user is department professor by DepartmentId
+     	 * @param: id: userId
+     	 * @return boolean if update successful or else false
+     	 */
+      boolean isDepartmentProfessorByDepartmentId(int userId, int departmentId);
 
 }

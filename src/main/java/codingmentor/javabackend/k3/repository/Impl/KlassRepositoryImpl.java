@@ -89,37 +89,30 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
     	});
 	}
 	
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public List<Klass> getKlassFromCourseIdList (ArrayList<String> courseIdsList) {
+	public List<Klass> getKlassesFromDepartmentId(int departmentId) {
 		return executeQuery(connection -> {
-			String query = "SELECT klasses.* FROM klasses WHERE klasses.id IN (";
-			
-			if (courseIdsList.size() == 0) {
-				return null;
-			}
-			
-			for (int i = 0; i < courseIdsList.size(); i++) {
-				query += (i == 0 ? "" :",") + "?";
-			}
-			query += ");";
-			
-			System.out.println(query);
+			final String query = "SELECT \r\n"
+					+ "	K.id, K.course_id, K.repo_id, K.semester, K.section, K.start_date, K.end_date \r\n"
+					+ "FROM klasses as K\r\n"
+					+ "INNER JOIN courses as C\r\n"
+					+ "	ON C.id = K.course_id\r\n"
+					+ "INNER JOIN departments as D\r\n"
+					+ "	ON D.id = C.department_id AND D.id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
-			
-			for (int i = 0; i < courseIdsList.size(); i++) {
-				statement.setInt(i + 1, Integer.parseInt(courseIdsList.get(i)));
-			}
-			
+			statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();
 			System.out.println(statement);
-			 
-			List<Klass> klasssList = new ArrayList<>();
+			List<Klass> usersList = new ArrayList<>();
 			while(results.next()) {
-				klasssList.add(mapper.map(results));
+				usersList.add(mapper.map(results));
 			}
 			close(connection, statement, results);
-			return klasssList;
-		 });
-	 }
-	
+			return usersList;
+		});
+	}
 }

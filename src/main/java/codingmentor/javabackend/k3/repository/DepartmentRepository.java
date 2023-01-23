@@ -39,4 +39,10 @@ public interface DepartmentRepository {
      * @return
      */
     public boolean updateDepartmentTitleById(String title, int id);
+    
+    public List<Department> getDepartmentsByUserId(int userId);
+
+    public boolean isDepartmentAdmin(int userId, int departmentId);
+    
+    public boolean isDepartmentProfessor(int userId, int departmentId);
 }

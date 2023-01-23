@@ -47,12 +47,15 @@ while (attributes.hasMoreElements()) {
 					<div class="collapse navbar-collapse" id="top-navbar">
 						<ul class="nav navbar-nav">
 							<!-- IF CURRENT USER IS ADMIN OR DEPARTMENT PROFESSOR-->
-							<c:if test="${current_user.admin}">
+							<c:if test="${current_user.admin || current_user.isDepartmentProfessor()}">
 								<li class="dropdown"><a href="#" class="dropdown-toggle"
 									data-toggle="dropdown" role="button" aria-haspopup="true"
 									aria-expanded="false">My Departments <span class="caret"></span></a>
 									<ul class="dropdown-menu">
 										<!--  IF IS DEPARTMENT PROFESSOR -->
+										<c:forEach var="department" items="${current_user.getDepartments()}">
+										  <li><t:link_to path="${UrlUtils.DEPARTMENT_COURSES_PATH}" id="${department.id}">${department.title}</t:link_to></li>
+										</c:forEach>
 										<!--  END IF IS DEPARTMENT PROFESSOR -->
 										<li role="separator" class="divider"></li>
 										<li><t:link_to path="${UrlUtils.DEPARTMENTS_PATH}">All Departments</t:link_to></li>

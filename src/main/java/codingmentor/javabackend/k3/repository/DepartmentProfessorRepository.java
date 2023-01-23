@@ -41,4 +41,5 @@ public interface DepartmentProfessorRepository {
      * @return newly inserted department id if inserted and -1 otherwise
      */
     int insertDepartmentProfessor (int user_id, int department_id, boolean admin);
+
 }

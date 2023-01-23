@@ -15,7 +15,6 @@ import java.util.List;
 import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
 import codingmentor.javabackend.k3.mapper.UserMapper;
-import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.repository.AbstractRepository;
 import codingmentor.javabackend.k3.repository.UserRepository;
@@ -301,43 +300,44 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		}) != 0;
 	}
 	
-	@Override
-	public List<User> getUserFromIdList (ArrayList<String> userIdsList) {
-		return executeQuery(connection -> {
-			String query = "SELECT users.* FROM users WHERE users.id IN (";
-			
-			if (userIdsList.size() == 0) {
-				return null;
-			}
-			
-			for (int i = 0; i < userIdsList.size(); i++) {
-				query += (i == 0 ? "" :",") + "?";
-			}
-			query += ");";
-			
-			System.out.println(query);
-			PreparedStatement statement = connection.prepareStatement(query);
-			
-			for (int i = 0; i < userIdsList.size(); i++) {
-				statement.setInt(i + 1, Integer.parseInt(userIdsList.get(i)));
-			}
-			
-			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
-			 
-			List<User> usersList = new ArrayList<>();
-			while(results.next()) {
-				usersList.add(mapper.map(results));
-			}
-			close(connection, statement, results);
-			return usersList;
-		 });
-	 }
+// DEPRECATED: NOT USE ANYMORE	
+//	@Override
+//	public List<User> getUserFromIdList (ArrayList<String> userIdsList) {
+//		return executeQuery(connection -> {
+//			String query = "SELECT users.* FROM users WHERE users.id IN (";
+//			
+//			if (userIdsList.size() == 0) {
+//				return null;
+//			}
+//			
+//			for (int i = 0; i < userIdsList.size(); i++) {
+//				query += (i == 0 ? "" :",") + "?";
+//			}
+//			query += ");";
+//			
+//			System.out.println(query);
+//			PreparedStatement statement = connection.prepareStatement(query);
+//			
+//			for (int i = 0; i < userIdsList.size(); i++) {
+//				statement.setInt(i + 1, Integer.parseInt(userIdsList.get(i)));
+//			}
+//			
+//			ResultSet results = statement.executeQuery();
+//			System.out.println(statement);
+//			 
+//			List<User> usersList = new ArrayList<>();
+//			while(results.next()) {
+//				usersList.add(mapper.map(results));
+//			}
+//			close(connection, statement, results);
+//			return usersList;
+//		 });
+//	 }
 
 	@Override
 	public boolean isDepartmentProfessor(int userId) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 AS one FROM department_professors WHERE user_id = ? LIMIT 1;";
+			 final String query = "SELECT 1 AS one FROM department_professors WHERE user_id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, userId);
 			 ResultSet results = statement.executeQuery();
@@ -346,5 +346,46 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 close(connection, statement, results);
 			 return user;
 		}) != null;
+	}
+	@Override
+	
+	public boolean isDepartmentProfessorByDepartmentId(int userId, int departmentId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT 1 AS one FROM department_professors WHERE user_id = ? and department_id = ? LIMIT 1;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 statement.setInt(2, departmentId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println(statement);
+			 User user = (results.next()) ? new User() : null;
+			 close(connection, statement, results);
+			 return user;
+		}) != null;
+		 
+	 }
+
+	
+	
+	@Override
+	public List<User> getUsersFromDepartmentId(int departmentId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT \r\n"
+					+ "	U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name\r\n"
+					+ "FROM users as U\r\n"
+					+ "INNER JOIN department_professors as DP \r\n"
+					+ "	ON DP.user_id = U.id\r\n"
+					+ "INNER JOIN departments as D\r\n"
+					+ "	ON DP.department_id = D.id and D.id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, departmentId);
+			ResultSet results = statement.executeQuery();
+			System.out.println(statement);
+			List<User> usersList = new ArrayList<>();
+			while(results.next()) {
+				usersList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return usersList;
+		});
 	}
 }

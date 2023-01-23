@@ -151,4 +151,67 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			 return result;
 		}) != 0;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Department> getDepartmentsByUserId(int userId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT D.id, D.title, D.repo_id FROM departments AS D "
+					+ "INNER JOIN department_professors AS DP ON DP.department_id = D.id AND DP.user_id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, userId);
+			ResultSet results = statement.executeQuery();
+			System.out.println(statement);
+			List<Department> departmentsList = new ArrayList<>();
+			while(results.next()) {
+				departmentsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return departmentsList;
+		});
+	}
+
+	@Override
+	public boolean isDepartmentAdmin(int userId, int departmentId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT \r\n"
+			 		+ "	 1 as ONE\r\n"
+			 		+ "FROM  department_professors as DP \r\n"
+			 		+ "INNER JOIN users as U\r\n"
+			 		+ "	ON DP.user_id = U.id and U.id = ? and DP.admin = 1\r\n"
+			 		+ "INNER JOIN departments as D\r\n"
+			 		+ "	ON DP.department_id = D.id AND D.id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 statement.setInt(2, departmentId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println(statement);
+			 Department department = results.next() ? new Department() : null;
+			 close(connection, statement, results);
+			 return department;
+		}) != null;
+	}
+
+	@Override
+	public boolean isDepartmentProfessor(int userId, int departmentId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT \r\n"
+			 		+ "	1 as ONE\r\n"
+			 		+ "FROM  department_professors as DP \r\n"
+			 		+ "INNER JOIN users as U\r\n"
+			 		+ "	ON DP.user_id = U.id and U.id = ? and DP.admin = 1\r\n"
+			 		+ "INNER JOIN departments as D\r\n"
+			 		+ "	ON DP.department_id = D.id AND D.id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 statement.setInt(2, departmentId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println(statement);
+			 Department department = results.next() ? new Department() : null;
+			 close(connection, statement, results);
+			 return department;
+		}) != null;
+	}
 }

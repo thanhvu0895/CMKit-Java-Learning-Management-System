@@ -1,11 +1,21 @@
 package codingmentor.javabackend.k3.model;
+import codingmentor.javabackend.k3.repository.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
 
 public class DepartmentProfessor {
 	private int id;
 	private int user_id;
 	private int department_id;
 	private boolean admin;
+	private Department department;
 	
+	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
+	
+	public Department getDepartment() {
+		this.department = departmentRepository.getDepartmentById(department_id);
+		return department;
+	}
+
 	public int getId() {
 		return id;
 	}

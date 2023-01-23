@@ -2,7 +2,6 @@ package codingmentor.javabackend.k3.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -63,7 +62,6 @@ public class DepartmentServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch(req.getServletPath()) {
 		case UrlUtils.DEPARTMENTS_PATH:
-			System.out.println("Value of req.getServletPath() is: " + req.getServletPath());
 			String pathInfo = req.getPathInfo();
 			if (pathInfo == null || pathInfo.equals("/")) {
 				getDepartmentsIndex(req, resp);
@@ -113,6 +111,8 @@ public class DepartmentServlet extends HttpServlet{
 			req.getSession(false).removeAttribute("courses");
 			Department department = departmentRepository.getDepartmentById(departmentId);
 			List<Course> courses = courseRepository.getCourseByDepartmentId(departmentId);
+			User current_user = (User) req.getSession(false).getAttribute("current_user");
+			req.setAttribute("isDepartmentAdmin", departmentRepository.isDepartmentAdmin(current_user.getId(), departmentId));
 			req.setAttribute("department", department);
 			req.setAttribute("courses", courses);
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_COURSES)
@@ -128,20 +128,10 @@ public class DepartmentServlet extends HttpServlet{
 			req.getSession(false).removeAttribute("courses");
 			req.getSession(false).removeAttribute("department_professor_users");
 			req.getSession(false).removeAttribute("department_professors");
+			
 			Department department = departmentRepository.getDepartmentById(departmentId);
 			List<DepartmentProfessor> departmentProfessors = departmentProfessorRepository.getDepartmentProfessorsByDepartmentId(departmentId);
-			ArrayList<String> userIds = new ArrayList<String>();
-			
-			for (DepartmentProfessor dp : departmentProfessors) {
-				userIds.add(String.valueOf(dp.getUser_id()));
-			}
-			
-			List<User> departmentProfessorUsers = userRepository.getUserFromIdList(userIds);
-			
-			for (User user : departmentProfessorUsers) {
-				user.setPassword_digest("FILTERED");
-			}
-			
+			List<User> departmentProfessorUsers = userRepository.getUsersFromDepartmentId(departmentId);
 			req.setAttribute("department", department);	
 			req.setAttribute("department_professors", departmentProfessors);
 			req.setAttribute("department_professor_users", departmentProfessorUsers);
@@ -170,13 +160,7 @@ public class DepartmentServlet extends HttpServlet{
 		try {
 			Department department = departmentRepository.getDepartmentById(departmentId);
 			List<Course> coursesByDepartments = courseRepository.getCourseByDepartmentId(departmentId);
-			ArrayList<String> courseIds = new ArrayList<String>();
-			
-			for (Course c : coursesByDepartments) {
-				courseIds.add(String.valueOf(c.getId()));
-			}
-
-			List<Klass> courseKlasses = klassRepository.getKlassFromCourseIdList(courseIds);
+			List<Klass> courseKlasses = klassRepository.getKlassesFromDepartmentId(departmentId);
 			req.setAttribute("klasses", courseKlasses);
 			req.setAttribute("department", department);
 			req.setAttribute("courses", coursesByDepartments);	
@@ -332,7 +316,7 @@ public class DepartmentServlet extends HttpServlet{
 			for (String email : departmentProfessorEmailList) {
 				email = email.toLowerCase();
 				User u = userRepository.findUserByEmail(email);
-				if (u != null  && !u.isDeleted() && !userRepository.isDepartmentProfessor(u.getId())) {
+				if (u != null  && !u.isDeleted() && !userRepository.isDepartmentProfessorByDepartmentId(u.getId(), departmentId)) {
 					// User already exists and not a department professor
 					int newDpId = departmentProfessorRepository.insertDepartmentProfessor(u.getId(), departmentId, admin);
 					if (newDpId == 0) {
@@ -367,9 +351,8 @@ public class DepartmentServlet extends HttpServlet{
 					if (recoverUser) {
 						userRepository.updateResetDigest(u.getId(), RandomUtils.SHA256Base64(token));
 						AccountsMailer.inviteUserEmail(req, u, token);
-						// TODO: CHECK IF USER IS ALREADY DEPARTMENT PROFESSOR
 						invited.add(email);
-						if (!userRepository.isDepartmentProfessor(u.getId())) {
+						if (!userRepository.isDepartmentProfessorByDepartmentId(u.getId(), departmentId)) {
 							int newDpId = departmentProfessorRepository.insertDepartmentProfessor(u.getId(), departmentId, admin);
 							if (newDpId != 0) {
 								invited.add(email);	
@@ -397,17 +380,8 @@ public class DepartmentServlet extends HttpServlet{
 			departmentProfessorRepository.updateAdminByDepartmentProfessorId(admin, departmentProfessorId);
 			Department department = departmentRepository.getDepartmentById(departmentId);
 			List<DepartmentProfessor> departmentProfessors = departmentProfessorRepository.getDepartmentProfessorsByDepartmentId(departmentId);
-			ArrayList<String> userIds = new ArrayList<String>();
 			
-			for (DepartmentProfessor dp : departmentProfessors) {
-				userIds.add(String.valueOf(dp.getUser_id()));
-			}
-			
-			List<User> departmentProfessorUsers = userRepository.getUserFromIdList(userIds);
-			
-			for (User user : departmentProfessorUsers) {
-				user.setPassword_digest("FILTERED");
-			}
+			List<User> departmentProfessorUsers = userRepository.getUsersFromDepartmentId(departmentId);
 		
 			req.getSession(false).setAttribute("department", department);	
 			req.getSession(false).setAttribute("department_professors", departmentProfessors);
