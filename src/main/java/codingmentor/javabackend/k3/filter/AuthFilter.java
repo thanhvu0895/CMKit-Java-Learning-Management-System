@@ -54,7 +54,11 @@ public class AuthFilter implements Filter{
 	    	resp.sendError(HttpServletResponse.SC_FORBIDDEN);
 	    	return;
 	    }
-	    	  
+	    
+	    if (isInSession(req)) {
+	    	
+	    	
+	    }
 
 		if (isInSession(req) || isLoginPage(req) || isResourceRequest(req) || isSetUpPage(req))  {
 			if (!isResourceRequest(req)) { // Prevent restricted pages from being cached.

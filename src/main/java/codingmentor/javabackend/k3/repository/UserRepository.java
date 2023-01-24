@@ -6,61 +6,94 @@ import java.util.List;
 import codingmentor.javabackend.k3.model.User;
 
 public interface UserRepository {
+	/*
+	 * GET List 
+	 */
+	
+    /**
+	 * Get list of all Users 
+	 *
+	 * @return a list of all Users if found or null
+	 */
+    List<User> getUsers();
+    
+    /**
+     * Get list of all Users given Department's id
+     * @param Department's id
+     * @return
+     */
+    public List<User> getUsersFromDepartmentId(int departmentId);
+    
+	/*
+	 * GET Item
+	 */
 	/**
-	 * Insert data of user to database
+	 * Find User with given id
+	 *
+	 * @param id: User's id
+	 * @return a User object if found or null
+	 */
+    User findUserById(int id);
+    
+    
+	/**
+	 * Find Single User given User's email
+	 *
+	 * @param email: User's email
+	 * @return an User object if found or null
+	 */
+    User findUserByEmail(String email);
+        
+	/**
+     * Check if User with given email exists 
+     *
+     * @param Users's email
+     * @return true if User with given email existed or false
+     */
+    boolean existedByEmail(String email);
+    
+    /**
+   	 * Check if user is department professor
+   	 * @param: id: userId
+   	 * @return boolean if update successful or else false
+   	 */
+    boolean isDepartmentProfessor(int id);
+    
+    /**
+   	 * Check if user is department professor by DepartmentId
+   	 * @param: id: userId
+   	 * @return boolean if update successful or else false
+   	 */
+    boolean isDepartmentProfessorByDepartmentId(int userId, int departmentId);
+    
+    
+    /*
+     * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
+     */
+    
+    
+    //POST(INSERT)
+    
+	/**
+	 * Insert new user with given email and admin attribute
 	 *
 	 * @param user data will insert to database
 	 * true if successful or false
 	 */
 	boolean createUserSendInvite(String email, boolean admin);
     
-	/**
-     * Check if user exists by email 
-     *
-     * @param email: users's email
-     * @return true if user existed or false
-     */
-    boolean existedByEmail(String email);
-    
-	/**
-	 * Find user by email
-	 *
-	 * @param email: user's email
-	 * @return a user instance if found or null
-	 */
-    User findUserByEmail(String email);
-    
-	/**
-	 * Find user by email
-	 *
-	 * @param id: user's id
-	 * @return a user instance if found or null
-	 */
-    User findUserById(int id);
-    
+    // PATCH(UPDATE)
     /**
-	 * Find list of users
-	 *
-	 * @return a list of all users if found or null
-	 */
-    List<User> getUsers();
-    
-    /**
-	 * Update users
+	 * Update User information given all details
 	 *
 	 * @return boolean if update successful or else false
 	 */
     boolean updateUserEditAdmin(String first_name, String last_name, String preferred_name, boolean admin, boolean disabled, int id);
     
-    /**
-   	 * Delete users
-   	 * @param: id: userId
-   	 * @return boolean if update successful or else false
-   	 */
-    boolean deleteUser(int id);
     
+
     /**
-   	 * Update user's preferred name by id 
+   	 * Update User's preferred name given user id 
    	 * @param: id: userId
    	 * @return boolean if update successful or else false
    	 */
@@ -72,8 +105,7 @@ public interface UserRepository {
    	 * @return boolean if update successful or else false
    	 */
      boolean updatePassword(String new_password, User user);
-     
-      
+
   	/**
   	 * Update user's reset_digest 
   	 * @param: User user
@@ -83,54 +115,31 @@ public interface UserRepository {
      
    	/**
    	 * Update user's password 
-   	 * @param: User user
    	 * @return boolean if update successful or else false
    	 */
      boolean updateUserInviteParams(int userid, String first_name, String last_name, String preferred_name, String password);
-     
- 		/**
-    	 * Update user's password 
-    	 * @param: User user
-    	 * @return boolean if update successful or else false
-    	 */
+ 
+	/**
+	 * Update User set_up to true or false
+	 * @param: User user
+	 * @return boolean if update successful or else false
+	 */
       boolean updateSetUpUser(int userid);
       
       
       /**
        * updateResetExpires
-       * @param userid
-       * @param reset_expires
-       * @return
        */
       public boolean updateResetExpires(int userid, LocalDateTime reset_expires);
       
       /**
-       * 
-       * @param id
-       * @return
+       * Update User's set_up and deleted to True with given id 
        */
       public boolean recoverUser(int id);
       
-      /**
-       * 
-       * @param departmentId
-       * @return
-       */
-      public List<User> getUsersFromDepartmentId(int departmentId);
-      
-      
-      /**
-     	 * Check if user is department professor
-     	 * @param: id: userId
-     	 * @return boolean if update successful or else false
-     	 */
-      boolean isDepartmentProfessor(int id);
-      
-      /**
-     	 * Check if user is department professor by DepartmentId
-     	 * @param: id: userId
-     	 * @return boolean if update successful or else false
-     	 */
-      boolean isDepartmentProfessorByDepartmentId(int userId, int departmentId);
+     /**
+ 	  * Update deleted param of User object
+ 	  */
+      boolean deleteUser(int id);
 
 }

@@ -1,22 +1,13 @@
 package codingmentor.javabackend.k3.model;
 
-import codingmentor.javabackend.k3.repository.DepartmentRepository;
-import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
-
 public class Department {
 	private int id;
 	private String title;
 	private int repo_id;
-	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
 	
-	public boolean isDepartmentAdmin(User user) {
-		return departmentRepository.isDepartmentAdmin(user.getId(), this.id) || user.isAdmin();
-	}
-	
-	public boolean isDepartmentProfessor(User user) {
-		return departmentRepository.isDepartmentProfessor(user.getId(), this.id) || user.isAdmin();
-	}
-	
+	/*
+	 * Getters, Setters
+	 */
 	public int getId() {
 		return id;
 	}

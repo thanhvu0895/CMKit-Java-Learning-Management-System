@@ -11,11 +11,6 @@ import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 
 
-
-/**
- * @author Thanh Vu
- *
- */
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     private int id;
@@ -30,6 +25,10 @@ public class User implements Serializable {
     private boolean set_up;
     private boolean disabled;
     private boolean deleted;
+    
+    /**
+     * Repository Functions
+     */
     
 	private UserRepository userRepository =  UserRepositoryImpl.getInstance();
 	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
@@ -113,10 +112,11 @@ public class User implements Serializable {
 		
 		return last_name+ ", " + first_name ;
 	}
+	
+	/*
+	 * Getters, Setters
+	 */
 
-	
-	
-    
     public boolean isDeleted() {
 		return deleted;
 	}
@@ -172,6 +172,7 @@ public class User implements Serializable {
     public void setPassword_digest(String password_digest) {
 		this.password_digest = password_digest;
 	}
+    
 
 	// fluent style api
 	public User() {

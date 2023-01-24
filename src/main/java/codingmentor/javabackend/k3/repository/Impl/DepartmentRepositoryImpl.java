@@ -52,44 +52,10 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
     	}
     }
     
-    /**
-	 * {@inheritDoc}
+	/*
+	 * GET LIST METHOD
 	 */
-	@Override
-	public Department getDepartmentById(int id) {
-		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM departments WHERE id = ? LIMIT 1;";
-		    PreparedStatement statement = connection.prepareStatement(query);
-		    statement.setInt(1, id);
-		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
-		    Department department = (results.next()) ? mapper.map(results) : null;
-		    close(connection, statement, results);
-		    return department;
-    	});
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Department getDepartmentByCourseId(int courseId) {
-		return executeQuerySingle(connection -> {
-			final String query = "select D.id, D.title,D.repo_id FROM "
-					+ "departments as D \n"
-					+ "	INNER JOIN courses as C \n"
-					+ "ON D.id = C.department_id and C.id = ?;";
-		    PreparedStatement statement = connection.prepareStatement(query);
-		    statement.setInt(1, courseId);
-		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
-		    Department department = (results.next()) ? mapper.map(results) : null;
-		    close(connection, statement, results);
-		    return department;
-    	});
-	}
     
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -130,7 +96,121 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			return departmentsList;
 		});
 	}
-		
+	
+	/*
+	 * GET ITEM METHOD
+	 */
+	
+    /**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Department getDepartmentById(int id) {
+		return executeQuerySingle(connection -> {
+			final String query = "SELECT * FROM departments WHERE id = ? LIMIT 1;";
+		    PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, id);
+		    ResultSet results = statement.executeQuery();
+		    System.out.println(statement);
+		    Department department = (results.next()) ? mapper.map(results) : null;
+		    close(connection, statement, results);
+		    return department;
+    	});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Department getDepartmentByCourseId(int courseId) {
+		return executeQuerySingle(connection -> {
+			final String query = "select D.id, D.title,D.repo_id FROM "
+					+ "departments as D \n"
+					+ "	INNER JOIN courses as C \n"
+					+ "ON D.id = C.department_id and C.id = ?;";
+		    PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, courseId);
+		    ResultSet results = statement.executeQuery();
+		    System.out.println(statement);
+		    Department department = (results.next()) ? mapper.map(results) : null;
+		    close(connection, statement, results);
+		    return department;
+    	});
+	}
+	
+	/*
+	 * GET Check True/false METHOD
+	 */
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean existedByTitle(String title) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT 1 as ONE FROM departments WHERE title = ?  LIMIT 1;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, title);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println(statement);
+			 Department department = (results.next()) ? new Department() : null;
+			 close(connection, statement, results);
+			 return department;
+		}) != null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isDepartmentAdmin(int userId, int departmentId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT \r\n"
+			 		+ "	 1 as ONE\r\n"
+			 		+ "FROM  department_professors as DP \r\n"
+			 		+ "INNER JOIN users as U\r\n"
+			 		+ "	ON DP.user_id = U.id and U.id = ? and DP.admin = 1\r\n"
+			 		+ "INNER JOIN departments as D\r\n"
+			 		+ "	ON DP.department_id = D.id AND D.id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 statement.setInt(2, departmentId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println(statement);
+			 Department department = results.next() ? new Department() : null;
+			 close(connection, statement, results);
+			 return department;
+		}) != null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isDepartmentProfessor(int userId, int departmentId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT \r\n"
+			 		+ "	1 as ONE\r\n"
+			 		+ "FROM  department_professors as DP \r\n"
+			 		+ "INNER JOIN users as U\r\n"
+			 		+ "	ON DP.user_id = U.id and U.id = ? and DP.admin = 1\r\n"
+			 		+ "INNER JOIN departments as D\r\n"
+			 		+ "	ON DP.department_id = D.id AND D.id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 statement.setInt(2, departmentId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println(statement);
+			 Department department = results.next() ? new Department() : null;
+			 close(connection, statement, results);
+			 return department;
+		}) != null;
+	}
+
+	/*
+	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
 	/**
 	 * {@inheritDoc}
 	 */
@@ -161,6 +241,8 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	}
 	
 	
+	//PATCH(UPDATE)
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -176,70 +258,5 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			 close(connection, statement, null);
 			 return result;
 		}) != 0;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean existedByTitle(String title) {
-		return executeQuerySingle(connection -> {
-			 final String query = "SELECT title FROM departments WHERE title = ?  LIMIT 1;";
-			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setString(1, title);
-			 ResultSet results = statement.executeQuery();
-			 System.out.println(statement);
-			 Department department = (results.next() && results.getString("title").equals(title)) ? new Department() : null;
-			 close(connection, statement, results);
-			 return department;
-		}) != null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isDepartmentAdmin(int userId, int departmentId) {
-		return executeQuerySingle(connection -> {
-			 final String query = "SELECT \r\n"
-			 		+ "	 1 as ONE\r\n"
-			 		+ "FROM  department_professors as DP \r\n"
-			 		+ "INNER JOIN users as U\r\n"
-			 		+ "	ON DP.user_id = U.id and U.id = ? and DP.admin = 1\r\n"
-			 		+ "INNER JOIN departments as D\r\n"
-			 		+ "	ON DP.department_id = D.id AND D.id = ?;";
-			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setInt(1, userId);
-			 statement.setInt(2, departmentId);
-			 ResultSet results = statement.executeQuery();
-			 System.out.println(statement);
-			 Department department = results.next() ? new Department() : null;
-			 close(connection, statement, results);
-			 return department;
-		}) != null;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isDepartmentProfessor(int userId, int departmentId) {
-		return executeQuerySingle(connection -> {
-			 final String query = "SELECT \r\n"
-			 		+ "	1 as ONE\r\n"
-			 		+ "FROM  department_professors as DP \r\n"
-			 		+ "INNER JOIN users as U\r\n"
-			 		+ "	ON DP.user_id = U.id and U.id = ? and DP.admin = 1\r\n"
-			 		+ "INNER JOIN departments as D\r\n"
-			 		+ "	ON DP.department_id = D.id AND D.id = ?;";
-			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setInt(1, userId);
-			 statement.setInt(2, departmentId);
-			 ResultSet results = statement.executeQuery();
-			 System.out.println(statement);
-			 Department department = results.next() ? new Department() : null;
-			 close(connection, statement, results);
-			 return department;
-		}) != null;
 	}
 }

@@ -14,12 +14,12 @@ public class UserMapper implements RowMapper<User> {
 		ResultSetMetaData rsmd = (ResultSetMetaData) results.getMetaData();
 		if (rsmd.getColumnCount() <= 6) {
 			return new User()
-					.id(results.getInt("id"))		
-					.email(results.getString("email"))
-					.admin(results.getBoolean("admin"))
-					.first_name(results.getString("first_name"))
-					.last_name(results.getString("last_name"))
-					.preferred_name(results.getString("preferred_name"));
+				.id(results.getInt("id"))		
+				.email(results.getString("email"))
+				.admin(results.getBoolean("admin"))
+				.first_name(results.getString("first_name"))
+				.last_name(results.getString("last_name"))
+				.preferred_name(results.getString("preferred_name"));
 		}
 		
 		if (results.getTimestamp("reset_expires") == null) {

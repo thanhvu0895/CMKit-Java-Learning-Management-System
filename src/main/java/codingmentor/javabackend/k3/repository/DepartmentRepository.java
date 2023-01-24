@@ -6,7 +6,12 @@ import codingmentor.javabackend.k3.model.Department;
 
 
 public interface DepartmentRepository {
+	
+	/*
+	 * GET LIST METHOD
+	 */
     /**
+	 * 
 	 * Get list of Departments
 	 *
 	 * @return a list of all Departments if found or null
@@ -14,12 +19,17 @@ public interface DepartmentRepository {
     List<Department> getDepartments();
     
     /**
+     * 
      * Get list of department from user id
      * @param userId
      * @return
      */
     public List<Department> getDepartmentsByUserId(int userId);
     
+    
+	/*
+	 * GET ITEM METHOD
+	 */
     /**
      * Get department by Department's id
      * @return Department if exists and null if not
@@ -32,21 +42,11 @@ public interface DepartmentRepository {
      */
     Department getDepartmentByCourseId(int courseId);
     
-    /**
-     * Add a new Department to DB
-     * @return newly inserted department id if inserted and -1 otherwise
-     */
-    int insertDepartment (String title, int repo_id);
     
+	/*
+	 * GET Check True/false METHOD
+	 */
     
-    /** Update Department's title given department id and new title
-     * 
-     * @param title
-     * @return true if updated, and false if update was unsuccessful
-     */
-    public boolean updateDepartmentTitleById(String title, int id);
-    
-
     /**
      * if an user is department's admin
      * @param userId
@@ -69,4 +69,24 @@ public interface DepartmentRepository {
      * @return
      */
     public boolean existedByTitle(String title);
+    
+	/*
+	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
+    /**
+     * Add a new Department to DB
+     * @return newly inserted department id if inserted and -1 otherwise
+     */
+    int insertDepartment (String title, int repo_id);
+    
+	//PATCH(UPDATE)
+    /** Update Department's title given department id and new title
+     * 
+     * @param title
+     * @return true if updated, and false if update was unsuccessful
+     */
+    public boolean updateDepartmentTitleById(String title, int id);
+
 }

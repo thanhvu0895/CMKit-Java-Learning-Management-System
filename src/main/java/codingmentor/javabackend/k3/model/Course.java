@@ -7,7 +7,15 @@ public class Course {
 	private int repo_id;
 	private int department_id;
 	private boolean active;
+	/**
+     * Repository Functions
+     */
 	
+	
+	
+	/*
+	 * Getters, Setters
+	 */
 	public int getId() {
 		return id;
 	}
@@ -31,10 +39,11 @@ public class Course {
 	public boolean isActive() {
 		return active;
 	}
-
+	
+	
+	/* Fluent Style API */
 	public Course() {}
 	
-	/* Fluen Style API */
 	public Course id(int id) {
 	    this.id = id;
 	    return this;

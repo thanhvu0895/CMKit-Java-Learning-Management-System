@@ -37,26 +37,6 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     	return repository;
     }
     
-    /**
-     * {@inheritDoc}
-     */
-    
-    @Override
-    public User findUserByEmail(String email) { 
-		return executeQuerySingle(connection -> {
-	
-			// Query to find user by email
-			final String query = "SELECT * FROM users WHERE email = ? LIMIT 1;";
-	        PreparedStatement statement = connection.prepareStatement(query);
-	        statement.setString(1, email);
-	        ResultSet results = statement.executeQuery();
-	        System.out.println(statement);
-	        User user = (results.next()) ? mapper.map(results) : null;
-	        close(connection, statement, results);
-	        return user;
-	    });
-    }
-    
     private void close (Connection connection, Statement ps, ResultSet rs) {
     	try {
     		if (rs != null) {
@@ -74,52 +54,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     		e.printStackTrace();
     	}
     }
- 
-  	/*
-  	 * # IMPORTANT: Accounts get a random password when they are first created. #
-  	 * # This password cannot actually be used as the set_up boolean is false, and
-  	 * # using a default password would be dumb # if set_up ever stopped working
-  	 */
-	/**
-	 * {@inheritDoc}
-	 */
     
-	@Override
-	public boolean createUserSendInvite(String email, boolean admin) {
-		return executeUpdate(connection -> {
-			final String query = "INSERT INTO users(email, admin, password_digest)"
-					+ "VALUES (?, ?, ?);";
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setString(1, email);
-			statement.setBoolean(2, admin);
-			String password_digest = hasher.hash(RandomUtils.unique64().toCharArray());
-			statement.setString(3, password_digest);
-			System.out.println(statement);
-			int result = statement.executeUpdate();
-    		close(connection, statement, null);			
-			return result;
-		}) != 0;
-	}
-
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean existedByEmail(String email) {
-		return executeQuerySingle(connection -> {
-			 final String query = "SELECT email FROM users WHERE email = ?  LIMIT 1;";
-			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setString(1, email);
-			 ResultSet results = statement.executeQuery();
-			 System.out.println(statement);
-			 User user = (results.next() && results.getString("email").equals(email)) ? new User() : null;
-			 close(connection, statement, results);
-			 return user;
-		}) != null;
-	}
-	
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -140,6 +75,34 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		});
 	}
 
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<User> getUsersFromDepartmentId(int departmentId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT \r\n"
+					+ "	U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name\r\n"
+					+ "FROM users as U\r\n"
+					+ "INNER JOIN department_professors as DP \r\n"
+					+ "	ON DP.user_id = U.id\r\n"
+					+ "INNER JOIN departments as D\r\n"
+					+ "	ON DP.department_id = D.id and D.id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, departmentId);
+			ResultSet results = statement.executeQuery();
+			System.out.println(statement);
+			List<User> usersList = new ArrayList<>();
+			while(results.next()) {
+				usersList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return usersList;
+		});
+	}
+    
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -158,7 +121,115 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
             return user;
     	});
 	}
-
+	
+    /**
+     * {@inheritDoc}
+     */
+    
+    @Override
+    public User findUserByEmail(String email) { 
+		return executeQuerySingle(connection -> {
+	
+			// Query to find user by email
+			final String query = "SELECT * FROM users WHERE email = ? LIMIT 1;";
+	        PreparedStatement statement = connection.prepareStatement(query);
+	        statement.setString(1, email);
+	        ResultSet results = statement.executeQuery();
+	        System.out.println(statement);
+	        User user = (results.next()) ? mapper.map(results) : null;
+	        close(connection, statement, results);
+	        return user;
+	    });
+    }
+ 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean existedByEmail(String email) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT email FROM users WHERE email = ?  LIMIT 1;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, email);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println(statement);
+			 User user = (results.next() && results.getString("email").equals(email)) ? new User() : null;
+			 close(connection, statement, results);
+			 return user;
+		}) != null;
+	}
+    
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isDepartmentProfessor(int userId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT 1 AS one FROM department_professors WHERE user_id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println(statement);
+			 User user = (results.next()) ? new User() : null;
+			 close(connection, statement, results);
+			 return user;
+		}) != null;
+	}
+	@Override
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean isDepartmentProfessorByDepartmentId(int userId, int departmentId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT 1 AS one FROM department_professors WHERE user_id = ? and department_id = ? LIMIT 1;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 statement.setInt(2, departmentId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println(statement);
+			 User user = (results.next()) ? new User() : null;
+			 close(connection, statement, results);
+			 return user;
+		}) != null;
+	 }
+    
+    /*
+     * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
+     */
+    
+  	/*
+  	 * # IMPORTANT: Accounts get a random password when they are first created. #
+  	 * # This password cannot actually be used as the set_up boolean is false, and
+  	 * # using a default password would be dumb # if set_up ever stopped working
+  	 */
+	
+	
+	//POST(CREATE)
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean createUserSendInvite(String email, boolean admin) {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO users(email, admin, password_digest)"
+					+ "VALUES (?, ?, ?);";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, email);
+			statement.setBoolean(2, admin);
+			String password_digest = hasher.hash(RandomUtils.unique64().toCharArray());
+			statement.setString(3, password_digest);
+			System.out.println(statement);
+			int result = statement.executeUpdate();
+    		close(connection, statement, null);			
+			return result;
+		}) != 0;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean updateUserEditAdmin(String first_name, String last_name, String preferred_name, boolean admin, boolean disabled, int id) {
 		return executeUpdate(connection -> {
@@ -177,36 +248,9 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		}) != 0;
 	}
 
-	
-	
-	@Override
-	public boolean deleteUser(int id) {
-		return executeUpdate(connection -> {
-			 final String query = " UPDATE users SET deleted = 1, set_up = 0 WHERE id = ?;";
-			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setInt(1, id);
-			 System.out.println(statement);
-			 int result = statement.executeUpdate();
-			 close(connection, statement, null);
-			 return result;
-		}) != 0;
-	}
-	
-	
-	@Override
-	public boolean recoverUser(int id) {
-		return executeUpdate(connection -> {
-			 final String query = " UPDATE users SET deleted = 0 WHERE id = ?;";
-			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setInt(1, id);
-			 System.out.println(statement);
-			 int result = statement.executeUpdate();
-			 close(connection, statement, null);
-			 return result;
-		}) != 0;
-	}
-	
-	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean updatePreferredNameById(String preferred_name, int id) {
 		return executeUpdate(connection -> {
@@ -220,7 +264,10 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 return result;
 		}) != 0;
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean updatePassword(String new_password, User user) {
 		return executeUpdate(connection -> {
@@ -236,6 +283,9 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		}) != 0;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean updateResetDigest(int userid, String reset_digest) {
 		return executeUpdate(connection -> {
@@ -250,7 +300,9 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		}) != 0;
 	}
 	
-	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean updateResetExpires(int userid, LocalDateTime reset_expires) {
 		return executeUpdate(connection -> {
@@ -265,9 +317,9 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		}) != 0;
 	}
 	
-	
-	
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean updateUserInviteParams(int userid, String first_name, String last_name, String preferred_name, String password) {
 		return executeUpdate(connection -> {
@@ -287,12 +339,48 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		}) != 0;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean updateSetUpUser(int userid) {
 		return executeUpdate(connection -> {
 			 final String query = " UPDATE users SET set_up = 1 WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, userid);
+			 System.out.println(statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}
+	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean deleteUser(int id) {
+		return executeUpdate(connection -> {
+			 final String query = " UPDATE users SET deleted = 1, set_up = 0 WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, id);
+			 System.out.println(statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean recoverUser(int id) {
+		return executeUpdate(connection -> {
+			 final String query = " UPDATE users SET deleted = 0 WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, id);
 			 System.out.println(statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
@@ -333,59 +421,4 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 //			return usersList;
 //		 });
 //	 }
-
-	@Override
-	public boolean isDepartmentProfessor(int userId) {
-		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 AS one FROM department_professors WHERE user_id = ?;";
-			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setInt(1, userId);
-			 ResultSet results = statement.executeQuery();
-			 System.out.println(statement);
-			 User user = (results.next()) ? new User() : null;
-			 close(connection, statement, results);
-			 return user;
-		}) != null;
-	}
-	@Override
-	
-	public boolean isDepartmentProfessorByDepartmentId(int userId, int departmentId) {
-		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 AS one FROM department_professors WHERE user_id = ? and department_id = ? LIMIT 1;";
-			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setInt(1, userId);
-			 statement.setInt(2, departmentId);
-			 ResultSet results = statement.executeQuery();
-			 System.out.println(statement);
-			 User user = (results.next()) ? new User() : null;
-			 close(connection, statement, results);
-			 return user;
-		}) != null;
-		 
-	 }
-
-	
-	
-	@Override
-	public List<User> getUsersFromDepartmentId(int departmentId) {
-		return executeQuery(connection -> {
-			final String query = "SELECT \r\n"
-					+ "	U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name\r\n"
-					+ "FROM users as U\r\n"
-					+ "INNER JOIN department_professors as DP \r\n"
-					+ "	ON DP.user_id = U.id\r\n"
-					+ "INNER JOIN departments as D\r\n"
-					+ "	ON DP.department_id = D.id and D.id = ?;";
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setInt(1, departmentId);
-			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
-			List<User> usersList = new ArrayList<>();
-			while(results.next()) {
-				usersList.add(mapper.map(results));
-			}
-			close(connection, statement, results);
-			return usersList;
-		});
-	}
 }

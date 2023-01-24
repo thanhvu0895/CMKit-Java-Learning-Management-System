@@ -9,8 +9,8 @@ public class DepartmentMapper  implements RowMapper<Department> {
 	@Override
 	public Department map(ResultSet results)  throws SQLException {
 		return new Department()
-				.id(results.getInt("id"))
-				.repo_id(results.getInt("repo_id"))
-				.title(results.getString("title"));
+			.id(results.getInt("id"))
+			.repo_id(results.getInt("repo_id"))
+			.title(results.getString("title"));
 	}
 }

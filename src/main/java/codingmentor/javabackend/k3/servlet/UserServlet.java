@@ -65,12 +65,7 @@ public class UserServlet extends HttpServlet {
 		case UrlUtils.USERS_PATH:
 			String pathInfo = req.getPathInfo();
 			if (pathInfo == null || pathInfo.equals("/")) { // If Request is /users/ or /users
-				List<User> users = userRepository.getUsers();
-				for (User user : users) {
-					user.setPassword_digest("[FILTERED]");
-				}
-				req.setAttribute("users", users);
-				req.getRequestDispatcher(JspUtils.USERS_INDEX).forward(req, resp);
+				getUserIndex(req, resp);
 				return;
 			}
 			
@@ -94,6 +89,71 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 
+	private void getUserIndex (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		try {
+			List<User> users = userRepository.getUsers();
+			for (User user : users) {
+				user.setPassword_digest("[FILTERED]");
+			}
+			req.setAttribute("users", users);
+			req.getRequestDispatcher(JspUtils.USERS_INDEX).forward(req, resp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void getShowUserPasswordResetPage (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		try {
+			String token = req.getParameter("token");
+			String userid = req.getParameter("user");
+			if (userid == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
+			if (UrlUtils.isInteger(userid)) {
+				int id = Integer.parseInt(userid);
+				User requestedUser = userRepository.findUserById(id);
+				if (requestedUser != null && requestedUser.validateResetToken(token)) {
+					req.getSession(false).setAttribute("token", token);
+					req.getSession(false).setAttribute("userid", id);
+					req.getRequestDispatcher(JspUtils.PASSWORD_RESET_SHOW_USE_PASSWORD_RESET)
+						.forward(req, resp);
+					return;
+				}
+				
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/**
+	 * Implement processSetUpUser 1/16/2023
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void getSetUpUserPage (HttpServletRequest req, HttpServletResponse resp, int id) throws ServletException, IOException {
+		try {
+			String token = req.getParameter("token");
+			User user = userRepository.findUserById(id);
+			if (user != null && user.validateInviteToken(token)) {
+				req.setAttribute("userid", id);
+				req.setAttribute("token", token);
+				user.setPassword_digest("[FILTERED]");
+				req.setAttribute("user", user);
+				req.getRequestDispatcher(JspUtils.USERS_SHOW_INVITE).forward(req, resp);
+				return;
+			} else {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch (req.getServletPath()) {
@@ -149,64 +209,8 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 	
-	
-	private void getShowUserPasswordResetPage (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		try {
-			String token = req.getParameter("token");
-			String userid = req.getParameter("user");
-			if (userid == null) {
-				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-				return;
-			}
-			
-			if (UrlUtils.isInteger(userid)) {
-				int id = Integer.parseInt(userid);
-				User requestedUser = userRepository.findUserById(id);
-				if (requestedUser != null && requestedUser.validateResetToken(token)) {
-					req.getSession(false).setAttribute("token", token);
-					req.getSession(false).setAttribute("userid", id);
-					req.getRequestDispatcher(JspUtils.PASSWORD_RESET_SHOW_USE_PASSWORD_RESET)
-						.forward(req, resp);
-					return;
-				}
-				
-				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	/**
-	 * Implement processSetUpUser 1/16/2023
-	 * @throws IOException 
-	 * @throws ServletException 
-	 */
-	private void getSetUpUserPage (HttpServletRequest req, HttpServletResponse resp, int id) throws ServletException, IOException {
-		try {
-			String token = req.getParameter("token");
-			User user = userRepository.findUserById(id);
-			if (user != null && user.validateInviteToken(token)) {
-				req.setAttribute("userid", id);
-				req.setAttribute("token", token);
-				user.setPassword_digest("[FILTERED]");
-				req.setAttribute("user", user);
-				req.getRequestDispatcher(JspUtils.USERS_SHOW_INVITE).forward(req, resp);
-				return;
-			} else {
-				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-				return;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	/**
-	 * 
-	 * @param req
-	 * @param resp
-	 * @throws IOException
+	 * postUserPasswordReset
 	 */
 	private void postUserPasswordReset(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {
@@ -246,11 +250,7 @@ public class UserServlet extends HttpServlet {
 	}
 	
 	/**
-	 * 
-	 * @param req
-	 * @param resp
-	 * @param id
-	 * @throws IOException
+	 * postRequestPaswordReset
 	 */
 	
 	private void postRequestPaswordReset(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -288,10 +288,6 @@ public class UserServlet extends HttpServlet {
 	}
 	/**
 	 * 
-	 * @param req
-	 * @param resp
-	 * @param id
-	 * @throws IOException
 	 */
 	
 	private void postResendInvite(HttpServletRequest req, HttpServletResponse resp, int id) throws IOException {
@@ -310,9 +306,6 @@ public class UserServlet extends HttpServlet {
 	
 	/**
 	 * Implement processCreateUserInvite 1/16/2023
-	 * @param req
-	 * @param resp
-	 * @throws IOException
 	 */
 	private void postSendInvite(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		
@@ -409,21 +402,6 @@ public class UserServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// PSEUDO CODE FOR THIS
-		// If password and password_confirmation is empty
-		// 		set session attribute "Please create a password for your account."
-		//		redirect_to SHOW_USER_INVITE_PATH with ?token = 
-		// 		stop function
-		// If password and password confirmation is not equal
-		//		set session attribute "Failed to create account: Password confirmation doesn't match Password."
-		//		redirect_to SHOW_USER_INVITE_PATH with ?token =
-		// If First Name or Last Name is empty
-		// 		set session attribute "set req attribute "Failed to create account: First name and last name are required."
-		//		redirect_to SHOW_USER_INVITE_PATH with ?token =
-		// Send update request to user with params: first_name, last_name, preferred_name, password
-		// if (update request is successful) 
-		//		Set_up = true
-		//		redirect_to root 
 	}
 	
 	
@@ -431,12 +409,6 @@ public class UserServlet extends HttpServlet {
 
 	/***
 	 * Implement processDeletePassword method Date: 1/14/2023
-	 * 
-	 * @param req
-	 * @param resp
-	 * @param userid user's id
-	 * @throws IOException
-	 * @throws ServletException
 	 */
 	private void postDeleteUser(HttpServletRequest req, HttpServletResponse resp, int userid)
 			throws IOException, ServletException {
@@ -458,11 +430,6 @@ public class UserServlet extends HttpServlet {
 
 	/***
 	 * Implement processChangePassword method Date: 1/14/2023
-	 * 
-	 * @param req
-	 * @param resp
-	 * @throws IOException
-	 * @throws ServletException
 	 */
 	private void postChangePassword(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
@@ -509,12 +476,6 @@ public class UserServlet extends HttpServlet {
 
 	/***
 	 * Implement updateUserPreferredName method Date: 1/14/2023
-	 * 
-	 * @param req
-	 * @param resp
-	 * @param userid user'id
-	 * @throws IOException
-	 * @throws ServletException
 	 */
 	private void postUpdateUserPreferredName(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
@@ -541,12 +502,6 @@ public class UserServlet extends HttpServlet {
 
 	/***
 	 * Implement processEditAdmin method Date: 1/14/2023
-	 * 
-	 * @param req
-	 * @param resp
-	 * @param userid user'id
-	 * @throws IOException
-	 * @throws ServletException
 	 */
 	private void postEditAdmin(HttpServletRequest req, HttpServletResponse resp, int userid)
 			throws IOException, ServletException {
