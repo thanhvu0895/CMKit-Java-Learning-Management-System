@@ -40,4 +40,14 @@ public interface CourseRepository {
      */
     int insertCourse (String title, String course_code, int repo_id, int department_id, boolean active);
     
+    /** Update Course's title and Course Code given Course id
+     * 
+     * @param title
+     * @param courseCode
+     * @param active
+     * @param id
+     * @return true if updated, and false if update was unsuccessful
+     */
+    public boolean updateCourseById(String title, String courseCode, boolean active, int id);
+    
 }

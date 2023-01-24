@@ -160,4 +160,23 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 			return 0;
 		});
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean updateCourseById(String title, String courseCode, boolean active, int id){
+		return executeUpdate(connection -> {
+			 final String query = "UPDATE courses SET title = ?, course_code = ?, active = ? WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, title);
+			 statement.setString(2, courseCode);
+			 statement.setBoolean(3, active);
+			 statement.setInt(4, id);
+			 System.out.println(statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}
 }

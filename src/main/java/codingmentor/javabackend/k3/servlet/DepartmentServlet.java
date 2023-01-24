@@ -173,6 +173,7 @@ public class DepartmentServlet extends HttpServlet{
 	
 	private void getDepartmentsNew(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {
+			
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_NEW) 
 				.forward(req, resp);
 		} catch (Exception e) {

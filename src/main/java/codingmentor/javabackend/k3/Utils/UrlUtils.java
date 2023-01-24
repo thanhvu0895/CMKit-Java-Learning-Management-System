@@ -68,6 +68,9 @@ public class UrlUtils {
 	public static final String COURSES_PATH_ALL = "/courses/*";
 	public static final String NEW_COURSE_PATH = "/courses/new";
 	public static final String COURSE_FILES_PATH ="/courses/:id/files";
+	public static final String EDIT_COURSE_PATH	= "/courses/:id/edit";
+	public static final String COURSE_GRADE_CATEGORIES_PATH	= "/courses/:id/grade_categories";
+
 	
 	public static final String LOGIN_PATH = "/login";
 	public static final String LOGOUT_PATH = "/logout";

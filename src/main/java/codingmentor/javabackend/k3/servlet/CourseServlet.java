@@ -100,6 +100,11 @@ public class CourseServlet extends HttpServlet{
 	
 	private void getCourseEdit(HttpServletRequest req, HttpServletResponse resp, int courseId) throws ServletException, IOException {
 		try {
+			
+			Department department = departmentRepository.getDepartmentByCourseId(courseId);
+			Course course = courseRepository.getCourseById(courseId);
+			req.setAttribute("department", department);
+			req.setAttribute("course", course);
 			req.getRequestDispatcher(JspUtils.COURSES_EDIT)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -164,13 +169,15 @@ public class CourseServlet extends HttpServlet{
 			String courseTitle = req.getParameter("course[title]");
 			String courseCode = req.getParameter("course[course_code]");
 			boolean courseActive = (req.getParameterValues("course[active]").length == 2);
-			System.out.println("Value of departmentId is: " + departmentId);
-			System.out.println("Value of courseTitle is: " + courseTitle);
-			System.out.println("Value of courseCourseCode  is: " + courseCode);
-			System.out.println("Value of courseActive  is: " + courseActive );
-			int repoId = repoRepository.insertRepo();
 			
-			if (repoId != -1) {
+			if (courseTitle == "" || courseCode == "") {
+				req.getSession(false).setAttribute("alert", "Title and course code can't be blank");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_COURSE_PATH);
+				return;
+			}
+			
+			int repoId = repoRepository.insertRepo();
+			if (repoId != 0) {
 				int courseId = courseRepository.insertCourse(courseTitle, courseCode, repoId, departmentId, courseActive);
 				req.getSession(false).setAttribute("department", departmentRepository.getDepartmentById(departmentId));
 				req.getSession(false).setAttribute("course", courseRepository.getCourseById(courseId));
@@ -186,6 +193,22 @@ public class CourseServlet extends HttpServlet{
 
 	private void patchCourseUpdate(HttpServletRequest req, HttpServletResponse resp, int courseId) throws IOException {
 		try {
+			String title = req.getParameter("course[title]");
+			String course_code = req.getParameter("course[course_code]");
+			boolean active = (req.getParameterValues("course[active]").length == 2);
+			if (title == "" || course_code == "") {
+				req.getSession(false).setAttribute("alert", "Title and course code can't be blank");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_COURSE_PATH, courseId));
+				return;
+			}
+			courseRepository.updateCourseById(title, course_code, active, courseId);
+			Department department = departmentRepository.getDepartmentByCourseId(courseId);
+			Course course = courseRepository.getCourseById(courseId);
+			req.getSession(false).setAttribute("department", department);
+			req.getSession(false).setAttribute("course", course);
+			req.getSession(false).setAttribute("notice", "Course was successfully updated.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_COURSE_PATH, courseId));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

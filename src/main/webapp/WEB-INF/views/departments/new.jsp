@@ -12,6 +12,7 @@
 
 <h1>New Department</h1>
 
+
 <t:form_with url="${UrlUtils.DEPARTMENTS_PATH}">
 	<div class="form-group">
 		<label for="department_title">Title</label>
@@ -22,5 +23,5 @@
 		<input type="submit" name="commit" value="Create Department" class="btn btn-success" data-disable-with="Create Department" />
 	</div>
 
-</t:form_with>
+</t:form_with> 
 </t:layoutj>

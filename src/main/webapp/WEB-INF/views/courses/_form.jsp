@@ -1,22 +1,20 @@
-<t:form_with url="${UrlUtils.COURSES_PATH}">
-  <input type="hidden" name="department" id="department" value="${department.id}" />
-  
+<t:form_with url="${UrlUtils.COURSES_PATH}/:id" id="${course.id}" method="PATCH">
   <div class="form-group">
     <label for="course_title">Title</label>
-    <input class="form-control" type="text" name="course[title]" id="course_title" />
+    <input class="form-control" type="text" value="${course.title}" name="course[title]" id="course_title" />
   </div>
 
   <div class="form-group">
-	    <label for="course_course_code">Course code</label>
-	    <input class="form-control" type="text" name="course[course_code]" id="course_course_code" />
-	  </div>
-	  
-	  <div class="form-group">
-	    <input name="course[active]" type="hidden" value="0" /><input type="checkbox" value="1" checked="checked" name="course[active]" id="course_active" />
-		<label for="course_Active">Active</label>
-	  </div>
-	
-	  <div class="actions">
-	    <input type="submit" name="commit" value="Create Course" class="btn btn-success" data-disable-with="Create Course" />
-	  </div>
+    <label for="course_course_code">Course code</label>
+    <input class="form-control" type="text" value="${course.course_code}" name="course[course_code]" id="course_course_code" />
+  </div>
+  
+  <div class="form-group">
+    <f:check_box check_box="active" model="course" value="${course.active}"></f:check_box>
+	<label for="course_Active">Active</label>
+  </div>
+
+  <div class="actions">
+    <input type="submit" name="commit" value="Update Course" class="btn btn-success" data-disable-with="Update Course" />
+  </div>
 </t:form_with>
