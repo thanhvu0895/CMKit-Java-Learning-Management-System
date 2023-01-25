@@ -5,6 +5,7 @@
 
 <t:layoutj pageTitle="${department.title} | Courses">
 
+
 <ol class="breadcrumb">
   <%@ include file="_department_crumbs.jsp" %>
   <li class="active">Courses</li>
@@ -53,3 +54,4 @@
 	}
 </script>
 </t:layoutj>
+<%-- <h1>DONE</h1> --%>
