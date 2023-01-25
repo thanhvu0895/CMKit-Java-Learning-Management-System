@@ -7,3 +7,4 @@
   </c:otherwise>
 </c:choose>
 <li>${department.title}</li>
+<%-- <h1>DONE</h1> --%>

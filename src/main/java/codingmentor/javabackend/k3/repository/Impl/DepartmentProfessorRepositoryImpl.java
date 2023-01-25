@@ -62,7 +62,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			final String query = "SELECT * FROM department_professors";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getDepartmentProfessors: " + statement);
 			List<DepartmentProfessor> departmentProfessorsList = new ArrayList<>();
 			while(results.next()) {
 				departmentProfessorsList.add(mapper.map(results));
@@ -82,7 +82,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
+		    System.out.println("getDepartmentProfessorById: " + statement);
 		    DepartmentProfessor departmentProfessor = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return departmentProfessor;
@@ -111,22 +111,6 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 	}
 	
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean updateAdminByDepartmentProfessorId(boolean admin, int id) {
-		return executeUpdate(connection -> {
-			 final String query = "UPDATE department_professors SET admin = ? WHERE id = ?;";
-			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setBoolean(1, admin);
-			 statement.setInt(2, id);
-			 System.out.println(statement);
-			 int result = statement.executeUpdate();
-			 close(connection, statement, null);
-			 return result;
-		}) != 0;
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -158,4 +142,23 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			return 0;
 		});
 	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean updateAdminByDepartmentProfessorId(boolean admin, int id) {
+		return executeUpdate(connection -> {
+			 final String query = "UPDATE department_professors SET admin = ? WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setBoolean(1, admin);
+			 statement.setInt(2, id);
+			 System.out.println("updateAdminByDepartmentProfessorId: " + statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}
+
 }

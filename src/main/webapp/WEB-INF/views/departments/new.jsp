@@ -12,16 +12,6 @@
 
 <h1>New Department</h1>
 
-
-<t:form_with url="${UrlUtils.DEPARTMENTS_PATH}">
-	<div class="form-group">
-		<label for="department_title">Title</label>
-		<input class="form-control" type="text" name="department[title]" id="department_title" />
-	</div>
-  
-	<div class="actions">
-		<input type="submit" name="commit" value="Create Department" class="btn btn-success" data-disable-with="Create Department" />
-	</div>
-
-</t:form_with> 
+<jsp:include page="_form.jsp"/>
 </t:layoutj>
+<%-- <h1>DONE</h1> --%>

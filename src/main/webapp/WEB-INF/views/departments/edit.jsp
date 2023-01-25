@@ -20,7 +20,7 @@
 	</div>
 	<div id="edit_department" class="panel-collapse collapse in">
 	  <div class="panel-body">
-        <%@ include file="_form.jsp" %>
+        <jsp:include page="_form.jsp"><jsp:param name="method" value="PATCH"/></jsp:include>
 	  </div>
 	</div>
   </div>
@@ -89,7 +89,8 @@
 			</div>
 
 			<div class="form-group">
-			  <input name="department_professor[admin]" type="hidden" value="0"><input type="checkbox" value="1" name="department_professor[admin]" id="department_professor_admin">
+			  <input name="department_professor[admin]" type="hidden" value="0">
+			  <input type="checkbox" value="1" name="department_professor[admin]" id="department_professor_admin">
 			  <label for="department_professor_Admin">Admin?</label>
 			</div>
 			
@@ -118,3 +119,4 @@
 </c:if>
 
 </t:layoutj>
+<%-- <h1>DONE</h1> --%>
