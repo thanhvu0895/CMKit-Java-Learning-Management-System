@@ -76,8 +76,7 @@ public class UserServlet extends HttpServlet {
 				int id = Integer.parseInt(pathParts[1]);
 				switch (pathParts[2]) {
 				case "edit_admin": // If request is /users/:id/edit_admin
-					User user = userRepository.findUserById(id);
-					user.setPassword_digest("[FILTERED]");
+					User user = userRepository.findUserByIdParamsWhiteListed(id);
 					req.setAttribute("user", user);
 					req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN).forward(req, resp);
 					break;
@@ -92,9 +91,6 @@ public class UserServlet extends HttpServlet {
 	private void getUserIndex (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			List<User> users = userRepository.getUsers();
-			for (User user : users) {
-				user.setPassword_digest("[FILTERED]");
-			}
 			req.setAttribute("users", users);
 			req.getRequestDispatcher(JspUtils.USERS_INDEX).forward(req, resp);
 		} catch (Exception e) {
@@ -115,8 +111,8 @@ public class UserServlet extends HttpServlet {
 				int id = Integer.parseInt(userid);
 				User requestedUser = userRepository.findUserById(id);
 				if (requestedUser != null && requestedUser.validateResetToken(token)) {
-					req.getSession(false).setAttribute("token", token);
-					req.getSession(false).setAttribute("userid", id);
+					req.setAttribute("token", token);
+					req.setAttribute("userid", id);
 					req.getRequestDispatcher(JspUtils.PASSWORD_RESET_SHOW_USE_PASSWORD_RESET)
 						.forward(req, resp);
 					return;
@@ -140,8 +136,7 @@ public class UserServlet extends HttpServlet {
 			if (user != null && user.validateInviteToken(token)) {
 				req.setAttribute("userid", id);
 				req.setAttribute("token", token);
-				user.setPassword_digest("[FILTERED]");
-				req.setAttribute("user", user);
+				req.setAttribute("user", userRepository.findUserByIdParamsWhiteListed(id));
 				req.getRequestDispatcher(JspUtils.USERS_SHOW_INVITE).forward(req, resp);
 				return;
 			} else {
@@ -234,10 +229,7 @@ public class UserServlet extends HttpServlet {
 			
 			int userid = (Integer) req.getSession(false).getAttribute("userid");
 			
-			System.out.println(userid);
-			
-			User user = userRepository.findUserById(userid);
-			System.out.println("Value of userid is: " + userid);
+			User user = userRepository.findUserByIdParamsWhiteListed(userid);
 			
 			if (user != null) {
 				userRepository.updatePassword(new_password_confirmation, user);
@@ -294,7 +286,6 @@ public class UserServlet extends HttpServlet {
 		try {
 			String token = RandomUtils.unique64();
 			User user = userRepository.findUserById(id);
-			user.setPassword_digest("[FILTERED]");
 			userRepository.updateResetDigest(id, RandomUtils.SHA256Base64(token));
 			AccountsMailer.inviteUserEmail(req, user, token);
 			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
@@ -435,8 +426,8 @@ public class UserServlet extends HttpServlet {
 			throws IOException, ServletException {
 		try {
 			User current_user = (User) req.getSession(false).getAttribute("current_user");
-			int userid = current_user.getId();
-			current_user = userRepository.findUserById(userid);
+			String email = current_user.getEmail();
+			current_user = userRepository.findUserByEmail(email);
 			String old_password = req.getParameter("old_password");
 			String new_password = req.getParameter("new_password");
 			String new_password_confirmation = req.getParameter("new_password_confirmation");
@@ -480,13 +471,16 @@ public class UserServlet extends HttpServlet {
 	private void postUpdateUserPreferredName(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
 		try {
+			String preferred_name = req.getParameter("user[preferred_name]");
+			
 			User current_user = (User) req.getSession(false).getAttribute("current_user");
 			int userid = current_user.getId();
-			String preferred_name = req.getParameter("user[preferred_name]");
+	
 			userRepository.updatePreferredNameById(preferred_name, userid);
-			current_user = userRepository.findUserById(userid);
-			current_user.setPassword_digest("[FILTERED]");
+	
+			current_user = userRepository.findUserByIdParamsWhiteListed(userid);
 			req.getSession(false).setAttribute("current_user", current_user);
+			
 			if (current_user.isAdmin()) {
 				req.getSession(false).setAttribute("notice", "User was successfully updated.");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
@@ -508,20 +502,17 @@ public class UserServlet extends HttpServlet {
 		try {
 			String first_name = req.getParameter("user[first_name]");
 			String last_name = req.getParameter("user[last_name]");
-
+			String preferred_name = req.getParameter("user[preferred_name]");
+			boolean admin = (req.getParameterValues("user[admin]").length == 2);
+			boolean disabled = (req.getParameterValues("user[disabled]").length == 2);
+			
 			if (first_name == "" || last_name == "") {
 				req.setAttribute("alert", "First name and last name must not be blank");
-				User user = userRepository.findUserById(userid);
-				user.setPassword_digest("[FILTERED]");
+				User user = userRepository.findUserByIdParamsWhiteListed(userid);
 				req.setAttribute("user", user);
 				req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN).forward(req, resp);
 				return;
 			}
-
-			String preferred_name = req.getParameter("user[preferred_name]");
-
-			boolean admin = (req.getParameterValues("user[admin]").length == 2);
-			boolean disabled = (req.getParameterValues("user[disabled]").length == 2);
 
 			userRepository.updateUserEditAdmin(first_name, last_name, preferred_name, admin, disabled, userid);
 			req.getSession(false).setAttribute("notice", "User was successfully updated.");
@@ -529,8 +520,7 @@ public class UserServlet extends HttpServlet {
 			User current_user = (User) req.getSession(false).getAttribute("current_user");
 			int current_user_id = current_user.getId();
 			if (current_user_id == userid) {
-				current_user = userRepository.findUserById(current_user_id);
-				current_user.setPassword_digest("[FILTERED]");
+				current_user = userRepository.findUserByIdParamsWhiteListed(current_user_id);
 				req.getSession(false).setAttribute("current_user", current_user);
 			}
 

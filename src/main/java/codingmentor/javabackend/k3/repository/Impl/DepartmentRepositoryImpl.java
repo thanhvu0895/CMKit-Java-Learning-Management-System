@@ -66,7 +66,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			final String query = "SELECT * FROM departments";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getDepartments: " + statement);
 			List<Department> departmentsList = new ArrayList<>();
 			while(results.next()) {
 				departmentsList.add(mapper.map(results));
@@ -87,7 +87,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, userId);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getDepartmentsByUserId: " + statement);
 			List<Department> departmentsList = new ArrayList<>();
 			while(results.next()) {
 				departmentsList.add(mapper.map(results));
@@ -111,7 +111,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
+		    System.out.println("getDepartmentById: " + statement);
 		    Department department = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return department;
@@ -131,7 +131,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, courseId);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
+		    System.out.println("getDepartmentByCourseId: " + statement);
 		    Department department = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return department;
@@ -151,7 +151,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, title);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println(statement);
+			 System.out.println("existedByTitle" + statement);
 			 Department department = (results.next()) ? new Department() : null;
 			 close(connection, statement, results);
 			 return department;
@@ -175,7 +175,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			 statement.setInt(1, userId);
 			 statement.setInt(2, departmentId);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println(statement);
+			 System.out.println("isDepartmentAdmin: " +statement);
 			 Department department = results.next() ? new Department() : null;
 			 close(connection, statement, results);
 			 return department;
@@ -199,7 +199,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			 statement.setInt(1, userId);
 			 statement.setInt(2, departmentId);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println(statement);
+			 System.out.println("isDepartmentProfessor: " + statement);
 			 Department department = results.next() ? new Department() : null;
 			 close(connection, statement, results);
 			 return department;
@@ -221,7 +221,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, title);
 			statement.setInt(2, repo_id);
-			System.out.println(statement);
+			System.out.println("insertDepartment: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -253,7 +253,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, title);
 			 statement.setInt(2, id);
-			 System.out.println(statement);
+			 System.out.println("updateDepartmentTitleById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

@@ -46,6 +46,7 @@
 			</tr>
 		  </thead>
 		  <tbody>
+		   <c:set var="department_professor_users" value="${department_professor_users}"/>
 		   <c:forEach var="dp" items="${department_professors}" varStatus="loop">
 		   <c:if test="${!(department_professor_users[loop.index].deleted)}"> 
 			  <tr>

@@ -194,3 +194,14 @@
 <br><br>
     Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
 </p>
+<p>
+    Dear William,
+<br><br>
+    Here is the link to reset your Kit password:
+<br>
+    <a href=http://localhost:8080/cmkit/use_password_reset?token=c11f5ade6d39c87eb332b87c5ed44021c315514f2261aaccb8161c33c93f9d73&user=3> http://localhost:8080/cmkit/use_password_reset?token=c11f5ade6d39c87eb332b87c5ed44021c315514f2261aaccb8161c33c93f9d73&user=3 </a>
+<br><br>
+    If you did not request a password reset, you should disregard this email.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>

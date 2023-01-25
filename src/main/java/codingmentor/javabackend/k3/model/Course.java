@@ -7,11 +7,6 @@ public class Course {
 	private int repo_id;
 	private int department_id;
 	private boolean active;
-	/**
-     * Repository Functions
-     */
-	
-	
 	
 	/*
 	 * Getters, Setters

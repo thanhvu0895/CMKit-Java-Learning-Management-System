@@ -19,7 +19,7 @@ public class RootServlet extends HttpServlet {
 		switch(req.getServletPath()) {
 		case UrlUtils.ROOT_PATH:
 			req.getRequestDispatcher(JspUtils.KLASSES_INDEX)
-			.forward(req, resp);
+				.forward(req, resp);
 			break;
 		}		
 	}

@@ -62,7 +62,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public List<User> getUsers() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM users";
+			final String query = "SELECT id, email, admin, first_name, last_name, preferred_name FROM users";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println(statement);
@@ -92,7 +92,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getUsersFromDepartmentId: " + statement);
 			List<User> usersList = new ArrayList<>();
 			while(results.next()) {
 				usersList.add(mapper.map(results));
@@ -103,6 +103,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	}
     
 	
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -112,6 +113,25 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 
     		// Query to find user by email
     		final String query = "SELECT * FROM users WHERE id = ?  LIMIT 1;";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            ResultSet results = statement.executeQuery();
+            System.out.println(statement);
+            User user = (results.next()) ? mapper.map(results) : null;
+            close(connection, statement, results);
+            return user;
+    	});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public User findUserByIdParamsWhiteListed(int id) {
+		return executeQuerySingle(connection -> {
+
+    		// Query to find user by email
+    		final String query = "SELECT id, email, admin, first_name, last_name, preferred_name FROM users WHERE id = ?  LIMIT 1;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet results = statement.executeQuery();
@@ -148,12 +168,12 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean existedByEmail(String email) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT email FROM users WHERE email = ?  LIMIT 1;";
+			 final String query = "SELECT 1 AS ONE FROM users WHERE email = ?  LIMIT 1;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, email);
 			 ResultSet results = statement.executeQuery();
 			 System.out.println(statement);
-			 User user = (results.next() && results.getString("email").equals(email)) ? new User() : null;
+			 User user = (results.next()) ? new User() : null;
 			 close(connection, statement, results);
 			 return user;
 		}) != null;

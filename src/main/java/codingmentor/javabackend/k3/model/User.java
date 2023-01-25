@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
 import codingmentor.javabackend.k3.repository.DepartmentRepository;
 import codingmentor.javabackend.k3.repository.UserRepository;
@@ -26,12 +27,15 @@ public class User implements Serializable {
     private boolean disabled;
     private boolean deleted;
     
+    
+    private PBKDF2Hasher hasher = new PBKDF2Hasher();
     /**
      * Repository Functions
      */
     
 	private UserRepository userRepository =  UserRepositoryImpl.getInstance();
 	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
+	
 	
     public boolean isDepartmentProfessor() throws NoSuchAlgorithmException {
     	return userRepository.isDepartmentProfessor(this.id);
@@ -45,6 +49,15 @@ public class User implements Serializable {
     	return (this.reset_digest != null) && LocalDateTime.now().isBefore(reset_expires) && this.reset_digest.equals(RandomUtils.SHA256Base64(token));
     }
     
+	
+	/**
+	 * Authenticate User's password
+	 */
+	
+	public boolean authenticate(String password) {
+		return hasher.checkPassword(password.toCharArray(), this.password_digest);	
+	}
+	
 	/**
      * 
      * @param token stored in user's password_digest

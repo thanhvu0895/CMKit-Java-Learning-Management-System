@@ -35,6 +35,17 @@ public interface UserRepository {
 	 */
     User findUserById(int id);
     
+	/*
+	 * GET Item
+	 */
+	/**
+	 * Find User with given id with white listed param
+	 *
+	 * @param id: User's id
+	 * @return a User object if found or null
+	 */
+    User findUserByIdParamsWhiteListed(int id);
+    
     
 	/**
 	 * Find Single User given User's email

@@ -100,7 +100,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, id);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getDepartmentProfessorsByDepartmentId: " + statement);
 			List<DepartmentProfessor> departmentProfessorsList = new ArrayList<>();
 			while(results.next()) {
 				departmentProfessorsList.add(mapper.map(results));

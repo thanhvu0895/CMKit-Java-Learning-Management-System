@@ -55,10 +55,6 @@ public class AuthFilter implements Filter{
 	    	return;
 	    }
 	    
-	    if (isInSession(req)) {
-	    	
-	    	
-	    }
 
 		if (isInSession(req) || isLoginPage(req) || isResourceRequest(req) || isSetUpPage(req))  {
 			if (!isResourceRequest(req)) { // Prevent restricted pages from being cached.
@@ -66,17 +62,15 @@ public class AuthFilter implements Filter{
 				resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 				resp.setDateHeader("Expires", 0); // Proxies.
 			}
-
+			
 			chain.doFilter(request, response);
 		} else {
-			
 			// If not at home page nor logged in, send to /login
 			resp.sendRedirect(req.getContextPath() + UrlUtils.LOGIN_PATH);
 			// we return here so the original servlet is not processed
 			return;
 		}
 	}	
-	
 
 	private boolean isLoginPage(HttpServletRequest request) { // if url = /login
 		String servletPathpath = request.getServletPath(); 
@@ -106,5 +100,10 @@ public class AuthFilter implements Filter{
 		User current_user = (User) request.getSession(false).getAttribute("current_user");
 		String path =  request.getServletPath();
 		return  (current_user != null && !current_user.isAdmin() && path.startsWith(UrlUtils.USERS_PATH));
+	}
+	
+	
+	public void destroy() {
+		//close any resources here
 	}
 }

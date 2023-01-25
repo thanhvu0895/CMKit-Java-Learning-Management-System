@@ -107,12 +107,8 @@ public class DepartmentServlet extends HttpServlet{
 	
 	private void getDepartmentCourses(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
-			req.getSession(false).removeAttribute("department");
-			req.getSession(false).removeAttribute("courses");
 			Department department = departmentRepository.getDepartmentById(departmentId);
-			List<Course> courses = courseRepository.getCourseByDepartmentId(departmentId);
-			User current_user = (User) req.getSession(false).getAttribute("current_user");
-			req.setAttribute("isDepartmentAdmin", departmentRepository.isDepartmentAdmin(current_user.getId(), departmentId));
+			List<Course> courses = courseRepository.getCoursesByDepartmentId(departmentId);
 			req.setAttribute("department", department);
 			req.setAttribute("courses", courses);
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_COURSES)
@@ -124,18 +120,12 @@ public class DepartmentServlet extends HttpServlet{
 	
 	private void getDepartmentEdit(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
-			req.getSession(false).removeAttribute("department");
-			req.getSession(false).removeAttribute("courses");
-			req.getSession(false).removeAttribute("department_professor_users");
-			req.getSession(false).removeAttribute("department_professors");
-			
 			Department department = departmentRepository.getDepartmentById(departmentId);
 			List<DepartmentProfessor> departmentProfessors = departmentProfessorRepository.getDepartmentProfessorsByDepartmentId(departmentId);
 			List<User> departmentProfessorUsers = userRepository.getUsersFromDepartmentId(departmentId);
-			req.setAttribute("department", department);	
+			req.setAttribute("department", department);
 			req.setAttribute("department_professors", departmentProfessors);
 			req.setAttribute("department_professor_users", departmentProfessorUsers);
-			
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_EDIT)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -159,10 +149,10 @@ public class DepartmentServlet extends HttpServlet{
 	private void getDepartmentKlasses(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
 			Department department = departmentRepository.getDepartmentById(departmentId);
-			List<Course> coursesByDepartments = courseRepository.getCourseByDepartmentId(departmentId);
+			List<Course> coursesByDepartments = courseRepository.getCoursesWithKlassByDepartmentId(departmentId);
 			List<Klass> courseKlasses = klassRepository.getKlassesFromDepartmentId(departmentId);
-			req.setAttribute("klasses", courseKlasses);
 			req.setAttribute("department", department);
+			req.setAttribute("klasses", courseKlasses);
 			req.setAttribute("courses", coursesByDepartments);	
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_KLASSES)
 				.forward(req, resp);
@@ -173,7 +163,6 @@ public class DepartmentServlet extends HttpServlet{
 	
 	private void getDepartmentsNew(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {
-			
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_NEW) 
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -213,7 +202,6 @@ public class DepartmentServlet extends HttpServlet{
 			if (pathInfoLength == 3 && UrlUtils.isInteger(pathParts[1]) && pathParts[2].equals("department_professors")) {
 				int departmentId = Integer.parseInt(pathParts[1]);
 				postDepartmentProfessors(req, resp, departmentId);
-				
 				return;
 				
 			}
@@ -268,18 +256,12 @@ public class DepartmentServlet extends HttpServlet{
 	private void patchDepartmentUpdate(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws IOException {
 		try {
 			String title = req.getParameter("department[title]");
-			Department department = departmentRepository.getDepartmentById(departmentId);
-			List<Course> courses = courseRepository.getCourseByDepartmentId(departmentId);
 			if (title == "") {
-				req.getSession(false).setAttribute("department", department);
-				req.getSession(false).setAttribute("courses", courses);
 				req.getSession(false).setAttribute("alert", "Title can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_DEPARTMENT_PATH, departmentId));
 				return;
 			}
 			departmentRepository.updateDepartmentTitleById(title, departmentId);
-			req.getSession(false).setAttribute("department", department);
-			req.getSession(false).setAttribute("courses", courses);
 			req.getSession(false).setAttribute("notice", "Department was successfully updated.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.DEPARTMENT_COURSES_PATH, departmentId));
 			return;
@@ -379,14 +361,6 @@ public class DepartmentServlet extends HttpServlet{
 		try {
 			boolean admin = (req.getParameterValues("department_professor[admin]").length == 2);
 			departmentProfessorRepository.updateAdminByDepartmentProfessorId(admin, departmentProfessorId);
-			Department department = departmentRepository.getDepartmentById(departmentId);
-			List<DepartmentProfessor> departmentProfessors = departmentProfessorRepository.getDepartmentProfessorsByDepartmentId(departmentId);
-			
-			List<User> departmentProfessorUsers = userRepository.getUsersFromDepartmentId(departmentId);
-		
-			req.getSession(false).setAttribute("department", department);	
-			req.getSession(false).setAttribute("department_professors", departmentProfessors);
-			req.getSession(false).setAttribute("department_professor_users", departmentProfessorUsers);
 			req.getSession(false).setAttribute("notice", "Professor updated.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_DEPARTMENT_PATH, departmentId));
 		} catch (Exception e) {
