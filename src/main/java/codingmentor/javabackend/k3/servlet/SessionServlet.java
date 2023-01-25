@@ -95,7 +95,7 @@ public class SessionServlet extends HttpServlet {
 		
 		// not null and password correct, log in
 		if (user != null && user.authenticate(password) && user.isSet_up() && !user.isDisabled()) {
-			user = userRepository.findUserByIdParamsWhiteListed(user.getId());
+			user = user.filterParams();
 			req.getSession(false).setAttribute("current_user", user);
 	    	req.getSession(false).setAttribute("notice",
 					"Logged in! Welcome, " + user.getPreferred_first_name() + "!");

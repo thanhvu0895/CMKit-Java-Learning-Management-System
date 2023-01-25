@@ -76,8 +76,8 @@ public class UserServlet extends HttpServlet {
 				int id = Integer.parseInt(pathParts[1]);
 				switch (pathParts[2]) {
 				case "edit_admin": // If request is /users/:id/edit_admin
-					User user = userRepository.findUserByIdParamsWhiteListed(id);
-					req.setAttribute("user", user);
+					User user = userRepository.findUserById(id);
+					req.setAttribute("user", user.filterParams());
 					req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN).forward(req, resp);
 					break;
 				case "set_up": // If request is /users/:id/set_up
@@ -91,6 +91,9 @@ public class UserServlet extends HttpServlet {
 	private void getUserIndex (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			List<User> users = userRepository.getUsers();
+			for (User user : users) {
+				user.filterParams();
+			}
 			req.setAttribute("users", users);
 			req.getRequestDispatcher(JspUtils.USERS_INDEX).forward(req, resp);
 		} catch (Exception e) {
@@ -136,7 +139,7 @@ public class UserServlet extends HttpServlet {
 			if (user != null && user.validateInviteToken(token)) {
 				req.setAttribute("userid", id);
 				req.setAttribute("token", token);
-				req.setAttribute("user", userRepository.findUserByIdParamsWhiteListed(id));
+				req.setAttribute("user", user.filterParams());
 				req.getRequestDispatcher(JspUtils.USERS_SHOW_INVITE).forward(req, resp);
 				return;
 			} else {
@@ -229,7 +232,7 @@ public class UserServlet extends HttpServlet {
 			
 			int userid = (Integer) req.getSession(false).getAttribute("userid");
 			
-			User user = userRepository.findUserByIdParamsWhiteListed(userid);
+			User user = userRepository.findUserById(userid);
 			
 			if (user != null) {
 				userRepository.updatePassword(new_password_confirmation, user);
@@ -311,12 +314,6 @@ public class UserServlet extends HttpServlet {
 				return;
 			}
 			
-			if (user != null && !user.isDeleted()) {
-				req.getSession().setAttribute("alert", "User not invited: Email has already been taken");
-				resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
-				return;
-			} 
-			
 			if (user == null) {
 				userRepository.createUserSendInvite(email, admin);
 				user =  userRepository.findUserByEmail(email);
@@ -330,6 +327,14 @@ public class UserServlet extends HttpServlet {
 				}
 				return;		
 			}
+			
+			if (user != null && !user.isDeleted()) {
+				req.getSession().setAttribute("alert", "User not invited: Email has already been taken");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
+				return;
+			} 
+			
+
 			
 			if (user.isDeleted()) {
 				userRepository.recoverUser(user.getId());
@@ -478,8 +483,8 @@ public class UserServlet extends HttpServlet {
 	
 			userRepository.updatePreferredNameById(preferred_name, userid);
 	
-			current_user = userRepository.findUserByIdParamsWhiteListed(userid);
-			req.getSession(false).setAttribute("current_user", current_user);
+			current_user = userRepository.findUserById(userid);
+			req.getSession(false).setAttribute("current_user", current_user.filterParams());
 			
 			if (current_user.isAdmin()) {
 				req.getSession(false).setAttribute("notice", "User was successfully updated.");
@@ -508,8 +513,8 @@ public class UserServlet extends HttpServlet {
 			
 			if (first_name == "" || last_name == "") {
 				req.setAttribute("alert", "First name and last name must not be blank");
-				User user = userRepository.findUserByIdParamsWhiteListed(userid);
-				req.setAttribute("user", user);
+				User user = userRepository.findUserById(userid);
+				req.setAttribute("user", user.filterParams());
 				req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN).forward(req, resp);
 				return;
 			}
@@ -520,8 +525,8 @@ public class UserServlet extends HttpServlet {
 			User current_user = (User) req.getSession(false).getAttribute("current_user");
 			int current_user_id = current_user.getId();
 			if (current_user_id == userid) {
-				current_user = userRepository.findUserByIdParamsWhiteListed(current_user_id);
-				req.getSession(false).setAttribute("current_user", current_user);
+				current_user = userRepository.findUserById(current_user_id);
+				req.getSession(false).setAttribute("current_user", current_user.filterParams());
 			}
 
 			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);	

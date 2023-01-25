@@ -49,7 +49,18 @@ public class User implements Serializable {
     	return (this.reset_digest != null) && LocalDateTime.now().isBefore(reset_expires) && this.reset_digest.equals(RandomUtils.SHA256Base64(token));
     }
     
-	
+	public User filterParams() {
+		return new User()
+			.id(this.id)
+			.email(this.email)
+			.admin(this.admin)
+			.first_name(this.first_name)
+			.last_name(this.last_name)
+			.preferred_name(this.preferred_name)
+			.set_up(this.set_up)
+			.deleted(this.deleted)
+			.disabled(this.disabled);
+	}
 	/**
 	 * Authenticate User's password
 	 */

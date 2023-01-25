@@ -62,7 +62,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public List<User> getUsers() {
 		return executeQuery(connection -> {
-			final String query = "SELECT id, email, admin, first_name, last_name, preferred_name FROM users";
+			final String query = "SELECT * FROM users";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println(statement);
@@ -83,7 +83,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	public List<User> getUsersFromDepartmentId(int departmentId) {
 		return executeQuery(connection -> {
 			final String query = "SELECT \r\n"
-					+ "	U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name\r\n"
+					+ "	U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted \r\n"
 					+ "FROM users as U\r\n"
 					+ "INNER JOIN department_professors as DP \r\n"
 					+ "	ON DP.user_id = U.id\r\n"
@@ -123,25 +123,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     	});
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public User findUserByIdParamsWhiteListed(int id) {
-		return executeQuerySingle(connection -> {
 
-    		// Query to find user by email
-    		final String query = "SELECT id, email, admin, first_name, last_name, preferred_name FROM users WHERE id = ?  LIMIT 1;";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, id);
-            ResultSet results = statement.executeQuery();
-            System.out.println(statement);
-            User user = (results.next()) ? mapper.map(results) : null;
-            close(connection, statement, results);
-            return user;
-    	});
-	}
-	
     /**
      * {@inheritDoc}
      */
