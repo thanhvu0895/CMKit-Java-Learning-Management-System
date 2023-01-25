@@ -83,7 +83,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	public List<User> getUsersFromDepartmentId(int departmentId) {
 		return executeQuery(connection -> {
 			final String query = "SELECT \r\n"
-					+ "	U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name\r\n"
+					+ "	U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted \r\n"
 					+ "FROM users as U\r\n"
 					+ "INNER JOIN department_professors as DP \r\n"
 					+ "	ON DP.user_id = U.id\r\n"
@@ -92,7 +92,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getUsersFromDepartmentId: " + statement);
 			List<User> usersList = new ArrayList<>();
 			while(results.next()) {
 				usersList.add(mapper.map(results));
@@ -102,6 +102,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		});
 	}
     
+	
 	
 	/**
 	 * {@inheritDoc}
@@ -122,6 +123,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     	});
 	}
 	
+
     /**
      * {@inheritDoc}
      */
@@ -148,12 +150,12 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean existedByEmail(String email) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT email FROM users WHERE email = ?  LIMIT 1;";
+			 final String query = "SELECT 1 AS ONE FROM users WHERE email = ?  LIMIT 1;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, email);
 			 ResultSet results = statement.executeQuery();
 			 System.out.println(statement);
-			 User user = (results.next() && results.getString("email").equals(email)) ? new User() : null;
+			 User user = (results.next()) ? new User() : null;
 			 close(connection, statement, results);
 			 return user;
 		}) != null;

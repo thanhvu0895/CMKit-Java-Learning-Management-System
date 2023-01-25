@@ -43,7 +43,7 @@ while (attributes.hasMoreElements()) {
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<c:choose>
-				<c:when test="${not empty sessionScope.current_user}">
+				<c:when test="${not empty current_user}">
 					<div class="collapse navbar-collapse" id="top-navbar">
 						<ul class="nav navbar-nav">
 							<!-- IF CURRENT USER IS ADMIN OR DEPARTMENT PROFESSOR-->

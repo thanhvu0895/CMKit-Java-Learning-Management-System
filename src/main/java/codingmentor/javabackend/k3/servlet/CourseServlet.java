@@ -179,8 +179,6 @@ public class CourseServlet extends HttpServlet{
 			int repoId = repoRepository.insertRepo();
 			if (repoId != 0) {
 				int courseId = courseRepository.insertCourse(courseTitle, courseCode, repoId, departmentId, courseActive);
-				req.getSession(false).setAttribute("department", departmentRepository.getDepartmentById(departmentId));
-				req.getSession(false).setAttribute("course", courseRepository.getCourseById(courseId));
 				req.getSession(false).setAttribute("notice", "Course was successfully created.");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.COURSES_PATH +"/:id", courseId));
 				return;
@@ -202,10 +200,6 @@ public class CourseServlet extends HttpServlet{
 				return;
 			}
 			courseRepository.updateCourseById(title, course_code, active, courseId);
-			Department department = departmentRepository.getDepartmentByCourseId(courseId);
-			Course course = courseRepository.getCourseById(courseId);
-			req.getSession(false).setAttribute("department", department);
-			req.getSession(false).setAttribute("course", course);
 			req.getSession(false).setAttribute("notice", "Course was successfully updated.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_COURSE_PATH, courseId));
 

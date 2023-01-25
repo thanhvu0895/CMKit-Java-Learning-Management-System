@@ -12,14 +12,17 @@ public class UserMapper implements RowMapper<User> {
 	@Override
 	public User map(ResultSet results)  throws SQLException {
 		ResultSetMetaData rsmd = (ResultSetMetaData) results.getMetaData();
-		if (rsmd.getColumnCount() <= 6) {
+		if (rsmd.getColumnCount() <= 9) {
 			return new User()
 				.id(results.getInt("id"))		
 				.email(results.getString("email"))
 				.admin(results.getBoolean("admin"))
 				.first_name(results.getString("first_name"))
 				.last_name(results.getString("last_name"))
-				.preferred_name(results.getString("preferred_name"));
+				.preferred_name(results.getString("preferred_name"))
+				.set_up(results.getBoolean("set_up"))
+				.disabled(results.getBoolean("disabled"))
+				.deleted(results.getBoolean("deleted"));
 		}
 		
 		if (results.getTimestamp("reset_expires") == null) {

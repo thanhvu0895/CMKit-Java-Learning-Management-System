@@ -31,7 +31,14 @@ public interface CourseRepository {
      * Get Courses by Department's id
      * @return Course if exists and null if not
      */
-    List<Course> getCourseByDepartmentId(int departmentId);
+    List<Course> getCoursesByDepartmentId(int departmentId);
+    
+    
+    /**
+     * Get Courses that include klasses by Department's id
+     * @return Course if exists and null if not
+     */
+    public List<Course> getCoursesWithKlassByDepartmentId(int departmentId);
     
     
     /**

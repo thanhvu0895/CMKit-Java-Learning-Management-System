@@ -52,6 +52,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
     	}
     }
 
+    
 	/**
 	 * {@inheritDoc}
 	 */
@@ -71,6 +72,52 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 			return coursesList;
 		});
 	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Course> getCoursesByDepartmentId(int departmentId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM courses where department_id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, departmentId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getCoursesByDepartmentId: " + statement);
+			List<Course> coursesList = new ArrayList<>();
+			while(results.next()) {
+				coursesList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return coursesList;
+		});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Course> getCoursesWithKlassByDepartmentId(int departmentId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT \r\n"
+					+ "	C.id, C.title, C.course_code, C.repo_id, C.department_id, C.active \r\n"
+					+ "FROM courses AS C \r\n"
+					+ "INNER JOIN klasses as K\r\n"
+					+ "	on K.course_id = C.id and department_id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, departmentId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getCoursesWithKlassByDepartmentId: " + statement);
+			List<Course> coursesList = new ArrayList<>();
+			while(results.next()) {
+				coursesList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return coursesList;
+		});
+	}
+
 	
 	/**
 	 * {@inheritDoc}
@@ -109,26 +156,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
     	});
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public List<Course> getCourseByDepartmentId(int departmentId) {
-		return executeQuery(connection -> {
-			final String query = "SELECT * FROM courses where department_id = ?";
-			PreparedStatement statement = connection.prepareStatement(query);
-		    statement.setInt(1, departmentId);
-			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
-			List<Course> coursesList = new ArrayList<>();
-			while(results.next()) {
-				coursesList.add(mapper.map(results));
-			}
-			close(connection, statement, results);
-			return coursesList;
-		});
-	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

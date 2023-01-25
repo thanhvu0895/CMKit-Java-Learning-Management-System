@@ -35,7 +35,6 @@ public interface UserRepository {
 	 */
     User findUserById(int id);
     
-    
 	/**
 	 * Find Single User given User's email
 	 *

@@ -12,10 +12,7 @@ import javax.servlet.http.HttpSession;
 import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.repository.UserRepository;
 import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
-import codingmentor.javabackend.k3.service.UserService;
-import codingmentor.javabackend.k3.service.Impl.UserServiceImpl;
 import codingmentor.javabackend.k3.Utils.JspUtils;
-import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 
@@ -28,16 +25,12 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 public class SessionServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -3801412244941307670L;
-	private UserService userService = null;
-	private PBKDF2Hasher hasher = null;
 	private UserRepository userRepository;
 
 	@Override
 	public void init() throws ServletException {
 	    super.init();
 		this.userRepository = UserRepositoryImpl.getInstance();
-    	hasher = new PBKDF2Hasher();
-	    userService = UserServiceImpl.getInstance();
 	}
 
 	@Override
@@ -91,21 +84,21 @@ public class SessionServlet extends HttpServlet {
 		String email = req.getParameter("email");
 		String password = req.getParameter("password");
 		
+		// #Get user by email, or null if not found
+		User user = userRepository.findUserByEmail(email);
 		
-		User current_user = userService.validateLogin(email, password);
-		
-		if (current_user != null && current_user.isDisabled()) {
+		if (user != null && user.authenticate(password) && user.isDisabled()) {
 			//Re-render page with error
 			req.setAttribute("alert", "Your account has been disabled. Please contact your system administrator.");
 			req.getRequestDispatcher(JspUtils.SESSIONS_NEW).forward(req, resp);
 		}
 		
 		// not null and password correct, log in
-		if (current_user != null && current_user.isSet_up() && !current_user.isDisabled()) {
-			current_user.setPassword_digest("[FILTERED]");
-	    	req.getSession(false).setAttribute("current_user", current_user);
+		if (user != null && user.authenticate(password) && user.isSet_up() && !user.isDisabled()) {
+			user = user.filterParams();
+			req.getSession(false).setAttribute("current_user", user);
 	    	req.getSession(false).setAttribute("notice",
-					"Logged in! Welcome, " + current_user.getPreferred_first_name() + "!");
+					"Logged in! Welcome, " + user.getPreferred_first_name() + "!");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH + "/");
 		} else {
 			//Re-render page with error
