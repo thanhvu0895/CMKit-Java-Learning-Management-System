@@ -12,11 +12,10 @@
 
 <jsp:include page="_tabs.jsp"><jsp:param name="current" value=":settings"/></jsp:include>
 
-<%@ include file="_form.jsp" %>
+<jsp:include page="_form.jsp"><jsp:param name="method" value="PATCH"/></jsp:include>
 
 <br><br><br>
 
-  <p>
     <a data-toggle="collapse" href="#delete_hidden" class="btn btn-danger">Delete Course</a>
     <div id="delete_hidden" class="collapse collapse-in">
 	  <a data-toggle="collapse" href="#delete_hidden2" class="btn btn-danger">Really Delete Course</a>
@@ -24,6 +23,6 @@
         <t:link_to path="${UrlUtils.COURSES_PATH}/:id" classBS="btn btn-warning" id="${course.id}" method="DELETE" confirm="Are you really, really, really sure you want to delete this course and all of its content? THIS CANNOT BE UNDONE!">Really, Really Delete Course</t:link_to>
       </div>
     </div>	
-  </p>
 
 </t:layoutj>
+<%-- <h1>DONE</h1> --%>

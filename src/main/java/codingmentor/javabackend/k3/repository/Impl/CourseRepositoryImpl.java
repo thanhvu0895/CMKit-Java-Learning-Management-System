@@ -30,9 +30,6 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
    
 	/**
 	 * close connection to save resources
-	 * @param connection
-	 * @param ps
-	 * @param rs
 	 */
     private void close (Connection connection, Statement ps, ResultSet rs) {
     	try {
@@ -52,6 +49,9 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
     	}
     }
 
+	/*
+	 * GET LIST METHOD
+	 */
     
 	/**
 	 * {@inheritDoc}
@@ -80,7 +80,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 	@Override
 	public List<Course> getCoursesByDepartmentId(int departmentId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM courses where department_id = ?";
+			final String query = "SELECT * FROM courses where department_id = ? ORDER BY course_code";
 			PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();
@@ -139,6 +139,10 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 		});
 	}
 
+	/*
+	 * GET ITEM METHOD
+	 */
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -156,6 +160,49 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
     	});
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Course getCourseByKLassId(int klassId) {
+		return executeQuerySingle(connection -> {
+			final String query = "SELECT * FROM courses as C, klasses as K \r\n"
+					+ "where K.course_id = C.id AND K.id = ? LIMIT 1";
+		    PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, klassId);
+		    ResultSet results = statement.executeQuery();
+		    System.out.println("getCourseByKLassId: " + statement);
+		    Course course = (results.next()) ? mapper.map(results) : null;
+		    close(connection, statement, results);
+		    return course;
+    	});
+	}
+	
+	/*
+	 * GET Check True/false METHOD
+	 */
+	
+	@Override
+	public boolean hasCourse(int klassId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT 1 as ONE FROM courses as C, klasses as K \r\n"
+			 		+ "where K.course_id = C.id and K.id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, klassId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println("existedByTitle" + statement);
+			 Course course = (results.next()) ? new Course() : null;
+			 close(connection, statement, results);
+			 return course;
+		}) != null;
+	}
+	
+	
+	/*
+	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
 
 	/**
 	 * {@inheritDoc}
@@ -189,6 +236,8 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 		});
 	}
 
+	
+	//PATCH(UPDATE)
 	/**
 	 * {@inheritDoc}
 	 */

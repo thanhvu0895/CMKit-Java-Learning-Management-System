@@ -34,11 +34,15 @@ public class UrlUtils {
 	public static final String NEW_ASSIGNMENT_PATH = "/assignments/new";
 	public static final String SHOW_COPY_ASSIGNMENT_PATH = "/copy_assignment";
 	
+	
+	
 	public static final String GRADERS_PATH = "/graders";
 	public static final String ADD_GRADER_PATH = "/add_grader";
 	
 	public static final String GRADE_CATEGORIES_PATH = "/grade_categories";
 	public static final String NEW_GRADE_CATEGORY_PATH = "/grade_categories/new";
+	public static final String EDIT_GRADE_CATEGORY_PATH = "/grade_categories/:id/edit";
+	public static final String GRADE_CATEGORY_PATH = "/grade_categories/:id";
 	
 	public static final String STUDENTS_PATH = "/students";
 	public static final String TOGGLE_ASSIGNED_NOTIFICATION_PATH = "/students/:id/toggle_assigned_notification";
@@ -62,7 +66,15 @@ public class UrlUtils {
 	public static final String KLASSES_PATH = "/klasses";
 	public static final String KLASSES_ALL_PATH = "/klasses/*";
 	public static final String NEW_KLASS_PATH = "/klasses/new";
+	public static final String EDIT_KLASS_PATH = "/klasses/:id/edit";
+	public static final String KLASS_FILES_PATH = "/klasses/:klass_id/files";
+	public static final String KLASS_STUDENTS_PATH = "/klasses/:klass_id/students";
+	public static final String KLASS_GRADERS_PATH = "/klasses/:klass_id/graders";
 	public static final String KLASS_ASSIGNMENTS_PATH = "/klasses/:klass_id/assignments";
+	public static final String KLASS_GRADEBOOK_PATH = "/klasses/:klass_id/gradebook";
+	public static final String KLASS_GRADEBOOK_CSV_PATH = "/klasses/:klass_id/gradebook_csv";
+	
+	
 	
 	public static final String COURSES_PATH = "/courses";
 	public static final String COURSES_PATH_ALL = "/courses/*";

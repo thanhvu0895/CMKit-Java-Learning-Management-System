@@ -52,6 +52,10 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
     	}
     }
 
+	/*
+	 * GET LIST METHOD
+	 */
+    
 	/**
 	 * {@inheritDoc}
 	 */
@@ -71,24 +75,6 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			return departmentProfessorsList;
 		});
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public DepartmentProfessor getDepartmentProfessorById(int id) {
-		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM department_professors WHERE id = ? LIMIT 1;";
-		    PreparedStatement statement = connection.prepareStatement(query);
-		    statement.setInt(1, id);
-		    ResultSet results = statement.executeQuery();
-		    System.out.println("getDepartmentProfessorById: " + statement);
-		    DepartmentProfessor departmentProfessor = (results.next()) ? mapper.map(results) : null;
-		    close(connection, statement, results);
-		    return departmentProfessor;
-    	});
-	}
-	
 	
 	/**
 	 * {@inheritDoc}
@@ -110,8 +96,39 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 		});
 	}
 	
-	
+	/*
+	 * GET ITEM METHOD
+	 */
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DepartmentProfessor getDepartmentProfessorById(int id) {
+		return executeQuerySingle(connection -> {
+			final String query = "SELECT * FROM department_professors WHERE id = ? LIMIT 1;";
+		    PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, id);
+		    ResultSet results = statement.executeQuery();
+		    System.out.println("getDepartmentProfessorById: " + statement);
+		    DepartmentProfessor departmentProfessor = (results.next()) ? mapper.map(results) : null;
+		    close(connection, statement, results);
+		    return departmentProfessor;
+    	});
+	}
+	
+	
+	/*
+	 * GET Check True/false METHOD
+	 */
+	
+	
+	
+	/*
+	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
 	/**
 	 * {@inheritDoc}
 	 */
@@ -143,7 +160,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 		});
 	}
 	
-	
+	//PATCH(UPDATE)
 	/**
 	 * {@inheritDoc}
 	 */

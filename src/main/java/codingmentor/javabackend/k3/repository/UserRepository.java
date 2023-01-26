@@ -132,7 +132,7 @@ public interface UserRepository {
       public boolean updateResetExpires(int userid, LocalDateTime reset_expires);
       
       /**
-       * Update User's set_up and deleted to True with given id 
+       * Update User's set_up and deleted to True with given id ă
        */
       public boolean recoverUser(int id);
       

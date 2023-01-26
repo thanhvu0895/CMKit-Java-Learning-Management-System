@@ -88,5 +88,26 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 		    return professor;
     	});
 	}
-	    
+	
+	/*
+	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int insertProfessor (int user_id, int klass_id) {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO professors (user_id, klass_id) VALUES (?, ?);";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, user_id);
+			statement.setInt(2, klass_id);
+			System.out.println("insertProfessor: " + statement);
+			int result = statement.executeUpdate();
+    		close(connection, statement, null);			
+			return result;
+		});
+	}
 }

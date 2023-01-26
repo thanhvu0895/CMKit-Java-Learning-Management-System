@@ -1,5 +1,5 @@
 package codingmentor.javabackend.k3.model;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Klass {
 	private int id;
@@ -7,9 +7,8 @@ public class Klass {
 	private int repo_id;
 	private String semester;
 	private int section;
-	private LocalDateTime start_date;
-	private LocalDateTime end_date;
-	
+	private LocalDate start_date;
+	private LocalDate end_date;
 	
 	public int getId() {
 		return id;
@@ -32,11 +31,11 @@ public class Klass {
 	}
 
 	
-	public LocalDateTime getStart_date() {
+	public LocalDate getStart_date() {
 		return start_date;
 	}
 
-	public LocalDateTime getEnd_date() {
+	public LocalDate getEnd_date() {
 		return end_date;
 	}
 
@@ -68,12 +67,12 @@ public class Klass {
 	    return this;
 	}
 	
-	public Klass start_date(LocalDateTime start_date) {
+	public Klass start_date(LocalDate start_date) {
 	    this.start_date = start_date;
 	    return this;
 	}
 	
-	public Klass end_date(LocalDateTime end_date) {
+	public Klass end_date(LocalDate end_date) {
 	    this.end_date = end_date;
 	    return this;
 	}	

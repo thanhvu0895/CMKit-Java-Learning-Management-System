@@ -2,10 +2,12 @@ package codingmentor.javabackend.k3.repository.Impl;
 
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +54,11 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
     	}
     }
     
+    
+	/*
+	 * GET LIST METHOD
+	 */
+    
 	/**
 	 * {@inheritDoc}
 	 */
@@ -72,6 +79,11 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 		});
 	}
 
+	
+	/*
+	 * GET ITEM METHOD
+	 */
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -115,4 +127,50 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			return usersList;
 		});
 	}
+		
+	/*
+	 * GET Check True/false METHOD
+	 */
+
+	
+	/*
+	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int insertKlass (int course_id, int repo_id, String semester, int section, LocalDate startDate, LocalDate endDate) {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO klasses (course_id, repo_id, semester, section, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?);";
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setInt(1, course_id);
+			statement.setInt(2, repo_id);
+			statement.setString(3, semester);
+			statement.setInt(4, section);
+			statement.setDate(5, Date.valueOf(startDate));
+			statement.setDate(6, Date.valueOf(endDate));
+			System.out.println("insertKlass: " + statement);
+			ResultSet rs = statement.getGeneratedKeys();
+			rs.next();
+			int affectedRows = statement.executeUpdate();
+			
+			if (affectedRows == 0) {
+				throw new SQLException("Creating Klass failed, no rows affected.");
+			}
+			
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+               return generatedKeys.getInt(1);
+            }
+            
+			close(connection, statement, generatedKeys);
+			return 0;
+		});
+	}
+	
+	
+	//PATCH(UPDATE)
 }

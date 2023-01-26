@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 
 <center>
-  <strong><h1> ${course.title}  </h1></strong>
+  <h1> ${course.title} </h1>
   <h4> ${course.course_code} </h4>
 </center>
 
@@ -26,6 +26,7 @@
     <t:link_to path="${UrlUtils.EDIT_COURSE_PATH}" id="${course.id}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>  Settings</t:link_to>
   </li>
   
-  <span class="pull-right"><t:link_to path="${UrlUtils.NEW_KLASS_PATH}?course=:id" classBS="btn btn-success"  id="${course.id}">Create Class</t:link_to></span>
+  <t:link_to path="${UrlUtils.NEW_KLASS_PATH}?course=:id" classBS="btn btn-success pull-right"  id="${course.id}">Create Class</t:link_to>
   
 </ul>
+<%-- <h1>DONE</h1> --%>

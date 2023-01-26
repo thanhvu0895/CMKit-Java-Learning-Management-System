@@ -14,13 +14,16 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.Assignment;
 import codingmentor.javabackend.k3.model.Course;
 import codingmentor.javabackend.k3.model.Department;
+import codingmentor.javabackend.k3.model.GradeCategory;
 import codingmentor.javabackend.k3.repository.AssignmentRepository;
 import codingmentor.javabackend.k3.repository.CourseRepository;
 import codingmentor.javabackend.k3.repository.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.GradeCategoryRepository;
 import codingmentor.javabackend.k3.repository.RepoRepository;
 import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
+import codingmentor.javabackend.k3.repository.Impl.GradeCategoryRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
 
 
@@ -34,6 +37,8 @@ public class CourseServlet extends HttpServlet{
 	private CourseRepository courseRepository = null;
 	private DepartmentRepository departmentRepository = null;
 	private AssignmentRepository assignmentRepository = null;
+	private GradeCategoryRepository gradeCategoryRepository = null;
+	
 	@Override
 	public void init() throws ServletException {
 		super.init();
@@ -41,6 +46,7 @@ public class CourseServlet extends HttpServlet{
 		courseRepository = CourseRepositoryImpl.getInstance();
 		departmentRepository = DepartmentRepositoryImpl.getInstance();
 		assignmentRepository = AssignmentRepositoryImpl.getInstance();
+		gradeCategoryRepository = GradeCategoryRepositoryImpl.getInstance();
 	}
 	
 	@Override
@@ -70,8 +76,10 @@ public class CourseServlet extends HttpServlet{
 					getCourseEdit(req, resp, courseId);
 					break;
 				case "files":
+					getCourseFiles(req, resp, courseId);
 					break;
 				case "grade_categories":
+					getCourseGradeCategories(req, resp, courseId);
 					break;
 				}
 			}
@@ -92,6 +100,34 @@ public class CourseServlet extends HttpServlet{
 			req.setAttribute("department", department);
 			req.setAttribute("assignments", assignments);
 			req.getRequestDispatcher(JspUtils.COURSES_SHOW)
+				.forward(req, resp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void getCourseFiles(HttpServletRequest req, HttpServletResponse resp, int courseId) throws ServletException, IOException {
+		try {
+			Course course = courseRepository.getCourseById(courseId);
+			Department department = departmentRepository.getDepartmentById(course.getDepartment_id());
+			req.setAttribute("course", course);
+			req.setAttribute("department", department);
+			req.getRequestDispatcher(JspUtils.COURSES_FILES)
+				.forward(req, resp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void getCourseGradeCategories(HttpServletRequest req, HttpServletResponse resp, int courseId) throws ServletException, IOException {
+		try {
+			Course course = courseRepository.getCourseById(courseId);
+			Department department = departmentRepository.getDepartmentById(course.getDepartment_id());
+			List<GradeCategory> course_grade_categories = gradeCategoryRepository.getGradeCategoriesByCourseId(courseId); 
+			req.setAttribute("course", course);
+			req.setAttribute("department", department);
+			req.setAttribute("course_grade_categories", course_grade_categories);
+			req.getRequestDispatcher(JspUtils.COURSES_GRADE_CATEGORIES)
 				.forward(req, resp);
 		} catch (Exception e) {
 			e.printStackTrace();

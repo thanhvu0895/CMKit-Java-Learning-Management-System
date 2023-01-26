@@ -101,9 +101,4 @@ public class AuthFilter implements Filter{
 		String path =  request.getServletPath();
 		return  (current_user != null && !current_user.isAdmin() && path.startsWith(UrlUtils.USERS_PATH));
 	}
-	
-	
-	public void destroy() {
-		//close any resources here
-	}
 }
