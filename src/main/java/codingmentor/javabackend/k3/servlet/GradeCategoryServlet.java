@@ -12,8 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
+import codingmentor.javabackend.k3.model.Course;
+import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.model.GradeCategory;
+import codingmentor.javabackend.k3.repository.CourseRepository;
+import codingmentor.javabackend.k3.repository.DepartmentRepository;
 import codingmentor.javabackend.k3.repository.GradeCategoryRepository;
+import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
+import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.GradeCategoryRepositoryImpl;
 
 
@@ -26,8 +32,10 @@ import codingmentor.javabackend.k3.repository.Impl.GradeCategoryRepositoryImpl;
 public class GradeCategoryServlet extends HttpServlet{
 	private static final long serialVersionUID = 1515497142397284883L;
 	private GradeCategoryRepository gradeCategoryRepository = null;
+	private CourseRepository courseRepository = null;
+	private DepartmentRepository departmentRepository = null;
 //	private RepoRepository repoRepository = null;
-//	private CourseRepository courseRepository = null;
+	
 //	private UserRepository userRepository = null;
 //	private GradeCategoryProfessorRepository gradeCategoryProfessorRepository = null;
 //	private KlassRepository klassRepository = null;
@@ -36,8 +44,9 @@ public class GradeCategoryServlet extends HttpServlet{
 	public void init() throws ServletException {
 		super.init();
 		gradeCategoryRepository = GradeCategoryRepositoryImpl.getInstance();
+		departmentRepository = DepartmentRepositoryImpl.getInstance();
 //		repoRepository = RepoRepositoryImpl.getInstance();
-//		courseRepository = CourseRepositoryImpl.getInstance();
+		courseRepository = CourseRepositoryImpl.getInstance();
 //		gradeCategoryProfessorRepository = GradeCategoryProfessorRepositoryImpl.getInstance();
 //		userRepository = UserRepositoryImpl.getInstance();
 //		klassRepository = KlassRepositoryImpl.getInstance();
@@ -46,7 +55,7 @@ public class GradeCategoryServlet extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch(req.getServletPath()) {
-		case UrlUtils.GRADE_CATEGORY_PATH:
+		case UrlUtils.GRADE_CATEGORIES_PATH:
 			String pathInfo = req.getPathInfo();
 			if (pathInfo == null || pathInfo.equals("/")) {
 				getGradeCategoriesIndex(req, resp);
@@ -148,10 +157,20 @@ public class GradeCategoryServlet extends HttpServlet{
 	
 	private void getGradeCategoriesNew(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {
-			
-			
-			req.getRequestDispatcher(JspUtils.GRADE_CATEGORIES_NEW) 
-				.forward(req, resp);
+			String courseIdString = req.getParameter("course");
+			if (UrlUtils.isInteger(courseIdString)) {
+				int courseId = Integer.parseInt(courseIdString);
+				Course course = courseRepository.getCourseById(courseId);
+				Department department = departmentRepository.getDepartmentByCourseId(courseId);
+				if (course != null && department != null) {
+					req.setAttribute("course", course);
+					req.setAttribute("departmentid", department.getId());
+					req.getRequestDispatcher(JspUtils.GRADE_CATEGORIES_NEW) 
+						.forward(req, resp);
+					return;
+				}
+			}
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -160,7 +179,7 @@ public class GradeCategoryServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch(req.getServletPath()) {
-		case UrlUtils.DEPARTMENTS_PATH:
+		case UrlUtils.GRADE_CATEGORIES_PATH:
 			String pathInfo = req.getPathInfo();
 			
 			if (pathInfo == null || pathInfo.equals("/")) { // if request is /users/ or /users
@@ -213,28 +232,33 @@ public class GradeCategoryServlet extends HttpServlet{
 	
 	private void postGradeCategoriesCreate(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {
-//			String title = req.getParameter("gradeCategory[title]");
-//			if (title == "") {
-//				req.getSession(false).setAttribute("alert", "Title can't be blank");
-//				resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_DEPARTMENT_PATH);
-//				return;
-//			}
-//			
-//			if (gradeCategoryRepository.existedByTitle(title)) {
-//				req.getSession(false).setAttribute("alert", "GradeCategory with the same title already existed");
-//				resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_DEPARTMENT_PATH);
-//				return;
-//			}
-//			
-//			int repoId = repoRepository.insertRepo();
-//			
-//			if (repoId != -1) {
-//				int gradeCategoryId = gradeCategoryRepository.insertGradeCategory(title, repoId);
-//				req.getSession(false).setAttribute("notice", "GradeCategory was successfully created.");
-//				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.DEPARTMENT_COURSES_PATH, gradeCategoryId));
-//				return;
-//			}	
-//			
+			String title = req.getParameter("grade_category[title]");
+			String gradeCategoryWeightString = req.getParameter("grade_category[weight]");
+			String courseIdString = req.getParameter("grade_category[course_id]");
+			int courseId = Integer.parseInt(courseIdString);
+			if (title == "") {
+				req.getSession(false).setAttribute("alert", "Title can't be blank");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.NEW_GRADE_CATEGORY_PATH	 + "?course=:id", courseId));
+				return;
+			}
+			
+			if (gradeCategoryWeightString == "") {
+				req.getSession(false).setAttribute("alert", "Grade Category can't be blank");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.NEW_GRADE_CATEGORY_PATH	 + "?course=:id", Integer.parseInt(courseIdString)));
+				return;
+			}
+			
+			if (UrlUtils.isInteger(gradeCategoryWeightString)) {
+				int gradeCategoryWeight = Integer.parseInt(gradeCategoryWeightString);
+				gradeCategoryRepository.insertGradeCategory(title, courseId, gradeCategoryWeight);
+				req.getSession(false).setAttribute("notice", "Grade category was successfully created.");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.COURSE_GRADE_CATEGORIES_PATH, courseId));
+				return;
+			}
+			
+			req.getSession(false).setAttribute("alert", "Invalid value for grade category.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.COURSE_GRADE_CATEGORIES_PATH, courseId));
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

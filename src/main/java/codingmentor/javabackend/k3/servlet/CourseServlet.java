@@ -158,8 +158,10 @@ public class CourseServlet extends HttpServlet{
 					req.setAttribute("department", department);
 					req.getRequestDispatcher(JspUtils.COURSES_NEW)
 						.forward(req, resp);
+					return;
 				}
 			}
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

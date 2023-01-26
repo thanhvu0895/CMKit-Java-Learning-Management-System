@@ -1,11 +1,23 @@
 package codingmentor.javabackend.k3.model;
 
+import codingmentor.javabackend.k3.repository.GradeCategoryRepository;
+import codingmentor.javabackend.k3.repository.Impl.GradeCategoryRepositoryImpl;
+
 public class GradeCategory {
 	private int id;
 	private String title;
 	private int klass_id;
 	private int course_id;
 	private double weight;
+	
+   /**
+    * Repository Functions
+    */
+	private GradeCategoryRepository gradeCategoryRepository =  GradeCategoryRepositoryImpl.getInstance();
+	
+	public boolean isUsedByAssignment() {
+		return gradeCategoryRepository.isUsedByAssignment(this.id);
+	}
 	
 	/*
 	 * Getters, Setters

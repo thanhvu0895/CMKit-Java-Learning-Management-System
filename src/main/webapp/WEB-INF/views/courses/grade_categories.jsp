@@ -10,6 +10,6 @@
 
 <jsp:include page="_tabs.jsp"><jsp:param name="current" value=":grade_categories"/></jsp:include>
 
-<jsp:include page="../grade_categories/_grade_category_list.jsp"><jsp:param name="parent" value="Course"/></jsp:include>
+<%@ include file="../grade_categories/_grade_category_list.jsp" %>
 
 </t:layoutj>

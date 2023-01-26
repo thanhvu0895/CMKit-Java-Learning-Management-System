@@ -146,25 +146,26 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean existedByTitle(String title) {
-		return false;
-//		return executeQuerySingle(connection -> {
-//			 final String query = "SELECT 1 as ONE FROM gradeCategory WHERE title = ?  LIMIT 1;";
-//			 PreparedStatement statement = connection.prepareStatement(query);
-//			 statement.setString(1, title);
-//			 ResultSet results = statement.executeQuery();
-//			 System.out.println("existedByTitle" + statement);
-//			 GradeCategory gradeCategory = (results.next()) ? new GradeCategory() : null;
-//			 close(connection, statement, results);
-//			 return gradeCategory;
-//		}) != null;
+	public boolean isUsedByAssignment(int gradeCategoryId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT * FROM assignments AS A\r\n"
+			 		+ " INNER JOIN grade_categories AS GC\r\n"
+			 		+ "	ON GC.course_id = A.id AND GC.id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, gradeCategoryId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println("isUsedByAssignment" + statement);
+			 GradeCategory gradeCategory = (results.next()) ? new GradeCategory() : null;
+			 close(connection, statement, results);
+			 return gradeCategory;
+		}) != null;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isGradeCategoryAdmin(int userId, int gradeCategoryId) {
+	public boolean existedByTitle(String title) {
 		return false;
 //		return executeQuerySingle(connection -> {
 //			 final String query = "SELECT \r\n"
@@ -219,30 +220,19 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int insertGradeCategory (String title, int klass_id, int course_id, double weight) {
-		return -1;
-//		return executeUpdate(connection -> {
-//			final String query = "INSERT INTO gradeCategory (title, repo_id) VALUES (?, ?);";
-//			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-//			statement.setString(1, title);
-//			statement.setInt(2, repo_id);
-//			System.out.println("insertGradeCategory: " + statement);
-//			ResultSet rs = statement.getGeneratedKeys();
-//			rs.next();
-//			int affectedRows = statement.executeUpdate();
-//			
-//			if (affectedRows == 0) {
-//				throw new SQLException("Creating GradeCategory failed, no rows affected.");
-//			}
-//			
-//			ResultSet generatedKeys = statement.getGeneratedKeys();
-//            if (generatedKeys.next()) {
-//               return generatedKeys.getInt(1);
-//            }
-//            
-//			close(connection, statement, generatedKeys);
-//			return 0;
-//		});
+	public boolean insertGradeCategory (String title, int course_id, double weight) {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO grade_categories (title, course_id, weight)"
+					+ " VALUES (?, ?, ?);";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, title);
+			statement.setInt(2, course_id);
+			statement.setDouble(3, weight);
+			System.out.println(statement);
+			int result = statement.executeUpdate();
+			close(connection, statement, null);			
+			return result;	
+		}) != 0;
 	}
 	
 	

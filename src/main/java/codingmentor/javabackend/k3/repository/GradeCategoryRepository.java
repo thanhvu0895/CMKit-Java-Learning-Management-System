@@ -48,12 +48,12 @@ public interface GradeCategoryRepository {
 	 */
     
     /**
-     * if an user is gradeCategory's admin
+     * if current GradeCategory is used by a course 
      * @param userId
      * @param gradeCategoryId
      * @return true if user is Admin of this gradeCategory, otherwise false
      */
-    public boolean isGradeCategoryAdmin(int userId, int gradeCategoryId);
+    public boolean isUsedByAssignment(int gradeCategoryId);
     
     /**
      * 
@@ -79,7 +79,7 @@ public interface GradeCategoryRepository {
      * Add a new GradeCategory to DB
      * @return newly inserted gradeCategory id if inserted and -1 otherwise
      */
-    int insertGradeCategory (String title, int klass_id, int course_id, double weight);
+    boolean insertGradeCategory (String title, int course_id, double weight);
     
 	//PATCH(UPDATE)
     /** Update GradeCategory's title given gradeCategory id and new title
