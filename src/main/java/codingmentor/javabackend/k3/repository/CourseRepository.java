@@ -49,13 +49,19 @@ public interface CourseRepository {
     /**
      * Get course by Klass's id
      */
-    Course getCourseByKLassId(int klassId);
+    Course getCourseByKlassId(int klassId);
+    
+    
+    /**
+     * Get course by GradeCategory's id
+     */
+    Course getCourseByGradeCategoryId(int klassId);
     
 	/*
 	 * GET Check True/false METHOD
 	 */
     
-    boolean hasCourse(int klassId);
+    
     
 	/*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS

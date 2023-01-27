@@ -52,27 +52,6 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 	/*
 	 * GET LIST METHOD
 	 */
-    
-	/**
-	 * {@inheritDoc}
-	 */
-
-	@Override
-	public List<GradeCategory> getGradeCategories() {
-		return null;
-//		return executeQuery(connection -> {
-//			final String query = "SELECT * FROM gradeCategory";
-//			PreparedStatement statement = connection.prepareStatement(query);
-//			ResultSet results = statement.executeQuery();
-//			System.out.println("getGradeCategory: " + statement);
-//			List<GradeCategory> gradeCategoryList = new ArrayList<>();
-//			while(results.next()) {
-//				gradeCategoryList.add(mapper.map(results));
-//			}
-//			close(connection, statement, results);
-//			return gradeCategoryList;
-//		});
-	}
 	
 	/**
 	 * {@inheritDoc}
@@ -105,39 +84,18 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 	 */
 	@Override
 	public GradeCategory getGradeCategoryById(int id) {
-		return null;
-//		return executeQuerySingle(connection -> {
-//			final String query = "SELECT * FROM gradeCategory WHERE id = ? LIMIT 1;";
-//		    PreparedStatement statement = connection.prepareStatement(query);
-//		    statement.setInt(1, id);
-//		    ResultSet results = statement.executeQuery();
-//		    System.out.println("getGradeCategoryById: " + statement);
-//		    GradeCategory gradeCategory = (results.next()) ? mapper.map(results) : null;
-//		    close(connection, statement, results);
-//		    return gradeCategory;
-//    	});
+		return executeQuerySingle(connection -> {
+			final String query = "SELECT* FROM grade_categories WHERE id = ?;";
+		    PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, id);
+		    System.out.println("getGradeCategoryById: " + statement);
+		    ResultSet results = statement.executeQuery();
+		    GradeCategory gradeCategory = (results.next()) ? mapper.map(results) : null;
+		    close(connection, statement, results);
+		    return gradeCategory;
+    	});
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public GradeCategory getGradeCategoryByCourseId(int courseId) {
-		return null;
-//		return executeQuerySingle(connection -> {
-//			final String query = "select D.id, D.title,D.repo_id FROM "
-//					+ "gradeCategory as D \n"
-//					+ "	INNER JOIN courses as C \n"
-//					+ "ON D.id = C.gradeCategory_id and C.id = ?;";
-//		    PreparedStatement statement = connection.prepareStatement(query);
-//		    statement.setInt(1, courseId);
-//		    ResultSet results = statement.executeQuery();
-//		    System.out.println("getGradeCategoryByCourseId: " + statement);
-//		    GradeCategory gradeCategory = (results.next()) ? mapper.map(results) : null;
-//		    close(connection, statement, results);
-//		    return gradeCategory;
-//    	});
-	}
 	
 	/*
 	 * GET Check True/false METHOD
@@ -148,9 +106,9 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 	@Override
 	public boolean isUsedByAssignment(int gradeCategoryId) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT * FROM assignments AS A\r\n"
+			 final String query = "SELECT 1 as ONE FROM assignments AS A\r\n"
 			 		+ " INNER JOIN grade_categories AS GC\r\n"
-			 		+ "	ON GC.course_id = A.id AND GC.id = ?;";
+			 		+ "	ON A.grade_category_id = GC.id AND GC.id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, gradeCategoryId);
 			 ResultSet results = statement.executeQuery();
@@ -161,55 +119,6 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 		}) != null;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean existedByTitle(String title) {
-		return false;
-//		return executeQuerySingle(connection -> {
-//			 final String query = "SELECT \r\n"
-//			 		+ "	 1 as ONE\r\n"
-//			 		+ "FROM  gradeCategory_professors as DP \r\n"
-//			 		+ "INNER JOIN users as U\r\n"
-//			 		+ "	ON DP.user_id = U.id and U.id = ? and DP.admin = 1\r\n"
-//			 		+ "INNER JOIN gradeCategory as D\r\n"
-//			 		+ "	ON DP.gradeCategory_id = D.id AND D.id = ?;";
-//			 PreparedStatement statement = connection.prepareStatement(query);
-//			 statement.setInt(1, userId);
-//			 statement.setInt(2, gradeCategoryId);
-//			 ResultSet results = statement.executeQuery();
-//			 System.out.println("isGradeCategoryAdmin: " +statement);
-//			 GradeCategory gradeCategory = results.next() ? new GradeCategory() : null;
-//			 close(connection, statement, results);
-//			 return gradeCategory;
-//		}) != null;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isGradeCategoryProfessor(int userId, int gradeCategoryId) {
-		return false;
-//		return executeQuerySingle(connection -> {
-//			 final String query = "SELECT \r\n"
-//			 		+ "	1 as ONE\r\n"
-//			 		+ "FROM  gradeCategory_professors as DP \r\n"
-//			 		+ "INNER JOIN users as U\r\n"
-//			 		+ "	ON DP.user_id = U.id and U.id = ? and DP.admin = 1\r\n"
-//			 		+ "INNER JOIN gradeCategory as D\r\n"
-//			 		+ "	ON DP.gradeCategory_id = D.id AND D.id = ?;";
-//			 PreparedStatement statement = connection.prepareStatement(query);
-//			 statement.setInt(1, userId);
-//			 statement.setInt(2, gradeCategoryId);
-//			 ResultSet results = statement.executeQuery();
-//			 System.out.println("isGradeCategoryProfessor: " + statement);
-//			 GradeCategory gradeCategory = results.next() ? new GradeCategory() : null;
-//			 close(connection, statement, results);
-//			 return gradeCategory;
-//		}) != null;
-	}
 
 	/*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
@@ -234,25 +143,24 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 			return result;	
 		}) != 0;
 	}
-	
-	
+		
 	//PATCH(UPDATE)
-	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean updateGradeCategoryTitleById(String title, int id) {
-		return false;
-//		return executeUpdate(connection -> {
-//			 final String query = "UPDATE gradeCategory SET title = ? WHERE id = ?;";
-//			 PreparedStatement statement = connection.prepareStatement(query);
-//			 statement.setString(1, title);
-//			 statement.setInt(2, id);
-//			 System.out.println("updateGradeCategoryTitleById: " + statement);
-//			 int result = statement.executeUpdate();
-//			 close(connection, statement, null);
-//			 return result;
-//		}) != 0;
+	public boolean updateGradeCategoryById(String title, double weight, int gradeCategoryId) {
+		return executeUpdate(connection -> {
+			 final String query = "UPDATE grade_categories SET title = ?, weight = ? WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, title);
+			 statement.setDouble(2, weight);
+			 statement.setInt(3, gradeCategoryId);
+			 System.out.println("updateGradeCategoryById: " + statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
 	}
+	
 }

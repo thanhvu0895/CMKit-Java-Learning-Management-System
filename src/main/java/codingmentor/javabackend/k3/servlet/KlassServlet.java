@@ -129,9 +129,11 @@ public class KlassServlet extends HttpServlet {
 	
 	private void getKlassEdit(HttpServletRequest req, HttpServletResponse resp, int klassId) throws ServletException, IOException {
 		try {
-			Course course = courseRepository.getCourseByKLassId(klassId);
+			Course course = courseRepository.getCourseByKlassId(klassId);
+			Klass klass = klassRepository.getKlassById(klassId);
 			req.setAttribute("course", course);
-			req.getRequestDispatcher(JspUtils.COURSES_EDIT)
+			req.setAttribute("klass", klass);
+			req.getRequestDispatcher(JspUtils.KLASSES_EDIT)
 				.forward(req, resp);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -141,7 +143,7 @@ public class KlassServlet extends HttpServlet {
 	private void getKlassAssignmentIndex(HttpServletRequest req, HttpServletResponse resp, int klassId) throws ServletException, IOException {
 		try {
 			Klass klass = klassRepository.getKlassById(klassId);
-			Course course = courseRepository.getCourseByKLassId(klassId);
+			Course course = courseRepository.getCourseByKlassId(klassId);
 			req.setAttribute("klass", klass);
 			req.setAttribute("course", course);
 			req.getRequestDispatcher(JspUtils.ASSIGNMENTS_INDEX)
@@ -263,7 +265,7 @@ public class KlassServlet extends HttpServlet {
 			String klassEndDayString = req.getParameter("klass[end_date(3i)]");
 			
 			int klassCourseId = Integer.parseInt(klassCourseIdString);
-			int klassSection = Integer.parseInt(klassSectionString);
+			Integer klassSection = null; 
 			int klassStartYear = Integer.parseInt(klassStartYearString);
 			int klassStartMonth = Integer.parseInt(klassStartMonthString);
 			int klassStartDay = Integer.parseInt(klassStartDayString);
@@ -278,6 +280,10 @@ public class KlassServlet extends HttpServlet {
 				req.getSession().setAttribute("alert", "Semester can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_KLASS_PATH + "?course=" + courseIdString);
 				return;
+			}
+			
+			if (klassSectionString != "") {
+				klassSection = Integer.parseInt(klassSectionString);
 			}
 			
 			if (!isValidKlassStartDate || !isValidKlassEndDate) {

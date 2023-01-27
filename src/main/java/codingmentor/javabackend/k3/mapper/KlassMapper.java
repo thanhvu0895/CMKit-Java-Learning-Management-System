@@ -14,7 +14,7 @@ public class KlassMapper implements RowMapper<Klass> {
 			.course_id(results.getInt("course_id"))
 			.repo_id(results.getInt("repo_id"))
 			.semester(results.getString("semester"))
-			.section(results.getInt("section"))
+			.section(results.getObject("section") == null ? null : (Integer) results.getObject("section"))
 			.start_date(results.getDate("start_date").toLocalDate())
 			.end_date(results.getDate("end_date").toLocalDate());
 	}

@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -142,14 +143,14 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int insertKlass (int course_id, int repo_id, String semester, int section, LocalDate startDate, LocalDate endDate) {
+	public int insertKlass (int course_id, int repo_id, String semester, Integer section, LocalDate startDate, LocalDate endDate) {
 		return executeUpdate(connection -> {
 			final String query = "INSERT INTO klasses (course_id, repo_id, semester, section, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, course_id);
 			statement.setInt(2, repo_id);
 			statement.setString(3, semester);
-			statement.setInt(4, section);
+			statement.setObject(4, section, Types.INTEGER);
 			statement.setDate(5, Date.valueOf(startDate));
 			statement.setDate(6, Date.valueOf(endDate));
 			System.out.println("insertKlass: " + statement);

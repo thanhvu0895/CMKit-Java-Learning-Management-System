@@ -1,5 +1,8 @@
 package codingmentor.javabackend.k3.Utils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
  * @author Thanh Vu
  *
@@ -39,6 +42,7 @@ public class UrlUtils {
 	public static final String GRADERS_PATH = "/graders";
 	public static final String ADD_GRADER_PATH = "/add_grader";
 	
+	public static final String GRADE_CATEGORIES_ALL_PATH = "/grade_categories/*";
 	public static final String GRADE_CATEGORIES_PATH = "/grade_categories";
 	public static final String NEW_GRADE_CATEGORY_PATH = "/grade_categories/new";
 	public static final String EDIT_GRADE_CATEGORY_PATH = "/grade_categories/:id/edit";
@@ -134,7 +138,19 @@ public class UrlUtils {
 	    }
 	    return true;
 	}
+    public static boolean isDouble(String str) {
+    	 try {
+    		 Double.parseDouble(str);
+    		 return true;
+    	 } catch (NumberFormatException ex) {
+    		 return false;
+    	 }
+    }
     
+    public static Double convertDoubleFromStringWithPrecision(String doubleNumberString, int precision) {
+    	return BigDecimal.valueOf(Double.parseDouble(doubleNumberString)).setScale(precision, RoundingMode.HALF_UP)
+			    .doubleValue();
+    }
 }
 
 

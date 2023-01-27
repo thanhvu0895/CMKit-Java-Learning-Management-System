@@ -48,6 +48,6 @@ public interface KlassRepository {
      * Add a new Klass to DB
      * @return newly inserted Klass id if inserted and -1 otherwise
      */
-    int insertKlass (int course_id, int repo_id, String semester, int section, LocalDate startDate, LocalDate endDate);
+    public int insertKlass (int course_id, int repo_id, String semester, Integer section, LocalDate startDate, LocalDate endDate);
 
 }

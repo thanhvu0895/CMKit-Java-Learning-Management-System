@@ -6,7 +6,7 @@ public class Klass {
 	private int course_id;
 	private int repo_id;
 	private String semester;
-	private int section;
+	private Integer section;
 	private LocalDate start_date;
 	private LocalDate end_date;
 	
@@ -26,7 +26,7 @@ public class Klass {
 		return semester;
 	}
 
-	public int getSection() {
+	public Integer getSection() {
 		return section;
 	}
 
@@ -62,7 +62,7 @@ public class Klass {
 	    return this;
 	}
 	
-	public Klass section(int section) {
+	public Klass section(Integer section) {
 	    this.section = section;
 	    return this;
 	}

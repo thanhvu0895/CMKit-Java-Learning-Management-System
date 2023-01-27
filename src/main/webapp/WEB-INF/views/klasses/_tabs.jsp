@@ -3,7 +3,7 @@
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <center>
-  <h1>course.title</h1>
+  <h1>${course.title}</h1>
   <h4>${klass.semester} section ${klass.section}</h4>
   
  <ul class="nav nav-tabs">
@@ -31,6 +31,6 @@
   <t:link_to path="${UrlUtils.EDIT_KLASS_PATH}" id="${klass.id}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>  Settings</t:link_to>
   </li>
   
-   <span class="pull-right"><t:link_to path="${UrlUtils.DEPARTMENT_COURSES_PATH}" id="${klass.id}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Edit Course </t:link_to></span> 
+   <span class="pull-right"><t:link_to path="${UrlUtils.COURSES_PATH}/:id" classBS="btn btn-default" id="${course.id}"><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Edit Course </t:link_to></span> 
  </ul>
 </center>

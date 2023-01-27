@@ -13,6 +13,4 @@
 <h1>New Class</h1>
 
 <%@ include file="_form.jsp" %>
-
-
 </t:layoutj>

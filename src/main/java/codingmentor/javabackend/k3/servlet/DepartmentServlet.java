@@ -87,6 +87,7 @@ public class DepartmentServlet extends HttpServlet{
 					break;
 				}
 			}
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			break;
 		case UrlUtils.NEW_DEPARTMENT_PATH: 					
 			getDepartmentsNew(req, resp);
@@ -109,6 +110,10 @@ public class DepartmentServlet extends HttpServlet{
 		try {
 			Department department = departmentRepository.getDepartmentById(departmentId);
 			List<Course> courses = courseRepository.getCoursesByDepartmentId(departmentId);
+			if (department == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
 			req.setAttribute("department", department);
 			req.setAttribute("courses", courses);
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_COURSES)
@@ -121,6 +126,10 @@ public class DepartmentServlet extends HttpServlet{
 	private void getDepartmentEdit(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
 			Department department = departmentRepository.getDepartmentById(departmentId);
+			if (department == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
 			List<DepartmentProfessor> departmentProfessors = departmentProfessorRepository.getDepartmentProfessorsByDepartmentId(departmentId);
 			List<User> departmentProfessorUsers = userRepository.getUsersFromDepartmentId(departmentId);
 			req.setAttribute("department", department);
@@ -138,6 +147,10 @@ public class DepartmentServlet extends HttpServlet{
 	private void getDepartmentFiles(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
 			Department department = departmentRepository.getDepartmentById(departmentId);
+			if (department == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
 			req.setAttribute("department", department);	
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_FILES)
 				.forward(req, resp);
@@ -149,6 +162,10 @@ public class DepartmentServlet extends HttpServlet{
 	private void getDepartmentKlasses(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
 			Department department = departmentRepository.getDepartmentById(departmentId);
+			if (department == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
 			List<Course> coursesByDepartments = courseRepository.getCoursesWithKlassByDepartmentId(departmentId);
 			List<Klass> courseKlasses = klassRepository.getKlassesFromDepartmentId(departmentId);
 			req.setAttribute("department", department);

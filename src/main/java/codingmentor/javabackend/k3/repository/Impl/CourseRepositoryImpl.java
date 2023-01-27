@@ -164,39 +164,38 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Course getCourseByKLassId(int klassId) {
+	public Course getCourseByKlassId(int klassId) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM courses as C, klasses as K \r\n"
+			final String query = "SELECT C.* FROM courses as C, klasses as K \r\n"
 					+ "where K.course_id = C.id AND K.id = ? LIMIT 1";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, klassId);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getCourseByKLassId: " + statement);
+		    System.out.println("getCourseByKlassId: " + statement);
 		    Course course = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return course;
     	});
 	}
 	
-	/*
-	 * GET Check True/false METHOD
+	/**
+	 * {@inheritDoc}
 	 */
-	
 	@Override
-	public boolean hasCourse(int klassId) {
+	public Course getCourseByGradeCategoryId(int klassId) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 as ONE FROM courses as C, klasses as K \r\n"
-			 		+ "where K.course_id = C.id and K.id = ?;";
-			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setInt(1, klassId);
-			 ResultSet results = statement.executeQuery();
-			 System.out.println("existedByTitle" + statement);
-			 Course course = (results.next()) ? new Course() : null;
-			 close(connection, statement, results);
-			 return course;
-		}) != null;
+			final String query = "SELECT C.* FROM courses as C\r\n"
+					+ " INNER JOIN grade_categories as GC \r\n"
+					+ " ON GC.course_id = C.id AND GC.id = ? LIMIT 1";
+		    PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, klassId);
+		    ResultSet results = statement.executeQuery();
+		    System.out.println("getCourseByGradeCategoryId: " + statement);
+		    Course course = (results.next()) ? mapper.map(results) : null;
+		    close(connection, statement, results);
+		    return course;
+    	});
 	}
-	
 	
 	/*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS

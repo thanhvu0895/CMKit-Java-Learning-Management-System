@@ -2,7 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
-<t:layoutj pageTitle="${course.title}: ${klass.semester} ${klass.section}} | Assignments">
+<t:layoutj pageTitle="${course.title}: ${klass.semester} ${klass.section} | Assignments">
 <ol class="breadcrumb">
   <li><t:link_to path="${UrlUtils.KLASSES_PATH}">Classes</t:link_to></li>
   <li>${course_code}&nbsp${course.title}: ${klass.semester}&nbsp${klass.section}</li>
@@ -15,10 +15,10 @@
 
 <span class="pull-left"><h4> Class Assignments: </h4></span>
 <span class="pull-right">
- <t:link_to path="${UrlUtils.NEW_ASSIGNMENT_PATH}?class=:id" classBS="btn btn-success">
+ <t:link_to path="${UrlUtils.NEW_ASSIGNMENT_PATH}?class=:id" id="${klass.id}" classBS="btn btn-success">
    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span class="glyphicon glyphicon-file" aria-hidden="true"></span> New Assignment (for this class)
    </t:link_to>
- <t:link_to path="${UrlUtils.SHOW_COPY_ASSIGNMENT_PATH}?klass=:id" classBS="btn btn-primary">
+ <t:link_to path="${UrlUtils.SHOW_COPY_ASSIGNMENT_PATH}?klass=:id" id="${klass.id}" classBS="btn btn-primary">
    <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span> Copy Assignment
  </t:link_to>
 </span>
