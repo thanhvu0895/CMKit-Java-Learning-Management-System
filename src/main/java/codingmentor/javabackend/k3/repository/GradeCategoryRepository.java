@@ -55,4 +55,10 @@ public interface GradeCategoryRepository {
     
 	//PUT(REPLACE)
     public boolean updateGradeCategoryById(String title, double weight, int gradeCategoryId);
+    
+    //DELETE
+	/**
+	 *  Remove Professor with given id
+	 */
+    boolean deleteGradeCategory(int gradeCategoryId);    
 }

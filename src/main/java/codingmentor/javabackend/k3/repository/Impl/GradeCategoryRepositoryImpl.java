@@ -163,4 +163,21 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 		}) != 0;
 	}
 	
+	
+	// deleteProfessor
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean deleteGradeCategory(int gradeCategoryId) {
+		return executeUpdate(connection -> {
+			 final String query = "DELETE FROM grade_categories WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, gradeCategoryId);
+			 System.out.println("deleteGradeCategory: " + statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}	
 }

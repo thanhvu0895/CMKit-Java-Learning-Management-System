@@ -30,7 +30,7 @@
 				<td><t:link_to path="${UrlUtils.GRADE_CATEGORIES_PATH}/:id" classBS="btn btn-danger" id="${gc.id}" confirm="Assignments are using this grade category." disable="disabled">Delete</t:link_to></td>
 			   </c:when>
 			   <c:otherwise>
-				<td><t:link_to path="${UrlUtils.GRADE_CATEGORIES_PATH}/:id" classBS="btn btn-danger" id="${gc.id}" confirm="Are you sure you want to delete this category?">Delete</t:link_to></td>
+				<td><t:link_to path="${UrlUtils.GRADE_CATEGORIES_PATH}/:id" classBS="btn btn-danger" id="${gc.id}" confirm="Are you sure you want to delete this category?" method="DELETE">Delete</t:link_to></td>
 			   </c:otherwise>
 			   </c:choose>
 			  </tr>

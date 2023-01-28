@@ -249,7 +249,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 			 statement.setString(2, courseCode);
 			 statement.setBoolean(3, active);
 			 statement.setInt(4, id);
-			 System.out.println(statement);
+			 System.out.println("updateKlassById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

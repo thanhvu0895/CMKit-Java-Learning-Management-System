@@ -9,8 +9,8 @@ import java.math.RoundingMode;
  */
 public class UrlUtils {
 
-	public static final String DEPARTMENTS_PATH = "/departments";
 	public static final String DEPARTMENTS_ALL_PATH = "/departments/*";
+	public static final String DEPARTMENTS_PATH = "/departments";
 	public static final String NEW_DEPARTMENT_PATH = "/departments/new";
 	public static final String DEPARTMENT_COURSES_PATH = "/departments/:id/courses";
 	public static final String DEPARTMENT_FILES_PATH = "/departments/:id/files";
@@ -26,19 +26,24 @@ public class UrlUtils {
 	public static final String SSH_KEYS_PATH = "/ssh_keys";
 	public static final String NEW_SSH_KEYS_PATH = "/ssh_keys/new";
 	
-	public static final String CONTRIBUTOR_INVITES_PATH = "/contributor_invites";
+	public static final String CONTRIBUTORS_ALL_PATH = "/contributors/*";
 	public static final String CONTRIBUTORS_PATH = "/contributors";
+	public static final String CONTRIBUTOR_INVITES_PATH = "/contributor_invites";
 	
+	
+	public static final String SUBMISSIONS_ALL_PATH = "/submissions/*";
 	public static final String SUBMISSIONS_PATH = "/submissions";
 	public static final String NEW_SUBMISSION_PATH = "/submissions/new";
 	public static final String SUBMISSION_PROFESSOR_NEW_UPLOAD_PATH = "/submission/new_professor";
 	
+	public static final String ASSIGNMENT_ALL_PATH = "/assignments/*";
 	public static final String ASSIGNMENT_PATH = "/assignments";
 	public static final String NEW_ASSIGNMENT_PATH = "/assignments/new";
 	public static final String SHOW_COPY_ASSIGNMENT_PATH = "/copy_assignment";
 	
 	
 	
+	public static final String GRADERS_ALL_PATH = "/graders/*";
 	public static final String GRADERS_PATH = "/graders";
 	public static final String ADD_GRADER_PATH = "/add_grader";
 	
@@ -48,11 +53,14 @@ public class UrlUtils {
 	public static final String EDIT_GRADE_CATEGORY_PATH = "/grade_categories/:id/edit";
 	public static final String GRADE_CATEGORY_PATH = "/grade_categories/:id";
 	
+	public static final String STUDENTS_ALL_PATH = "/students";
 	public static final String STUDENTS_PATH = "/students";
 	public static final String TOGGLE_ASSIGNED_NOTIFICATION_PATH = "/students/:id/toggle_assigned_notification";
 	
 	
+	public static final String PROFESSORS_ALL_PATH = "/professors/*";
 	public static final String PROFESSORS_PATH = "/professors";
+	
 	
 	public static final String USERS_ALL_PATH = "/users/*";
 	public static final String USERS_PATH = "/users";
@@ -67,8 +75,8 @@ public class UrlUtils {
 	public static final String SHOW_USER_INVITE_PATH ="/users/:id/set_up";
 	public static final String ACCEPT_USER_INVITE_PATH = "/users/:id/accept_invite";
 	
-	public static final String KLASSES_PATH = "/klasses";
 	public static final String KLASSES_ALL_PATH = "/klasses/*";
+	public static final String KLASSES_PATH = "/klasses";
 	public static final String NEW_KLASS_PATH = "/klasses/new";
 	public static final String EDIT_KLASS_PATH = "/klasses/:id/edit";
 	public static final String KLASS_FILES_PATH = "/klasses/:klass_id/files";
@@ -81,7 +89,7 @@ public class UrlUtils {
 	
 	
 	public static final String COURSES_PATH = "/courses";
-	public static final String COURSES_PATH_ALL = "/courses/*";
+	public static final String COURSES_ALL_PATH = "/courses/*";
 	public static final String NEW_COURSE_PATH = "/courses/new";
 	public static final String COURSE_FILES_PATH ="/courses/:id/files";
 	public static final String EDIT_COURSE_PATH	= "/courses/:id/edit";
@@ -100,7 +108,7 @@ public class UrlUtils {
 	
 //	public static final String NOT_FOUND = "/404";
 //	public static final String INTERNAL_ERROR = "/500";
-    public static final String ALL = "/*";	
+    public static final String ALL_PATH = "/*";	
     
     public static String putIdInPath(String path, int id) {
     	path = path.replaceFirst("\\:id", String.valueOf(id));

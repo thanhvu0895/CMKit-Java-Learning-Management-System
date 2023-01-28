@@ -50,4 +50,9 @@ public interface KlassRepository {
      */
     public int insertKlass (int course_id, int repo_id, String semester, Integer section, LocalDate startDate, LocalDate endDate);
 
+    //PATCH(UPDATE)
+    /** Update Klass's semester, section, start date and end date
+     * @return true if updated, and false if update was unsuccessful
+     */
+    public boolean updateKlassById(String semester, Integer section, LocalDate startDate, LocalDate endDate, int klassId);
 }

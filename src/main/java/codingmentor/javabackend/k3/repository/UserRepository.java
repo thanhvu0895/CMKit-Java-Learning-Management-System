@@ -24,6 +24,14 @@ public interface UserRepository {
      */
     public List<User> getUsersFromDepartmentId(int departmentId);
     
+    /**
+     * Get list of Klass Professor's User Details Admin given Klass's id
+     * @param Department's id
+     * @return
+     */
+    public List<User> getUsersFromKlassId(int klassId);
+    
+    
 	/*
 	 * GET Item
 	 */
@@ -42,7 +50,12 @@ public interface UserRepository {
 	 * @return an User object if found or null
 	 */
     User findUserByEmail(String email);
-        
+     
+    
+	/*
+	 * GET Check True/false METHOD
+	 */
+    
 	/**
      * Check if User with given email exists 
      *
@@ -60,11 +73,15 @@ public interface UserRepository {
     
     /**
    	 * Check if user is department professor by DepartmentId
-   	 * @param: id: userId
    	 * @return boolean if update successful or else false
    	 */
     boolean isDepartmentProfessorByDepartmentId(int userId, int departmentId);
     
+    /**
+   	 * Check if user is Klass professor by KlassId
+   	 * @return boolean if update successful or else false
+   	 */
+    boolean isKlassProfessorByKlassId(int userId, int klassId);
     
     /*
      * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
@@ -135,7 +152,7 @@ public interface UserRepository {
        * Update User's set_up and deleted to True with given id ă
        */
       public boolean recoverUser(int id);
-      
+
      /**
  	  * Update deleted param of User object
  	  */

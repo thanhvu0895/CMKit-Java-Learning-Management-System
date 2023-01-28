@@ -15,7 +15,7 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 
 
 
-@WebFilter(urlPatterns = {UrlUtils.ALL})
+@WebFilter(urlPatterns = {UrlUtils.ALL_PATH})
 public class EncodingFilter implements Filter {
 
     @Override

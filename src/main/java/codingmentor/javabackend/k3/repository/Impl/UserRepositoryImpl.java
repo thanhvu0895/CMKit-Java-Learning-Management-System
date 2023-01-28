@@ -55,6 +55,11 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     	}
     }
     
+    
+	/*
+	 * GET List 
+	 */
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -65,7 +70,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			final String query = "SELECT * FROM users";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getUsers: " + statement);
 			List<User> usersList = new ArrayList<>();
 			while(results.next()) {
 				usersList.add(mapper.map(results));
@@ -103,6 +108,31 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	}
     
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<User> getUsersFromKlassId(int klassId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted from professors as P"
+					+ "	INNER JOIN users AS U"
+					+ " ON P.user_id = U.id and P.klass_id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, klassId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getUsersFromKlassId: " + statement);
+			List<User> usersList = new ArrayList<>();
+			while(results.next()) {
+				usersList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return usersList;
+		});
+	}
+	
+	/*
+	 * GET Item
+	 */
 	
 	/**
 	 * {@inheritDoc}
@@ -116,7 +146,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet results = statement.executeQuery();
-            System.out.println(statement);
+            System.out.println("findUserById: " + statement);
             User user = (results.next()) ? mapper.map(results) : null;
             close(connection, statement, results);
             return user;
@@ -137,13 +167,17 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	        PreparedStatement statement = connection.prepareStatement(query);
 	        statement.setString(1, email);
 	        ResultSet results = statement.executeQuery();
-	        System.out.println(statement);
+	        System.out.println("findUserByEmail: " + statement);
 	        User user = (results.next()) ? mapper.map(results) : null;
 	        close(connection, statement, results);
 	        return user;
 	    });
     }
  
+	/*
+	 * GET Check True/false METHOD
+	 */
+    
 	/**
 	 * {@inheritDoc}
 	 */
@@ -154,7 +188,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, email);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println(statement);
+			 System.out.println("existedByEmail: " + statement);
 			 User user = (results.next()) ? new User() : null;
 			 close(connection, statement, results);
 			 return user;
@@ -171,7 +205,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, userId);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println(statement);
+			 System.out.println("isDepartmentProfessor: " + statement);
 			 User user = (results.next()) ? new User() : null;
 			 close(connection, statement, results);
 			 return user;
@@ -189,12 +223,31 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 statement.setInt(1, userId);
 			 statement.setInt(2, departmentId);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println(statement);
+			 System.out.println("isDepartmentProfessorByDepartmentId: " + statement);
 			 User user = (results.next()) ? new User() : null;
 			 close(connection, statement, results);
 			 return user;
 		}) != null;
 	 }
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isKlassProfessorByKlassId(int userId, int klassId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT 1 AS one FROM professors WHERE user_id = ? and klass_id = ? LIMIT 1;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 statement.setInt(2, klassId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println("isKlassProfessorByKlassId: " + statement);
+			 User user = (results.next()) ? new User() : null;
+			 close(connection, statement, results);
+			 return user;
+		}) != null;
+	}
+	
     
     /*
      * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
@@ -222,7 +275,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			statement.setBoolean(2, admin);
 			String password_digest = hasher.hash(RandomUtils.unique64().toCharArray());
 			statement.setString(3, password_digest);
-			System.out.println(statement);
+			System.out.println("createUserSendInvite: " + statement);
 			int result = statement.executeUpdate();
     		close(connection, statement, null);			
 			return result;
@@ -243,7 +296,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			statement.setBoolean(4, admin);
 			statement.setBoolean(5, disabled);
 			statement.setInt(6, id);
-			System.out.println(statement);
+			System.out.println("updateUserEditAdmin: " + statement);
 			int result = statement.executeUpdate();		 
 			close(connection, statement, null);
 			return result;
@@ -260,7 +313,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, preferred_name);
 			 statement.setInt(2, id);
-			 System.out.println(statement);
+			 System.out.println("updatePreferredNameById: " +statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -278,7 +331,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 String password_digest = hasher.hash(new_password.toCharArray());
 			 statement.setString(1, password_digest);
 			 statement.setInt(2, user.getId());
-			 System.out.println(statement);
+			 System.out.println("updatePassword: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -295,7 +348,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, reset_digest);
 			 statement.setInt(2, userid);
-			 System.out.println(statement);
+			 System.out.println("updateResetDigest: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -312,7 +365,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setTimestamp(1, Timestamp.from(reset_expires.toInstant(ZoneOffset.of("-05:00"))));
 			 statement.setInt(2, userid);
-			 System.out.println(statement);
+			 System.out.println("updateResetExpires: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -334,7 +387,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 String password_digest = hasher.hash(password.toCharArray());
 			 statement.setString(4, password_digest);
 			 statement.setInt(5, userid);
-			 System.out.println(statement);
+			 System.out.println("updateUserInviteParams: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -350,7 +403,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 final String query = " UPDATE users SET set_up = 1 WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, userid);
-			 System.out.println(statement);
+			 System.out.println("updateSetUpUser: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -367,7 +420,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 final String query = " UPDATE users SET deleted = 1, set_up = 0 WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, id);
-			 System.out.println(statement);
+			 System.out.println("deleteUser: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -383,13 +436,14 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 final String query = " UPDATE users SET deleted = 0 WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, id);
-			 System.out.println(statement);
+			 System.out.println("recoverUser: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
 		}) != 0;
 	}
-	
+
+
 // DEPRECATED: NOT USE ANYMORE	
 //	@Override
 //	public List<User> getUserFromIdList (ArrayList<String> userIdsList) {

@@ -2,7 +2,7 @@ package codingmentor.javabackend.k3.servlet;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,24 +16,24 @@ import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.Course;
 import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.model.Klass;
+import codingmentor.javabackend.k3.model.Professor;
 import codingmentor.javabackend.k3.model.User;
-import codingmentor.javabackend.k3.repository.AssignmentRepository;
 import codingmentor.javabackend.k3.repository.CourseRepository;
 import codingmentor.javabackend.k3.repository.DepartmentRepository;
 import codingmentor.javabackend.k3.repository.KlassRepository;
 import codingmentor.javabackend.k3.repository.ProfessorRepository;
 import codingmentor.javabackend.k3.repository.RepoRepository;
-import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
+import codingmentor.javabackend.k3.repository.UserRepository;
 import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.KlassRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.ProfessorRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
+import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 
 
 @WebServlet(urlPatterns = {
 	UrlUtils.KLASSES_ALL_PATH,
-	
 })
 public class KlassServlet extends HttpServlet {
 
@@ -42,8 +42,8 @@ public class KlassServlet extends HttpServlet {
 	private RepoRepository repoRepository = null;
 	private CourseRepository courseRepository = null;
 	private DepartmentRepository departmentRepository = null;
-	private AssignmentRepository assignmentRepository = null;
 	private ProfessorRepository professorRepository = null;
+	private UserRepository userRepository = null;
 	
 	@Override
 	public void init() throws ServletException {
@@ -52,8 +52,8 @@ public class KlassServlet extends HttpServlet {
 		repoRepository = RepoRepositoryImpl.getInstance();
 		courseRepository = CourseRepositoryImpl.getInstance();
 		departmentRepository = DepartmentRepositoryImpl.getInstance();
-		assignmentRepository = AssignmentRepositoryImpl.getInstance();
 		professorRepository = ProfessorRepositoryImpl.getInstance();
+		userRepository = UserRepositoryImpl.getInstance();
 	}
 	
 	@Override
@@ -120,6 +120,11 @@ public class KlassServlet extends HttpServlet {
 	
 	private void getKlassShow(HttpServletRequest req, HttpServletResponse resp, int klassId) throws ServletException, IOException {
 		try {
+			Klass klass = klassRepository.getKlassById(klassId);
+			if (klass == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
 			req.getRequestDispatcher(JspUtils.KLASSES_SHOW)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -129,10 +134,22 @@ public class KlassServlet extends HttpServlet {
 	
 	private void getKlassEdit(HttpServletRequest req, HttpServletResponse resp, int klassId) throws ServletException, IOException {
 		try {
-			Course course = courseRepository.getCourseByKlassId(klassId);
 			Klass klass = klassRepository.getKlassById(klassId);
+			List<User> klassProfessorUsers = userRepository.getUsersFromKlassId(klassId);
+			List<Professor> klassProfessors = professorRepository.getProfessorsByKlassId(klassId);
+			if (klass == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
+			Course course = courseRepository.getCourseByKlassId(klassId);
+			Department klassDepartment = departmentRepository.getDepartmentByCourseId(course.getId());
+			
 			req.setAttribute("course", course);
 			req.setAttribute("klass", klass);
+			req.setAttribute("department", klassDepartment);
+			req.setAttribute("klass_professor_users", klassProfessorUsers);
+			req.setAttribute("klass_professors", klassProfessors);
 			req.getRequestDispatcher(JspUtils.KLASSES_EDIT)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -143,6 +160,12 @@ public class KlassServlet extends HttpServlet {
 	private void getKlassAssignmentIndex(HttpServletRequest req, HttpServletResponse resp, int klassId) throws ServletException, IOException {
 		try {
 			Klass klass = klassRepository.getKlassById(klassId);
+			
+			if (klass == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
 			Course course = courseRepository.getCourseByKlassId(klassId);
 			req.setAttribute("klass", klass);
 			req.setAttribute("course", course);
@@ -155,6 +178,14 @@ public class KlassServlet extends HttpServlet {
 	
 	private void getKlassFiles(HttpServletRequest req, HttpServletResponse resp, int klassId) throws ServletException, IOException {
 		try {
+			
+			Klass klass = klassRepository.getKlassById(klassId);
+			
+			if (klass == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
 			req.getRequestDispatcher(JspUtils.KLASSES_FILES)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -164,6 +195,14 @@ public class KlassServlet extends HttpServlet {
 	
 	private void getKlassGradeBook(HttpServletRequest req, HttpServletResponse resp, int klassId) throws ServletException, IOException {
 		try {
+			
+			Klass klass = klassRepository.getKlassById(klassId);
+			
+			if (klass == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
 			req.getRequestDispatcher(JspUtils.KLASSES_GRADE_BOOK)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -173,6 +212,13 @@ public class KlassServlet extends HttpServlet {
 	
 	private void getKlassGradeBookCSV(HttpServletRequest req, HttpServletResponse resp, int klassId) throws ServletException, IOException {
 		try {
+			Klass klass = klassRepository.getKlassById(klassId);
+			
+			if (klass == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
 			req.getRequestDispatcher(JspUtils.KLASSES_GRADE_BOOK)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -182,6 +228,13 @@ public class KlassServlet extends HttpServlet {
 	
 	private void getKlassGradersIndex(HttpServletRequest req, HttpServletResponse resp, int klassId) throws ServletException, IOException {
 		try {
+			Klass klass = klassRepository.getKlassById(klassId);
+			
+			if (klass == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
 			req.getRequestDispatcher(JspUtils.GRADERS_INDEX)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -191,6 +244,12 @@ public class KlassServlet extends HttpServlet {
 	
 	private void getKlassStudentsIndex(HttpServletRequest req, HttpServletResponse resp, int klassId) throws ServletException, IOException {
 		try {
+			Klass klass = klassRepository.getKlassById(klassId);
+			
+			if (klass == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
 			req.getRequestDispatcher(JspUtils.STUDENTS_INDEX)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -240,9 +299,6 @@ public class KlassServlet extends HttpServlet {
 				case "PATCH":
 					patchKlassUpdate(req, resp, klassId);
 					break;
-				case "PUT":
-					putKlassUpdate(req, resp, klassId);
-					break;
 				case "DELETE":
 					deleteKlassDestroy(req, resp, klassId);
 					break;
@@ -286,8 +342,14 @@ public class KlassServlet extends HttpServlet {
 				klassSection = Integer.parseInt(klassSectionString);
 			}
 			
-			if (!isValidKlassStartDate || !isValidKlassEndDate) {
-				req.getSession().setAttribute("alert", "Start Date and End Date must be valid");
+			if (!isValidKlassStartDate) {
+				req.getSession().setAttribute("alert", "Start Date must be valid");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_KLASS_PATH + "?course=" + courseIdString);
+				return;
+			}
+			
+			if (!isValidKlassEndDate) {
+				req.getSession().setAttribute("alert", "End Date must be valid");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_KLASS_PATH + "?course=" + courseIdString);
 				return;
 			}
@@ -309,17 +371,67 @@ public class KlassServlet extends HttpServlet {
 	
 	private void patchKlassUpdate(HttpServletRequest req, HttpServletResponse resp, int klassId) throws IOException {
 		try {
+			System.out.println("HIT");
+			Klass klass = klassRepository.getKlassById(klassId);
+			
+			if (klass == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return; 
+			}
+			
+			String klassSemester = req.getParameter("klass[semester]");
+			String klassSectionString = req.getParameter("klass[section]");
+			String klassStartYearString = req.getParameter("klass[start_date(1i)]");
+			String klassStartMonthString = req.getParameter("klass[start_date(2i)]");
+			String klassStartDayString = req.getParameter("klass[start_date(3i)]");
+			String klassEndYearString = req.getParameter("klass[end_date(1i)]");
+			String klassEndMonthString = req.getParameter("klass[end_date(2i)]");
+			String klassEndDayString = req.getParameter("klass[end_date(3i)]");
+			
+			if (klassSemester == "") {
+				req.getSession().setAttribute("alert", "Semester can't be blank");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_KLASS_PATH, klassId));
+				return;
+			}
+			
+			Integer klassSection = null; 
+			int klassStartYear = Integer.parseInt(klassStartYearString);
+			int klassStartMonth = Integer.parseInt(klassStartMonthString);
+			int klassStartDay = Integer.parseInt(klassStartDayString);
+			int klassEndYear = Integer.parseInt(klassEndYearString);
+			int klassEndMonth = Integer.parseInt(klassEndMonthString);
+			int klassEndDay = Integer.parseInt(klassEndDayString);
+
+			boolean isValidKlassStartDate = DateValidatorDateTimeFormatter.isValid(klassStartYearString, klassStartMonthString, klassStartDayString);
+			boolean isValidKlassEndDate = DateValidatorDateTimeFormatter.isValid(klassEndYearString, klassEndMonthString, klassEndDayString);
+			
+			if (klassSectionString != "") {
+				klassSection = Integer.parseInt(klassSectionString);
+			}
+			
+			if (!isValidKlassStartDate) {
+				req.getSession().setAttribute("alert", "Start Date must be valid");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_KLASS_PATH, klassId));
+				return;
+			}
+			
+			if (!isValidKlassEndDate) {
+				req.getSession().setAttribute("alert", "End Date must be valid");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_KLASS_PATH, klassId));
+				return;
+			}
+			
+			LocalDate klassStartDate = LocalDate.of(klassStartYear, klassStartMonth, klassStartDay);
+			LocalDate klassEndDate = LocalDate.of(klassEndYear, klassEndMonth, klassEndDay);
+			
+			klassRepository.updateKlassById(klassSemester, klassSection, klassStartDate, klassEndDate, klassId);
+			req.getSession().setAttribute("notice", "Class was successfully updated.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_KLASS_PATH, klassId));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	private void putKlassUpdate(HttpServletRequest req, HttpServletResponse resp, int klassId) throws IOException {
-		try {
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	private void deleteKlassDestroy(HttpServletRequest req, HttpServletResponse resp, int klassId) throws IOException {
 		try {

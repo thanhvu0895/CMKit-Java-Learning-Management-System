@@ -80,11 +80,11 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 	 * {@inheritDoc}
 	 */
 	@Override   
-	public List<DepartmentProfessor>  getDepartmentProfessorsByDepartmentId(int id) {
+	public List<DepartmentProfessor>  getDepartmentProfessorsByDepartmentId(int departmentId) {
 		return executeQuery(connection -> {
 			final String query = "SELECT * FROM department_professors where department_id = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setInt(1, id);
+			statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getDepartmentProfessorsByDepartmentId: " + statement);
 			List<DepartmentProfessor> departmentProfessorsList = new ArrayList<>();
@@ -95,6 +95,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			return departmentProfessorsList;
 		});
 	}
+	
 	
 	/*
 	 * GET ITEM METHOD
@@ -140,7 +141,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			statement.setInt(1, user_id);
 			statement.setInt(2, department_id);
 			statement.setBoolean(3, admin);
-			System.out.println(statement);
+			System.out.println("insertDepartmentProfessor: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -176,6 +177,24 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			 close(connection, statement, null);
 			 return result;
 		}) != 0;
+	}
+
+	// deleteProfessor
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean deleteDepartmentProfessor(int departmentProfessorId) {
+		return executeUpdate(connection -> {
+			 final String query = "DELETE FROM department_professors WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, departmentProfessorId);
+			 System.out.println("deleteDepartmentProfessor: " + statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+		
 	}
 
 }

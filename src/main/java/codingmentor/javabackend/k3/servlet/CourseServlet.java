@@ -28,7 +28,7 @@ import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
 
 
 @WebServlet(urlPatterns = {
-		UrlUtils.COURSES_PATH_ALL,
+		UrlUtils.COURSES_ALL_PATH,
 		UrlUtils.NEW_COURSE_PATH,
 })
 public class CourseServlet extends HttpServlet{
@@ -94,6 +94,12 @@ public class CourseServlet extends HttpServlet{
 	private void getCourseShow(HttpServletRequest req, HttpServletResponse resp, int courseId) throws ServletException, IOException {
 		try {
 			Course course = courseRepository.getCourseById(courseId);
+
+			if (course == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
 			Department department = departmentRepository.getDepartmentById(course.getDepartment_id());
 			List<Assignment> assignments = assignmentRepository.getAssignmentsByCourseId(courseId);
 			req.setAttribute("course", course);
@@ -109,6 +115,12 @@ public class CourseServlet extends HttpServlet{
 	private void getCourseFiles(HttpServletRequest req, HttpServletResponse resp, int courseId) throws ServletException, IOException {
 		try {
 			Course course = courseRepository.getCourseById(courseId);
+			
+			if (course == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
 			Department department = departmentRepository.getDepartmentById(course.getDepartment_id());
 			req.setAttribute("course", course);
 			req.setAttribute("department", department);
@@ -122,6 +134,12 @@ public class CourseServlet extends HttpServlet{
 	private void getCourseGradeCategories(HttpServletRequest req, HttpServletResponse resp, int courseId) throws ServletException, IOException {
 		try {
 			Course course = courseRepository.getCourseById(courseId);
+			
+			if (course == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
 			Department department = departmentRepository.getDepartmentById(course.getDepartment_id());
 			List<GradeCategory> course_grade_categories = gradeCategoryRepository.getGradeCategoriesByCourseId(courseId); 
 			req.setAttribute("course", course);
@@ -136,9 +154,15 @@ public class CourseServlet extends HttpServlet{
 	
 	private void getCourseEdit(HttpServletRequest req, HttpServletResponse resp, int courseId) throws ServletException, IOException {
 		try {
+			Course course = courseRepository.getCourseById(courseId);
+			
+			if (course == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
 			
 			Department department = departmentRepository.getDepartmentByCourseId(courseId);
-			Course course = courseRepository.getCourseById(courseId);
+			
 			req.setAttribute("department", department);
 			req.setAttribute("course", course);
 			req.getRequestDispatcher(JspUtils.COURSES_EDIT)
@@ -151,6 +175,7 @@ public class CourseServlet extends HttpServlet{
 	private void getCourseNew(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			String departmentIdString = req.getParameter("department");
+			
 			if (UrlUtils.isInteger(departmentIdString)) {
 				int departmentId = Integer.parseInt(departmentIdString);
 				Department department = departmentRepository.getDepartmentById(departmentId);
@@ -189,9 +214,6 @@ public class CourseServlet extends HttpServlet{
 				case "PATCH":
 					patchCourseUpdate(req, resp, courseId);
 					break;
-				case "PUT":
-					putCourseUpdate(req, resp, courseId);
-					break;
 				case "DELETE":
 					deleteCourseDestroy(req, resp, courseId);
 					break;
@@ -204,12 +226,14 @@ public class CourseServlet extends HttpServlet{
 		try {
 			String departmentIdString = req.getParameter("department");
 			int departmentId = Integer.parseInt(departmentIdString);
+			
+			
 			String courseTitle = req.getParameter("course[title]");
 			String courseCode = req.getParameter("course[course_code]");
 			boolean courseActive = (req.getParameterValues("course[active]").length == 2);
 			
-			if (courseTitle == "" || courseCode == "") {
-				req.getSession(false).setAttribute("alert", "Title and course code can't be blank");
+			if (courseTitle == "") {
+				req.getSession(false).setAttribute("alert", "Title can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_COURSE_PATH);
 				return;
 			}
@@ -232,8 +256,8 @@ public class CourseServlet extends HttpServlet{
 			String title = req.getParameter("course[title]");
 			String course_code = req.getParameter("course[course_code]");
 			boolean active = (req.getParameterValues("course[active]").length == 2);
-			if (title == "" || course_code == "") {
-				req.getSession(false).setAttribute("alert", "Title and course code can't be blank");
+			if (title == "") {
+				req.getSession(false).setAttribute("alert", "Title can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_COURSE_PATH, courseId));
 				return;
 			}
@@ -241,13 +265,6 @@ public class CourseServlet extends HttpServlet{
 			req.getSession(false).setAttribute("notice", "Course was successfully updated.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_COURSE_PATH, courseId));
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void putCourseUpdate(HttpServletRequest req, HttpServletResponse resp, int courseId) throws IOException {
-		try {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

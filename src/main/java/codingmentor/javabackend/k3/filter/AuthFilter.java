@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.User;
 
-@WebFilter(urlPatterns = {UrlUtils.ALL})
+@WebFilter(urlPatterns = {UrlUtils.ALL_PATH})
 public class AuthFilter implements Filter{
 	
 	/*

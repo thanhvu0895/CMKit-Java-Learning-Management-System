@@ -11,8 +11,10 @@ public class test2 {
 	
 	public static void main(String[] args) {
 		
-		
-	
-//		LocalDate klassStartDate = LocalDate.of(2023, 2, 31);
+		String[] emailList = "a@      1, b@3, th a  nh v u@ 49  3208"
+				.replaceAll("\\s","").split(",");
+		for (String string : emailList) {
+			System.out.println(string);
+		}
 	}
 }

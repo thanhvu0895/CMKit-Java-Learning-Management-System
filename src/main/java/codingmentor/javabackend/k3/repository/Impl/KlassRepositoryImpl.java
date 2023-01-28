@@ -174,4 +174,19 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 	
 	
 	//PATCH(UPDATE)
+	public boolean updateKlassById(String semester, Integer section, LocalDate startDate, LocalDate endDate, int klassId) {
+		return executeUpdate(connection -> {
+			 final String query = "UPDATE klasses SET semester = ?, section = ?, start_date = ?, end_date = ? WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, semester);
+			 statement.setObject(2, section, Types.INTEGER);
+			 statement.setDate(3, Date.valueOf(startDate));
+			 statement.setDate(4, Date.valueOf(endDate));
+			 statement.setInt(5, klassId);
+			 System.out.println("updateKlassById: " + statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}
 }

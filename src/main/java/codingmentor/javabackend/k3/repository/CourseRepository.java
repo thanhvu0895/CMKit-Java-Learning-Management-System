@@ -76,7 +76,7 @@ public interface CourseRepository {
     
     
     //PATCH(UPDATE)
-    /** Update Course's title and Course Code given Course id
+    /** Update Course's title, Course Code, active status given Course id
      * @return true if updated, and false if update was unsuccessful
      */
     public boolean updateCourseById(String title, String courseCode, boolean active, int id);

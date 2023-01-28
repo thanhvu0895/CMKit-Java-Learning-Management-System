@@ -52,6 +52,10 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
     	}
     }
 
+    
+	/*
+	 * GET LIST METHOD
+	 */
 	/**
 	 * {@inheritDoc}
 	 */
@@ -72,6 +76,32 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 		});
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<Professor> getProfessorsByKlassId(int klassId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT P.id, P.user_id, P.klass_id from professors as P\r\n"
+					+ " INNER JOIN users AS U\r\n"
+					+ " ON P.user_id = U.id and P.klass_id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, klassId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getProfessorsByKlassId: " + statement);
+			List<Professor> professorsList = new ArrayList<>();
+			while(results.next()) {
+				professorsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return professorsList;
+		});
+	}
+	
+	
+	
+	/*
+	 * GET ITEM METHOD
+	 */
 	/**
 	 * {@inheritDoc}
 	 */
@@ -101,13 +131,43 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 	public int insertProfessor (int user_id, int klass_id) {
 		return executeUpdate(connection -> {
 			final String query = "INSERT INTO professors (user_id, klass_id) VALUES (?, ?);";
-			PreparedStatement statement = connection.prepareStatement(query);
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, user_id);
 			statement.setInt(2, klass_id);
 			System.out.println("insertProfessor: " + statement);
-			int result = statement.executeUpdate();
-    		close(connection, statement, null);			
-			return result;
+			ResultSet rs = statement.getGeneratedKeys();
+			rs.next();
+			int affectedRows = statement.executeUpdate();
+			
+			if (affectedRows == 0) {
+				throw new SQLException("Creating Department Professor failed, no rows affected.");
+			}
+			
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+			
+            if (generatedKeys.next()) {
+               return generatedKeys.getInt(1);
+            }
+            
+			close(connection, statement, generatedKeys);
+			return 0;
 		});
 	}
+
+	// deleteProfessor
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean deleteProfessor(int professorId) {
+		return executeUpdate(connection -> {
+			 final String query = "DELETE FROM professors WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, professorId);
+			 System.out.println("deleteProfessor: " + statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}	
 }
