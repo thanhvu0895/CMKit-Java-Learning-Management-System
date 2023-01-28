@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.User;
 
-@WebFilter(urlPatterns = {UrlUtils.ALL})
+@WebFilter(urlPatterns = {UrlUtils.ALL_PATH})
 public class AuthFilter implements Filter{
 	
 	/*
@@ -100,10 +100,5 @@ public class AuthFilter implements Filter{
 		User current_user = (User) request.getSession(false).getAttribute("current_user");
 		String path =  request.getServletPath();
 		return  (current_user != null && !current_user.isAdmin() && path.startsWith(UrlUtils.USERS_PATH));
-	}
-	
-	
-	public void destroy() {
-		//close any resources here
 	}
 }

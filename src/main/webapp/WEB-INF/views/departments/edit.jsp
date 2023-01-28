@@ -72,7 +72,7 @@
 			      </t:form_with>
 				</td>
 				<td>
-				  <t:link_to path="${UrlUtils.DEPARTMENT_DEPARTMENT_PROFESSOR_PATH}" classBS="btn btn-danger" id="${dp.id}" secondId="${department.id}" confirm="Are you sure?">Remove</t:link_to>
+				  <t:link_to path="${UrlUtils.DEPARTMENT_DEPARTMENT_PROFESSOR_PATH}" classBS="btn btn-danger" id="${dp.id}" secondId="${department.id}" confirm="Are you sure?" method="DELETE">Remove</t:link_to>
 				</td>
 			  </tr>
 			 </c:if>

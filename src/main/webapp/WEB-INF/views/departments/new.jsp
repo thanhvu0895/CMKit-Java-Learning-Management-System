@@ -12,6 +12,6 @@
 
 <h1>New Department</h1>
 
-<jsp:include page="_form.jsp"/>
+<%@ include file="_form.jsp" %>
 </t:layoutj>
 <%-- <h1>DONE</h1> --%>

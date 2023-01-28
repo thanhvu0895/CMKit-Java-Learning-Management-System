@@ -30,9 +30,6 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
    
 	/**
 	 * close connection to save resources
-	 * @param connection
-	 * @param ps
-	 * @param rs
 	 */
     private void close (Connection connection, Statement ps, ResultSet rs) {
     	try {

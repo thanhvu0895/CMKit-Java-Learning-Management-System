@@ -504,16 +504,22 @@ public class UserServlet extends HttpServlet {
 	 */
 	private void postEditAdmin(HttpServletRequest req, HttpServletResponse resp, int userid)
 			throws IOException, ServletException {
-		try {
+		try {	
+			User user = userRepository.findUserById(userid);
+			
+			if (user == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return; 
+			}
+			
 			String first_name = req.getParameter("user[first_name]");
 			String last_name = req.getParameter("user[last_name]");
 			String preferred_name = req.getParameter("user[preferred_name]");
 			boolean admin = (req.getParameterValues("user[admin]").length == 2);
 			boolean disabled = (req.getParameterValues("user[disabled]").length == 2);
-			
+
 			if (first_name == "" || last_name == "") {
 				req.setAttribute("alert", "First name and last name must not be blank");
-				User user = userRepository.findUserById(userid);
 				req.setAttribute("user", user.filterParams());
 				req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN).forward(req, resp);
 				return;

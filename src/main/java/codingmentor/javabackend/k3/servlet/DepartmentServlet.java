@@ -86,7 +86,9 @@ public class DepartmentServlet extends HttpServlet{
 					getDepartmentKlasses(req, resp, departmentId);
 					break;
 				}
+			return;
 			}
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			break;
 		case UrlUtils.NEW_DEPARTMENT_PATH: 					
 			getDepartmentsNew(req, resp);
@@ -109,6 +111,10 @@ public class DepartmentServlet extends HttpServlet{
 		try {
 			Department department = departmentRepository.getDepartmentById(departmentId);
 			List<Course> courses = courseRepository.getCoursesByDepartmentId(departmentId);
+			if (department == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
 			req.setAttribute("department", department);
 			req.setAttribute("courses", courses);
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_COURSES)
@@ -121,6 +127,10 @@ public class DepartmentServlet extends HttpServlet{
 	private void getDepartmentEdit(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
 			Department department = departmentRepository.getDepartmentById(departmentId);
+			if (department == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
 			List<DepartmentProfessor> departmentProfessors = departmentProfessorRepository.getDepartmentProfessorsByDepartmentId(departmentId);
 			List<User> departmentProfessorUsers = userRepository.getUsersFromDepartmentId(departmentId);
 			req.setAttribute("department", department);
@@ -138,6 +148,12 @@ public class DepartmentServlet extends HttpServlet{
 	private void getDepartmentFiles(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
 			Department department = departmentRepository.getDepartmentById(departmentId);
+			
+			if (department == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
 			req.setAttribute("department", department);	
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_FILES)
 				.forward(req, resp);
@@ -149,6 +165,12 @@ public class DepartmentServlet extends HttpServlet{
 	private void getDepartmentKlasses(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws ServletException, IOException {
 		try {
 			Department department = departmentRepository.getDepartmentById(departmentId);
+			
+			if (department == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
 			List<Course> coursesByDepartments = courseRepository.getCoursesWithKlassByDepartmentId(departmentId);
 			List<Klass> courseKlasses = klassRepository.getKlassesFromDepartmentId(departmentId);
 			req.setAttribute("department", department);
@@ -190,9 +212,6 @@ public class DepartmentServlet extends HttpServlet{
 				case "PATCH":
 					patchDepartmentUpdate(req, resp, departmentId);
 					break;
-				case "PUT":
-					putDepartmentUpdate(req, resp, departmentId);
-					break;
 				case "DELETE":
 					deleteDepartmentDestroy(req, resp, departmentId);
 					break;
@@ -212,9 +231,6 @@ public class DepartmentServlet extends HttpServlet{
 				switch (req.getParameter("method")) {
 				case "PATCH":
 					patchDepartmentProfessorUpdate(req, resp, departmentId, departmentProfessorId);
-					break;
-				case "PUT":
-					putDepartmentProfessorUpdate(req, resp, departmentId, departmentProfessorId);
 					break;
 				case "DELETE":
 					deleteDepartmentProfessorDestroy(req, resp, departmentId, departmentProfessorId);
@@ -270,12 +286,6 @@ public class DepartmentServlet extends HttpServlet{
 		}
 	}
 	
-	private void putDepartmentUpdate(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws IOException {
-		try {
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	private void deleteDepartmentDestroy(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws IOException {
 		try {
@@ -293,11 +303,15 @@ public class DepartmentServlet extends HttpServlet{
 			String token = RandomUtils.unique64();
 			
 			String[] departmentProfessorEmailList = req.getParameter("department_professor[emails]")
-					.replaceAll("[\\s]","")
+					.replaceAll("\\s","")
 					.split(",");
 			boolean admin = (req.getParameterValues("department_professor[admin]").length == 2);
 			for (String email : departmentProfessorEmailList) {
+				if (email == "") {
+					continue;
+				}
 				email = email.toLowerCase();
+				System.out.println("Value of email is: " + email);
 				User u = userRepository.findUserByEmail(email);
 				if (u != null  && !u.isDeleted() && !userRepository.isDepartmentProfessorByDepartmentId(u.getId(), departmentId)) {
 					// User already exists and not a department professor
@@ -307,7 +321,7 @@ public class DepartmentServlet extends HttpServlet{
 					} else {
 						added.add(email);
 					}
-					break;
+					continue;
 				}
 				
 				if (u == null) {
@@ -326,7 +340,7 @@ public class DepartmentServlet extends HttpServlet{
 					} else {
 						failed.add(email);
 					}
-					break;		
+					continue;		
 				}
 				
 				if (u.isDeleted()) {
@@ -346,11 +360,12 @@ public class DepartmentServlet extends HttpServlet{
 					} else {
 						failed.add(email);
 					}
-					break;
+					continue;
 				}
 			}
-			req.getSession(false).setAttribute("notice", added.size() + " professors added; " + invited.size() + " professors invited");
-			req.getSession(false).setAttribute("alert", "Failed to add " + failed.size() + " professors");
+			req.getSession(false).setAttribute("notice", added.size() + " professors added: " + String.join(",", added) + ";" 
+					+ invited.size() + " professors invited: " + String.join(",", invited) + ";");
+			req.getSession(false).setAttribute("alert", "Failed to add " + failed.size() + " professors: " + String.join(",", added) + ";");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_DEPARTMENT_PATH, departmentId));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -368,15 +383,12 @@ public class DepartmentServlet extends HttpServlet{
 		}
 	}
 	
-	private void putDepartmentProfessorUpdate(HttpServletRequest req, HttpServletResponse resp, int departmentId, int departmentProfessorId) throws IOException {
-		try {
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	private void deleteDepartmentProfessorDestroy(HttpServletRequest req, HttpServletResponse resp, int departmentId, int departmentProfessorId) throws IOException {
 		try {
+			departmentProfessorRepository.deleteDepartmentProfessor(departmentProfessorId);
+			req.getSession(false).setAttribute("notice", "Professor removed.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_DEPARTMENT_PATH, departmentId));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

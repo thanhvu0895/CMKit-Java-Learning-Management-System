@@ -52,6 +52,10 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
     	}
     }
 
+	/*
+	 * GET LIST METHOD
+	 */
+    
 	/**
 	 * {@inheritDoc}
 	 */
@@ -71,6 +75,31 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			return departmentProfessorsList;
 		});
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override   
+	public List<DepartmentProfessor>  getDepartmentProfessorsByDepartmentId(int departmentId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM department_professors where department_id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, departmentId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getDepartmentProfessorsByDepartmentId: " + statement);
+			List<DepartmentProfessor> departmentProfessorsList = new ArrayList<>();
+			while(results.next()) {
+				departmentProfessorsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return departmentProfessorsList;
+		});
+	}
+	
+	
+	/*
+	 * GET ITEM METHOD
+	 */
 
 	/**
 	 * {@inheritDoc}
@@ -90,28 +119,17 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 	}
 	
 	
-	/**
-	 * {@inheritDoc}
+	/*
+	 * GET Check True/false METHOD
 	 */
-	@Override   
-	public List<DepartmentProfessor>  getDepartmentProfessorsByDepartmentId(int id) {
-		return executeQuery(connection -> {
-			final String query = "SELECT * FROM department_professors where department_id = ?";
-			PreparedStatement statement = connection.prepareStatement(query);
-			statement.setInt(1, id);
-			ResultSet results = statement.executeQuery();
-			System.out.println("getDepartmentProfessorsByDepartmentId: " + statement);
-			List<DepartmentProfessor> departmentProfessorsList = new ArrayList<>();
-			while(results.next()) {
-				departmentProfessorsList.add(mapper.map(results));
-			}
-			close(connection, statement, results);
-			return departmentProfessorsList;
-		});
-	}
 	
 	
-
+	
+	/*
+	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
 	/**
 	 * {@inheritDoc}
 	 */
@@ -123,7 +141,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			statement.setInt(1, user_id);
 			statement.setInt(2, department_id);
 			statement.setBoolean(3, admin);
-			System.out.println(statement);
+			System.out.println("insertDepartmentProfessor: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -143,7 +161,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 		});
 	}
 	
-	
+	//PATCH(UPDATE)
 	/**
 	 * {@inheritDoc}
 	 */
@@ -159,6 +177,24 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			 close(connection, statement, null);
 			 return result;
 		}) != 0;
+	}
+
+	// deleteProfessor
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean deleteDepartmentProfessor(int departmentProfessorId) {
+		return executeUpdate(connection -> {
+			 final String query = "DELETE FROM department_professors WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, departmentProfessorId);
+			 System.out.println("deleteDepartmentProfessor: " + statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+		
 	}
 
 }

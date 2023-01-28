@@ -9,4 +9,7 @@
 </ol>
 
 <jsp:include page="_tabs.jsp"><jsp:param name="current" value=":grade_categories"/></jsp:include>
+
+<%@ include file="../grade_categories/_grade_category_list.jsp" %>
+
 </t:layoutj>
