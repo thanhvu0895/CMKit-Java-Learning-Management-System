@@ -115,6 +115,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
     	});
 	}
 	
+	
 	/**
 	 * {@inheritDoc}
 	 */

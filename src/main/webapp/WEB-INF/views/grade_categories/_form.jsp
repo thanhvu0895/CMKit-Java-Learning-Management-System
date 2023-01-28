@@ -1,9 +1,5 @@
-<%@ page trimDirectiveWhitespaces="true" contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
-<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <c:choose>
-<c:when test="${param.method == 'PATCH'}">
+<c:when test="${not empty grade_category}">
 <t:form_with url="${UrlUtils.GRADE_CATEGORY_PATH}" id="${grade_category.id}" method="PATCH"> 
  	<div class="form-group">
     <label for="grade_category_title">Title</label>

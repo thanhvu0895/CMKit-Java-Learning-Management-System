@@ -20,7 +20,7 @@
 	</div>
 	<div id="edit_department" class="panel-collapse collapse in">
 	  <div class="panel-body">
-        <jsp:include page="_form.jsp"><jsp:param name="method" value="PATCH"/></jsp:include>
+        <%@ include file="_form.jsp" %>
 	  </div>
 	</div>
   </div>

@@ -36,7 +36,6 @@ public class GradeCategoryServlet extends HttpServlet{
 		gradeCategoryRepository = GradeCategoryRepositoryImpl.getInstance();
 		departmentRepository = DepartmentRepositoryImpl.getInstance();
 		courseRepository = CourseRepositoryImpl.getInstance();
-
 	}
 	
 	@Override

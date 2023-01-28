@@ -12,5 +12,5 @@
 
 <h1>Editing ${grade_category.title} Category</h1>
 
-<jsp:include page="_form.jsp"><jsp:param name="method" value="PATCH"/></jsp:include>
+<%@ include file="_form.jsp" %>
 </t:layoutj>

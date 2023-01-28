@@ -16,7 +16,7 @@
 <div class="panel panel-default">
   <div class="panel-heading"><h4 class="panel-title"><strong>Options</strong></h4></div>
   <div class="panel-body">
-	<jsp:include page="_form.jsp"><jsp:param name="method" value="PATCH"/></jsp:include>
+	<%@ include file="_form.jsp" %>
   </div>
 </div>
 
