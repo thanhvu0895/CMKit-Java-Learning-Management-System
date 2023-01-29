@@ -2,10 +2,12 @@ package codingmentor.javabackend.k3.repository.Impl;
 
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,15 +135,15 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int insertAssignment(String title, int course_id, int grade_category_id, int files_repo_id, int assignment_type, String permitted_filetypes, String description, int file_limit, int file_or_link) {
+	public int insertAssignment(String title, int course_id, Integer grade_category_id, int files_repo_id, int assignment_type, String permitted_filetypes, String description, int file_limit, int file_or_link) {
 		return executeUpdate(connection -> {
 			final String query = "INSERT INTO assignments"
-					+ " (title, course_id, grade_category_id, files_repo_id, template_repo_id, created_at, updated_at, assignment_type, permitted_filetypes, description, file_limit, file_or_link)"
+					+ " (title, course_id, grade_category_id, files_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, title);
 			statement.setInt(2, course_id);
-			statement.setInt(3, grade_category_id);
+			statement.setObject(3, grade_category_id, Types.INTEGER);
 			statement.setInt(4, files_repo_id);
 			statement.setInt(5, assignment_type);
 			statement.setString(6, permitted_filetypes);
@@ -171,16 +173,16 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int insertStudentRepoAssignment(String title, int course_id, int grade_category_id, 
+	public int insertStudentRepoAssignment(String title, int course_id, Integer grade_category_id, 
 			int files_repo_id, int template_repo_id, int assignment_type, String permitted_filetypes, String description, int file_limit,int file_or_link) {
 		return executeUpdate(connection -> {
 			final String query = "INSERT INTO assignments"
-					+ " (title, course_id, grade_category_id, files_repo_id, template_repo_id, created_at, updated_at, assignment_type, permitted_filetypes, description, file_limit, file_or_link)"
+					+ " (title, course_id, grade_category_id, files_repo_id, template_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, title);
 			statement.setInt(2, course_id);
-			statement.setInt(3, grade_category_id);
+			statement.setObject(3, grade_category_id, Types.INTEGER);
 			statement.setInt(4, files_repo_id);
 			statement.setInt(5, template_repo_id);
 			statement.setInt(6, assignment_type);
@@ -188,7 +190,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			statement.setString(8, description);
 			statement.setInt(9, file_limit);
 			statement.setInt(10, file_or_link);
-			System.out.println("insertAssignment: " + statement);
+			System.out.println("insertStudentRepoAssignment: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -206,6 +208,51 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			return 0;
 		});
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean updateStudentFileAssignmentById(String title, String description, Integer grade_category_id,
+			int file_or_link, String permitted_filetypes, int file_limit, int assignmentId) {
+		return executeUpdate(connection -> {
+			final String query = "UPDATE assignments SET title = ?, description= ?, grade_category_id = ?, file_or_link = ?, permitted_filetypes = ?, file_limit = ?  WHERE id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, title);
+			statement.setString(2, description);
+			statement.setObject(3, grade_category_id, Types.INTEGER);
+			statement.setInt(4, file_or_link);
+			statement.setString(5, permitted_filetypes);
+			statement.setInt(6, file_limit);
+			statement.setInt(7, assignmentId);
+			 System.out.println("updateStudentFileAssignmentById: " + statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean updateAssignmentById(String title, String description, Integer grade_category_id, int assignmentId) {
+		return executeUpdate(connection -> {
+			final String query = "UPDATE assignments SET title = ?, description= ?, grade_category_id = ? WHERE id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, title);
+			statement.setString(2, description);
+			statement.setObject(3, grade_category_id, Types.INTEGER);
+			statement.setInt(4, assignmentId);
+			 System.out.println("updateStudentFileAssignmentById: " + statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}
+	
+	// PATCH(UPDATE)
+	
 	
 	
 }

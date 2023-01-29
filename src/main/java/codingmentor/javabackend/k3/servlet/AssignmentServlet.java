@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import codingmentor.javabackend.k3.Utils.EnumUtils;
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.Assignment;
@@ -78,10 +79,19 @@ public class AssignmentServlet extends HttpServlet {
 			if (pathInfoLength == 2 && UrlUtils.isInteger(pathParts[1])) { 
 				int assignmentId = Integer.parseInt(pathParts[1]); 
 				getAsssignmentShow(req, resp, assignmentId);
-				break;
+				return;
 			}
 			
+			if (pathInfoLength == 3 && UrlUtils.isInteger(pathParts[1])) { 
+				int assignmentId = Integer.parseInt(pathParts[1]);
+				switch (pathParts[2]) {
+				case "edit":
+					getAssignmentEdit(req, resp, assignmentId);
+					break;
+				}
+			
 			break;
+			}
 		}
 	}
 
@@ -168,16 +178,42 @@ public class AssignmentServlet extends HttpServlet {
 			
 			Course course = courseRepository.getCourseById(assignment.getCourse_id());
 			Department department = departmentRepository.getDepartmentByCourseId(course.getId());
+			GradeCategory gradeCategory = gradeCategoryRepository.getGradeCategoryByAssignmentId(assignmentId);
 			
 			req.setAttribute("course", course);
 			req.setAttribute("department", department);
 			req.setAttribute("assignment", assignment);
+			req.setAttribute("grade_category", gradeCategory);
 			req.getRequestDispatcher(JspUtils.ASSIGNMENTS_SHOW)
 				.forward(req, resp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	private void getAssignmentEdit(HttpServletRequest req, HttpServletResponse resp, int assignmentId) throws ServletException, IOException {
+		try {
+			Assignment assignment = assignmentRepository.getAssignmentById(assignmentId);
+			if (assignment == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			Course course = courseRepository.getCourseById(assignment.getCourse_id());
+			Department department = departmentRepository.getDepartmentByCourseId(course.getId());
+			GradeCategory gradeCategory = gradeCategoryRepository.getGradeCategoryByAssignmentId(assignmentId);
+			List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesByCourseId(course.getId());
+			req.setAttribute("course", course);
+			req.setAttribute("department", department);
+			req.setAttribute("assignment", assignment);
+			req.setAttribute("grade_category", gradeCategory);
+			req.setAttribute("assignment_grade_categories", gradeCategoriesList);
+			req.getRequestDispatcher(JspUtils.ASSIGNMENTS_EDIT)
+				.forward(req, resp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	
 	@Override
@@ -190,6 +226,22 @@ public class AssignmentServlet extends HttpServlet {
 				postAssignmentCreate(req, resp);
 				return;
 			}
+			
+			
+			String[] pathParts = pathInfo.split("/");
+			int pathInfoLength = pathParts.length;
+			
+			if (pathInfoLength == 2 && UrlUtils.isInteger(pathParts[1])) {
+				int assignmentId = Integer.parseInt(pathParts[1]);
+				switch (req.getParameter("method")) {
+				case "PATCH":
+					patchAssignmentUpdate(req, resp, assignmentId);
+					break;
+				case "DELETE":
+					deleteAssignmentDestroy(req, resp, assignmentId);
+					break;
+				}
+			}	
 		}
 	}
 	
@@ -205,38 +257,109 @@ public class AssignmentServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_ASSIGNMENT_PATH + "?course=" + courseIdString);
 			return;
 		}
-
+		
+		Integer grade_category_id = null;
 		String gradeCategoryIdString = req.getParameter("assignment[grade_category_id]");
-		int grade_category_id = Integer.parseInt(gradeCategoryIdString);
+		if (gradeCategoryIdString != null) {
+			grade_category_id = Integer.parseInt(gradeCategoryIdString);
+		}
 		
 		int files_repo_id = repoRepository.insertRepo();
 		
 		String assignmentTypeString = req.getParameter("assignment[assignment_type]");
-		int assignment_type = Integer.parseInt(assignmentTypeString); 
+		int assignment_type = EnumUtils.assignment_typeEnum.valueOf(assignmentTypeString).ordinal(); 
 		
 		String permitted_filetypes = req.getParameter("assignment[permitted_filetypes]");
 		
 		String description = req.getParameter("assignment[description]");
 		
 		String fileOrLinkString = req.getParameter("assignment[file_or_link]");
-		int file_or_link = Integer.parseInt(fileOrLinkString); 
-		
-
+		int file_or_link = EnumUtils.file_or_linkEnum.valueOf(fileOrLinkString).ordinal();
 		
 		String fileLimitString = req.getParameter("assignment[file_limit]");
+		
+		if (fileLimitString == "") {
+			req.getSession(false).setAttribute("alert", "File limit can't be blank");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_ASSIGNMENT_PATH + "?course=" + courseIdString);
+			return;
+		}
+		
 		int file_limit = Integer.parseInt(fileLimitString);
 		
 		int assignmentId = 0;
 		
 		// if assignment type is student type requiring a template repository to be created
-		if (assignment_type == 1) {
+		if (assignment_type == 0) {
 			int template_repo_id = repoRepository.insertRepo();
 			assignmentId = assignmentRepository.insertStudentRepoAssignment(title, course_id, grade_category_id, files_repo_id, template_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link);
-			
-			
+			req.getSession(false).setAttribute("notice", "Assignment was successfully created.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.ASSIGNMENT_PATH + "/" + assignmentId);
 			return;
 		}
 		
 		assignmentId = assignmentRepository.insertAssignment(title, course_id, grade_category_id, files_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link);
+		req.getSession(false).setAttribute("notice", "Assignment was successfully created.");
+		resp.sendRedirect(req.getContextPath() + UrlUtils.ASSIGNMENT_PATH + "/" + assignmentId);
+	}
+	
+	
+	private void patchAssignmentUpdate(HttpServletRequest req, HttpServletResponse resp, int assignmentId) throws IOException {
+		try {
+			Assignment assignment = assignmentRepository.getAssignmentById(assignmentId);
+			
+			if (assignment == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			String title = req.getParameter("assignment[title]");
+			Integer grade_category_id = null;
+			String gradeCategoryIdString = req.getParameter("assignment[grade_category_id]");
+			String description = req.getParameter("assignment[description]");
+			
+			if (title == "") {
+				req.getSession(false).setAttribute("alert", "Title can't be blank");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_ASSIGNMENT_PATH, assignmentId));
+				return;
+			}
+			
+			if (gradeCategoryIdString != null) {
+				grade_category_id = Integer.parseInt(gradeCategoryIdString);
+			}
+			
+			if (assignment.getAssignment_type() == 0) {
+				String permitted_filetypes = req.getParameter("assignment[permitted_filetypes]");
+				String fileOrLinkString = req.getParameter("assignment[file_or_link]");
+				int file_or_link = EnumUtils.file_or_linkEnum.valueOf(fileOrLinkString).ordinal();
+				
+				String fileLimitString = req.getParameter("assignment[file_limit]");
+				
+				if (fileLimitString == "") {
+					req.getSession(false).setAttribute("alert", "File limit can't be blank");
+					resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_ASSIGNMENT_PATH, assignmentId));
+					return;
+				}
+				
+				int file_limit = Integer.parseInt(fileLimitString);
+				assignmentRepository.updateStudentFileAssignmentById(title, description, grade_category_id, file_or_link, permitted_filetypes, file_limit, assignmentId);
+				req.getSession(false).setAttribute("notice", "Assignment was successfully updated.");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.ASSIGNMENT_PATH  + "/:id", assignmentId));
+				return;
+			}
+			 
+			assignmentRepository.updateAssignmentById(title, description, grade_category_id, assignmentId);
+			req.getSession(false).setAttribute("notice", "Assignment was successfully updated.");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.ASSIGNMENT_PATH  + "/:id", assignmentId));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void deleteAssignmentDestroy(HttpServletRequest req, HttpServletResponse resp, int klassId) throws IOException {
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

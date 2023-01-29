@@ -1,5 +1,6 @@
 package codingmentor.javabackend.k3.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import codingmentor.javabackend.k3.model.Assignment;
@@ -47,7 +48,7 @@ public interface AssignmentRepository {
      * repository (like coding project repository) for pushing and pulling
      * @return new Assignment
      */
-    int insertAssignment(String title, int course_id, int grade_category_id, int files_repo_id, int assignment_type, String permitted_filetypes, String description, int file_limit, int file_or_link);
+    int insertAssignment(String title, int course_id, Integer grade_category_id, int files_repo_id, int assignment_type, String permitted_filetypes, String description, int file_limit, int file_or_link);
     
     
     /**
@@ -55,8 +56,18 @@ public interface AssignmentRepository {
      * for student pushing and pulling to the repository
      * @return new Assignment
      */
-    int insertStudentRepoAssignment(String title, int course_id, int grade_category_id, int files_repo_id, int template_repo_id, int assignment_type, String permitted_filetypes, String description, int file_limit, int file_or_link);
+    int insertStudentRepoAssignment(String title, int course_id, Integer grade_category_id, int files_repo_id, int template_repo_id, int assignment_type, String permitted_filetypes, String description, int file_limit, int file_or_link);
     
+    //PATCH(UPDATE)
+    /** Update Assignment's with Assignment'type being student files
+     * @return true if updated, and false if update was unsuccessful
+     */
+    public boolean updateStudentFileAssignmentById(String title, String description, Integer grade_category_id, int file_or_link,  String permitted_filetypes,  int file_limit, int assignmentId);
+    
+    /** Update other Assignment types
+     * @return true if updated, and false if update was unsuccessful
+     */
+    public boolean updateAssignmentById(String title, String description, Integer grade_category_id, int assignmentId);
     
     
     

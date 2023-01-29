@@ -40,7 +40,8 @@ public class UrlUtils {
 	public static final String ASSIGNMENT_PATH = "/assignments";
 	public static final String NEW_ASSIGNMENT_PATH = "/assignments/new";
 	public static final String SHOW_COPY_ASSIGNMENT_PATH = "/copy_assignment";
-	
+	public static final String ASSIGNMENT_PROBLEMS_PATH = "/assignments/:assignment_id/problems";
+	public static final String EDIT_ASSIGNMENT_PATH = "/assignments/:id/edit";
 	
 	
 	public static final String GRADERS_ALL_PATH = "/graders/*";

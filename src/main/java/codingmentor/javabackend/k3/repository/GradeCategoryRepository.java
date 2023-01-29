@@ -20,6 +20,14 @@ public interface GradeCategoryRepository {
     public List<GradeCategory> getGradeCategoriesByCourseId(int courseId);
     
     
+    /**
+     * 
+     * Get list of gradeCategory from user id
+     * @param userId
+     * @return
+     */
+    public List<GradeCategory> getGradeCategoriesUsedByAssignmentInCourse(int courseId);
+    
 	/*
 	 * GET ITEM METHOD
 	 */
@@ -28,6 +36,12 @@ public interface GradeCategoryRepository {
      * @return GradeCategory if exists and null if not
      */
     GradeCategory getGradeCategoryById(int id);
+    
+    /**
+     * Get gradeCategory by GradeCategory's id
+     * @return GradeCategory if exists and null if not
+     */
+    GradeCategory getGradeCategoryByAssignmentId(int assignmentId);
     
  
 	/*

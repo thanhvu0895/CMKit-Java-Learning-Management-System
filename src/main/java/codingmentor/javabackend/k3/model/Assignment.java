@@ -1,11 +1,13 @@
 package codingmentor.javabackend.k3.model;
 
+import codingmentor.javabackend.k3.Utils.EnumUtils;
+
 public class Assignment {
 	private int id;
 	private String title;
 	private int klass_id;
 	private int course_id;
-	private int grade_category_id;
+	private Integer grade_category_id;
 	private int files_repo_id;
 	private int template_repo_id;
 	private int assignment_type;
@@ -13,6 +15,15 @@ public class Assignment {
 	private String description;
 	private int file_limit;
 	private int file_or_link;
+	
+	public String getFileOrLinkString() {
+		return EnumUtils.file_or_linkEnum.values()[this.file_or_link].toString();		
+	}
+	
+
+	public String getAssignmentType() {
+		return EnumUtils.assignment_typeEnum.values()[this.assignment_type].toString();		
+	}
 	
 	public int getId() {
 		return id;
@@ -30,7 +41,7 @@ public class Assignment {
 		return course_id;
 	}
 
-	public int getGrade_category_id() {
+	public Integer getGrade_category_id() {
 		return grade_category_id;
 	}
 
@@ -86,7 +97,7 @@ public class Assignment {
 	    return this;
 	}
 	
-	public Assignment grade_category_id(int grade_category_id) {
+	public Assignment grade_category_id(Integer grade_category_id) {
 	    this.grade_category_id = grade_category_id;
 	    return this;
 	}
@@ -102,6 +113,11 @@ public class Assignment {
 	}
 	
 	public Assignment assignment_type(int assignment_type) {
+	    this.assignment_type = assignment_type;
+	    return this;
+	}
+	
+	public Assignment assignment_type(int assignment_type, String assignmentTypeString) {
 	    this.assignment_type = assignment_type;
 	    return this;
 	}
