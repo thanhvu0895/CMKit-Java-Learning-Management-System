@@ -52,6 +52,11 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
     	}
     }
 
+    
+	/*
+	 * GET LIST METHOD
+	 */
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -71,7 +76,10 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 			return problemsList;
 		});
 	}
-
+	
+	/*
+	 * GET ITEM METHOD
+	 */
 	/**
 	 * {@inheritDoc}
 	 */
@@ -88,5 +96,51 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 		    return problem;
     	});
 	}
+	
+	/*
+	 * GET Check True/false METHOD
+	 */
+    
+    /*
+	 * POST(CREATE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int insertProblem (int assignment_id, String title, Double points, int location, String grader_notes) {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO problems (assignment_id, title, points, location, grader_notes) VALUES (?, ?, ?, ?, ?);";
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setInt(1, assignment_id);
+			statement.setString(2, title);
+			statement.setDouble(3, points);
+			statement.setInt(4, location);
+			statement.setString(5, grader_notes);
+			System.out.println("insertProblemrepository: " + statement);
+			ResultSet rs = statement.getGeneratedKeys();
+			rs.next();
+			int affectedRows = statement.executeUpdate();
+			
+			if (affectedRows == 0) {
+				throw new SQLException("Creating Problem failed, no rows affected.");
+			}
+			
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+			
+            if (generatedKeys.next()) {
+               return generatedKeys.getInt(1);
+            }
+            
+			close(connection, statement, generatedKeys);
+			return 0;
+		});
+	}
+	
+	
+	
+	//PATCH
 	    
 }

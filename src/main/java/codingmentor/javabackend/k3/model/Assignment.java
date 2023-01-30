@@ -16,6 +16,10 @@ public class Assignment {
 	private int file_limit;
 	private int file_or_link;
 	
+   /**
+    * Repository Functions
+    */
+	
 	public String getFileOrLinkString() {
 		return EnumUtils.file_or_linkEnum.values()[this.file_or_link].toString();		
 	}
@@ -24,6 +28,10 @@ public class Assignment {
 	public String getAssignmentType() {
 		return EnumUtils.assignment_typeEnum.values()[this.assignment_type].toString();		
 	}
+	
+	/*
+	 * Getters, Setters
+	 */
 	
 	public int getId() {
 		return id;

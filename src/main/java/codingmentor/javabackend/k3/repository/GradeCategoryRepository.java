@@ -12,7 +12,7 @@ public interface GradeCategoryRepository {
 	 */
     
     /**
-     * 
+	 * @category LIST
      * Get list of gradeCategory from user id
      * @param userId
      * @return
@@ -21,8 +21,8 @@ public interface GradeCategoryRepository {
     
     
     /**
-     * 
-     * Get list of gradeCategory from user id
+	 * @category ITEM
+     * Get list of GradeCategory from user id
      * @param userId
      * @return
      */
@@ -32,13 +32,15 @@ public interface GradeCategoryRepository {
 	 * GET ITEM METHOD
 	 */
     /**
-     * Get gradeCategory by GradeCategory's id
+	 * @category ITEM
+     * Get GradeCategory by GradeCategory's id
      * @return GradeCategory if exists and null if not
      */
     GradeCategory getGradeCategoryById(int id);
     
     /**
-     * Get gradeCategory by GradeCategory's id
+	 * @category ITEM
+     * Get GradeCategory by GradeCategory's id
      * @return GradeCategory if exists and null if not
      */
     GradeCategory getGradeCategoryByAssignmentId(int assignmentId);
@@ -49,6 +51,7 @@ public interface GradeCategoryRepository {
 	 */
     
     /**
+	 * @category CHECK
      * if current GradeCategory is used by a course 
      * @param userId
      * @param gradeCategoryId
@@ -62,16 +65,23 @@ public interface GradeCategoryRepository {
 	
 	//POST(INSERT INTO)
     /**
+	 * @category POST
      * Add a new GradeCategory to DB
      * @return newly inserted gradeCategory id if inserted and -1 otherwise
      */
     boolean insertGradeCategory (String title, int course_id, double weight);
     
-	//PUT(REPLACE)
+	//PATCH
+    /**
+     * 
+	 * @category PATCH
+     * @return
+     */
     public boolean updateGradeCategoryById(String title, double weight, int gradeCategoryId);
     
     //DELETE
 	/**
+	 * @category DELETE
 	 *  Remove Professor with given id
 	 */
     boolean deleteGradeCategory(int gradeCategoryId);    

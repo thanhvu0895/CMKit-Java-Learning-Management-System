@@ -2,7 +2,6 @@ package codingmentor.javabackend.k3.repository.Impl;
 
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -69,7 +68,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			final String query = "SELECT * FROM assignments";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getAssignments(): " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -89,7 +88,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, courseId);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getAssignmentsByCourseId: " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -113,7 +112,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
+		    System.out.println("getAssignmentById: " + statement);
 		    Assignment assignment = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return assignment;
@@ -127,7 +126,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	
 	
 	/*
-	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
+	 * POST(CREATE) PATCH(UPDATE) METHODS
 	 */
 	
 	//POST(INSERT INTO)
@@ -169,6 +168,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		});
 	}
 	
+	// PATCH(UPDATE)
 	/**
 	 * {@inheritDoc}
 	 */

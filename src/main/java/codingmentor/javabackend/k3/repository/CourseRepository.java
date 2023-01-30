@@ -12,25 +12,27 @@ public interface CourseRepository {
 	
 	/**
 	 * Get list of Courses
-	 *
+     * @category LIST
 	 * @return a list of all Courses if found or null
 	 */
     List<Course> getCourses();
     
     /**
 	 * Get list of Courses Order by Course Code
-	 *
+     * @category LIST
 	 * @return a list of all Courses if found or null
 	 */
     List<Course> getCoursesOrderByCourseCode();
     
     /**
+     * @category LIST
      * Get Courses by Department's id
      * @return Course if exists and null if not
      */
     List<Course> getCoursesByDepartmentId(int departmentId);
     
     /**
+     * @category LIST
      * Get Courses that include klasses by Department's id
      * @return Course if exists and null if not
      */
@@ -41,18 +43,21 @@ public interface CourseRepository {
 	 */
     
     /**
+     * @category ITEM
      * Get course by Course's id
      * @return Course if exists and null if not
      */
     Course getCourseById(int id);
     
     /**
+     * @category ITEM
      * Get course by Klass's id
      */
     Course getCourseByKlassId(int klassId);
     
     
     /**
+     * @category ITEM
      * Get course by GradeCategory's id
      */
     Course getCourseByGradeCategoryId(int klassId);
@@ -61,7 +66,9 @@ public interface CourseRepository {
 	 * GET Check True/false METHOD
 	 */
     
-    
+    /**
+     * @category CHECK
+     */
     
 	/*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
@@ -69,6 +76,7 @@ public interface CourseRepository {
 	// POST(INSERT INTO)
         
     /**
+     * @category POST
      * Add a new Course to DB
      * @return newly inserted Course id if inserted and -1 otherwise
      */
@@ -77,8 +85,12 @@ public interface CourseRepository {
     
     //PATCH(UPDATE)
     /** Update Course's title, Course Code, active status given Course id
+     * @category PATCH
      * @return true if updated, and false if update was unsuccessful
      */
     public boolean updateCourseById(String title, String courseCode, boolean active, int id);
     
+    /**
+	 * @category DELETE
+     */
 }

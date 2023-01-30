@@ -51,7 +51,11 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
     		e.printStackTrace();
     	}
     }
-
+    
+	/*
+	 * GET LIST METHOD
+	 */
+    
 	/**
 	 * {@inheritDoc}
 	 */
@@ -62,7 +66,7 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 			final String query = "SELECT * FROM submissions";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getSubmissions: " + statement);
 			List<Submission> submissionsList = new ArrayList<>();
 			while(results.next()) {
 				submissionsList.add(mapper.map(results));
@@ -72,6 +76,10 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 		});
 	}
 
+	/*
+	 * GET ITEM METHOD
+	 */
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -82,11 +90,53 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
+		    System.out.println("getSubmissionById: " + statement);
 		    Submission submission = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return submission;
     	});
 	}
-	    
+
+	
+	
+	/*
+	 * GET Check True/false METHOD
+	 */
+    
+    /*
+	 * POST(CREATE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int insertSubmission(int assigned_id, double percent_modifier) {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO `Submissions` (`user_id`, `klass_id`) VALUES (?, ?);";
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setInt(1, assigned_id);
+			statement.setDouble(2, percent_modifier);
+			System.out.println("insertSubmission: " + statement);
+			ResultSet rs = statement.getGeneratedKeys();
+			rs.next();
+			int affectedRows = statement.executeUpdate();
+			
+			if (affectedRows == 0) {
+				throw new SQLException("Creating Submission failed, no rows affected.");
+			}
+			
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+			
+            if (generatedKeys.next()) {
+               return generatedKeys.getInt(1);
+            }
+            
+			close(connection, statement, generatedKeys);
+			return 0;
+		});
+	}
+	//PATCH
 }

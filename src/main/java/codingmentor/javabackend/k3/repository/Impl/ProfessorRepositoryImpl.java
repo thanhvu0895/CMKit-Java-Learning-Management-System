@@ -66,7 +66,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 			final String query = "SELECT * FROM professors";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getProfessors: " + statement);
 			List<Professor> professorsList = new ArrayList<>();
 			while(results.next()) {
 				professorsList.add(mapper.map(results));
@@ -112,7 +112,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
+		    System.out.println("getProfessorById: " + statement);
 		    Professor professor = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return professor;
@@ -154,7 +154,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 		});
 	}
 
-	// deleteProfessor
+	// DELETE
 	/**
 	 * {@inheritDoc}
 	 */

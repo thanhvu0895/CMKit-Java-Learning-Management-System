@@ -51,7 +51,10 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
     		e.printStackTrace();
     	}
     }
-
+    
+	/*
+	 * GET LIST METHOD
+	 */
 	/**
 	 * {@inheritDoc}
 	 */
@@ -62,7 +65,7 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 			final String query = "SELECT * FROM students";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getStudents: " + statement);
 			List<Student> studentsList = new ArrayList<>();
 			while(results.next()) {
 				studentsList.add(mapper.map(results));
@@ -71,7 +74,11 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 			return studentsList;
 		});
 	}
-
+	
+	/*
+	 * GET ITEM METHOD
+	 */
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -82,11 +89,48 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
+		    System.out.println("getStudentById: " + statement);
 		    Student student = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return student;
     	});
 	}
+	
+	/*
+	 * GET Check True/false METHOD
+	 */
+    
+    /*
+	 * POST(CREATE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
+	 public int insertStudent (int user_id, int klass_id) {
+		 return executeUpdate(connection -> {
+				final String query = "INSERT INTO `students` (`user_id`, `klass_id`) VALUES (?, ?);";
+				PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+				statement.setInt(1, user_id);
+				statement.setInt(2, klass_id);
+				System.out.println("insertStudent: " + statement);
+				ResultSet rs = statement.getGeneratedKeys();
+				rs.next();
+				int affectedRows = statement.executeUpdate();
+				
+				if (affectedRows == 0) {
+					throw new SQLException("Creating Student failed, no rows affected.");
+				}
+				
+				ResultSet generatedKeys = statement.getGeneratedKeys();
+				
+	            if (generatedKeys.next()) {
+	               return generatedKeys.getInt(1);
+	            }
+	            
+				close(connection, statement, generatedKeys);
+				return 0;
+			});
+	 }
+	
+	//PATCH
 	    
 }

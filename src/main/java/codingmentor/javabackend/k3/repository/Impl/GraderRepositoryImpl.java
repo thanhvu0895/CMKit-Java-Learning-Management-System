@@ -51,6 +51,10 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
     		e.printStackTrace();
     	}
     }
+    
+	/*
+	 * GET LIST METHOD
+	 */
 
 	/**
 	 * {@inheritDoc}
@@ -62,7 +66,7 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 			final String query = "SELECT * FROM graders";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getGraders: " + statement);
 			List<Grader> gradersList = new ArrayList<>();
 			while(results.next()) {
 				gradersList.add(mapper.map(results));
@@ -72,6 +76,10 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 		});
 	}
 
+	/*
+	 * GET ITEM METHOD
+	 */
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -82,11 +90,51 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
+		    System.out.println("getGraderById: " + statement);
 		    Grader grader = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return grader;
     	});
 	}
+	
+	/*
+	 * GET Check True/false METHOD
+	 */
+    
+    /*
+	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int insertGrader (int user_id, int klass_id) {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO `graders` (`user_id`, `klass_id`) VALUES (?, ?);";
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setInt(1, user_id);
+			statement.setInt(2, klass_id);
+			System.out.println("insertGrader: " + statement);
+			ResultSet rs = statement.getGeneratedKeys();
+			rs.next();
+			int affectedRows = statement.executeUpdate();
+			
+			if (affectedRows == 0) {
+				throw new SQLException("Creating Grader failed, no rows affected.");
+			}
+			
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+			
+            if (generatedKeys.next()) {
+               return generatedKeys.getInt(1);
+            }
+            
+			close(connection, statement, generatedKeys);
+			return 0;
+		});
+	}
+	
 	    
 }

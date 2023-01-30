@@ -179,7 +179,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 			statement.setString(1, title);
 			statement.setInt(2, course_id);
 			statement.setDouble(3, weight);
-			System.out.println(statement);
+			System.out.println("insertGradeCategory: " + statement);
 			int result = statement.executeUpdate();
 			close(connection, statement, null);			
 			return result;	

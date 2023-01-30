@@ -6,7 +6,14 @@ public class RubricItem {
 	private String title;
 	private double points;
 	private int location;
+   /**
+    * Repository Functions
+    */
 
+	
+	/*
+	 * Getters, Setters
+	 */
 	public int getId() {
 		return id;
 	}
@@ -28,10 +35,9 @@ public class RubricItem {
 	}
 	
 	
-	public RubricItem() {}
-	
-	
 	/* Fluent Style API */
+	
+	public RubricItem() {}
 	
 	public RubricItem id(int id) {
 	    this.id = id;

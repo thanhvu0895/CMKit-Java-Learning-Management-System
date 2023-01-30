@@ -70,7 +70,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			final String query = "SELECT * FROM klasses";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getklasses(): " + statement);
 			List<Klass> klassesList = new ArrayList<>();
 			while(results.next()) {
 				klassesList.add(mapper.map(results));
@@ -95,7 +95,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
+		    System.out.println("getKlassById: " + statement);
 		    Klass klass = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return klass;
@@ -119,7 +119,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getKlassesFromDepartmentId: " + statement);
 			List<Klass> usersList = new ArrayList<>();
 			while(results.next()) {
 				usersList.add(mapper.map(results));

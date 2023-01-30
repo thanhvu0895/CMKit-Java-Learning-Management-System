@@ -9,7 +9,6 @@ public class StudentMapper implements RowMapper<Student> {
 
 	@Override
 	public Student map(ResultSet results) throws SQLException {
-		// StudentODO Auto-generated method stub
 		return new Student()
 			.id(results.getInt("id"))
 			.user_id(results.getInt("user_id"))
@@ -20,5 +19,4 @@ public class StudentMapper implements RowMapper<Student> {
 			.notify_extension(results.getBoolean("notify_extension"))
 			.notify_regrade_response(results.getBoolean("notify_regrade_response"));
 	}
-
 }

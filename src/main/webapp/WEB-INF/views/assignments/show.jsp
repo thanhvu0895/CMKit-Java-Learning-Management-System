@@ -25,7 +25,7 @@
 
 <p>
   <t:link_to path="${UrlUtils.EDIT_ASSIGNMENT_PATH}" classBS="btn btn-default"  id="${assignment.id}">Edit Title & Category</t:link_to>
-  <t:link_to path="${UrlUtils.ASSIGNMENT_PROBLEMS_PATH}" classBS="btn btn-primary"  id="${assignment.id}">Edit Grading Rubric</t:link_to>
+  <t:link_to path="${UrlUtils.ASSIGNMENT_PROBLEMS_PATH}" classBS="btn btn-primary"  secondId="${assignment.id}">Edit Grading Rubric</t:link_to>
 </p>
 
 <p>

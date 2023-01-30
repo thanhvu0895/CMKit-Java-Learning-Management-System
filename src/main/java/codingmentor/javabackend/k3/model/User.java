@@ -27,12 +27,10 @@ public class User implements Serializable {
     private boolean disabled;
     private boolean deleted;
     
-    
-    private PBKDF2Hasher hasher = new PBKDF2Hasher();
     /**
      * Repository Functions
      */
-    
+    private PBKDF2Hasher hasher = new PBKDF2Hasher();  
 	private UserRepository userRepository =  UserRepositoryImpl.getInstance();
 	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
 	

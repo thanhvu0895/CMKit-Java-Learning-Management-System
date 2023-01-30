@@ -36,6 +36,7 @@ import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
 		UrlUtils.ASSIGNMENT_ALL_PATH,
 		UrlUtils.NEW_ASSIGNMENT_PATH,
 		UrlUtils.SHOW_COPY_ASSIGNMENT_PATH,
+		
 })
 public class AssignmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -89,6 +90,8 @@ public class AssignmentServlet extends HttpServlet {
 				case "edit":
 					getAssignmentEdit(req, resp, assignmentId);
 					break;
+				case "problems":
+					getAssignmentProblemsIndex(req, resp, assignmentId);;
 				}
 			
 			break;
@@ -224,6 +227,14 @@ public class AssignmentServlet extends HttpServlet {
 			req.setAttribute("assignment_grade_categories", gradeCategoriesList);
 			req.getRequestDispatcher(JspUtils.ASSIGNMENTS_EDIT)
 				.forward(req, resp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void getAssignmentProblemsIndex(HttpServletRequest req, HttpServletResponse resp, int assignmentId) throws ServletException, IOException {
+		try {
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

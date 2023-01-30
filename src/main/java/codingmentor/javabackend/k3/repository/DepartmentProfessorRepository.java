@@ -12,18 +12,11 @@ public interface DepartmentProfessorRepository {
 	
     /**
 	 * Get list of DepartmentProfessors
-	 *
+     * @category LIST
 	 * @return a list of all DepartmentProfessors if found or null
 	 */
     List<DepartmentProfessor> getDepartmentProfessors();
-    
-    /**
-     * Get Department by DepartmentProfessor's id
-     * @return DepartmentProfessor if exists and null if not
-     */
-    DepartmentProfessor getDepartmentProfessorById(int id);
-    
-    
+        
     /**
      * Get Department Professor by Department's id
      * @return DepartmentProfessor if exists and null if not
@@ -33,12 +26,20 @@ public interface DepartmentProfessorRepository {
 	/*
 	 * GET Item
 	 */
+    /**
+     * @category ITEM
+     * Get Department by DepartmentProfessor's id
+     * @return DepartmentProfessor if exists and null if not
+     */
+    DepartmentProfessor getDepartmentProfessorById(int id);
     
     
 	/*
 	 * GET Check True/false METHOD
 	 */
-    
+    /**
+     * @category CHECK
+     */
     
     /*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
@@ -46,6 +47,7 @@ public interface DepartmentProfessorRepository {
 	
     //POST(INSERT INTO)
     /**
+     * @category POST
      * Insert a new DepartmentProfessor to DB
      * @return newly inserted Department id if inserted and -1 otherwise
      */
@@ -53,6 +55,7 @@ public interface DepartmentProfessorRepository {
     
     //PATCH(UPDATE)
     /**
+     * @category PATCH
      * Update admin status of Department Professor by Department Professor's id
      * @return
      */
@@ -60,6 +63,7 @@ public interface DepartmentProfessorRepository {
     
     
 	/**
+     * @category DELETE
 	 *  Remove DepartmentProfessor with given id
 	 */
     boolean deleteDepartmentProfessor(int departmentProfessorId);

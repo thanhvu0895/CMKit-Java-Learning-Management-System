@@ -6,6 +6,13 @@ public class SshKey {
 	private int user_id;
 	private String label;
 	
+   /**
+    * Repository Functions
+    */
+	
+	/*
+	 * Getters, Setters
+	 */
 	public int getId() {
 		return id;
 	}

@@ -12,14 +12,14 @@ public interface AssignmentRepository {
 	 */
     /**
 	 * Get list of Assignments
-	 *
+	 * @category LIST
 	 * @return a list of all Assignments if found or null
 	 */
     List<Assignment> getAssignments();
     
     /**
 	 * Get list of Assignments by CourseId
-	 *
+	 * @category LIST
 	 * @return a list of all Assignments if found or null
 	 */
     List<Assignment> getAssignmentsByCourseId(int courseId);
@@ -29,6 +29,7 @@ public interface AssignmentRepository {
 	 * GET ITEM METHOD
 	 */
     /**
+	 * @category ITEM
      * Get department by Assignment's id
      * @return Assignment if exists and null if not
      */
@@ -37,12 +38,16 @@ public interface AssignmentRepository {
 	/*
 	 * GET Check True/false METHOD
 	 */
+    /**
+	 * @category CHECK
+     */
     
 	/*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
 	 */
 	//POST(INSERT INTO)
     /**
+	 * @category POST
      * Insert into Assignment when assignment type does not require creating a 
      * repository (like coding project repository) for pushing and pulling
      * @return new Assignment
@@ -51,6 +56,7 @@ public interface AssignmentRepository {
     
     
     /**
+	 * @category POST
      * Insert into Asssignment when assignment type is Student Repo
      * for student pushing and pulling to the repository
      * @return new Assignment
@@ -59,15 +65,19 @@ public interface AssignmentRepository {
     
     //PATCH(UPDATE)
     /** Update Assignment's with Assignment'type being student files
+     * @category PATCH
      * @return true if updated, and false if update was unsuccessful
      */
     public boolean updateStudentFileAssignmentById(String title, String description, Integer grade_category_id, int file_or_link,  String permitted_filetypes,  int file_limit, int assignmentId);
     
     /** Update other Assignment types
+	 * @category PATCH
      * @return true if updated, and false if update was unsuccessful
      */
     public boolean updateAssignmentById(String title, String description, Integer grade_category_id, int assignmentId);
     
     
-    
+    /**
+	 * @category DELETE
+     */
 }

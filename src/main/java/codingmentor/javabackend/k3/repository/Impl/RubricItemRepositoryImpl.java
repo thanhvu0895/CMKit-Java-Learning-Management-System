@@ -52,6 +52,12 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
     	}
     }
 
+    
+    
+	/*
+	 * GET LIST METHOD
+	 */
+    
 	/**
 	 * {@inheritDoc}
 	 */
@@ -62,7 +68,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 			final String query = "SELECT * FROM rubric_items";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getRubricItems: " + statement);
 			List<RubricItem> rubricItemsList = new ArrayList<>();
 			while(results.next()) {
 				rubricItemsList.add(mapper.map(results));
@@ -72,6 +78,10 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 		});
 	}
 
+	
+	/*
+	 * GET ITEM METHOD
+	 */
 	/**
 	 * {@inheritDoc}
 	 */
@@ -82,11 +92,44 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
+		    System.out.println("getRubricItemById: " + statement);
 		    RubricItem rubricItem = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return rubricItem;
     	});
 	}
-	    
+
+
+	
+	/*
+	 * GET Check True/false METHOD
+	 */
+    
+    /*
+	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean insertRubricItem(int problem_id, String title, double points, int location) {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO rubric_items (problem_id, title, points, location) VALUES (?, ?, ?, ?);";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, problem_id);
+			statement.setString(2, title);
+			statement.setDouble(3, points);
+			statement.setInt(4, location);
+			System.out.println("insertRubricItem: " + statement);
+			int result = statement.executeUpdate();
+			close(connection, statement, null);			
+			return result;	
+		}) != 0;
+	}
+	
+	
+	//PATCH
+	
 }

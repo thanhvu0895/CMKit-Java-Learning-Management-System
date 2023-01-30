@@ -18,5 +18,4 @@ public class RubricItemMapper implements RowMapper<RubricItem> {
 			.points(results.getDouble("points"))
 			.location(results.getInt("location"));
 	}
-
 }
