@@ -84,7 +84,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, userId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getDepartmentsByUserId: " + statement);
+			System.out.println("getDepartmentsByDPUserId: " + statement);
 			List<Department> departmentsList = new ArrayList<>();
 			while(results.next()) {
 				departmentsList.add(mapper.map(results));
@@ -94,6 +94,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 		});
 	}
 	
+
 	/*
 	 * GET ITEM METHOD
 	 */

@@ -1,6 +1,5 @@
 package codingmentor.javabackend.k3.repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import codingmentor.javabackend.k3.model.Assignment;

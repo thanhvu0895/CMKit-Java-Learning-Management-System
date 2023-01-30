@@ -92,10 +92,9 @@ public class GradeCategoryServlet extends HttpServlet{
 			if (UrlUtils.isInteger(courseIdString)) {
 				int courseId = Integer.parseInt(courseIdString);
 				Course course = courseRepository.getCourseById(courseId);
-				Department department = departmentRepository.getDepartmentByCourseId(courseId);
-				if (course != null && department != null) {
+				if (course != null) {
 					req.setAttribute("course", course);
-					req.setAttribute("departmentid", department.getId());
+					req.setAttribute("departmentid", course.getDepartment_id());
 					req.getRequestDispatcher(JspUtils.GRADE_CATEGORIES_NEW) 
 						.forward(req, resp);
 					return;

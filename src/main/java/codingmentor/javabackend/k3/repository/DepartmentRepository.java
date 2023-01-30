@@ -20,7 +20,7 @@ public interface DepartmentRepository {
     
     /**
      * 
-     * Get list of department from user id
+     * Get list of Department from Department Professor's user id
      * @param userId
      * @return
      */

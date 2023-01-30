@@ -18,6 +18,7 @@ import codingmentor.javabackend.k3.model.Course;
 import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.model.GradeCategory;
 import codingmentor.javabackend.k3.model.Klass;
+import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.repository.AssignmentRepository;
 import codingmentor.javabackend.k3.repository.CourseRepository;
 import codingmentor.javabackend.k3.repository.DepartmentRepository;
@@ -97,17 +98,35 @@ public class AssignmentServlet extends HttpServlet {
 
 	private void getAssignmentNew(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+
 			String courseIdString = req.getParameter("course");
 			
 			if (UrlUtils.isInteger(courseIdString)) {
+				String copyIdString = req.getParameter("copy");
+				if (UrlUtils.isInteger(copyIdString)) {
+					Assignment assignment = assignmentRepository.getAssignmentById(Integer.parseInt(copyIdString));
+					
+					if (assignment == null) {
+						resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+						return;
+					}
+					int courseId = Integer.parseInt(courseIdString);
+					Course course = courseRepository.getCourseById(courseId);
+					List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesByCourseId(courseId);
+					req.setAttribute("assignment_grade_categories", gradeCategoriesList);
+					req.setAttribute("departmentid", course.getDepartment_id());
+					req.setAttribute("assignment", assignment);
+					req.setAttribute("course", course);
+					req.getRequestDispatcher(JspUtils.ASSIGNMENTS_NEW)
+					.forward(req, resp);
+					return;
+				}
+				
 				int courseId = Integer.parseInt(courseIdString);
 				Course course = courseRepository.getCourseById(courseId);
 				if (course != null) {
-					List<Assignment> assignmentsList = assignmentRepository.getAssignmentsByCourseId(courseId);
 					List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesByCourseId(courseId);
-					Department department = departmentRepository.getDepartmentByCourseId(courseId);
-					req.setAttribute("departmentid", department.getId());
-					req.setAttribute("assignments", assignmentsList);
+					req.setAttribute("departmentid", course.getDepartment_id());
 					req.setAttribute("course", course);
 					req.setAttribute("assignment_grade_categories", gradeCategoriesList);
 					req.getRequestDispatcher(JspUtils.ASSIGNMENTS_NEW)
@@ -123,6 +142,7 @@ public class AssignmentServlet extends HttpServlet {
 	
 	private void getShowCopyAssignment(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+			
 			String courseIdString = req.getParameter("course");
 			if(courseIdString != "" && UrlUtils.isInteger(courseIdString)) {
 				int courseId = Integer.parseInt(courseIdString);
@@ -132,14 +152,8 @@ public class AssignmentServlet extends HttpServlet {
 					resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 					return;
 				}
-				
-				Department department = departmentRepository.getDepartmentByCourseId(courseId);
-
-				List<Assignment> assignmentsList = assignmentRepository.getAssignmentsByCourseId(courseId);
-				req.setAttribute("assignments", assignmentsList);
 				req.setAttribute("course", course);
-				req.setAttribute("departmentid", department.getId());
-				req.setAttribute("params", ":copy");
+				req.setAttribute("departmentid", course.getDepartment_id());
 				req.getRequestDispatcher(JspUtils.ASSIGNMENTS_SHOW_COPY_ASSIGNMENT)
 					.forward(req, resp);
 				return;
@@ -155,9 +169,9 @@ public class AssignmentServlet extends HttpServlet {
 				}
 					
 				Course course = courseRepository.getCourseByKlassId(klassId);
-				Department department = departmentRepository.getDepartmentByCourseId(course.getId());
+				
 				req.setAttribute("course", course);
-				req.setAttribute("department", department);
+				req.setAttribute("departmentid", course.getDepartment_id());
 				req.setAttribute("klass", klass);
 				req.getRequestDispatcher(JspUtils.ASSIGNMENTS_SHOW_COPY_ASSIGNMENT)
 					.forward(req, resp);
@@ -202,6 +216,7 @@ public class AssignmentServlet extends HttpServlet {
 			Department department = departmentRepository.getDepartmentByCourseId(course.getId());
 			GradeCategory gradeCategory = gradeCategoryRepository.getGradeCategoryByAssignmentId(assignmentId);
 			List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesByCourseId(course.getId());
+
 			req.setAttribute("course", course);
 			req.setAttribute("department", department);
 			req.setAttribute("assignment", assignment);

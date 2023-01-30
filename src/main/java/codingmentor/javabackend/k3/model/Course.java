@@ -1,5 +1,10 @@
 package codingmentor.javabackend.k3.model;
 
+import java.util.List;
+
+import codingmentor.javabackend.k3.repository.AssignmentRepository;
+import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
+
 public class Course {
 	private int id;
 	private String title;
@@ -7,6 +12,17 @@ public class Course {
 	private int repo_id;
 	private int department_id;
 	private boolean active;
+	
+	
+   /**
+    * Repository Functions
+    */
+	private AssignmentRepository assignmentRepository =  AssignmentRepositoryImpl.getInstance();
+	
+	
+	public List<Assignment> getAssignments() {
+		return assignmentRepository.getAssignmentsByCourseId(this.id);
+	}
 	
 	/*
 	 * Getters, Setters

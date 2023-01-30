@@ -36,15 +36,19 @@ public class User implements Serializable {
 	private UserRepository userRepository =  UserRepositoryImpl.getInstance();
 	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
 	
+	public List<Department> getDepartments() {
+    	return departmentRepository.getDepartmentsByUserId(this.id);
+	}
+	
+	public List<Department> getDepartmentsCheckAdmin() {
+		
+    	return isAdmin() ? departmentRepository.getDepartments() : departmentRepository.getDepartmentsByUserId(this.id);
+	}
 	
     public boolean isDepartmentProfessor() throws NoSuchAlgorithmException {
     	return userRepository.isDepartmentProfessor(this.id);
     }
-    
-    public List<Department> getDepartments() {
-    	return departmentRepository.getDepartmentsByUserId(this.id);
-	}
-
+        
 	public boolean validateResetToken(String token) throws NoSuchAlgorithmException {
     	return (this.reset_digest != null) && LocalDateTime.now().isBefore(reset_expires) && this.reset_digest.equals(RandomUtils.SHA256Base64(token));
     }

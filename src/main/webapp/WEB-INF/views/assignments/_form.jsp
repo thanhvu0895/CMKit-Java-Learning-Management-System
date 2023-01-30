@@ -119,10 +119,10 @@
   <script>showOrHideFiletypes()</script>
 </c:if>
   <div class="actions">
-	<input type="submit" name="commit" value="${not empty assignment ? 'Update Assignment' : 'Create Assignment'}" class="btn btn-primary" data-disable-with="${not empty assignment ? 'Update Assignment' : 'Create Assignment'}"/>
+	<input type="submit" name="commit" value="${not empty assignment && empty param.copy ? 'Update Assignment' : 'Create Assignment'}" class="btn btn-primary" data-disable-with="${not empty assignment ? 'Update Assignment' : 'Create Assignment'}"/>
   </div>
   
-  <c:if test="${params == ':copy'}">
-  
-  </c:if>
+ <c:if test="${not empty param.copy}">
+ 	<input type="hidden" name="copy" id="copy" value="${assignment.id}">
+ </c:if>
 </t:form_with>
