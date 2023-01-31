@@ -452,7 +452,7 @@ public class UserServlet extends HttpServlet {
 				return;
 			}
 			
-			if (!new_password.equals(old_password)) {
+			if (new_password.equals(old_password)) {
 				req.setAttribute("alert", "New password and old password cannot be the same.");
 				req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD).forward(req, resp);
 				return;
