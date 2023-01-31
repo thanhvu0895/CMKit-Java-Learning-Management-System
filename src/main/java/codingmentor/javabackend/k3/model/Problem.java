@@ -39,8 +39,15 @@ public class Problem {
 		return grader_notes;
 	}
 	
+	public void setLocation(int location) {
+		this.location = location;
+	}
+
+	
+	
 	/* Fluent Style API */
 	
+
 	public Problem() {}
 	
 	public Problem id(int id) {
@@ -63,6 +70,11 @@ public class Problem {
 		this.points = points;
 		return this;
 	}
+	
+	public Problem location(int location) {
+		this.location = location;
+		return this;
+    }
 	
 	public Problem grader_notes(String grader_notes) {
 		this.grader_notes = grader_notes;

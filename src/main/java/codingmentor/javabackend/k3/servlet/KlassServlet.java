@@ -101,8 +101,11 @@ public class KlassServlet extends HttpServlet {
 					getKlassStudentsIndex(req, resp, klassId);
 					break;
 				}
+				
 				return;
 			}
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return;	
 		case UrlUtils.NEW_KLASS_PATH:
 			getKlassNew(req, resp);
 			break;

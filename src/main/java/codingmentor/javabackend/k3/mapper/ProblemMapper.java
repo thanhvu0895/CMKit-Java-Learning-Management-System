@@ -14,6 +14,7 @@ public class ProblemMapper implements RowMapper<Problem> {
 			.assignment_id(results.getInt("assignment_id"))
 			.title(results.getString("title"))
 			.points(results.getDouble("points"))
+			.location(results.getInt("location"))
 			.grader_notes(results.getString("grader_notes"));
 	}
 }

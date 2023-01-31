@@ -1,4 +1,4 @@
-<t:form_with url="${not empty problem ? UrlUtils.ASSIGNMENT_PROBLEMS_PATH : UrlUtils.EDIT_ASSIGNMENT_PROBLEM_PATH}" secondId="${assignment.id}" id="${problem.id}"  method="${not empty problem ? 'PATCH' : ''}">
+<t:form_with url="${not empty problem ? UrlUtils.EDIT_ASSIGNMENT_PROBLEM_PATH : UrlUtils.ASSIGNMENT_PROBLEMS_PATH }" secondId="${assignment.id}" id="${problem.id}"  method="${not empty problem ? 'PATCH' : ''}">
 
 <div class="form-group">
     <label for="problem_title">Title</label>

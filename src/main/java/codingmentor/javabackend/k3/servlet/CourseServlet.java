@@ -66,7 +66,7 @@ public class CourseServlet extends HttpServlet{
 			if (pathInfoLength == 2 && UrlUtils.isInteger(pathParts[1])) { 
 				int courseId = Integer.parseInt(pathParts[1]); 
 				getCourseShow(req, resp, courseId);
-				break;
+				return;
 			}
 			
 			if (pathInfoLength == 3 && UrlUtils.isInteger(pathParts[1])) { 
@@ -82,7 +82,9 @@ public class CourseServlet extends HttpServlet{
 					getCourseGradeCategories(req, resp, courseId);
 					break;
 				}
+				return;
 			}
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			break;
 		case UrlUtils.NEW_COURSE_PATH:
 			getCourseNew(req, resp);

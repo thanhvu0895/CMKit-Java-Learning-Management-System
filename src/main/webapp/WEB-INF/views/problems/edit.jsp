@@ -3,10 +3,12 @@
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <t:layoutj pageTitle="Edit ${problem.title}">
-<%@ include file="../assignments/_assignment_crumbs.jsp" %>
-<li><t:link_to path="${UrlUtils.ASSIGNMENT_PATH}/:id" id="${assignment.id}">${assignment.title}</t:link_to></li>
-<li><t:link_to path="${UrlUtils.ASSIGNMENT_PROBLEMS_PATH}" secondId="${assignment.id}">Rubric</t:link_to></li>
-<li class="active">${problem.id}</li>
+<ol class="breadcrumb">
+  <%@ include file="../assignments/_assignment_crumbs.jsp" %>
+  <li><t:link_to path="${UrlUtils.ASSIGNMENT_PATH}/:id" id="${assignment.id}">${assignment.title}</t:link_to></li>
+  <li><t:link_to path="${UrlUtils.ASSIGNMENT_PROBLEMS_PATH}" secondId="${assignment.id}">Rubric</t:link_to></li>
+  <li class="active">${problem.id}</li>
+</ol>
 
 <h2>Editing Problem "${problem.title}"</h2>
 

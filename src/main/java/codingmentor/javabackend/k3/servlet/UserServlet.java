@@ -84,7 +84,10 @@ public class UserServlet extends HttpServlet {
 					getSetUpUserPage(req, resp, id);
 					break;
 				}
+				return;
 			}
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return;
 		}
 	}
 

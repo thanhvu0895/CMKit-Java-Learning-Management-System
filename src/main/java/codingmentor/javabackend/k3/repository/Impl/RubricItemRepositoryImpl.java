@@ -78,6 +78,42 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 		});
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<RubricItem> getRubricItemsByProblemId(int problem_id) {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM rubric_items where problem_id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, problem_id);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getRubricItemsByAssignmentId: " + statement);
+			List<RubricItem> rubricItemsList = new ArrayList<>();
+			while(results.next()) {
+				rubricItemsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return rubricItemsList;
+		});
+	}
+	
+	@Override
+	public List<RubricItem> getRubricItemsByProblemIdOrderByLocationAsc(int problem_id) {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM rubric_items where problem_id = ? ORDER BY location ASC";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, problem_id);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getRubricItemsByAssignmentId: " + statement);
+			List<RubricItem> rubricItemsList = new ArrayList<>();
+			while(results.next()) {
+				rubricItemsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return rubricItemsList;
+		});
+	}
 	
 	/*
 	 * GET ITEM METHOD
@@ -128,6 +164,9 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 			return result;	
 		}) != 0;
 	}
+
+	
+
 	
 	
 	//PATCH

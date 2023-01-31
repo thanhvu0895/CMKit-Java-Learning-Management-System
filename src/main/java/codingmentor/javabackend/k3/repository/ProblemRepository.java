@@ -17,15 +17,45 @@ public interface ProblemRepository {
 	 */
     List<Problem> getProblems();
     
+    
+    /**
+	 * Get list of Problems by Assignment Id
+	 * @category LIST
+	 * @return a list of all Problems if found or null
+	 */
+    List<Problem> getProblemsByAssignmentId(int assignment_id);
+    
+    
+    /**
+	 * Get list of Problems by Assignment Id
+	 * @category LIST
+	 * @return a list of all Problems if found or null
+	 */
+    List<Problem> getProblemsByAssignmentIdOrderByLocationAsc(int assignment_id);
+    
 	/*
 	 * GET ITEM METHOD
 	 */
     /**
 	 * @category ITEM
-     * Get department by Problem's id
+     * Get Problem by Problem's id
      * @return Problem if exists and null if not
      */
     Problem getProblemById(int id);
+    
+    /**
+  	 * @category ITEM
+     * Get Problem by Problem and Assignment's id
+     * @return Problem if exists and null if not
+     */
+     Problem getProblemByLocationAndAssignmentId(int location, int assignment_id);
+     
+     /**
+   	 * @category ITEM
+	 * Get Problem by Problem and Assignment's id
+	 * @return Problem if exists and null if not
+     */
+      Problem getMaxProblemByAssignmentId(int assignment_id);
     
 	/*
 	 * GET Check True/false METHOD
@@ -50,6 +80,10 @@ public interface ProblemRepository {
     /**
 	 * @category PATCH
      */
+    boolean updateProblemLocationById (int location, int problem_id);
+    
+    
+    
     
     /**
 	 * @category DELETE

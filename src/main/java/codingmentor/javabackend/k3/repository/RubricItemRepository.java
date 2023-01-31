@@ -19,6 +19,22 @@ public interface RubricItemRepository {
 	 */
     List<RubricItem> getRubricItems();
     
+    /**
+     * @category LIST
+	 * Get list of RubricItems By Problem Id 
+	 *
+	 * @return a list of all RubricItems if found or null
+	 */
+    List<RubricItem> getRubricItemsByProblemId(int problem_id);
+    
+    /**
+     * @category LIST
+	 * Get list of RubricItems By Problem Id order by location asc
+	 *
+	 * @return a list of all RubricItems if found or null
+	 */
+    List<RubricItem> getRubricItemsByProblemIdOrderByLocationAsc(int problem_id);
+    
     
 	/*
 	 * GET ITEM METHOD

@@ -18,19 +18,24 @@ import codingmentor.javabackend.k3.model.Course;
 import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.model.GradeCategory;
 import codingmentor.javabackend.k3.model.Klass;
-import codingmentor.javabackend.k3.model.User;
+import codingmentor.javabackend.k3.model.Problem;
+import codingmentor.javabackend.k3.model.RubricItem;
 import codingmentor.javabackend.k3.repository.AssignmentRepository;
 import codingmentor.javabackend.k3.repository.CourseRepository;
 import codingmentor.javabackend.k3.repository.DepartmentRepository;
 import codingmentor.javabackend.k3.repository.GradeCategoryRepository;
 import codingmentor.javabackend.k3.repository.KlassRepository;
+import codingmentor.javabackend.k3.repository.ProblemRepository;
 import codingmentor.javabackend.k3.repository.RepoRepository;
+import codingmentor.javabackend.k3.repository.RubricItemRepository;
 import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.GradeCategoryRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.KlassRepositoryImpl;
+import codingmentor.javabackend.k3.repository.Impl.ProblemRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
+import codingmentor.javabackend.k3.repository.Impl.RubricItemRepositoryImpl;
 
 @WebServlet(urlPatterns = {
 		UrlUtils.ASSIGNMENT_ALL_PATH,
@@ -46,6 +51,8 @@ public class AssignmentServlet extends HttpServlet {
 	private KlassRepository klassRepository = null;
 	private GradeCategoryRepository gradeCategoryRepository = null;
 	private RepoRepository repoRepository = null;
+	private ProblemRepository problemRepository = null;
+	private RubricItemRepository rubricItemRepository = null;
 
 	@Override
 	public void init() throws ServletException {
@@ -56,6 +63,9 @@ public class AssignmentServlet extends HttpServlet {
 		klassRepository = KlassRepositoryImpl.getInstance();
 		gradeCategoryRepository = GradeCategoryRepositoryImpl.getInstance();
 		repoRepository = RepoRepositoryImpl.getInstance();
+		problemRepository = ProblemRepositoryImpl.getInstance();
+		rubricItemRepository = RubricItemRepositoryImpl.getInstance();
+		
 	}
 	
 	@Override
@@ -92,10 +102,32 @@ public class AssignmentServlet extends HttpServlet {
 					break;
 				case "problems":
 					getAssignmentProblemsIndex(req, resp, assignmentId);;
+					break;
 				}
-			
-			break;
+				return;
 			}
+			
+			if (pathInfoLength == 4 && UrlUtils.isInteger(pathParts[1]) && pathParts[2].equals("problems")) {
+				int assignmentId = Integer.parseInt(pathParts[1]);
+				
+				if (pathParts[3].equals("new")) {
+					getAssignmentProblemsNew(req, resp, assignmentId);	
+				}
+				return;
+			}
+			
+			
+			if (pathInfoLength == 5 && UrlUtils.isInteger(pathParts[1]) && pathParts[2].equals("problems")) {
+				int assignmentId = Integer.parseInt(pathParts[1]);
+				if (UrlUtils.isInteger(pathParts[3]) && pathParts[4].equals("edit")) {
+					int problemId = Integer.parseInt(pathParts[1]);
+					getAssignmentProblemsEdit(req, resp, assignmentId, problemId);
+				}
+				return;
+			}
+			
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return;
 		}
 	}
 
@@ -234,13 +266,75 @@ public class AssignmentServlet extends HttpServlet {
 	
 	private void getAssignmentProblemsIndex(HttpServletRequest req, HttpServletResponse resp, int assignmentId) throws ServletException, IOException {
 		try {
+			Assignment assignment = assignmentRepository.getAssignmentById(assignmentId);
 			
+			if (assignment == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
+			Course course = courseRepository.getCourseById(assignment.getCourse_id());
+			Department department = departmentRepository.getDepartmentByCourseId(course.getId());
+			List<Problem> problemsList = problemRepository.getProblemsByAssignmentIdOrderByLocationAsc(assignmentId);
+			req.setAttribute("course", course);
+			req.setAttribute("department", department);
+			req.setAttribute("assignment", assignment);
+			req.setAttribute("problems", problemsList);
+			req.getRequestDispatcher(JspUtils.PROBLEMS_INDEX)
+				.forward(req, resp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	
+	private void getAssignmentProblemsNew(HttpServletRequest req, HttpServletResponse resp, int assignmentId) throws ServletException, IOException {
+		try {
+			Assignment assignment = assignmentRepository.getAssignmentById(assignmentId);
+			
+			if (assignment == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
+			Course course = courseRepository.getCourseById(assignment.getCourse_id());
+			Department department = departmentRepository.getDepartmentByCourseId(course.getId());
+			
+			req.setAttribute("course", course);
+			req.setAttribute("department", department);
+			req.setAttribute("assignment", assignment);
+			req.getRequestDispatcher(JspUtils.PROBLEMS_NEW)
+				.forward(req, resp);
+			
+		} catch (Exception e) {
+
+		}
+	}
+
+	private void getAssignmentProblemsEdit(HttpServletRequest req, HttpServletResponse resp, int assignmentId, int problemId) throws ServletException, IOException {
+		try {
+			Assignment assignment = assignmentRepository.getAssignmentById(assignmentId);
+			Problem problem = problemRepository.getProblemById(problemId);
+			
+			if (assignment == null || problem == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
+			Course course = courseRepository.getCourseById(assignment.getCourse_id());
+			Department department = departmentRepository.getDepartmentByCourseId(course.getId());
+			
+			List<RubricItem> rubricItemsList = rubricItemRepository.getRubricItemsByProblemIdOrderByLocationAsc(problemId);
+			req.setAttribute("course", course);
+			req.setAttribute("department", department);
+			req.setAttribute("assignment", assignment);
+			req.setAttribute("problem", problem);
+			req.setAttribute("rubric_items", rubricItemsList);
+			req.getRequestDispatcher(JspUtils.PROBLEMS_EDIT)
+				.forward(req, resp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -267,7 +361,43 @@ public class AssignmentServlet extends HttpServlet {
 					deleteAssignmentDestroy(req, resp, assignmentId);
 					break;
 				}
-			}	
+			}
+			
+			if (pathInfoLength == 3 && UrlUtils.isInteger(pathParts[1]) && pathParts[2].equals("problems")) {
+				int assignmentId = Integer.parseInt(pathParts[1]);
+				postAssignmentProblemCreate(req, resp, assignmentId);
+				return;
+				
+			}
+			
+			if (pathInfoLength == 4 && UrlUtils.isInteger(pathParts[1]) && pathParts[2].equals("problems") && UrlUtils.isInteger(pathParts[3])) { 
+				int assignmentId = Integer.parseInt(pathParts[1]);
+				int problemId = Integer.parseInt(pathParts[3]);
+				switch (req.getParameter("method")) {
+				case "PATCH":
+					patchAssignmentProblemUpdate(req, resp, assignmentId, problemId);
+					break;
+				case "DELETE":
+					deleteAssignmentProblemDestroy(req, resp, assignmentId, problemId);
+					break;
+				}
+				return;
+			}
+			
+			if (pathInfoLength == 5 && UrlUtils.isInteger(pathParts[1]) && pathParts[2].equals("problems")) {
+				int assignmentId = Integer.parseInt(pathParts[1]);
+				int problemId = Integer.parseInt(pathParts[3]);
+				switch (pathParts[4]) {
+				case "move_up":
+					patchAssignmentProblemMoveUp(req, resp, assignmentId, problemId);
+					break;
+				case "move_down":
+					System.out.println("HIT MOVE DOWN");
+					patchAssignmentProblemMoveDown(req, resp, assignmentId, problemId);
+					break;
+				}
+				return;
+			}
 		}
 	}
 	
@@ -382,6 +512,123 @@ public class AssignmentServlet extends HttpServlet {
 	}
 	
 	private void deleteAssignmentDestroy(HttpServletRequest req, HttpServletResponse resp, int klassId) throws IOException {
+		try {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void postAssignmentProblemCreate(HttpServletRequest req, HttpServletResponse resp, int assignmentId) throws IOException {
+		try {
+			Assignment assignment = assignmentRepository.getAssignmentById(assignmentId);
+			
+			if (assignment == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
+			String title = req.getParameter("problem[title]");
+			String pointsString = req.getParameter("problem[points]");
+			String grader_notes = req.getParameter("problem[grader_notes]");
+			
+			if (title == "") {
+				req.getSession(false).setAttribute("alert", "Title can't be blank");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putSecondInPath(UrlUtils.NEW_ASSIGNMENT_PROBLEM_PATH, assignmentId));
+				return;
+			}
+			
+			if (pointsString == "") {
+				req.getSession(false).setAttribute("alert", "Points can't be blank");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putSecondInPath(UrlUtils.NEW_ASSIGNMENT_PROBLEM_PATH, assignmentId));
+				return;
+			}
+			
+			if (UrlUtils.isDouble(pointsString)) {
+				Double points = UrlUtils.convertDoubleFromStringWithPrecision(pointsString, 4);
+				int location = problemRepository.getProblemsByAssignmentId(assignmentId).size();
+				int newProblemId = problemRepository.insertProblem(assignmentId, title, points, location, grader_notes);
+				rubricItemRepository.insertRubricItem(newProblemId, "Full Credit", points, 0);
+				rubricItemRepository.insertRubricItem(newProblemId, "No Credit", 0, 1);
+				req.getSession(false).setAttribute("notice", "Problem was successfully created. Two example options were also created. Replace these with your rubric for this problem.");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.putSecondInPath(UrlUtils.EDIT_ASSIGNMENT_PROBLEM_PATH, assignmentId), newProblemId)) ;
+				return;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void patchAssignmentProblemUpdate(HttpServletRequest req, HttpServletResponse resp, int assignmentId, int problemId) throws IOException {
+		try {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void patchAssignmentProblemMoveUp(HttpServletRequest req, HttpServletResponse resp, int assignmentId, int problemId) throws IOException {
+		try {
+			System.out.println("Value of problemId is: " + problemId);
+			Assignment assignment = assignmentRepository.getAssignmentById(assignmentId);
+			Problem problem = problemRepository.getProblemById(problemId);
+			
+			if (problem == null || assignment == null) {
+				resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				return;	
+			}
+			
+			int location = problem.getLocation();
+			System.out.println("Value of INITIAL location is: " + location);
+			
+			if (location  > 0) {
+				location -= 1;
+				Problem above = problemRepository.getProblemByLocationAndAssignmentId(location, assignmentId);
+				System.out.println("Value of location after - 1 is: " + location + " and id = " + problemId);
+				
+				//Move current location holder down
+				System.out.println("Value of above.getLocation() is: " + above.getLocation() + " and id is : " + above.getId());
+				
+				// Save Problem
+				problemRepository.updateProblemLocationById(location, problemId);
+				problemRepository.updateProblemLocationById(above.getLocation() + 1, above.getId());
+			}
+			
+			resp.sendRedirect(req.getContextPath() + UrlUtils.putSecondInPath(UrlUtils.ASSIGNMENT_PROBLEMS_PATH, assignmentId));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+	}
+	
+	private void patchAssignmentProblemMoveDown(HttpServletRequest req, HttpServletResponse resp, int assignmentId, int problemId) throws IOException {
+		try {
+			Assignment assignment = assignmentRepository.getAssignmentById(assignmentId);
+			Problem problem = problemRepository.getProblemById(problemId);
+			
+			if (problem == null || assignment == null) {
+				resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				return;	
+			}
+			
+			int location = problem.getLocation();
+			if (location  < problemRepository.getMaxProblemByAssignmentId(assignmentId).getLocation()) {
+				location += 1;
+				//Move current location holder down
+				Problem below = problemRepository.getProblemByLocationAndAssignmentId(location, assignmentId);
+				
+				// Save Problem
+				problemRepository.updateProblemLocationById(location, problemId);
+				problemRepository.updateProblemLocationById(below.getLocation() - 1, below.getId());
+			}
+			
+			resp.sendRedirect(req.getContextPath() + UrlUtils.putSecondInPath(UrlUtils.ASSIGNMENT_PROBLEMS_PATH, assignmentId));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+	}
+	
+	
+	
+	
+	private void deleteAssignmentProblemDestroy(HttpServletRequest req, HttpServletResponse resp, int assignmentId, int problemId) throws IOException {
 		try {
 			
 		} catch (Exception e) {

@@ -28,8 +28,8 @@
    <tr>
         <td>${problem.title}</td>
         <td>${problem.points}</td>
-        <td><t:link_to path="${UrlUtils.EDIT_ASSIGNMENT_PROBLEM_PATH}" classBS="btn btn-default"  id="${problem.id}" secondId="${assignment.id}">Edit</t:link_to></td>
-        <td><t:link_to path="${UrlUtils.ASSIGNMENT_PROBLEM_PATH}" classBS="btn btn-danger" id="${problem.id}" secondId="${assignment.id}" confirm="Are you sure?"></t:link_to></td>
+        <td><t:link_to path="${UrlUtils.EDIT_ASSIGNMENT_PROBLEM_PATH}" classBS="btn btn-default" id="${problem.id}" secondId="${assignment.id}">Edit</t:link_to></td>
+        <td><t:link_to path="${UrlUtils.ASSIGNMENT_PROBLEM_PATH}" classBS="btn btn-danger" id="${problem.id}" secondId="${assignment.id}" confirm="Are you sure?">Delete</t:link_to></td>
 		<td><t:link_to path="${UrlUtils.ASSIGNMENT_PROBLEM_MOVE_DOWN_PATH}" classBS="btn btn-default" method="POST" id="${problem.id}" secondId="${assignment.id}"><span class="glyphicon glyphicon-arrow-down"></span></t:link_to>
 		<t:link_to path="${UrlUtils.ASSIGNMENT_PROBLEM_MOVE_UP_PATH}" classBS="btn btn-default" method="POST" id="${problem.id}" secondId="${assignment.id}"><span class="glyphicon glyphicon-arrow-up"></span></t:link_to></td>
    </tr>

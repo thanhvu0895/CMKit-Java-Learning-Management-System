@@ -77,6 +77,46 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 		});
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Problem> getProblemsByAssignmentId(int assignment_id) {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM problems WHERE assignment_id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, assignment_id);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getProblemsByAssignmentId: " + statement);
+			List<Problem> problemsList = new ArrayList<>();
+			while(results.next()) {
+				problemsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return problemsList;
+		});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Problem> getProblemsByAssignmentIdOrderByLocationAsc(int assignment_id) {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM problems WHERE assignment_id = ? ORDER BY location ASC";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, assignment_id);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getProblemsByAssignmentId: " + statement);
+			List<Problem> problemsList = new ArrayList<>();
+			while(results.next()) {
+				problemsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return problemsList;
+		});
+	}
+	
 	/*
 	 * GET ITEM METHOD
 	 */
@@ -96,6 +136,42 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 		    return problem;
     	});
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Problem getMaxProblemByAssignmentId(int assignment_id) {
+		return executeQuerySingle(connection -> {
+			final String query = "SELECT * FROM problems WHERE location = ( SELECT MAX(location) FROM problems where assignment_id = ?);";
+		    PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, assignment_id);
+		    ResultSet results = statement.executeQuery();
+		    System.out.println("getMaxProblemByAssignmentId: " + statement);
+		    Problem problem = (results.next()) ? mapper.map(results) : null;
+		    close(connection, statement, results);
+		    return problem;
+    	});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Problem getProblemByLocationAndAssignmentId(int location, int assignment_id) {
+		return executeQuerySingle(connection -> {
+			final String query = "SELECT * FROM problems WHERE location = ? and assignment_id = ? LIMIT 1;";
+		    PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, location);
+		    statement.setInt(2, assignment_id);
+		    ResultSet results = statement.executeQuery();
+		    System.out.println("getProblemByLocationAndAssignmentId: " + statement);
+		    Problem problem = (results.next()) ? mapper.map(results) : null;
+		    close(connection, statement, results);
+		    return problem;
+    	});
+	}
+	    
 	
 	/*
 	 * GET Check True/false METHOD
@@ -139,8 +215,21 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 		});
 	}
 	
-	
-	
 	//PATCH
-	    
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean updateProblemLocationById(int location, int problem_id) {
+		return executeUpdate(connection -> {
+			 final String query = "UPDATE problems SET location = ? WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, location);
+			 statement.setInt(2, problem_id);
+			 System.out.println("updateProblemLocationById: " + statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}
 }
