@@ -9,6 +9,14 @@ public class Student {
 	private boolean notify_contributor_invite;
 	private boolean notify_extension;
 	private boolean notify_regrade_response;
+   
+	/**
+    * Repository Functions
+    */
+	
+	/*
+	 * Getters, Setters
+	 */
 	
 	public int getId() {
 		return id;

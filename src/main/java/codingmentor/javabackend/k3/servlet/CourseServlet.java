@@ -66,7 +66,7 @@ public class CourseServlet extends HttpServlet{
 			if (pathInfoLength == 2 && UrlUtils.isInteger(pathParts[1])) { 
 				int courseId = Integer.parseInt(pathParts[1]); 
 				getCourseShow(req, resp, courseId);
-				break;
+				return;
 			}
 			
 			if (pathInfoLength == 3 && UrlUtils.isInteger(pathParts[1])) { 
@@ -82,7 +82,9 @@ public class CourseServlet extends HttpServlet{
 					getCourseGradeCategories(req, resp, courseId);
 					break;
 				}
+				return;
 			}
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			break;
 		case UrlUtils.NEW_COURSE_PATH:
 			getCourseNew(req, resp);
@@ -102,6 +104,9 @@ public class CourseServlet extends HttpServlet{
 			
 			Department department = departmentRepository.getDepartmentById(course.getDepartment_id());
 			List<Assignment> assignments = assignmentRepository.getAssignmentsByCourseId(courseId);
+			
+			List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesUsedByAssignmentInCourse(courseId);
+			req.setAttribute("course_grade_categories", gradeCategoriesList);
 			req.setAttribute("course", course);
 			req.setAttribute("department", department);
 			req.setAttribute("assignments", assignments);

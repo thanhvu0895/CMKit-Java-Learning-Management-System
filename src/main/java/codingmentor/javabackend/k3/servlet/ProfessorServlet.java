@@ -52,6 +52,9 @@ public class ProfessorServlet extends HttpServlet{
 				postProfessorDelete(req, resp, professorId);
 				return;
 			}
+			
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return;
 		}
 	}
 	

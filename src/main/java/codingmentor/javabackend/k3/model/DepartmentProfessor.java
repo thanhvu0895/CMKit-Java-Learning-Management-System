@@ -6,6 +6,14 @@ public class DepartmentProfessor {
 	private int department_id;
 	private boolean admin;	
 
+   /**
+    * Repository Functions
+    */
+	
+	
+	/*
+	 * Getters, Setters
+	 */
 	public int getId() {
 		return id;
 	}

@@ -19,6 +19,16 @@ public class Submission {
 	private boolean hide_rubric;
 	private boolean force_allow_resubmit;
 	
+	
+   /**
+    * Repository Functions
+    */
+	
+	
+	/*
+	 * Getters, Setters
+	 */
+	
 	public int getId() {
 		return id;
 	}

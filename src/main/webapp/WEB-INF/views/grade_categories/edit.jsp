@@ -6,11 +6,11 @@
 
 <ol class="breadcrumb">
      <li><t:link_to path="${UrlUtils.DEPARTMENT_COURSES_PATH}" id="${departmentid}">Courses</t:link_to></li>
-     <li><t:link_to path="${UrlUtils.COURSES_PATH}/:id" id="${department.id}">${course.course_code}&nbsp${course.title}</t:link_to></li>	
+     <li><t:link_to path="${UrlUtils.COURSES_PATH}/:id" id="${course.id}">${course.course_code}&nbsp${course.title}</t:link_to></li>	
   <li class="active">New Grade Category </li>
 </ol>
 
 <h1>Editing ${grade_category.title} Category</h1>
 
-<jsp:include page="_form.jsp"><jsp:param name="method" value="PATCH"/></jsp:include>
+<%@ include file="_form.jsp" %>
 </t:layoutj>

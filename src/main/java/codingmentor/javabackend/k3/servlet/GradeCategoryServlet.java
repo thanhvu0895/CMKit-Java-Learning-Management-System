@@ -10,13 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.Course;
-import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.model.GradeCategory;
 import codingmentor.javabackend.k3.repository.CourseRepository;
-import codingmentor.javabackend.k3.repository.DepartmentRepository;
 import codingmentor.javabackend.k3.repository.GradeCategoryRepository;
 import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.GradeCategoryRepositoryImpl;
 
 
@@ -28,15 +25,12 @@ public class GradeCategoryServlet extends HttpServlet{
 	private static final long serialVersionUID = 1515497142397284883L;
 	private GradeCategoryRepository gradeCategoryRepository = null;
 	private CourseRepository courseRepository = null;
-	private DepartmentRepository departmentRepository = null;
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		gradeCategoryRepository = GradeCategoryRepositoryImpl.getInstance();
-		departmentRepository = DepartmentRepositoryImpl.getInstance();
 		courseRepository = CourseRepositoryImpl.getInstance();
-
 	}
 	
 	@Override
@@ -58,7 +52,10 @@ public class GradeCategoryServlet extends HttpServlet{
 					getGradeCategoryEdit(req, resp, gradeCategoryId);			
 					break;
 				}
+				return;
 			}
+			
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			break;
 		case UrlUtils.NEW_GRADE_CATEGORY_PATH: 					
 			getGradeCategoriesNew(req, resp);
@@ -93,10 +90,9 @@ public class GradeCategoryServlet extends HttpServlet{
 			if (UrlUtils.isInteger(courseIdString)) {
 				int courseId = Integer.parseInt(courseIdString);
 				Course course = courseRepository.getCourseById(courseId);
-				Department department = departmentRepository.getDepartmentByCourseId(courseId);
-				if (course != null && department != null) {
+				if (course != null) {
 					req.setAttribute("course", course);
-					req.setAttribute("departmentid", department.getId());
+					req.setAttribute("departmentid", course.getDepartment_id());
 					req.getRequestDispatcher(JspUtils.GRADE_CATEGORIES_NEW) 
 						.forward(req, resp);
 					return;

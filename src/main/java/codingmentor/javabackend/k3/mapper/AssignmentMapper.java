@@ -14,7 +14,7 @@ public class AssignmentMapper implements RowMapper<Assignment> {
 			.title(results.getString("title"))
 			.klass_id(results.getInt("klass_id"))
 			.course_id(results.getInt("course_id"))
-			.grade_category_id(results.getInt("grade_category_id"))
+			.grade_category_id(results.getObject("grade_category_id") == null ? null : (Integer) results.getObject("grade_category_id"))
 			.files_repo_id(results.getInt("files_repo_id"))
 			.template_repo_id(results.getInt("template_repo_id"))
 			.assignment_type(results.getInt("assignment_type"))

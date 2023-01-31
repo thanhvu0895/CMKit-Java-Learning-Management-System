@@ -5,6 +5,15 @@ public class Professor {
 	private int user_id;
 	private int klass_id;
 	
+   /**
+    * Repository Functions
+    */	
+	
+	
+	/*
+	 * Getters, Setters
+	 */
+	
 	public int getId() {
 		return id;
 	}

@@ -12,7 +12,7 @@
 
 <jsp:include page="_tabs.jsp"><jsp:param name="current" value=":settings"/></jsp:include>
 
-<jsp:include page="_form.jsp"><jsp:param name="method" value="PATCH"/></jsp:include>
+<%@ include file="_form.jsp" %>
 
 <br><br><br>
 

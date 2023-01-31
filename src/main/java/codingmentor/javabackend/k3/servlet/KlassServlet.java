@@ -34,6 +34,7 @@ import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 
 @WebServlet(urlPatterns = {
 	UrlUtils.KLASSES_ALL_PATH,
+	UrlUtils.NEW_KLASS_PATH,
 })
 public class KlassServlet extends HttpServlet {
 
@@ -60,6 +61,9 @@ public class KlassServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		switch(req.getServletPath()) {
+		case UrlUtils.NEW_KLASS_PATH:
+			getKlassNew(req, resp);
+			break;
 		case UrlUtils.KLASSES_PATH:
 			String pathInfo = req.getPathInfo();
 			if (pathInfo == null || pathInfo.equals("/")) {
@@ -101,11 +105,12 @@ public class KlassServlet extends HttpServlet {
 					getKlassStudentsIndex(req, resp, klassId);
 					break;
 				}
+				
 				return;
 			}
-		case UrlUtils.NEW_KLASS_PATH:
-			getKlassNew(req, resp);
-			break;
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			return;	
+
 		}
 	}
 	
@@ -263,18 +268,16 @@ public class KlassServlet extends HttpServlet {
 			if (UrlUtils.isInteger(courseIdString)) {
 				int courseId = Integer.parseInt(courseIdString);
 				Course course = courseRepository.getCourseById(courseId);
-				Department department = departmentRepository.getDepartmentByCourseId(courseId);
-				if (course != null) {
-					req.setAttribute("course", course);
-					req.setAttribute("departmentid", department.getId());
-					req.getRequestDispatcher(JspUtils.KLASSES_NEW)
-						.forward(req, resp);
+
+				if (course == null) {
+					resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 					return;
 				}
-				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-				return;
+				req.setAttribute("course", course);
+				req.setAttribute("departmentid", course.getDepartment_id());
+				req.getRequestDispatcher(JspUtils.KLASSES_NEW)
+					.forward(req, resp);
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

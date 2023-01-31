@@ -51,7 +51,11 @@ public class SshKeyRepositoryImpl extends AbstractRepository<SshKey> implements 
     		e.printStackTrace();
     	}
     }
-
+    
+    
+	/*
+	 * GET LIST METHOD
+	 */
 	/**
 	 * {@inheritDoc}
 	 */
@@ -62,7 +66,7 @@ public class SshKeyRepositoryImpl extends AbstractRepository<SshKey> implements 
 			final String query = "SELECT * FROM ssh_keys";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getSshKeys: " + statement);
 			List<SshKey> sshKeysList = new ArrayList<>();
 			while(results.next()) {
 				sshKeysList.add(mapper.map(results));
@@ -72,6 +76,10 @@ public class SshKeyRepositoryImpl extends AbstractRepository<SshKey> implements 
 		});
 	}
 
+	/*
+	 * GET ITEM METHOD
+	 */
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -82,11 +90,24 @@ public class SshKeyRepositoryImpl extends AbstractRepository<SshKey> implements 
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
+		    System.out.println("getSshKeyById: " + statement);
 		    SshKey sshKey = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return sshKey;
     	});
 	}
+	
+	/*
+	 * GET Check True/false METHOD
+	 */
+    
+    /*
+	 * POST(CREATE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
+	
+	
+	//PATCH
 	    
 }

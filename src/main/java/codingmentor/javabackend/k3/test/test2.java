@@ -5,16 +5,28 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
 import codingmentor.javabackend.k3.Utils.DateValidatorDateTimeFormatter;
+import codingmentor.javabackend.k3.model.Assignment;
 
 public class test2 {
-	
-	public static void main(String[] args) {
-		
-		String[] emailList = "a@      1, b@3, th a  nh v u@ 49  3208"
-				.replaceAll("\\s","").split(",");
-		for (String string : emailList) {
-			System.out.println(string);
-		}
+	private static int assignmentType;
+	private static enum AssignmentEnum{
+		RED, GREEN, BLUE;
 	}
+	private enum AssignmentTypes {
+		student_file, student_repo, professor_file, grade_only
+	}
+	public static final ArrayList<AssignmentTypes> ALL = new ArrayList<>();
+	public static void main(String[] args) {
+		for (AssignmentTypes a  : AssignmentTypes.values()) {
+			ALL.add(a);
+		}
+		System.out.println(AssignmentTypes.valueOf("student_repo").ordinal());
+		System.out.println(ALL.get(0));
+		
+		System.out.println(AssignmentTypes.values()[0].toString());
+	}
+	
 }

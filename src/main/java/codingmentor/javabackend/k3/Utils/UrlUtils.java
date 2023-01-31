@@ -41,6 +41,20 @@ public class UrlUtils {
 	public static final String NEW_ASSIGNMENT_PATH = "/assignments/new";
 	public static final String SHOW_COPY_ASSIGNMENT_PATH = "/copy_assignment";
 	
+	public static final String EDIT_ASSIGNMENT_PATH = "/assignments/:id/edit";
+	
+	
+	public static final String ASSIGNMENT_PROBLEMS_PATH = "/assignments/:assignment_id/problems";
+	public static final String ASSIGNMENT_PROBLEM_PATH = "/assignments/:assignment_id/problems/:id";
+	public static final String NEW_ASSIGNMENT_PROBLEM_PATH = "/assignments/:assignment_id/problems/new";
+	public static final String EDIT_ASSIGNMENT_PROBLEM_PATH = "/assignments/:assignment_id/problems/:id/edit";
+	public static final String ASSIGNMENT_PROBLEM_MOVE_DOWN_PATH = "/assignments/:assignment_id/problems/:id/move_down";
+	public static final String ASSIGNMENT_PROBLEM_MOVE_UP_PATH = "/assignments/:assignment_id/problems/:id/move_up";
+	public static final String ASSIGNMENT_VIEW_COPY_RUBRIC_PATH = "/assignments/:assignment_id/copy_rubric";
+	
+	public static final String ASSIGNMENT_PROBLEM_RUBRIC_ITEM_PATH = "/assignments/:assignment_id/problems/:problem_id/rubric_items/:id";
+	public static final String ASSIGNMENT_PROBLEM_RUBRIC_ITEM_MOVE_UP_PATH = "/assignments/:assignment_id/problems/:problem_id/rubric_items/:id/move_up";
+	public static final String ASSIGNMENT_PROBLEM_RUBRIC_ITEM_MOVE_DOWN_PATH = "/assignments/:assignment_id/problems/:problem_id/rubric_items/:id/move_down";
 	
 	
 	public static final String GRADERS_ALL_PATH = "/graders/*";
@@ -160,9 +174,3 @@ public class UrlUtils {
 			    .doubleValue();
     }
 }
-
-
-//		  get 'users/:id/edit_admin', to: 'users#edit_admin', as: 'user_edit_admin'		  
-//		  get 'users/:id/set_up', to: 'users#show_invite', as: 'show_user_invite'
-//		  post 'users/:id/accept_invite', to: 'users#accept_invite', as: 'accept_user_invite'
-//		  post 'users/:id/resend_invite', to: 'users#resend_invite', as: 'resend_user_invite'

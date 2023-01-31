@@ -52,6 +52,11 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
     	}
     }
 
+
+	/*
+	 * GET LIST METHOD
+	 */
+    
 	/**
 	 * {@inheritDoc}
 	 */
@@ -62,7 +67,7 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
 			final String query = "SELECT * FROM repos";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getRepos:" + statement);
 			List<Repo> reposList = new ArrayList<>();
 			while(results.next()) {
 				reposList.add(mapper.map(results));
@@ -72,6 +77,11 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
 		});
 	}
 
+	
+	/*
+	 * GET ITEM METHOD
+	 */
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -82,13 +92,22 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet result = statement.executeQuery();
-		    System.out.println(statement);
+		    System.out.println("getRepoById: " + statement);
 		    Repo repo = (result.next()) ? mapper.map(result) : null;
 		    close(connection, statement, result);
 		    return repo;
     	});
 	}
-
+	
+	/*
+	 * GET Check True/false METHOD
+	 */
+    
+    /*
+	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
+	 */
+	
+	//POST(INSERT INTO)
 	/**
 	 * {@inheritDoc}
 	 */
@@ -97,7 +116,7 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
 		return executeUpdate(connection -> {
 			final String query = "INSERT INTO repos () VALUES ();";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			System.out.println(statement);
+			System.out.println("insertRepo(): " + statement);
 			ResultSet rs  = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();

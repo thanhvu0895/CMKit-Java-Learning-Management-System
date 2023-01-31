@@ -63,7 +63,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 			final String query = "SELECT * FROM courses";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getCourses()" + statement);
 			List<Course> coursesList = new ArrayList<>();
 			while(results.next()) {
 				coursesList.add(mapper.map(results));
@@ -129,7 +129,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 			final String query = "SELECT * FROM courses ORDER BY course_code";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println(statement);
+			System.out.println("getCoursesOrderByCourseCode: " + statement);
 			List<Course> coursesList = new ArrayList<>();
 			while(results.next()) {
 				coursesList.add(mapper.map(results));
@@ -153,7 +153,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println(statement);
+		    System.out.println("getCourseById: " + statement);
 		    Course course = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return course;
@@ -216,7 +216,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 			statement.setInt(3, repo_id);
 			statement.setInt(4, department_id);
 			statement.setBoolean(5, active);
-			System.out.println(statement);
+			System.out.println("insertCourse: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();

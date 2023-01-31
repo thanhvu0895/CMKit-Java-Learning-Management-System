@@ -34,7 +34,6 @@ import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 
 
 @WebServlet(urlPatterns = {
-		UrlUtils.DEPARTMENTS_PATH,
 		UrlUtils.NEW_DEPARTMENT_PATH,
 		UrlUtils.DEPARTMENTS_ALL_PATH
 })
@@ -257,7 +256,7 @@ public class DepartmentServlet extends HttpServlet{
 			
 			int repoId = repoRepository.insertRepo();
 			
-			if (repoId != -1) {
+			if (repoId != 0) {
 				int departmentId = departmentRepository.insertDepartment(title, repoId);
 				req.getSession(false).setAttribute("notice", "Department was successfully created.");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.DEPARTMENT_COURSES_PATH, departmentId));

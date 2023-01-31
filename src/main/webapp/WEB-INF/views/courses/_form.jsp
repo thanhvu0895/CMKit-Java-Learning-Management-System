@@ -1,10 +1,5 @@
-<%@page trimDirectiveWhitespaces="true" contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
-<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
-<%@taglib prefix="f" tagdir="/WEB-INF/tags/form_tags"%>
 <c:choose>
-  <c:when test="${not empty param.method}">
+  <c:when test="${not empty course}">
 	<t:form_with url="${UrlUtils.COURSES_PATH}/:id" id="${course.id}" method="PATCH">
 	  <div class="form-group">
 	    <label for="course_title">Title</label>
@@ -26,6 +21,7 @@
 	  </div>
 	</t:form_with>
   </c:when>
+  
   <c:otherwise>
 	  <t:form_with url="${UrlUtils.COURSES_PATH}">
 	  <input type="hidden" name="department" id="department" value="${department.id}" />
@@ -50,4 +46,3 @@
 	</t:form_with>
   </c:otherwise>
 </c:choose>
-<%-- <h1>DONE</h1> --%>

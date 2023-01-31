@@ -7,6 +7,13 @@ public class Grader {
 	private int klass_id;
 	private boolean notify_grader_assigned;
 	
+   /**
+    * Repository Functions
+    */
+	
+	/*
+	 * Getters, Setters
+	 */
 	public int getId() {
 		return id;
 	}

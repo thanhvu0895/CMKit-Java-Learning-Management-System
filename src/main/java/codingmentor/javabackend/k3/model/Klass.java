@@ -10,6 +10,14 @@ public class Klass {
 	private LocalDate start_date;
 	private LocalDate end_date;
 	
+   /**
+    * Repository Functions
+    */
+	
+	
+	/*
+	 * Getters, Setters
+	 */
 	public int getId() {
 		return id;
 	}

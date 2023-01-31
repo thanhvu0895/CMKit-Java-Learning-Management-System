@@ -75,6 +75,30 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 		});
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<GradeCategory> getGradeCategoriesUsedByAssignmentInCourse(int courseId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT GC.title, GC.id, GC.title, GC.klass_id, GC.course_id, GC.weight FROM grade_categories as GC\r\n"
+					+ " INNER JOIN assignments as A\r\n"
+					+ "	ON A.grade_category_id = GC.id\r\n"
+					+ " INNER JOIN courses as C \r\n"
+					+ "	ON GC.course_id = C.id and C.id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, courseId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getGradeCategoriesUsedByAssignmentInCourse: " + statement);
+			List<GradeCategory> gradeCategoryList = new ArrayList<>();
+			while(results.next()) {
+				gradeCategoryList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return gradeCategoryList;
+		});
+	}
+	
 	/*
 	 * GET ITEM METHOD
 	 */
@@ -95,7 +119,25 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 		    return gradeCategory;
     	});
 	}
-	
+
+    /**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public GradeCategory getGradeCategoryByAssignmentId(int assignmentId) {
+		return executeQuerySingle(connection -> {
+			final String query = "SELECT GC.* FROM grade_categories as GC\r\n"
+					+ "	INNER JOIN assignments as A \r\n"
+					+ " ON GC.id = A.grade_category_id and A.id = ?;";
+		    PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, assignmentId);
+		    System.out.println("getGradeCategoryById: " + statement);
+		    ResultSet results = statement.executeQuery();
+		    GradeCategory gradeCategory = (results.next()) ? mapper.map(results) : null;
+		    close(connection, statement, results);
+		    return gradeCategory;
+    	});
+	}	
 	
 	/*
 	 * GET Check True/false METHOD
@@ -137,7 +179,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 			statement.setString(1, title);
 			statement.setInt(2, course_id);
 			statement.setDouble(3, weight);
-			System.out.println(statement);
+			System.out.println("insertGradeCategory: " + statement);
 			int result = statement.executeUpdate();
 			close(connection, statement, null);			
 			return result;	
@@ -179,5 +221,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 			 close(connection, statement, null);
 			 return result;
 		}) != 0;
-	}	
+	}
+
+
 }
