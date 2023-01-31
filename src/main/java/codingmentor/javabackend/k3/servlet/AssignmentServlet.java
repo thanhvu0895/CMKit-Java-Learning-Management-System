@@ -120,7 +120,7 @@ public class AssignmentServlet extends HttpServlet {
 			if (pathInfoLength == 5 && UrlUtils.isInteger(pathParts[1]) && pathParts[2].equals("problems")) {
 				int assignmentId = Integer.parseInt(pathParts[1]);
 				if (UrlUtils.isInteger(pathParts[3]) && pathParts[4].equals("edit")) {
-					int problemId = Integer.parseInt(pathParts[1]);
+					int problemId = Integer.parseInt(pathParts[3]);
 					getAssignmentProblemsEdit(req, resp, assignmentId, problemId);
 				}
 				return;
