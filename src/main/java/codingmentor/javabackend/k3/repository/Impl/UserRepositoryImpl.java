@@ -130,6 +130,28 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		});
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<User> getGraderUsersByKlassId(int klassId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted FROM graders as G\r\n"
+					+ " INNER JOIN users as U\r\n"
+					+ "	ON U.id = G.user_id AND G.klass_id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, klassId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getGraderUsersByKlassId: " + statement);
+			List<User> usersList = new ArrayList<>();
+			while(results.next()) {
+				usersList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return usersList;
+		});
+	}
+
 	/*
 	 * GET Item
 	 */
@@ -442,7 +464,6 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 return result;
 		}) != 0;
 	}
-
 
 // DEPRECATED: NOT USE ANYMORE	
 //	@Override

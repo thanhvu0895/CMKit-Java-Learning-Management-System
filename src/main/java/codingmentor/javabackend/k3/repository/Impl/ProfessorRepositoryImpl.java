@@ -191,4 +191,10 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 			 return result;
 		}) != 0;
 	}
+
+	@Override
+	public Professor getProfessorByUserId(int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

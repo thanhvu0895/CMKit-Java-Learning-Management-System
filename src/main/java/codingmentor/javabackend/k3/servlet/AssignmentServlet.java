@@ -531,7 +531,7 @@ public class AssignmentServlet extends HttpServlet {
 		
 		int course_id = Integer.parseInt(courseIdString);
 		
-		if (klassIdString != "") {
+		if (klassIdString != null) {
 			int klass_id = Integer.parseInt(klassIdString);
 			if (title == "") {
 				req.getSession(false).setAttribute("alert", "Title can't be blank");

@@ -55,7 +55,28 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 	/*
 	 * GET LIST METHOD
 	 */
-
+    	
+    /**
+	 * {@inheritDoc}
+	 */
+    
+	@Override
+	public List<Grader> getGradersByKlassId(int klassId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM graders WHERE klass_id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, klassId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getGradersByKlassId: " + statement);
+			List<Grader> gradersList = new ArrayList<>();
+			while(results.next()) {
+				gradersList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return gradersList;
+		});
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

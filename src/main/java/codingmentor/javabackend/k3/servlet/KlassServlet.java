@@ -17,6 +17,7 @@ import codingmentor.javabackend.k3.model.Assignment;
 import codingmentor.javabackend.k3.model.Course;
 import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.model.GradeCategory;
+import codingmentor.javabackend.k3.model.Grader;
 import codingmentor.javabackend.k3.model.Klass;
 import codingmentor.javabackend.k3.model.Professor;
 import codingmentor.javabackend.k3.model.User;
@@ -24,6 +25,7 @@ import codingmentor.javabackend.k3.repository.AssignmentRepository;
 import codingmentor.javabackend.k3.repository.CourseRepository;
 import codingmentor.javabackend.k3.repository.DepartmentRepository;
 import codingmentor.javabackend.k3.repository.GradeCategoryRepository;
+import codingmentor.javabackend.k3.repository.GraderRepository;
 import codingmentor.javabackend.k3.repository.KlassRepository;
 import codingmentor.javabackend.k3.repository.ProfessorRepository;
 import codingmentor.javabackend.k3.repository.RepoRepository;
@@ -32,6 +34,7 @@ import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.GradeCategoryRepositoryImpl;
+import codingmentor.javabackend.k3.repository.Impl.GraderRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.KlassRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.ProfessorRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
@@ -53,6 +56,7 @@ public class KlassServlet extends HttpServlet {
 	private UserRepository userRepository = null;
 	private AssignmentRepository assignmentRepository = null;
 	private GradeCategoryRepository gradeCategoryRepository = null;
+	private GraderRepository graderRepository = null;
 	
 	@Override
 	public void init() throws ServletException {
@@ -65,6 +69,7 @@ public class KlassServlet extends HttpServlet {
 		userRepository = UserRepositoryImpl.getInstance();
 		assignmentRepository = AssignmentRepositoryImpl.getInstance();
 		gradeCategoryRepository = GradeCategoryRepositoryImpl.getInstance();
+		graderRepository = GraderRepositoryImpl.getInstance();
 	}
 	
 	@Override
@@ -252,12 +257,17 @@ public class KlassServlet extends HttpServlet {
 	private void getKlassGradersIndex(HttpServletRequest req, HttpServletResponse resp, int klassId) throws ServletException, IOException {
 		try {
 			Klass klass = klassRepository.getKlassById(klassId);
-			
 			if (klass == null) {
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 				return;
 			}
-			
+			Course course = courseRepository.getCourseByKlassId(klassId);
+			List<Grader> gradersList = graderRepository.getGradersByKlassId(klassId);
+			List<User> graderUsersList = userRepository.getGraderUsersByKlassId(klassId);
+			req.setAttribute("grader_users", graderUsersList);
+			req.setAttribute("course", course);
+			req.setAttribute("klass", klass);
+			req.setAttribute("graders", gradersList);
 			req.getRequestDispatcher(JspUtils.GRADERS_INDEX)
 				.forward(req, resp);
 		} catch (Exception e) {
