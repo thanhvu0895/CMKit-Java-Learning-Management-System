@@ -33,6 +33,13 @@ public interface UserRepository {
      */
     public List<User> getUsersFromKlassId(int klassId);
     
+    /**
+     * @category LIST
+     * Get list of Klass Professor's User Details Admin given Klass's id
+     * @param Department's id
+     * @return
+     */
+    public List<User> getGraderUsersByKlassId(int klassId);
     
 	/*
 	 * GET Item
