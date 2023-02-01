@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import codingmentor.javabackend.k3.mapper.ProfessorMapper;
+import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.model.Professor;
 import codingmentor.javabackend.k3.repository.AbstractRepository;
 import codingmentor.javabackend.k3.repository.ProfessorRepository;
@@ -119,6 +120,26 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
     	});
 	}
 	
+	
+	/*
+	 * GET Check True/false METHOD
+	 */
+    /**
+	 * @category CHECK
+     */
+	@Override
+	public boolean isProfessorByUserId(int userId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT 1 as ONE FROM professors WHERE user_id = ?  LIMIT 1;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println("isProfessorByUserId" + statement);
+			 Professor professor = (results.next()) ? new Professor() : null;
+			 close(connection, statement, results);
+			 return professor;
+		}) != null;
+	}
 	/*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
 	 */
@@ -169,5 +190,5 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 			 close(connection, statement, null);
 			 return result;
 		}) != 0;
-	}	
+	}
 }

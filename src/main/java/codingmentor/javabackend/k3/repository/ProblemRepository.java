@@ -77,12 +77,16 @@ public interface ProblemRepository {
      */
     int insertProblem (int assignment_id, String title, Double points, int location, String grader_notes);
     
+    //PATCH(UPDATE)
     /**
 	 * @category PATCH
      */
     boolean updateProblemLocationById (int location, int problem_id);
     
-    
+    /**
+	 * @category PATCH
+     */
+    boolean updateProblemById (String title, double points, String grader_notes, int problem_id);
     
     
     /**

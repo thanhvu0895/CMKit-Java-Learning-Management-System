@@ -4,6 +4,7 @@
 <%@ attribute name="path" required="true"%>
 <%@ attribute name="id" required="false"%>
 <%@ attribute name="secondId" required="false"%>
+<%@ attribute name="thirdId" required="false"%>
 <%@ attribute name="classBS" required="false"%>
 <%@ attribute name="method" required="false"%>
 <%@ attribute name="confirm" required="false"%>
@@ -13,6 +14,8 @@
 <c:set var="path" value="${pageContext.request.contextPath}${path}" /> <%-- ADD CONTEXT PATH TO url URL --%>  
 <c:set var="path" value="${UrlUtils.putIdInPath(pageContext.getAttribute('path'), pageContext.getAttribute('id'))}" />
 <c:set var="path" value="${UrlUtils.putSecondInPath(pageContext.getAttribute('path'), pageContext.getAttribute('secondId'))}" />
+<c:set var="path" value="${UrlUtils.putSecondInPath(pageContext.getAttribute('path'), pageContext.getAttribute('thirdId'))}" />
+
 	<%-- If url has :id pattern, it will replace with value of id  --%>
 <c:choose>
 	<c:when test="${not empty disable}">

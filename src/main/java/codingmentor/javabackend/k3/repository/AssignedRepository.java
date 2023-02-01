@@ -29,6 +29,16 @@ public interface AssignedRepository {
     Assigned getAssignedById(int id);
     
 	/*
+	 * GET ITEM METHOD
+	 */
+    /**
+	 * @category ITEM
+     * Get department by Assigned's id
+     * @return Assigned if exists and null if not
+     */
+    Assigned getAssignedByAssignmentId(int assignmentId);
+    
+	/*
 	 * GET Check True/false METHOD
 	 */
     

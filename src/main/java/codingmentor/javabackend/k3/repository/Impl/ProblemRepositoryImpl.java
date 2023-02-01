@@ -143,9 +143,10 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 	@Override
 	public Problem getMaxProblemByAssignmentId(int assignment_id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM problems WHERE location = ( SELECT MAX(location) FROM problems where assignment_id = ?);";
+			final String query = "SELECT * FROM problems WHERE location = ( SELECT MAX(location) FROM problems where assignment_id = ?) and assignemnt_id = ?;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, assignment_id);
+		    statement.setInt(2, assignment_id);
 		    ResultSet results = statement.executeQuery();
 		    System.out.println("getMaxProblemByAssignmentId: " + statement);
 		    Problem problem = (results.next()) ? mapper.map(results) : null;
@@ -227,6 +228,25 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 			 statement.setInt(1, location);
 			 statement.setInt(2, problem_id);
 			 System.out.println("updateProblemLocationById: " + statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean updateProblemById(String title, double points, String grader_notes, int problem_id) {
+		return executeUpdate(connection -> {
+			 final String query = "UPDATE problems SET title = ?, points = ?, grader_notes = ? WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, title );
+			 statement.setDouble(2, points);
+			 statement.setString(3, grader_notes);
+			 statement.setInt(4, problem_id);
+			 System.out.println("updateProblemById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

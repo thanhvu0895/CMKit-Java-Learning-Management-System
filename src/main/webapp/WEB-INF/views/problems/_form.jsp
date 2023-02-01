@@ -1,6 +1,6 @@
 <c:choose>
 <c:when test="${not empty problem}">
-<t:form_with url="${UrlUtils.EDIT_ASSIGNMENT_PROBLEM_PATH}" id="${problem.id}" secondId="${assignment.id}" method="PATCH">
+<t:form_with url="${UrlUtils.ASSIGNMENT_PROBLEM_PATH}" id="${problem.id}" secondId="${assignment.id}" method="PATCH">
 
 <div class="form-group">
     <label for="problem_title">Title</label>

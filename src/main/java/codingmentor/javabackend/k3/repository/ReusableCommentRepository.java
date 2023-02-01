@@ -20,6 +20,15 @@ public interface ReusableCommentRepository {
     List<ReusableComment> getReusableComments();
     
     
+    /**
+     * @category LIST
+	 * Get list of ReusableComments by Problem Id
+	 *
+	 * @return a list of all ReusableComments if found or null
+	 */
+    List<ReusableComment> getReusableCommentsByProblemId(int problem_id);
+    
+    
 	/*
 	 * GET ITEM METHOD
 	 */
@@ -37,7 +46,7 @@ public interface ReusableCommentRepository {
     /**
 	 * @category CHECK
      */
-    
+    boolean existedByCommentAndProblemId(String comment, int problemId);
     /*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
 	 */

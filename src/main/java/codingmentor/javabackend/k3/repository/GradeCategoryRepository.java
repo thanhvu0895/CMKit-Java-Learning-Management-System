@@ -13,12 +13,19 @@ public interface GradeCategoryRepository {
     
     /**
 	 * @category LIST
-     * Get list of gradeCategory from user id
+     * Get list of gradeCategory from Course id
      * @param userId
      * @return
      */
-    public List<GradeCategory> getGradeCategoriesByCourseId(int courseId);
-    
+    List<GradeCategory> getGradeCategoriesByCourseId(int courseId);
+ 
+    /**
+ 	 * @category LIST
+      * Get list of gradeCategory from Klass's id
+      * @param userId
+      * @return
+      */
+    List<GradeCategory> getGradeCategoriesByKlassId(int klassId);
     
     /**
 	 * @category ITEM
@@ -26,7 +33,7 @@ public interface GradeCategoryRepository {
      * @param userId
      * @return
      */
-    public List<GradeCategory> getGradeCategoriesUsedByAssignmentInCourse(int courseId);
+    List<GradeCategory> getGradeCategoriesUsedByAssignmentInCourse(int courseId);
     
 	/*
 	 * GET ITEM METHOD
@@ -57,7 +64,7 @@ public interface GradeCategoryRepository {
      * @param gradeCategoryId
      * @return true if user is Admin of this gradeCategory, otherwise false
      */
-    public boolean isUsedByAssignment(int gradeCategoryId);
+    boolean isUsedByAssignment(int gradeCategoryId);
  
 	/*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
@@ -77,7 +84,7 @@ public interface GradeCategoryRepository {
 	 * @category PATCH
      * @return
      */
-    public boolean updateGradeCategoryById(String title, double weight, int gradeCategoryId);
+    boolean updateGradeCategoryById(String title, double weight, int gradeCategoryId);
     
     //DELETE
 	/**

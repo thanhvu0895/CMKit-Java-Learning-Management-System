@@ -52,10 +52,13 @@ public class UrlUtils {
 	public static final String ASSIGNMENT_PROBLEM_MOVE_UP_PATH = "/assignments/:assignment_id/problems/:id/move_up";
 	public static final String ASSIGNMENT_VIEW_COPY_RUBRIC_PATH = "/assignments/:assignment_id/copy_rubric";
 	
+	public static final String ASSIGNMENT_PROBLEM_RUBRIC_ITEMS_PATH = "/assignments/:assignment_id/problems/:id/rubric_items";
 	public static final String ASSIGNMENT_PROBLEM_RUBRIC_ITEM_PATH = "/assignments/:assignment_id/problems/:problem_id/rubric_items/:id";
 	public static final String ASSIGNMENT_PROBLEM_RUBRIC_ITEM_MOVE_UP_PATH = "/assignments/:assignment_id/problems/:problem_id/rubric_items/:id/move_up";
 	public static final String ASSIGNMENT_PROBLEM_RUBRIC_ITEM_MOVE_DOWN_PATH = "/assignments/:assignment_id/problems/:problem_id/rubric_items/:id/move_down";
 	
+	public static final String ASSIGNMENT_PROBLEM_REUSABLE_COMMENTS_PATH = "/assignments/:assignment_id/problems/:id/reusable_comments";
+	public static final String ASSIGNMENT_PROBLEM_REUSABLE_COMMENT_PATH = "/assignments/:assignment_id/problems/:problem_id/reusable_comments/:id";
 	
 	public static final String GRADERS_ALL_PATH = "/graders/*";
 	public static final String GRADERS_PATH = "/graders";
@@ -133,6 +136,7 @@ public class UrlUtils {
     	path = path.replaceFirst("\\:.*?id", String.valueOf(secondId));
     	return path;
     }
+    
     
     public static boolean isInteger(String str) {
 	    if (str == null) {

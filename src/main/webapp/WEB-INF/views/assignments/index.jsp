@@ -37,16 +37,17 @@
   </tr>
 </thead>
 <tbody>
-<%--   <% @klass_assignments.each do |a| %>
-	<%= render 'klasses/assignment_row', a: a %>
-  <% end %> --%>
+  <c:forEach var="a" items="${klass_assignments}" varStatus="loop">
+   <%@ include file="../klasses/_assignment_row.jsp" %>
+  </c:forEach>
+	
+
 </tbody>
 </table>
 
 <br>
-<%-- <% if @klass.course %> --%>
 	<p>
-	  <%-- <h4> <%=link_to "Assignments Inherited From Course:", @klass.course %> </h4> --%>
+	  <h4><t:link_to path="${UrlUtils.COURSES_PATH}/:id" id="${course.id}">Assignments Inherited From Course:</t:link_to></h4>
 	  <table class="table table-hover">
 		<thead>
 		  <tr>
@@ -61,13 +62,12 @@
 		  </tr>
 		</thead>
 		<tbody>
-		 <%--  <% @course_assignments.each do |a| %>
-			<%= render 'klasses/assignment_row', a: a %>
-		  <% end %> --%>
+		<c:forEach var="a" items="${course_assignments}">
+			<%@ include file="../klasses/_assignment_row.jsp" %>
+		</c:forEach>
 		</tbody>
 	  </table>
 	</p>
-<%-- <% end %> --%>
 
 
 </t:layoutj>

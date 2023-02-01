@@ -31,23 +31,23 @@ public class AccountsMailer {
 	    			+ "    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.\r\n"
 	    			+ "</p>\r\n"
 	    			+ "";
-//    	//TODO: COMMENT THIS PART BEFORE BUILD TO PRODUCTION SERVER
-//	    	
-//	    	/* BEGIN COMMENT FOR PRODUCTION */
-//			// Specify the file name and path here:
-//			File file = new File("C:\\xampp\\htdocs\\cmkit\\src\\main\\webapp\\log\\MailLog.txt");	 	
-//			/* This logic is to create the file if the
-//			 * file is not already present
-//			 */			
-//			if(!file.exists()){
-//				file.createNewFile();
-//			}	
-//	    	// Here true is to append the content to file		
-//			BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-//	    	bw.write(emailBody);
-//	    	// Closing BufferedWriter Stream
-//	    	bw.close();  	
-//	    	/* END COMMENT FOR PRODUCTION */
+    	//TODO: COMMENT THIS PART BEFORE BUILD TO PRODUCTION SERVER
+	    	
+	    	/* BEGIN COMMENT FOR PRODUCTION */
+			// Specify the file name and path here:
+			File file = new File("C:\\xampp\\htdocs\\cmkit\\src\\main\\webapp\\log\\MailLog.txt");	 	
+			/* This logic is to create the file if the
+			 * file is not already present
+			 */			
+			if(!file.exists()){
+				file.createNewFile();
+			}	
+	    	// Here true is to append the content to file		
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+	    	bw.write(emailBody);
+	    	// Closing BufferedWriter Stream
+	    	bw.close();  	
+	    	/* END COMMENT FOR PRODUCTION */
 	    	
 	      	mail(user.getEmail(), "Kit Password Reset", emailBody);
 			
@@ -77,22 +77,22 @@ public class AccountsMailer {
 	    			+ "</p>\r\n"
 	    			+ "\r\n"
 	    			+ "";
-//	    	//TODO: COMMENT THIS PART BEFORE BUILD TO PRODUCTION SERVER
-//			// Specify the file name and path here:
-//			File file = new File("C:\\xampp\\htdocs\\cmkit\\src\\main\\webapp\\log\\MailLog.txt");
-//		 	
-//			/* This logic is to create the file if the
-//			 * file is not already present
-//			 */
-//			
-//			if(!file.exists()){
-//				file.createNewFile();
-//			}
-//	    	// Here true is to append the content to file		
-//			BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
-//	    	bw.write(emailBody);
-//	    	// Closing BufferedWriter Stream
-//	    	bw.close();
+	    	//TODO: COMMENT THIS PART BEFORE BUILD TO PRODUCTION SERVER
+			// Specify the file name and path here:
+			File file = new File("C:\\xampp\\htdocs\\cmkit\\src\\main\\webapp\\log\\MailLog.txt");
+		 	
+			/* This logic is to create the file if the
+			 * file is not already present
+			 */
+			
+			if(!file.exists()){
+				file.createNewFile();
+			}
+	    	// Here true is to append the content to file		
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+	    	bw.write(emailBody);
+	    	// Closing BufferedWriter Stream
+	    	bw.close();
 	    	
 	    	mail(user.getEmail(), "Kit Account Setup", emailBody);    	
 		} catch (Exception e) {

@@ -98,6 +98,26 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		});
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Assignment> getAssignmentsByKlassId(int klassId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM assignments where klass_id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, klassId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getAssignmentsByKlassId: " + statement);
+			List<Assignment> assignmentsList = new ArrayList<>();
+			while(results.next()) {
+				assignmentsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return assignmentsList;
+		});
+	}
+	
 	/*
 	 * GET ITEM METHOD
 	 */
@@ -155,7 +175,84 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			int affectedRows = statement.executeUpdate();
 			
 			if (affectedRows == 0) {
-				throw new SQLException("Creating Department failed, no rows affected.");
+				throw new SQLException("Creating Assignment failed, no rows affected.");
+			}
+			
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+               return generatedKeys.getInt(1);
+            }
+            
+			close(connection, statement, generatedKeys);
+			return 0;
+		});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int insertAssignmentKlass(String title, int klass_id, Integer grade_category_id, int files_repo_id, int assignment_type, String permitted_filetypes, String description, int file_limit, int file_or_link) {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO assignments"
+					+ " (title, klass_id, grade_category_id, files_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link)"
+					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setString(1, title);
+			statement.setInt(2, klass_id);
+			statement.setObject(3, grade_category_id, Types.INTEGER);
+			statement.setInt(4, files_repo_id);
+			statement.setInt(5, assignment_type);
+			statement.setString(6, permitted_filetypes);
+			statement.setString(7, description);
+			statement.setInt(8, file_limit);
+			statement.setInt(9, file_or_link);
+			System.out.println("insertAssignmentKlass: " + statement);
+			ResultSet rs = statement.getGeneratedKeys();
+			rs.next();
+			int affectedRows = statement.executeUpdate();
+			
+			if (affectedRows == 0) {
+				throw new SQLException("Creating AssignmentKlass failed, no rows affected.");
+			}
+			
+			ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+               return generatedKeys.getInt(1);
+            }
+            
+			close(connection, statement, generatedKeys);
+			return 0;
+		});
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int insertStudentRepoAssignmentKlass(String title, int klass_id, Integer grade_category_id, int files_repo_id, int template_repo_id, int assignment_type, String permitted_filetypes, String description, int file_limit, int file_or_link) {
+		return executeUpdate(connection -> {
+			final String query = "INSERT INTO assignments"
+					+ " (title, klass_id, grade_category_id, files_repo_id, template_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link)"
+					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			statement.setString(1, title);
+			statement.setInt(2, klass_id);
+			statement.setObject(3, grade_category_id, Types.INTEGER);
+			statement.setInt(4, files_repo_id);
+			statement.setInt(5, template_repo_id);
+			statement.setInt(6, assignment_type);
+			statement.setString(7, permitted_filetypes);
+			statement.setString(8, description);
+			statement.setInt(9, file_limit);
+			statement.setInt(10, file_or_link);
+			System.out.println("insertStudentRepoAssignmentKlass: " + statement);
+			ResultSet rs = statement.getGeneratedKeys();
+			rs.next();
+			int affectedRows = statement.executeUpdate();
+			
+			if (affectedRows == 0) {
+				throw new SQLException("Creating StudentRepoAssignment failed, no rows affected.");
 			}
 			
 			ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -196,7 +293,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			int affectedRows = statement.executeUpdate();
 			
 			if (affectedRows == 0) {
-				throw new SQLException("Creating Department failed, no rows affected.");
+				throw new SQLException("Creating StudentRepoAssignment failed, no rows affected.");
 			}
 			
 			ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -209,6 +306,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		});
 	}
 
+	// PATCH(UPDATE)
 	/**
 	 * {@inheritDoc}
 	 */
@@ -249,10 +347,5 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			 close(connection, statement, null);
 			 return result;
 		}) != 0;
-	}
-	
-	// PATCH(UPDATE)
-	
-	
-	
+	}	
 }

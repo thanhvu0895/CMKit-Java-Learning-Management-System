@@ -79,6 +79,28 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 	 * {@inheritDoc}
 	 */
 	@Override
+	public List<GradeCategory> getGradeCategoriesByKlassId(int klassId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT GC.id, GC.title, GC.klass_id, GC.course_id, GC.weight FROM grade_categories as GC\r\n"
+					+ " INNER JOIN klasses as K \r\n"
+					+ "	ON GC.klass_id = K.id and K.id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, klassId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getGradeCategoriesByCourseId: " + statement);
+			List<GradeCategory> gradeCategoryList = new ArrayList<>();
+			while(results.next()) {
+				gradeCategoryList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return gradeCategoryList;
+		});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public List<GradeCategory> getGradeCategoriesUsedByAssignmentInCourse(int courseId) {
 		return executeQuery(connection -> {
 			final String query = "SELECT GC.title, GC.id, GC.title, GC.klass_id, GC.course_id, GC.weight FROM grade_categories as GC\r\n"

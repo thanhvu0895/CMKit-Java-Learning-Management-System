@@ -77,6 +77,29 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 		});
 	}
 	
+
+	/**
+	 * {@inheritDoc}
+	 */
+
+	@Override
+	public List<ReusableComment> getReusableCommentsByProblemId(int problem_id) {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM reusable_comments where problem_id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, problem_id);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getReusableCommentsByProblemId: " + statement);
+			List<ReusableComment> reusable_commentsList = new ArrayList<>();
+			while(results.next()) {
+				reusable_commentsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return reusable_commentsList;
+		});
+	}
+
+	
 	/*
 	 * GET ITEM METHOD
 	 */
@@ -91,16 +114,34 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
 		    System.out.println("getReusableCommentById: " + statement);
-		    ReusableComment ReusableComment = (results.next()) ? mapper.map(results) : null;
+		    ReusableComment reusableComment = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
-		    return ReusableComment;
+		    return reusableComment;
     	});
 	}
 	
 	/*
 	 * GET Check True/false METHOD
 	 */
-    
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean existedByCommentAndProblemId(String comment, int problemId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT 1 as ONE FROM reusable_comments WHERE comment = ? and problem_id = ? LIMIT 1;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, comment);
+			 statement.setInt(2, problemId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println("existedByCommentAndProblemId" + statement);
+			 ReusableComment reusableComment = (results.next()) ? new ReusableComment() : null;
+			 close(connection, statement, results);
+			 return reusableComment;
+		}) != null;
+	}
+	
+	
     /*
 	 * POST(CREATE) PATCH(UPDATE) METHODS
 	 */
@@ -122,6 +163,5 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 			return result;	
 		}) != 0;
 	}
-	//PATCH
-	    
+	//PATCH	    
 }
