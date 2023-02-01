@@ -2,7 +2,16 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
-<t:layoutj pageTitle="Copy Assignment To ${not empty klass ? (course.title + ' ' + klass.semester + ' section ' + klass.section) : course.title}">
+
+<c:set var="pageTitle" value="Copy Assignment To ${course.title}"/>
+
+<c:if test="${not empty klass}">
+  <c:set var="pageTitle" value="Copy Assignment To ${course.course_code}&nbsp${course.title}: ${klass.semester}&nbsp${klass.section}"/>
+</c:if>
+
+
+
+<t:layoutj pageTitle="${pageTitle}">
 <ol class="breadcrumb">
 <c:choose>
  <c:when test="${not empty klass}">

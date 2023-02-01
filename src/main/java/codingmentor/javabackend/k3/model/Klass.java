@@ -1,6 +1,12 @@
 package codingmentor.javabackend.k3.model;
 import java.time.LocalDate;
 
+import codingmentor.javabackend.k3.repository.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.ProfessorRepository;
+import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
+import codingmentor.javabackend.k3.repository.Impl.ProfessorRepositoryImpl;
+
+
 public class Klass {
 	private int id;
 	private int course_id;
@@ -13,6 +19,17 @@ public class Klass {
    /**
     * Repository Functions
     */
+	private ProfessorRepository professorRepository =  ProfessorRepositoryImpl.getInstance();
+	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
+	
+	/*
+	 * OTHER FUNCTIONS
+	 */
+	
+	public boolean isKlassAdmin(User current_user) {
+		Department department = departmentRepository.getDepartmentByCourseId(this.course_id);
+		return professorRepository.isProfessorByUserId(current_user.getId()) || departmentRepository.isDepartmentAdmin(current_user.getId(), department.getId());
+	}
 	
 	
 	/*

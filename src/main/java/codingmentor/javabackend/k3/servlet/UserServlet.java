@@ -121,11 +121,12 @@ public class UserServlet extends HttpServlet {
 					req.setAttribute("userid", id);
 					req.getRequestDispatcher(JspUtils.PASSWORD_RESET_SHOW_USE_PASSWORD_RESET)
 						.forward(req, resp);
-					return;
+					
 				}
-				
-				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
 			}
+			
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -217,10 +218,16 @@ public class UserServlet extends HttpServlet {
 		try {
 			String new_password = req.getParameter("new_password");
 			String new_password_confirmation = req.getParameter("new_password_confirmation");
+			String token = req.getParameter("token");
+			String userid = req.getParameter("user_id");
+			
+			User user = userRepository.findUserById(Integer.parseInt(userid));
+			
 			String baseUrl = req.getRequestURL().substring(0, req.getRequestURL().length() - req.getRequestURI().length()) + req.getContextPath();
 			String currentPath = baseUrl + UrlUtils.SHOW_USER_PASSWORD_RESET_PATH + "?token=" 
-					+ req.getSession(false).getAttribute("token") 
-					+  "&user=" + req.getSession(false).getAttribute("userid");
+					+ token
+					+  "&user=" + userid;
+			
 			if (new_password == "" || new_password_confirmation == "") {
 				req.getSession(false).setAttribute("alert", "New Password cannot be empty");
 				resp.sendRedirect(currentPath);
@@ -233,15 +240,15 @@ public class UserServlet extends HttpServlet {
 				return;
 			}
 			
-			int userid = (Integer) req.getSession(false).getAttribute("userid");
-			
-			User user = userRepository.findUserById(userid);
-			
 			if (user != null) {
 				userRepository.updatePassword(new_password_confirmation, user);
 				req.getSession(false).setAttribute("notice", "Password reset.");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.LOGIN_PATH);
+				return;
 			}
+			
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

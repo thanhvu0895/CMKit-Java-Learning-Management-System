@@ -2,5 +2,5 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page import="codingmentor.javabackend.k3.Utils.UrlUtils" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
-<t:layoutj pageTitle="${klass.course.title}: ${klass.semester} ${klass.section.to_s}) | Graders">
+<t:layoutj pageTitle="${klass.course.title}: ${klass.semester} ${klass.section}) | Graders">
 </t:layoutj>

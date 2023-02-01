@@ -134,7 +134,42 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 		    return rubricItem;
     	});
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public RubricItem getMaxRubricItemByProblemId(int problem_id) {
+		return executeQuerySingle(connection -> {
+			final String query = " SELECT * FROM rubric_items WHERE location = ( SELECT MAX(location) FROM rubric_items where problem_id = ?) and problem_id = ?;";
+		    PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, problem_id);
+		    statement.setInt(2, problem_id);
+		    ResultSet results = statement.executeQuery();
+		    System.out.println("getMaxRubricItemByProblemId: " + statement);
+		    RubricItem rubricitem = (results.next()) ? mapper.map(results) : null;
+		    close(connection, statement, results);
+		    return rubricitem;
+    	});
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public RubricItem getRubricItemByLocationAndProblemId(int location, int problem_id) {
+		return executeQuerySingle(connection -> {
+			final String query = "SELECT * FROM rubric_items WHERE location = ? and problem_id = ? LIMIT 1;";
+		    PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, location);
+		    statement.setInt(2, problem_id);
+		    ResultSet results = statement.executeQuery();
+		    System.out.println("getRubricItemByLocationAndProblemId: " + statement);
+		    RubricItem rubricItem = (results.next()) ? mapper.map(results) : null;
+		    close(connection, statement, results);
+		    return rubricItem;
+    	});
+	}
 
 	
 	/*
@@ -165,10 +200,39 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 		}) != 0;
 	}
 
-	
-
-	
-	
 	//PATCH
-	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean updateRubricItemById(String title, double points, int id) {
+		return executeUpdate(connection -> {
+			 final String query = "UPDATE rubric_items SET title = ?, points = ? WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setString(1, title);
+			 statement.setDouble(2, points);
+			 statement.setInt(3, id);
+			 System.out.println("updateRubricItemsById: " + statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean updateRubricItemLocationById(int location, int rubricItemId) {
+		return executeUpdate(connection -> {
+			 final String query = "UPDATE rubric_items SET location = ? WHERE id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, location);
+			 statement.setInt(2, rubricItemId);
+			 System.out.println("updateRubricItemLocationById: " + statement);
+			 int result = statement.executeUpdate();
+			 close(connection, statement, null);
+			 return result;
+		}) != 0;
+	}	
 }

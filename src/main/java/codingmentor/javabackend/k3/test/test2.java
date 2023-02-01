@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import codingmentor.javabackend.k3.Utils.DateValidatorDateTimeFormatter;
+import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.Assignment;
 
 public class test2 {
@@ -27,6 +28,14 @@ public class test2 {
 		System.out.println(ALL.get(0));
 		
 		System.out.println(AssignmentTypes.values()[0].toString());
+		
+		
+		String test = "/assignments/:assignment_id/problems/:problem_id/rubric_items/:id/move_up";
+		test = UrlUtils.putIdInPath(test, 1);
+		test = UrlUtils.putSecondInPath(test, 2);
+		test = UrlUtils.putSecondInPath(test, 3);
+		
+		System.out.println(test);
 	}
 	
 }

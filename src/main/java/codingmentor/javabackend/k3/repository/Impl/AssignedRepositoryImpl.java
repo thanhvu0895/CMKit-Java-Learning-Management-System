@@ -99,7 +99,15 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 		    return Assigned;
     	});
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Assigned getAssignedByAssignmentId(int assignmentId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	
 	/*

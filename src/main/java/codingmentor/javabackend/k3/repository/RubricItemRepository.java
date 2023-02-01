@@ -1,7 +1,6 @@
 package codingmentor.javabackend.k3.repository;
 
 import java.util.List;
-
 import codingmentor.javabackend.k3.model.RubricItem;
 
 
@@ -46,6 +45,21 @@ public interface RubricItemRepository {
      */
     RubricItem getRubricItemById(int id);
     
+    
+    /**
+  	 * @category ITEM
+     * Get Rubric Item by location and Problem's id
+     * @return Rubric Item if exists and null if not
+     */
+    RubricItem getRubricItemByLocationAndProblemId(int location, int problem_id);
+    
+    /**
+  	 * @category ITEM
+     * Get Rubric Item with Max Location By Problem id
+     * @return Rubric Item if exists and null if not
+     */
+    RubricItem getMaxRubricItemByProblemId(int problem_id);
+    
 	/*
 	 * GET Check True/false METHOD
 	 */
@@ -68,7 +82,17 @@ public interface RubricItemRepository {
     
     /**
      * @category PATCH
-	 */
+     * Update title and points of Rubric Item by id
+     * @return
+     */
+    boolean updateRubricItemById(String title, double points, int id);
+
+    /**
+     * @category PATCH
+     * Update location of Rubric Item by id
+     * @return
+     */
+    boolean updateRubricItemLocationById (int location, int rubricItemId);
     
     /**
 	 * @category DELETE

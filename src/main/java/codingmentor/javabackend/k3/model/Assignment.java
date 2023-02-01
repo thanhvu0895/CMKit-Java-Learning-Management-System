@@ -1,6 +1,10 @@
 package codingmentor.javabackend.k3.model;
 
+import java.util.List;
+
 import codingmentor.javabackend.k3.Utils.EnumUtils;
+import codingmentor.javabackend.k3.repository.ProblemRepository;
+import codingmentor.javabackend.k3.repository.Impl.ProblemRepositoryImpl;
 
 public class Assignment {
 	private int id;
@@ -17,8 +21,9 @@ public class Assignment {
 	private int file_or_link;
 	
    /**
-    * Repository Functions
+    * Repository and Enum Functions
     */
+	private ProblemRepository problemRepository =  ProblemRepositoryImpl.getInstance();
 	
 	public String getFileOrLinkString() {
 		return EnumUtils.file_or_linkEnum.values()[this.file_or_link].toString();		
@@ -28,6 +33,39 @@ public class Assignment {
 	public String getAssignmentType() {
 		return EnumUtils.assignment_typeEnum.values()[this.assignment_type].toString();		
 	}
+	
+	/*
+	 * OTHER FUNCTIONS
+	 */
+	
+
+	
+	public int getPointValue() {
+		int sum = 0;
+		List<Problem> problemsList = problemRepository.getProblemsByAssignmentId(this.id);
+		for (Problem problem : problemsList) {
+			sum += problem.getPoints();
+		}
+		
+		return sum;
+	}
+	
+	public boolean studentResponsible() {
+		return this.getFileOrLinkString().equals("student_file") || this.getFileOrLinkString().equals("student_repo"); 
+	}
+	
+	public boolean incompletePossible() {
+		return this.getFileOrLinkString().equals("student_repo");
+	}
+	
+	public boolean hasUploadedFiles() {
+		return this.getFileOrLinkString().equals("student_file") || this.getFileOrLinkString().equals("professor_file");
+	}
+	
+	
+	
+	
+	
 	
 	/*
 	 * Getters, Setters

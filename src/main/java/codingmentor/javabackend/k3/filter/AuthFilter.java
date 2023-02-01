@@ -79,7 +79,7 @@ public class AuthFilter implements Filter{
 	
 	private boolean isSetUpPage(HttpServletRequest request) { // if url = /login
 		String requestUrl = request.getRequestURL().toString();
-		return  requestUrl.endsWith("set_up") || requestUrl.endsWith("accept_invite");
+		return  requestUrl.endsWith("set_up") || requestUrl.endsWith("accept_invite") || requestUrl.endsWith("use_password_reset");
     }
 	
 	private boolean isInSession (HttpServletRequest req) { // if no user logged in yet

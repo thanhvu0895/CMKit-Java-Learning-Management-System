@@ -37,7 +37,13 @@ public interface ProfessorRepository {
      */
     Professor getProfessorById(int id);
     
-
+    /**
+	 * @category ITEM
+     * Get Professor by User id
+     * @return Professor if exists and null if not
+     */
+    Professor getProfessorByUserId(int userId);
+    
     
 	/*
 	 * GET Check True/false METHOD
@@ -45,6 +51,7 @@ public interface ProfessorRepository {
     /**
 	 * @category CHECK
      */
+    boolean isProfessorByUserId(int userId);
     
     /*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
