@@ -23,23 +23,28 @@ public interface UserRepository {
      * @param Department's id
      * @return
      */
-    public List<User> getUsersFromDepartmentId(int departmentId);
+    List<User> getUsersFromDepartmentId(int departmentId);
     
     /**
      * @category LIST
      * Get list of Klass Professor's User Details Admin given Klass's id
-     * @param Department's id
-     * @return
      */
-    public List<User> getUsersFromKlassId(int klassId);
+    List<User> getUsersFromKlassId(int klassId);
     
     /**
      * @category LIST
-     * Get list of Klass Professor's User Details Admin given Klass's id
-     * @param Department's id
+     * Get list of Grader Users details given Klass's id
      * @return
      */
-    public List<User> getGraderUsersByKlassId(int klassId);
+    List<User> getGraderUsersByKlassId(int klassId);
+    
+
+    /**
+     * @category LIST
+     * Get list of Student User Details given Klass's id
+     */
+    List<User> getStudentUsersByKlassId(int klassId);
+    
     
 	/*
 	 * GET Item
@@ -94,6 +99,20 @@ public interface UserRepository {
    	 * @return boolean if update successful or else false
    	 */
     boolean isKlassProfessorByKlassId(int userId, int klassId);
+
+    /**
+     * @category CHECK
+   	 * Check if user is Grader by KlassId
+   	 * @return true if is a Grader of a specific class, false otherwise
+   	 */
+    boolean isKlassGraderByKlassId(int userId, int klassId);
+    
+    /**
+     * @category CHECK
+   	 * Check if user is Student by KlassId
+   	 * @return true if is a Student of a specific class, false otherwise
+   	 */
+    boolean isKlassStudentByKlassId(int userId, int klassId);
     
     /*
      * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS

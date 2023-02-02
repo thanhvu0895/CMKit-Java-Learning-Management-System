@@ -364,7 +364,7 @@ public class DepartmentServlet extends HttpServlet{
 			}
 			req.getSession(false).setAttribute("notice", added.size() + " professors added: " + String.join(",", added) + ";" 
 					+ invited.size() + " professors invited: " + String.join(",", invited) + ";");
-			req.getSession(false).setAttribute("alert", "Failed to add " + failed.size() + " professors: " + String.join(",", added) + ";");
+			req.getSession(false).setAttribute("alert", "Failed to add " + failed.size() + " professors: " + String.join(",", failed) + ";");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_DEPARTMENT_PATH, departmentId));
 		} catch (Exception e) {
 			e.printStackTrace();

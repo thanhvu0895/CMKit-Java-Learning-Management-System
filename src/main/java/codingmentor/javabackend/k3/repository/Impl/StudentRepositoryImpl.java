@@ -75,6 +75,28 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 		});
 	}
 	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+
+	@Override
+	public List<Student> getStudentsByKlassId(int klassId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT * FROM students WHERE klass_id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, klassId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getStudentsByKlassId: " + statement);
+			List<Student> studentsList = new ArrayList<>();
+			while(results.next()) {
+				studentsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return studentsList;
+		});
+	}
+	
 	/*
 	 * GET ITEM METHOD
 	 */
@@ -130,6 +152,8 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 				return 0;
 			});
 	 }
+
+
 	
 	//PATCH
 	    

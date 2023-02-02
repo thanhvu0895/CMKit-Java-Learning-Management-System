@@ -9,8 +9,6 @@
   <c:set var="pageTitle" value="Copy Assignment To ${course.course_code}&nbsp${course.title}: ${klass.semester}&nbsp${klass.section}"/>
 </c:if>
 
-
-
 <t:layoutj pageTitle="${pageTitle}">
 <ol class="breadcrumb">
 <c:choose>

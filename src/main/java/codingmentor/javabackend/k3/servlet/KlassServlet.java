@@ -2,6 +2,7 @@ package codingmentor.javabackend.k3.servlet;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,8 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import codingmentor.javabackend.k3.Utils.AccountsMailer;
 import codingmentor.javabackend.k3.Utils.DateValidatorDateTimeFormatter;
 import codingmentor.javabackend.k3.Utils.JspUtils;
+import codingmentor.javabackend.k3.Utils.RandomUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.Assignment;
 import codingmentor.javabackend.k3.model.Course;
@@ -20,6 +23,7 @@ import codingmentor.javabackend.k3.model.GradeCategory;
 import codingmentor.javabackend.k3.model.Grader;
 import codingmentor.javabackend.k3.model.Klass;
 import codingmentor.javabackend.k3.model.Professor;
+import codingmentor.javabackend.k3.model.Student;
 import codingmentor.javabackend.k3.model.User;
 import codingmentor.javabackend.k3.repository.AssignmentRepository;
 import codingmentor.javabackend.k3.repository.CourseRepository;
@@ -29,6 +33,7 @@ import codingmentor.javabackend.k3.repository.GraderRepository;
 import codingmentor.javabackend.k3.repository.KlassRepository;
 import codingmentor.javabackend.k3.repository.ProfessorRepository;
 import codingmentor.javabackend.k3.repository.RepoRepository;
+import codingmentor.javabackend.k3.repository.StudentRepository;
 import codingmentor.javabackend.k3.repository.UserRepository;
 import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
@@ -38,12 +43,15 @@ import codingmentor.javabackend.k3.repository.Impl.GraderRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.KlassRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.ProfessorRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
+import codingmentor.javabackend.k3.repository.Impl.StudentRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 
 
 @WebServlet(urlPatterns = {
 	UrlUtils.KLASSES_ALL_PATH,
 	UrlUtils.NEW_KLASS_PATH,
+	UrlUtils.GRADERS_ALL_PATH,
+	UrlUtils.STUDENTS_ALL_PATH
 })
 public class KlassServlet extends HttpServlet {
 
@@ -57,6 +65,7 @@ public class KlassServlet extends HttpServlet {
 	private AssignmentRepository assignmentRepository = null;
 	private GradeCategoryRepository gradeCategoryRepository = null;
 	private GraderRepository graderRepository = null;
+	private StudentRepository studentRepository = null;
 	
 	@Override
 	public void init() throws ServletException {
@@ -70,6 +79,7 @@ public class KlassServlet extends HttpServlet {
 		assignmentRepository = AssignmentRepositoryImpl.getInstance();
 		gradeCategoryRepository = GradeCategoryRepositoryImpl.getInstance();
 		graderRepository = GraderRepositoryImpl.getInstance();
+		studentRepository = StudentRepositoryImpl.getInstance();
 	}
 	
 	@Override
@@ -186,17 +196,20 @@ public class KlassServlet extends HttpServlet {
 				return;
 			}
 			
+			Course course = courseRepository.getCourseByKlassId(klassId);
+			
 			List<Assignment> klassAssignmentsList = assignmentRepository.getAssignmentsByKlassId(klassId);
 			List<Assignment> courseAssignmentList = assignmentRepository.getAssignmentsByCourseId(klass.getCourse_id());
 			List<GradeCategory> klassGradeCategoriesList = gradeCategoryRepository.getGradeCategoriesByKlassId(klassId);
 			List<GradeCategory> courseGradeCategoriesList = gradeCategoryRepository.getGradeCategoriesByCourseId(klass.getCourse_id());
-			Course course = courseRepository.getCourseByKlassId(klassId);
+			
 			req.setAttribute("klass", klass);
 			req.setAttribute("course", course);
 			req.setAttribute("klass_grade_categories", klassGradeCategoriesList);
 			req.setAttribute("course_grade_categories", courseGradeCategoriesList);
 			req.setAttribute("klass_assignments", klassAssignmentsList);
 			req.setAttribute("course_assignments", courseAssignmentList);
+			
 			req.getRequestDispatcher(JspUtils.ASSIGNMENTS_INDEX)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -214,8 +227,14 @@ public class KlassServlet extends HttpServlet {
 				return;
 			}
 			
+			Course course = courseRepository.getCourseByKlassId(klassId);
+			
+			req.setAttribute("klass", klass);
+			req.setAttribute("course", course);
+			
 			req.getRequestDispatcher(JspUtils.KLASSES_FILES)
 				.forward(req, resp);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -231,6 +250,12 @@ public class KlassServlet extends HttpServlet {
 				return;
 			}
 			
+			Course course = courseRepository.getCourseByKlassId(klassId);
+			List<GradeCategory> klassGradeCategoriesList = gradeCategoryRepository.getGradeCategoriesByKlassId(klassId);
+			
+			req.setAttribute("klass_grade_categories", klassGradeCategoriesList);
+			req.setAttribute("klass", klass);
+			req.setAttribute("course", course);
 			req.getRequestDispatcher(JspUtils.KLASSES_GRADE_BOOK)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -261,13 +286,16 @@ public class KlassServlet extends HttpServlet {
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 				return;
 			}
+			
 			Course course = courseRepository.getCourseByKlassId(klassId);
 			List<Grader> gradersList = graderRepository.getGradersByKlassId(klassId);
 			List<User> graderUsersList = userRepository.getGraderUsersByKlassId(klassId);
-			req.setAttribute("grader_users", graderUsersList);
+			
 			req.setAttribute("course", course);
 			req.setAttribute("klass", klass);
 			req.setAttribute("graders", gradersList);
+			req.setAttribute("grader_users", graderUsersList);
+			
 			req.getRequestDispatcher(JspUtils.GRADERS_INDEX)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -283,6 +311,25 @@ public class KlassServlet extends HttpServlet {
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 				return;
 			}
+			
+			Course course = courseRepository.getCourseByKlassId(klassId);
+			
+			List<Student> studentsList = studentRepository.getStudentsByKlassId(klassId);
+			List<User> studentUsersList = userRepository.getStudentUsersByKlassId(klassId);
+			List<String> studentEmailsList = new ArrayList<>();
+			
+			for (User user : studentUsersList) {
+				studentEmailsList.add(user.getEmail()); 
+			}
+			
+			String studentEmailsString = String.join(",", studentEmailsList);
+			
+			req.setAttribute("course", course);
+			req.setAttribute("klass", klass);
+			req.setAttribute("students", studentsList);
+			req.setAttribute("student_users", studentUsersList);
+			req.setAttribute("student_emails", studentEmailsString);
+			
 			req.getRequestDispatcher(JspUtils.STUDENTS_INDEX)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -293,6 +340,7 @@ public class KlassServlet extends HttpServlet {
 	private void getKlassNew(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			String courseIdString = req.getParameter("course");
+			
 			if (UrlUtils.isInteger(courseIdString)) {
 				int courseId = Integer.parseInt(courseIdString);
 				Course course = courseRepository.getCourseById(courseId);
@@ -301,6 +349,7 @@ public class KlassServlet extends HttpServlet {
 					resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 					return;
 				}
+				
 				req.setAttribute("course", course);
 				req.setAttribute("departmentid", course.getDepartment_id());
 				req.getRequestDispatcher(JspUtils.KLASSES_NEW)
@@ -316,6 +365,7 @@ public class KlassServlet extends HttpServlet {
 		switch(req.getServletPath()) {
 		case UrlUtils.KLASSES_PATH:
 			String pathInfo = req.getPathInfo();
+			
 			if (pathInfo == null || pathInfo.equals("/")) {
 				postKlassCreate(req, resp);
 				return;
@@ -335,6 +385,13 @@ public class KlassServlet extends HttpServlet {
 					break;
 				}
 			}
+		break;
+		case UrlUtils.GRADERS_PATH:
+			postGraderCreate(req, resp);
+			break;
+		case UrlUtils.STUDENTS_PATH:
+			postStudentCreate(req, resp);
+			break;			
 		}
 	}
 	
@@ -387,6 +444,7 @@ public class KlassServlet extends HttpServlet {
 			
 			LocalDate klassStartDate = LocalDate.of(klassStartYear, klassStartMonth, klassStartDay);
 			LocalDate klassEndDate = LocalDate.of(klassEndYear, klassEndMonth, klassEndDay);
+			
 			int repoId = repoRepository.insertRepo();
 			if (repoId != -1) {
 				int klassId = klassRepository.insertKlass(klassCourseId, repoId, klassSemester, klassSection, klassStartDate, klassEndDate);
@@ -395,6 +453,7 @@ public class KlassServlet extends HttpServlet {
 				req.getSession(false).setAttribute("notice", "Class was successfully created.");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putSecondInPath(UrlUtils.KLASS_ASSIGNMENTS_PATH, klassId));
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -402,7 +461,6 @@ public class KlassServlet extends HttpServlet {
 	
 	private void patchKlassUpdate(HttpServletRequest req, HttpServletResponse resp, int klassId) throws IOException {
 		try {
-			System.out.println("HIT");
 			Klass klass = klassRepository.getKlassById(klassId);
 			
 			if (klass == null) {
@@ -466,6 +524,180 @@ public class KlassServlet extends HttpServlet {
 	
 	private void deleteKlassDestroy(HttpServletRequest req, HttpServletResponse resp, int klassId) throws IOException {
 		try {
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void postGraderCreate(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		try {
+			//#Counters for success message
+			List<String> added = new ArrayList<>();
+			List<String> invited = new ArrayList<>();
+			List<String> failed = new ArrayList<>();
+			String token = RandomUtils.unique64();
+			
+			String[] graderEmailsList = req.getParameter("emails")
+					.replaceAll("\\s","")
+					.split(",");
+			
+			String klassIdString = req.getParameter("klass_id");
+			int klassId = Integer.parseInt(klassIdString);
+			
+			for (String email : graderEmailsList) {
+				if (email == "") {
+					continue;
+				}
+				
+				email = email.toLowerCase();
+				User u = userRepository.findUserByEmail(email);
+				
+				if (u != null  && !u.isDeleted() && !userRepository.isKlassGraderByKlassId(u.getId(), klassId)) {
+					// User already exists and not a klass grader
+					int newKlassGraderId = graderRepository.insertGrader(u.getId(), klassId);
+					
+					if (newKlassGraderId == 0) {
+						failed.add(email);
+					} else {
+						added.add(email);
+					}
+					
+					continue;
+				}
+				
+				if (u == null) {
+					boolean inviteSent = userRepository.createUserSendInvite(email, false);
+					u =  userRepository.findUserByEmail(email);
+					int new_user_id = u.getId();
+					userRepository.updateResetDigest(new_user_id, RandomUtils.SHA256Base64(token));
+					AccountsMailer.inviteUserEmail(req, u, token);
+					if (inviteSent) {
+						int newGraderId = graderRepository.insertGrader(new_user_id, klassId);
+						if (newGraderId != 0) {
+							invited.add(email);
+						} else {
+							failed.add(email);
+						}
+					} else {
+						failed.add(email);
+					}
+					continue;		
+				}
+				
+				
+				if (u.isDeleted()) {
+					boolean recoverUser = userRepository.recoverUser(u.getId());
+					if (recoverUser) {
+						userRepository.updateResetDigest(u.getId(), RandomUtils.SHA256Base64(token));
+						AccountsMailer.inviteUserEmail(req, u, token);
+						invited.add(email);
+						if (!userRepository.isKlassGraderByKlassId(u.getId(), klassId)) {
+							int newGraderId = graderRepository.insertGrader(u.getId(), klassId); 
+							if (newGraderId != 0) {
+								invited.add(email);	
+							} else {
+								failed.add(email);
+							}
+						}
+					} else {
+						failed.add(email);
+					}
+					continue;
+				}
+			}
+			
+			req.getSession(false).setAttribute("notice", added.size() + " graders added: " + String.join(",", added) + ";" 
+					+ invited.size() + " graders invited: " + String.join(",", invited) + ";");
+			req.getSession(false).setAttribute("alert", "Failed to add " + failed.size() + " graders: " + String.join(",", failed) + ";");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.putSecondInPath(UrlUtils.KLASS_GRADERS_PATH, klassId));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void postStudentCreate(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		try {
+			//#Counters for success message
+			List<String> added = new ArrayList<>();
+			List<String> invited = new ArrayList<>();
+			List<String> failed = new ArrayList<>();
+			String token = RandomUtils.unique64();
+			
+			String[] studentEmailsList = req.getParameter("emails")
+					.replaceAll("\\s","")
+					.split(",");
+			
+			String klassIdString = req.getParameter("klass_id");
+			int klassId = Integer.parseInt(klassIdString);
+			
+			for (String email : studentEmailsList) {
+				if (email == "") {
+					continue;
+				}
+				
+				email = email.toLowerCase();
+				User u = userRepository.findUserByEmail(email);
+				
+				if (u != null  && !u.isDeleted() && !userRepository.isKlassStudentByKlassId(u.getId(), klassId)) {
+					// User already exists and not a klass student
+					int newKlassStudentId = studentRepository.insertStudent(u.getId(), klassId);
+					
+					if (newKlassStudentId == 0) {
+						failed.add(email);
+					} else {
+						added.add(email);
+					}
+					
+					continue;
+				}
+				
+				if (u == null) {
+					boolean inviteSent = userRepository.createUserSendInvite(email, false);
+					u =  userRepository.findUserByEmail(email);
+					int new_user_id = u.getId();
+					userRepository.updateResetDigest(new_user_id, RandomUtils.SHA256Base64(token));
+					AccountsMailer.inviteUserEmail(req, u, token);
+					if (inviteSent) {
+						int newStudentId = studentRepository.insertStudent(new_user_id, klassId);
+						if (newStudentId != 0) {
+							invited.add(email);
+						} else {
+							failed.add(email);
+						}
+					} else {
+						failed.add(email);
+					}
+					continue;		
+				}
+				
+				
+				if (u.isDeleted()) {
+					boolean recoverUser = userRepository.recoverUser(u.getId());
+					if (recoverUser) {
+						userRepository.updateResetDigest(u.getId(), RandomUtils.SHA256Base64(token));
+						AccountsMailer.inviteUserEmail(req, u, token);
+						invited.add(email);
+						if (!userRepository.isKlassStudentByKlassId(u.getId(), klassId)) {
+							int newStudentId = studentRepository.insertStudent(u.getId(), klassId); 
+							if (newStudentId != 0) {
+								invited.add(email);	
+							} else {
+								failed.add(email);
+							}
+						}
+					} else {
+						failed.add(email);
+					}
+					continue;
+				}
+			}
+			
+			req.getSession(false).setAttribute("notice", added.size() + " students added: " + String.join(",", added) + ";" 
+					+ invited.size() + " students invited: " + String.join(",", invited) + ";");
+			req.getSession(false).setAttribute("alert", "Failed to add " + failed.size() + " students: " + String.join(",", failed) + ";");
+			resp.sendRedirect(req.getContextPath() + UrlUtils.putSecondInPath(UrlUtils.KLASS_STUDENTS_PATH, klassId));
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

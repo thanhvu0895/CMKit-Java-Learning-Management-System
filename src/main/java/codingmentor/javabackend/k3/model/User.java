@@ -26,6 +26,7 @@ public class User implements Serializable {
     private boolean set_up;
     private boolean disabled;
     private boolean deleted;
+    private int assigned_assignments;
     
     /**
      * Repository Functions
@@ -155,6 +156,10 @@ public class User implements Serializable {
 		return id;
 	}
 
+	public int getAssigned_assignments() {
+		return assigned_assignments;
+	}
+
 	public String getEmail() {
 		return email.toLowerCase();
 	}
@@ -206,6 +211,11 @@ public class User implements Serializable {
 	
     public User id(int id) {
         this.id = id;
+        return this;
+    }
+    
+    public User assigned_assignments(int assigned_assignments) {
+        this.assigned_assignments = assigned_assignments;
         return this;
     }
 	

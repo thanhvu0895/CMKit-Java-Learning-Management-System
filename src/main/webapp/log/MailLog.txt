@@ -9,3 +9,59 @@
 <br><br>
     Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
 </p>
+<p>
+    Dear hanh@gmail.com,
+<br><br>
+    You have been invited to create an account on the Kit platform. To create your account, please follow the link below:
+<br>
+    <a href=http://localhost:8080/cmkit/users/74/set_up?token=c5f5655a59705cd0d71c2b35ae67f41c8ea73ac1de7c36788ca8141c2941533c> http://localhost:8080/cmkit/users/74/set_up?token=c5f5655a59705cd0d71c2b35ae67f41c8ea73ac1de7c36788ca8141c2941533c </a>
+<br><br>
+    You will be prompted for your name and asked to create a password. Once you have set up your account, you can log in using your email (hanh@gmail.com) and password at http://localhost:8080/cmkit.
+<br><br>
+    If you have any trouble setting up an account or have a question, please contact your professor.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>
+
+<p>
+    Dear vu@gmail.com,
+<br><br>
+    You have been invited to create an account on the Kit platform. To create your account, please follow the link below:
+<br>
+    <a href=http://localhost:8080/cmkit/users/75/set_up?token=c5f5655a59705cd0d71c2b35ae67f41c8ea73ac1de7c36788ca8141c2941533c> http://localhost:8080/cmkit/users/75/set_up?token=c5f5655a59705cd0d71c2b35ae67f41c8ea73ac1de7c36788ca8141c2941533c </a>
+<br><br>
+    You will be prompted for your name and asked to create a password. Once you have set up your account, you can log in using your email (vu@gmail.com) and password at http://localhost:8080/cmkit.
+<br><br>
+    If you have any trouble setting up an account or have a question, please contact your professor.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>
+
+<p>
+    Dear ammang123@gmail.com,
+<br><br>
+    You have been invited to create an account on the Kit platform. To create your account, please follow the link below:
+<br>
+    <a href=http://localhost:8080/cmkit/users/76/set_up?token=a1dcb07c217a6a9c8613807391e8c213fa1d1be61f48cfb889089c017b42b556> http://localhost:8080/cmkit/users/76/set_up?token=a1dcb07c217a6a9c8613807391e8c213fa1d1be61f48cfb889089c017b42b556 </a>
+<br><br>
+    You will be prompted for your name and asked to create a password. Once you have set up your account, you can log in using your email (ammang123@gmail.com) and password at http://localhost:8080/cmkit.
+<br><br>
+    If you have any trouble setting up an account or have a question, please contact your professor.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>
+
+<p>
+    Dear anmang123@gmail.com,
+<br><br>
+    You have been invited to create an account on the Kit platform. To create your account, please follow the link below:
+<br>
+    <a href=http://localhost:8080/cmkit/users/77/set_up?token=f03988f1d4f60d618e4c6643aa3ea7a4a9714d011db890db941268a604a65b9a> http://localhost:8080/cmkit/users/77/set_up?token=f03988f1d4f60d618e4c6643aa3ea7a4a9714d011db890db941268a604a65b9a </a>
+<br><br>
+    You will be prompted for your name and asked to create a password. Once you have set up your account, you can log in using your email (anmang123@gmail.com) and password at http://localhost:8080/cmkit.
+<br><br>
+    If you have any trouble setting up an account or have a question, please contact your professor.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>
+

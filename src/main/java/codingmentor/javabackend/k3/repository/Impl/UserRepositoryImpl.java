@@ -130,15 +130,41 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		});
 	}
 	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<User> getStudentUsersByKlassId(int klassId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted from students as S"
+					+ "	INNER JOIN users AS U"
+					+ " ON S.user_id = U.id and S.klass_id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, klassId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getStudentUsersByKlassId: " + statement);
+			List<User> usersList = new ArrayList<>();
+			while(results.next()) {
+				usersList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return usersList;
+		});
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public List<User> getGraderUsersByKlassId(int klassId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted FROM graders as G\r\n"
-					+ " INNER JOIN users as U\r\n"
-					+ "	ON U.id = G.user_id AND G.klass_id = ?;";
+			final String query = "SELECT T1.*, ifnull(T2.assigned_assignments, 0) as assigned_assignments\r\n"
+					+ "FROM (SELECT U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted \r\n"
+					+ "	from graders as G INNER JOIN users as U ON U.id = G.user_id AND G.klass_id = ?) AS T1\r\n"
+					+ "LEFT JOIN (SELECT A.user_id, count(user_id) as assigned_assignments\r\n"
+					+ "	from (SELECT AG.* FROM assigned_graders as AG INNER JOIN assigneds as S ON AG.assigned_id = S.id) as A group by user_id) AS T2\r\n"
+					+ "ON T1.id = T2.user_id;";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
@@ -251,6 +277,43 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			 return user;
 		}) != null;
 	 }
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isKlassStudentByKlassId(int userId, int klassId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT 1 AS one FROM students WHERE user_id = ? and klass_id = ? LIMIT 1;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 statement.setInt(2, klassId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println("isKlassStudentByKlassId: " + statement);
+			 User user = (results.next()) ? new User() : null;
+			 close(connection, statement, results);
+			 return user;
+		}) != null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isKlassGraderByKlassId(int userId, int klassId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "SELECT 1 AS one FROM graders WHERE user_id = ? and klass_id = ? LIMIT 1;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 statement.setInt(2, klassId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println("isKlassGraderByKlassId: " + statement);
+			 User user = (results.next()) ? new User() : null;
+			 close(connection, statement, results);
+			 return user;
+		}) != null;
+	}
+	
 	
 	/**
 	 * {@inheritDoc}
