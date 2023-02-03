@@ -30,7 +30,7 @@
   <tr id="header1" style="position:sticky;top:0;background:white;z-index:1">
 	  <th style="border-right: solid;border-bottom:hidden;background:white;left:0;position:sticky"></th>
 	  <c:forEach var="cat" items="${klass_grade_categories}">
-	    <th class="text-center" colspan="" style="border-right: solid"> ${cat.title } (${cat.weight}%) </th>
+	    <th class="text-center" colspan="" style="border-right: solid"> ${cat.title} (${cat.weight}%) </th>
 	  </c:forEach>
 	  <th style="border-left:double;border-bottom:hidden"></th>
   </tr>
@@ -86,7 +86,5 @@
 </script>
 
 <div> <!-- Reopen main layout div -->
-	  
-  
 
 </t:layoutj>

@@ -21,7 +21,7 @@ public class AssignedMapper implements RowMapper<Assigned> {
 			.repo_id(results.getInt("repo_id"))
 			.limit_resubmissions(results.getBoolean("limit_resubmissions"))
 			.resubmission_limit(results.getInt("resubmission_limit"))
-			.allow_resubmissions(results.getBoolean("allow_resubmissions"))
+			.allow_resubmissions(results.getInt("allow_resubmissions"))
 			.hide_grades(results.getBoolean("hide_grades"));
 	}
 }

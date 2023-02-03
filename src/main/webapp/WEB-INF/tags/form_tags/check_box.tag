@@ -8,7 +8,7 @@
 	<c:when test="${not empty model}">
 		<c:choose>
 			<c:when test="${value}">
-				<input name="${model}[${check_box}]" type="hidden" value="0" /> <%-- SENDING TO database --%>
+				<input name="${model}[${check_box}]" type="hidden" value="0" />
 				<input type="checkbox" value="1" checked="checked" name="${model}[${check_box}]" id="${model}_${check_box}" />
 			</c:when>
 			<c:otherwise>	

@@ -37,6 +37,8 @@
   </tr>
 </thead>
 <tbody>
+  <c:set var="grade_categories" value="${klass_grade_categories}" />
+  <c:set var="assigneds" value="${klass_assigneds}" />
   <c:forEach var="a" items="${klass_assignments}" varStatus="loop">
    <%@ include file="../klasses/_assignment_row.jsp" %>
   </c:forEach>
@@ -62,12 +64,12 @@
 		  </tr>
 		</thead>
 		<tbody>
-		<c:forEach var="a" items="${course_assignments}">
+		<c:set var="grade_categories" value="${course_grade_categories}"/>
+		<c:forEach var="a" items="${course_assignments}" varStatus="loop">
 			<%@ include file="../klasses/_assignment_row.jsp" %>
 		</c:forEach>
 		</tbody>
 	  </table>
 	</p>
-
 
 </t:layoutj>

@@ -40,8 +40,8 @@ public class Assignment {
 	
 
 	
-	public int getPointValue() {
-		int sum = 0;
+	public double getPointValue() {
+		double sum = 0;
 		List<Problem> problemsList = problemRepository.getProblemsByAssignmentId(this.id);
 		for (Problem problem : problemsList) {
 			sum += problem.getPoints();
@@ -51,21 +51,17 @@ public class Assignment {
 	}
 	
 	public boolean studentResponsible() {
-		return this.getFileOrLinkString().equals("student_file") || this.getFileOrLinkString().equals("student_repo"); 
+		return this.getAssignmentType().equals("student_file") || this.getAssignmentType().equals("student_repo"); 
 	}
 	
 	public boolean incompletePossible() {
-		return this.getFileOrLinkString().equals("student_repo");
+		return this.getAssignmentType().equals("student_repo");
 	}
 	
 	public boolean hasUploadedFiles() {
-		return this.getFileOrLinkString().equals("student_file") || this.getFileOrLinkString().equals("professor_file");
+		return this.getAssignmentType().equals("student_file") || this.getAssignmentType().equals("professor_file");
 	}
-	
-	
-	
-	
-	
+		
 	
 	/*
 	 * Getters, Setters

@@ -105,7 +105,7 @@ public class CourseServlet extends HttpServlet{
 			Department department = departmentRepository.getDepartmentById(course.getDepartment_id());
 			List<Assignment> assignments = assignmentRepository.getAssignmentsByCourseId(courseId);
 			
-			List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesUsedByAssignmentInCourse(courseId);
+			List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesUsedByAssignmentsInCourse(courseId);
 			req.setAttribute("course_grade_categories", gradeCategoriesList);
 			req.setAttribute("course", course);
 			req.setAttribute("department", department);
@@ -146,7 +146,7 @@ public class CourseServlet extends HttpServlet{
 			}
 			
 			Department department = departmentRepository.getDepartmentById(course.getDepartment_id());
-			List<GradeCategory> course_grade_categories = gradeCategoryRepository.getGradeCategoriesByCourseId(courseId); 
+			List<GradeCategory> course_grade_categories = gradeCategoryRepository.getGradeCategoriesUsedByAssignmentsInCourse(courseId); 
 			req.setAttribute("course", course);
 			req.setAttribute("department", department);
 			req.setAttribute("course_grade_categories", course_grade_categories);

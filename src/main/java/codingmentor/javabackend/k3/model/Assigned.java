@@ -2,6 +2,10 @@ package codingmentor.javabackend.k3.model;
 
 import java.time.LocalDateTime;
 
+import codingmentor.javabackend.k3.Utils.EnumUtils;
+import codingmentor.javabackend.k3.repository.AssignmentRepository;
+import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
+
 public class Assigned {
 	private int id;
 	private int assignment_id;
@@ -14,11 +18,31 @@ public class Assigned {
 	private int repo_id;
 	private boolean limit_resubmissions;
 	private int resubmission_limit;
-	private boolean allow_resubmissions;
+	private int allow_resubmissions;
 	private boolean hide_grades;
+
    /**
     * Repository Functions
     */
+	private AssignmentRepository assignmentRepository =  AssignmentRepositoryImpl.getInstance();
+	
+	public String getAllowResubmissions() {
+		return EnumUtils.allow_resubmissionsEnum.values()[this.allow_resubmissions].toString();
+	}
+	
+	/**
+	 *  OTHER FUNCTIONS:
+	 */
+
+	// #Get actual maximum points after adjusted
+	public double getAdjustedMaxGrade() {
+		return (!Double.isNaN(point_value_scale)) ? this.point_value_scale : getUnscaledMaxGrade();
+	}
+	
+	//   #Get max points, either from override or total of problems
+	public double getUnscaledMaxGrade() {
+		return (!Double.isNaN(point_value_scale)) ? this.max_points_override : assignmentRepository.getAssignmentById(this.assignment_id).getPointValue();
+	}
 	
 	/*
 	 * Getters, Setters
@@ -68,10 +92,11 @@ public class Assigned {
 		return resubmission_limit;
 	}
 	
-	public boolean isAllow_resubmissions() {
+	
+	public int getAllow_resubmissions() {
 		return allow_resubmissions;
 	}
-	
+
 	public boolean isHide_grades() {
 		return hide_grades;
 	}
@@ -134,7 +159,7 @@ public class Assigned {
 	    return this;
 	}
 	
-	public Assigned allow_resubmissions(boolean allow_resubmissions) {
+	public Assigned allow_resubmissions(int allow_resubmissions) {
 	    this.allow_resubmissions = allow_resubmissions;
 	    return this;
 	}

@@ -75,19 +75,44 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 		});
 	}
 	
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<GradeCategory> getGradeCategoriesByKlassId(int klassId) {
+	public List<GradeCategory> getGradeCategoriesUsedByAssignmentsInCourse(int courseId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT GC.id, GC.title, GC.klass_id, GC.course_id, GC.weight FROM grade_categories as GC\r\n"
-					+ " INNER JOIN klasses as K \r\n"
-					+ "	ON GC.klass_id = K.id and K.id = ?;";
+			final String query = "SELECT A.id as AssignmentId, GC.id, GC.weight, GC.title, GC.klass_id, GC.course_id FROM assignments as A\r\n"
+					+ " LEFT JOIN grade_categories as GC\r\n"
+					+ " ON A.grade_category_id = GC.id\r\n"
+					+ " where A.course_id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, courseId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getGradeCategoriesUsedByAssignmentsInCourse: " + statement);
+			List<GradeCategory> gradeCategoryList = new ArrayList<>();
+			while(results.next()) {
+				gradeCategoryList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return gradeCategoryList;
+		});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<GradeCategory> getGradeCategoriesUsedByAssignmentsInKlass(int klassId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT A.id as AssignmentId, GC.id, GC.weight, GC.title, GC.klass_id, GC.course_id FROM assignments as A\r\n"
+					+ " LEFT JOIN grade_categories as GC\r\n"
+					+ " ON A.grade_category_id = GC.id\r\n"
+					+ " where A.klass_id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getGradeCategoriesByCourseId: " + statement);
+			System.out.println("getGradeCategoriesUsedByAssignmentsInKlass: " + statement);
 			List<GradeCategory> gradeCategoryList = new ArrayList<>();
 			while(results.next()) {
 				gradeCategoryList.add(mapper.map(results));

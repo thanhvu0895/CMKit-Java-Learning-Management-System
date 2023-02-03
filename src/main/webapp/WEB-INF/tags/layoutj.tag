@@ -25,7 +25,7 @@ while (attributes.hasMoreElements()) {
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/application.css">	
 <!-- Viewport,  refresh resubmission fix-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<%@include file="./_fix_refresh_resubmission.jsp"%>
+<%@ include file="./_fix_refresh_resubmission.jsp"%>
 </head>
 <body>
 	<!-- Login Navigation bar -->

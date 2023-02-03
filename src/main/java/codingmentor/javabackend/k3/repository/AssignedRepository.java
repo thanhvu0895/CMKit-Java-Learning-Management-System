@@ -18,6 +18,17 @@ public interface AssignedRepository {
 	 */
     List<Assigned> getAssigneds();
     
+    
+	/*
+	 * GET LIST METHOD
+	 */
+    /**
+	 * Get list of Assigneds of assignments in a klass
+	 * @category LIST
+	 * @return a list of all Assigneds if found or null
+	 */
+    List<Assigned> getAssignedsByAssignmentsInKlass(int klassId);
+    
 	/*
 	 * GET ITEM METHOD
 	 */

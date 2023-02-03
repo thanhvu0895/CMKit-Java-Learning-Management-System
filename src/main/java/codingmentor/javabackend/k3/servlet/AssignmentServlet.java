@@ -92,6 +92,7 @@ public class AssignmentServlet extends HttpServlet {
 			
 			String[] pathParts = pathInfo.split("/");
 			int pathInfoLength = pathParts.length;
+			
 
 			if (pathInfoLength == 2 && UrlUtils.isInteger(pathParts[1])) { 
 				int assignmentId = Integer.parseInt(pathParts[1]); 
@@ -99,14 +100,17 @@ public class AssignmentServlet extends HttpServlet {
 				return;
 			}
 			
-			if (pathInfoLength == 3 && UrlUtils.isInteger(pathParts[1])) { 
+			if (pathInfoLength == 3 && UrlUtils.isInteger(pathParts[1])) {				
 				int assignmentId = Integer.parseInt(pathParts[1]);
 				switch (pathParts[2]) {
 				case "edit":
 					getAssignmentEdit(req, resp, assignmentId);
 					break;
 				case "problems":
-					getAssignmentProblemsIndex(req, resp, assignmentId);;
+					getAssignmentProblemsIndex(req, resp, assignmentId);
+					break;
+				case "assign":
+					getAssignmentAssignedsNew(req, resp, assignmentId);
 					break;
 				}
 				return;
@@ -145,8 +149,28 @@ public class AssignmentServlet extends HttpServlet {
 				int klassId = Integer.parseInt(klasIdString);
 				Klass klass = klassRepository.getKlassById(klassId);
 				
+				String copyIdString = req.getParameter("copy");
+				
 				if (klass == null) {
 					resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+					return;
+				}
+				
+				if (copyIdString != "" && UrlUtils.isInteger(copyIdString)) {
+					Assignment assignment = assignmentRepository.getAssignmentById(Integer.parseInt(copyIdString));
+					
+					if (assignment == null) {
+						resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+						return;
+					}
+					
+					Course course = courseRepository.getCourseById(klass.getCourse_id());
+					List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesByCourseId(klass.getCourse_id());	
+					req.setAttribute("assignment_grade_categories", gradeCategoriesList);
+					req.setAttribute("assignment", assignment);
+					req.setAttribute("course", course);
+					req.getRequestDispatcher(JspUtils.ASSIGNMENTS_NEW)
+					.forward(req, resp);
 					return;
 				}
 				
@@ -163,18 +187,23 @@ public class AssignmentServlet extends HttpServlet {
 			}
 			
 			
-			if (UrlUtils.isInteger(courseIdString)) {
+			if (courseIdString != "" && UrlUtils.isInteger(courseIdString)) {
+				
 				String copyIdString = req.getParameter("copy");
-				if (UrlUtils.isInteger(copyIdString)) {
+				
+				if (copyIdString != "" && UrlUtils.isInteger(copyIdString)) {
 					Assignment assignment = assignmentRepository.getAssignmentById(Integer.parseInt(copyIdString));
 					
 					if (assignment == null) {
 						resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 						return;
 					}
+					
 					int courseId = Integer.parseInt(courseIdString);
+					
 					Course course = courseRepository.getCourseById(courseId);
 					List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesByCourseId(courseId);
+					
 					req.setAttribute("assignment_grade_categories", gradeCategoriesList);
 					req.setAttribute("departmentid", course.getDepartment_id());
 					req.setAttribute("assignment", assignment);
@@ -186,6 +215,7 @@ public class AssignmentServlet extends HttpServlet {
 				
 				int courseId = Integer.parseInt(courseIdString);
 				Course course = courseRepository.getCourseById(courseId);
+				
 				if (course != null) {
 					List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesByCourseId(courseId);
 					req.setAttribute("departmentid", course.getDepartment_id());
@@ -195,6 +225,7 @@ public class AssignmentServlet extends HttpServlet {
 						.forward(req, resp);
 					return;
 				}
+				
 			}
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} catch (Exception e) {
@@ -206,6 +237,7 @@ public class AssignmentServlet extends HttpServlet {
 		try {
 			
 			String courseIdString = req.getParameter("course");
+			
 			if(courseIdString != "" && UrlUtils.isInteger(courseIdString)) {
 				int courseId = Integer.parseInt(courseIdString);
 				Course course = courseRepository.getCourseById(courseId);
@@ -214,6 +246,7 @@ public class AssignmentServlet extends HttpServlet {
 					resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 					return;
 				}
+				
 				req.setAttribute("course", course);
 				req.setAttribute("departmentid", course.getDepartment_id());
 				req.getRequestDispatcher(JspUtils.ASSIGNMENTS_SHOW_COPY_ASSIGNMENT)
@@ -222,6 +255,7 @@ public class AssignmentServlet extends HttpServlet {
 			}
 			
 			String classIdString = req.getParameter("klass");
+			
 			if(classIdString != "" && UrlUtils.isInteger(classIdString)) {
 				int klassId = Integer.parseInt(classIdString);
 				Klass klass = klassRepository.getKlassById(klassId);
@@ -417,6 +451,39 @@ public class AssignmentServlet extends HttpServlet {
 			req.setAttribute("reusable_comments", reusableComments);
 			req.getRequestDispatcher(JspUtils.PROBLEMS_EDIT)
 				.forward(req, resp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void getAssignmentAssignedsNew (HttpServletRequest req, HttpServletResponse resp, int assignmentId) throws ServletException, IOException {
+		try {
+			Assignment assignment = assignmentRepository.getAssignmentById(assignmentId);
+			
+			if (assignment == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
+			String klassIdString = req.getParameter("class");
+			
+			if (UrlUtils.isInteger(klassIdString)) {
+				
+				int klassId = Integer.parseInt(klassIdString);
+				
+				Klass klass = klassRepository.getKlassById(klassId);
+				Course course = courseRepository.getCourseByKlassId(klassId);
+				
+				req.setAttribute("course", course);
+				req.setAttribute("klass", klass);
+				req.setAttribute("assignment", assignment);
+				
+				req.getRequestDispatcher(JspUtils.ASSIGNED_NEW)
+					.forward(req, resp);
+				return;
+			}
+
+			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
