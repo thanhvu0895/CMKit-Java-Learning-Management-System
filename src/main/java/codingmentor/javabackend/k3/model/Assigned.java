@@ -2,6 +2,7 @@ package codingmentor.javabackend.k3.model;
 
 import java.time.LocalDateTime;
 
+import codingmentor.javabackend.k3.Utils.DateValidatorDateTimeFormatter;
 import codingmentor.javabackend.k3.Utils.EnumUtils;
 import codingmentor.javabackend.k3.repository.AssignmentRepository;
 import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
@@ -33,6 +34,10 @@ public class Assigned {
 	/**
 	 *  OTHER FUNCTIONS:
 	 */
+	
+	public String formatDueDate() {
+		return DateValidatorDateTimeFormatter.formatLocalDateTime(this.due_date);
+	}
 
 	// #Get actual maximum points after adjusted
 	public double getAdjustedMaxGrade() {

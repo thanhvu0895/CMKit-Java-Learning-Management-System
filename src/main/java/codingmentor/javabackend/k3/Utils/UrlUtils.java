@@ -52,6 +52,8 @@ public class UrlUtils {
 	public static final String ASSIGNMENT_PROBLEM_MOVE_UP_PATH = "/assignments/:assignment_id/problems/:id/move_up";
 	public static final String ASSIGNMENT_VIEW_COPY_RUBRIC_PATH = "/assignments/:assignment_id/copy_rubric";
 	
+	public static final String ASSIGNMENT_ASSIGN_PATH = "/assignments/:assignment_id/assign";
+	
 	public static final String ASSIGNMENT_PROBLEM_RUBRIC_ITEMS_PATH = "/assignments/:assignment_id/problems/:id/rubric_items";
 	public static final String ASSIGNMENT_PROBLEM_RUBRIC_ITEM_PATH = "/assignments/:assignment_id/problems/:problem_id/rubric_items/:id";
 	public static final String ASSIGNMENT_PROBLEM_RUBRIC_ITEM_MOVE_UP_PATH = "/assignments/:assignment_id/problems/:problem_id/rubric_items/:id/move_up";

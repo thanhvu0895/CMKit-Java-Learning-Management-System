@@ -20,7 +20,7 @@
 <p>
   <strong>Grade category:</strong>
   ${ not empty grade_category ? grade_category.title : "none"}
-  <%-- <br>Worth ${assignment.getPointValue()} --%>
+  <br>Worth ${assignment.getPointValue() == 0 ? 0 : assignment.getPointValue()}
 </p>
 
 <p>

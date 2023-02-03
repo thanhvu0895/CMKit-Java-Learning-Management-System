@@ -1,10 +1,13 @@
 package codingmentor.javabackend.k3.Utils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 // THANKS TO: https://mkyong.com/java/how-to-check-if-date-is-valid-in-java/
+import java.util.Locale;
 
 public class DateValidatorDateTimeFormatter {
 	
@@ -32,4 +35,10 @@ public class DateValidatorDateTimeFormatter {
         
         return valid;
     }
+    
+    public static String formatLocalDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("EEEE, MMM d 'at' hh:mma", Locale.ENGLISH);        
+        return dateTime.atZone(ZoneId.of("America/New_York")).format(dtf);
+    }
+
 }
