@@ -17,6 +17,7 @@ import codingmentor.javabackend.k3.repository.DepartmentRepository;
 public class DepartmentRepositoryImpl extends AbstractRepository<Department> implements DepartmentRepository{
 	private static DepartmentRepository repository = null;
 	private final DepartmentMapper mapper;
+	
 	private DepartmentRepositoryImpl() {
 		mapper = new DepartmentMapper();
 	}
@@ -77,7 +78,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Department> getDepartmentsByUserId(int userId) {
+	public List<Department> getDepartmentsByDPUserId(int userId) {
 		return executeQuery(connection -> {
 			final String query = "SELECT D.id, D.title, D.repo_id FROM departments AS D "
 					+ "INNER JOIN department_professors AS DP ON DP.department_id = D.id AND DP.user_id = ?;";

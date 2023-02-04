@@ -24,7 +24,7 @@ public interface DepartmentRepository {
      * @param userId
      * @return
      */
-    public List<Department> getDepartmentsByUserId(int userId);
+    public List<Department> getDepartmentsByDPUserId(int userId);
     
     
 	/*

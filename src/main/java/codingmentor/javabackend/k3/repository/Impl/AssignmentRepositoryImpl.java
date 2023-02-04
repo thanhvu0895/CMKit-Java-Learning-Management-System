@@ -104,8 +104,6 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		});
 	}
 	
-	
-	
 	/**
 	 * {@inheritDoc}
 	 */

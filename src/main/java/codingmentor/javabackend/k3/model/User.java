@@ -36,12 +36,15 @@ public class User implements Serializable {
 	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
 	
 	public List<Department> getDepartments() {
-    	return departmentRepository.getDepartmentsByUserId(this.id);
+    	return departmentRepository.getDepartmentsByDPUserId(this.id);
 	}
 	
-	public List<Department> getDepartmentsCheckAdmin() {
-		
-    	return isAdmin() ? departmentRepository.getDepartments() : departmentRepository.getDepartmentsByUserId(this.id);
+	/**
+	 * If user is admin
+	 * @return
+	 */
+	public List<Department> getDepartmentsCheckAdmin() {	
+    	return isAdmin() ? departmentRepository.getDepartments() : departmentRepository.getDepartmentsByDPUserId(this.id);
 	}
 	
     public boolean isDepartmentProfessor() throws NoSuchAlgorithmException {

@@ -1,12 +1,12 @@
-<t:form_with url="${not empty assignment ? UrlUtils.ASSIGNMENT_PATH.concat('/:id') : UrlUtils.ASSIGNMENT_PATH}" id="${assignment.id}"  method="${not empty assignment ? 'PATCH' : ''}">
+<t:form_with url="${not empty assignment && empty param.copy ? UrlUtils.ASSIGNMENT_PATH.concat('/:id') : UrlUtils.ASSIGNMENT_PATH}" id="${assignment.id}"  method="${not empty assignment ? 'PATCH' : ''}">
 
-  <c:if test="${empty assignment}">
+  <c:if test="${empty assignment || not empty param.course}">
   <div class="field">
     <input value="${course.id}" type="hidden" name="assignment[course_id]" id="assignment_course_id" />
   </div>
   </c:if>
 
- <c:if test="${not empty klass}">
+ <c:if test="${not empty klass || not empty param.copy}">
   <div class="field">
 	<input type="hidden" value="${klass.id}" name="assignment[klass_id]" id="assignment_klass_id" />
   </div>
@@ -114,15 +114,17 @@
   <div class="form-group" id="fileLimit">
 	<label id="limitLabel" for="assignment_Maximum Files and Links (instructors &amp; graders can exceed this limit):">Maximum files and links (instructors &amp; graders can exceed this limit):</label>
 	<input class="form-control" type="number" value="${not empty assignment ? assignment.file_limit : 1}" name="assignment[file_limit]" id="assignment_file_limit" min="0" max="1000000000"/>
-  </div>
-	
+  </div>	
   <script>showOrHideFiletypes()</script>
 </c:if>
-  <div class="actions">
-	<input type="submit" name="commit" value="${not empty assignment && empty param.copy ? 'Update Assignment' : 'Create Assignment'}" class="btn btn-primary" data-disable-with="${not empty assignment ? 'Update Assignment' : 'Create Assignment'}"/>
-  </div>
-  
+
  <c:if test="${not empty param.copy}">
  	<input type="hidden" name="copy" id="copy" value="${assignment.id}">
  </c:if>
+ 
+  <div class="actions">
+	<input type="submit" name="commit" value="${not empty assignment && empty param.copy ? 'Update Assignment' : 'Create Assignment'}" class="btn btn-primary" data-disable-with="${not empty assignment && empty param.copy ? 'Update Assignment' : 'Create Assignment'}"/>
+  </div>
+  
+
 </t:form_with>

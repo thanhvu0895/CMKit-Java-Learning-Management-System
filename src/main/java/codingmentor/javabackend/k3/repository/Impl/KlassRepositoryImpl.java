@@ -115,7 +115,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 					+ "INNER JOIN courses as C\r\n"
 					+ "	ON C.id = K.course_id\r\n"
 					+ "INNER JOIN departments as D\r\n"
-					+ "	ON D.id = C.department_id AND D.id = ?;";
+					+ "	ON D.id = C.department_id AND D.id = ? ORDER BY K.course_id;";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();

@@ -56,7 +56,7 @@
 					  <td>
 						<c:choose> 
 						 <c:when test="${not empty klass}"><t:link_to path="${UrlUtils.NEW_ASSIGNMENT_PATH}?copy=${a.id}&class=${klass.id}" classBS="btn btn-success">Copy</t:link_to></c:when>
-						 <c:otherwise><t:link_to path="${UrlUtils.NEW_ASSIGNMENT_PATH}?copy=${a.id}&course=${c.id}" classBS="btn btn-success">Copy</t:link_to></c:otherwise>
+						 <c:otherwise><t:link_to path="${UrlUtils.NEW_ASSIGNMENT_PATH}?copy=${a.id}&course=${param.course}" classBS="btn btn-success">Copy</t:link_to></c:otherwise>
 						</c:choose> 
 					  </td>
 					 </tr>

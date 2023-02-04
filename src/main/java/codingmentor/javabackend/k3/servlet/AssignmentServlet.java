@@ -168,6 +168,7 @@ public class AssignmentServlet extends HttpServlet {
 					List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesByCourseId(klass.getCourse_id());	
 					req.setAttribute("assignment_grade_categories", gradeCategoriesList);
 					req.setAttribute("assignment", assignment);
+					req.setAttribute("klass", klass);
 					req.setAttribute("course", course);
 					req.getRequestDispatcher(JspUtils.ASSIGNMENTS_NEW)
 					.forward(req, resp);
@@ -495,7 +496,14 @@ public class AssignmentServlet extends HttpServlet {
 		case UrlUtils.ASSIGNMENT_PATH:
 			String pathInfo = req.getPathInfo();
 			
-			if (pathInfo == null || pathInfo.equals("/")) { // if request is /users/ or /users
+			if (pathInfo == null || pathInfo.equals("/")) { // if request is /assignments/ or /assignments
+				String copyAssignmentIdString = req.getParameter("copy");
+				if (copyAssignmentIdString != "" && UrlUtils.isInteger(copyAssignmentIdString)) {
+					int copyAssignmentId = Integer.parseInt(copyAssignmentIdString);
+					postAssignmentCopy(req, resp, copyAssignmentId);
+					return;
+				}
+				
 				postAssignmentCreate(req, resp);
 				return;
 			}
@@ -590,16 +598,16 @@ public class AssignmentServlet extends HttpServlet {
 	}
 	
 	private void postAssignmentCreate(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		
 		String title = req.getParameter("assignment[title]");
-		
 		String courseIdString = req.getParameter("assignment[course_id]");
-		String klassIdString = req.getParameter("assignment[klass_id]");
+		String klassIdString = req.getParameter("assignment[klass_id]");	
 		
 		int course_id = Integer.parseInt(courseIdString);
 		
 		if (klassIdString != null) {
+			
 			int klass_id = Integer.parseInt(klassIdString);
+			
 			if (title == "") {
 				req.getSession(false).setAttribute("alert", "Title can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_ASSIGNMENT_PATH + "?class=" + klassIdString);
@@ -639,7 +647,7 @@ public class AssignmentServlet extends HttpServlet {
 			// if assignment type is student type requiring a template repository to be created
 			if (assignment_type == 0) {
 				int template_repo_id = repoRepository.insertRepo();
-				assignmentId = assignmentRepository.insertStudentRepoAssignmentKlass(title, klass_id, grade_category_id, files_repo_id, template_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link);
+				assignmentId = assignmentRepository.insertStudentRepoAssignmentKlass(title, klass_id, grade_category_id, files_repo_id, template_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link);				
 				req.getSession(false).setAttribute("notice", "Assignment was successfully created.");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.ASSIGNMENT_PATH + "/" + assignmentId);
 				return;
@@ -648,7 +656,6 @@ public class AssignmentServlet extends HttpServlet {
 			assignmentId = assignmentRepository.insertAssignmentKlass(title,klass_id , grade_category_id, files_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link);
 			req.getSession(false).setAttribute("notice", "Assignment was successfully created.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.ASSIGNMENT_PATH + "/" + assignmentId);
-
 			return;
 		}
 		
@@ -702,6 +709,163 @@ public class AssignmentServlet extends HttpServlet {
 		assignmentId = assignmentRepository.insertAssignment(title, course_id, grade_category_id, files_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link);
 		req.getSession(false).setAttribute("notice", "Assignment was successfully created.");
 		resp.sendRedirect(req.getContextPath() + UrlUtils.ASSIGNMENT_PATH + "/" + assignmentId);
+	}
+	
+	
+	private void postAssignmentCopy(HttpServletRequest req, HttpServletResponse resp, int copyAssignmentId) throws IOException {
+		try {
+			String title = req.getParameter("assignment[title]");
+			String courseIdString = req.getParameter("assignment[course_id]");
+			String klassIdString = req.getParameter("assignment[klass_id]");	
+			String description = req.getParameter("assignment[description]");
+			String gradeCategoryIdString = req.getParameter("assignment[grade_category_id]");
+			
+			Integer grade_category_id = null;
+			
+			if (gradeCategoryIdString != null) {
+				grade_category_id = Integer.parseInt(gradeCategoryIdString);
+			}
+			
+			Assignment assignment = assignmentRepository.getAssignmentById(copyAssignmentId);
+			
+			// IF COPYING ASSIGNMENT TO A KLASS
+			if (klassIdString != "") {
+				int klass_id = Integer.parseInt(klassIdString);
+				
+				if (title == "") {
+					req.getSession(false).setAttribute("alert", "Title can't be blank");
+					resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_ASSIGNMENT_PATH + "?class=" + klassIdString);
+					return;
+				}
+				
+				int files_repo_id = repoRepository.insertRepo();
+							
+				int assignmentId = 0;
+				
+				// if assignment type is student type requiring a template repository to be created
+				if (assignment.getAssignment_type() == 0) {
+					String permitted_filetypes = req.getParameter("assignment[permitted_filetypes]");
+					
+					String fileOrLinkString = req.getParameter("assignment[file_or_link]");
+					int file_or_link = EnumUtils.file_or_linkEnum.valueOf(fileOrLinkString).ordinal();
+		
+					String fileLimitString = req.getParameter("assignment[file_limit]");
+					
+					if (fileLimitString == "") {
+						req.getSession(false).setAttribute("alert", "File limit can't be blank");
+						resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_ASSIGNMENT_PATH + "?class=" + klassIdString);
+						return;
+					}
+					
+					int file_limit = Integer.parseInt(fileLimitString);
+		
+					int template_repo_id = repoRepository.insertRepo();
+					assignmentId = assignmentRepository.insertStudentRepoAssignmentKlass(title, klass_id, grade_category_id, files_repo_id, template_repo_id, assignment.getAssignment_type(), permitted_filetypes, description, file_limit, file_or_link);
+					
+					List<Problem> problemsList = problemRepository.getProblemsByAssignmentId(copyAssignmentId);
+					
+					for (Problem problem : problemsList) {
+						int newProblemId = problemRepository.insertProblem(assignmentId, problem.getTitle(), problem.getPoints(), problem.getLocation(), problem.getGrader_notes());
+			
+						List<RubricItem> rubricItems = rubricItemRepository.getRubricItemsByProblemId(problem.getId());
+			
+						for (RubricItem r : rubricItems) {
+							rubricItemRepository.insertRubricItem(newProblemId, r.getTitle(), r.getPoints(), r.getLocation());
+						}
+					}
+					
+					req.getSession(false).setAttribute("notice", "Assignment was successfully created.");
+					resp.sendRedirect(req.getContextPath() + UrlUtils.ASSIGNMENT_PATH + "/" + assignmentId);
+					return;
+				}
+				
+				List<Problem> problemsList = problemRepository.getProblemsByAssignmentId(copyAssignmentId);
+				
+				for (Problem problem : problemsList) {
+					int newProblemId = problemRepository.insertProblem(assignmentId, problem.getTitle(), problem.getPoints(), problem.getLocation(), problem.getGrader_notes());
+		
+					List<RubricItem> rubricItems = rubricItemRepository.getRubricItemsByProblemId(problem.getId());
+		
+					for (RubricItem r : rubricItems) {
+						rubricItemRepository.insertRubricItem(newProblemId, r.getTitle(), r.getPoints(), r.getLocation());
+					}
+				}
+				
+				assignmentId = assignmentRepository.insertAssignmentKlass(title,klass_id , grade_category_id, files_repo_id, assignment.getAssignment_type(), assignment.getPermitted_filetypes(), description, assignment.getFile_limit(), assignment.getFile_or_link());
+				req.getSession(false).setAttribute("notice", "Assignment was successfully created.");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.ASSIGNMENT_PATH + "/" + assignmentId);
+				return;
+			}
+			
+			if (courseIdString != "") {
+				int course_id = Integer.parseInt(courseIdString);
+				
+				if (title == "") {
+					req.getSession(false).setAttribute("alert", "Title can't be blank");
+					resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_ASSIGNMENT_PATH + "?course=" + courseIdString);
+					return;
+				}
+				
+				int files_repo_id = repoRepository.insertRepo();
+					
+				int assignmentId = 0;
+				
+				// if assignment type is student type requiring a template repository to be created
+				if (assignment.getAssignment_type() == 0) {
+					String permitted_filetypes = req.getParameter("assignment[permitted_filetypes]");
+					
+					String fileOrLinkString = req.getParameter("assignment[file_or_link]");
+					int file_or_link = EnumUtils.file_or_linkEnum.valueOf(fileOrLinkString).ordinal();
+					
+					String fileLimitString = req.getParameter("assignment[file_limit]");
+					
+					if (fileLimitString == "") {
+						req.getSession(false).setAttribute("alert", "File limit can't be blank");
+						resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_ASSIGNMENT_PATH + "?course=" + courseIdString);
+						return;
+					}
+					
+					int file_limit = Integer.parseInt(fileLimitString);
+					int template_repo_id = repoRepository.insertRepo();
+					assignmentId = assignmentRepository.insertStudentRepoAssignment(title, course_id, grade_category_id, files_repo_id, template_repo_id, assignment.getAssignment_type(), permitted_filetypes, description, file_limit, file_or_link);
+					
+					List<Problem> problemsList = problemRepository.getProblemsByAssignmentId(copyAssignmentId);
+					
+					for (Problem problem : problemsList) {
+						int newProblemId = problemRepository.insertProblem(assignmentId, problem.getTitle(), problem.getPoints(), problem.getLocation(), problem.getGrader_notes());
+			
+						List<RubricItem> rubricItems = rubricItemRepository.getRubricItemsByProblemId(problem.getId());
+			
+						for (RubricItem r : rubricItems) {
+							rubricItemRepository.insertRubricItem(newProblemId, r.getTitle(), r.getPoints(), r.getLocation());
+						}
+					}
+					
+					req.getSession(false).setAttribute("notice", "Assignment was successfully created.");
+					resp.sendRedirect(req.getContextPath() + UrlUtils.ASSIGNMENT_PATH + "/" + assignmentId);
+					return;
+				}
+				
+				
+				List<Problem> problemsList = problemRepository.getProblemsByAssignmentId(copyAssignmentId);
+				
+				for (Problem problem : problemsList) {
+					int newProblemId = problemRepository.insertProblem(assignmentId, problem.getTitle(), problem.getPoints(), problem.getLocation(), problem.getGrader_notes());
+		
+					List<RubricItem> rubricItems = rubricItemRepository.getRubricItemsByProblemId(problem.getId());
+		
+					for (RubricItem r : rubricItems) {
+						rubricItemRepository.insertRubricItem(newProblemId, r.getTitle(), r.getPoints(), r.getLocation());
+					}
+				}
+				
+				assignmentId = assignmentRepository.insertAssignmentKlass(title, course_id, grade_category_id, files_repo_id, assignment.getAssignment_type(), assignment.getPermitted_filetypes(), description, assignment.getFile_limit(), assignment.getFile_or_link());
+				req.getSession(false).setAttribute("notice", "Assignment was successfully created.");
+				resp.sendRedirect(req.getContextPath() + UrlUtils.ASSIGNMENT_PATH + "/" + assignmentId);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
