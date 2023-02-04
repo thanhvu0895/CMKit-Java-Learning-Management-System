@@ -19,8 +19,11 @@ public class Assignment {
 	private String description;
 	private int file_limit;
 	private int file_or_link;
+	private double total_points;
+	private String assigned_graders;
 	
-   /**
+  
+/**
     * Repository and Enum Functions
     */
 	private ProblemRepository problemRepository =  ProblemRepositoryImpl.getInstance();
@@ -39,7 +42,6 @@ public class Assignment {
 	 */
 	
 
-	
 	public double getPointValue() {
 		double sum = 0;
 		List<Problem> problemsList = problemRepository.getProblemsByAssignmentId(this.id);
@@ -67,6 +69,15 @@ public class Assignment {
 	 * Getters, Setters
 	 */
 	
+	public double getTotal_points() {
+		return total_points;
+	}
+
+	public String getAssigned_graders() {
+		return assigned_graders;
+	}
+
+
 	public int getId() {
 		return id;
 	}
@@ -181,6 +192,16 @@ public class Assignment {
 	
 	public Assignment file_or_link(int file_or_link) {
 	    this.file_or_link = file_or_link;
+	    return this;
+	}
+	
+	public Assignment total_points(double total_points) {
+	    this.total_points = total_points;
+	    return this;
+	}
+	
+	public Assignment assigned_graders(String assigned_graders) {
+	    this.assigned_graders = assigned_graders;
 	    return this;
 	}
 	

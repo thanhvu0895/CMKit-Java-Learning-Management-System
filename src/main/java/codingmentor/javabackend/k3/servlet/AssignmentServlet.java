@@ -279,7 +279,7 @@ public class AssignmentServlet extends HttpServlet {
 	
 	private void getAsssignmentShow(HttpServletRequest req, HttpServletResponse resp, int assignmentId) throws ServletException, IOException {
 		try {
-			Assignment assignment = assignmentRepository.getAssignmentById(assignmentId);
+			Assignment assignment = assignmentRepository.getAssignmentByIdWithTotalPoint(assignmentId);
 			if (assignment == null) {
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 				return;

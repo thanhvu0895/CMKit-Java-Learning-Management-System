@@ -66,6 +66,7 @@
 		<tbody>
 		<c:set var="grade_categories" value="${course_grade_categories}"/>
 		<c:forEach var="a" items="${course_assignments}" varStatus="loop">
+		<c:set var="assigneds" value="${course_assigneds}" />
 			<%@ include file="../klasses/_assignment_row.jsp" %>
 		</c:forEach>
 		</tbody>

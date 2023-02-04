@@ -14,7 +14,7 @@ public class UserMapper implements RowMapper<User> {
 			
 		ResultSetMetaData rsmd = (ResultSetMetaData) results.getMetaData();
 		
-		if (rsmd.getColumnCount() == 10) {
+		if (rsmd.getColumnCount() == 10) {	
 			return new User()
 					.id(results.getInt("id"))		
 					.email(results.getString("email"))

@@ -46,7 +46,7 @@ public class Assigned {
 	
 	//   #Get max points, either from override or total of problems
 	public double getUnscaledMaxGrade() {
-		return (!Double.isNaN(point_value_scale)) ? this.max_points_override : assignmentRepository.getAssignmentById(this.assignment_id).getPointValue();
+		return (!Double.isNaN(max_points_override)) ? this.max_points_override : assignmentRepository.getAssignmentById(this.assignment_id).getPointValue();
 	}
 	
 	/*

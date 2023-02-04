@@ -203,15 +203,17 @@ public class KlassServlet extends HttpServlet {
 			
 			Course course = courseRepository.getCourseByKlassId(klassId);
 			
-			List<Assignment> klassAssignmentsList = assignmentRepository.getAssignmentsByKlassId(klassId);
+			List<Assignment> klassAssignmentsList = assignmentRepository.getAssignmentsWithGradersListByKlassId(klassId);
 			List<Assignment> courseAssignmentList = assignmentRepository.getAssignmentsByCourseId(klass.getCourse_id());
 			List<GradeCategory> klassGradeCategoriesList = gradeCategoryRepository.getGradeCategoriesUsedByAssignmentsInKlass(klassId);
 			List<GradeCategory> courseGradeCategoriesList = gradeCategoryRepository.getGradeCategoriesUsedByAssignmentsInCourse(klass.getCourse_id());
 			List<Assigned> klassAssignedsList = assignedRepository.getAssignedsByAssignmentsInKlass(klassId);
+			List<Assigned> courseAssignedsList = assignedRepository.getAssignedsByAssignmentsInCourse(klass.getCourse_id());
 			
 			req.setAttribute("klass", klass);
 			req.setAttribute("course", course);
 			req.setAttribute("klass_assigneds", klassAssignedsList);
+			req.setAttribute("course_assigneds", courseAssignedsList);
 			req.setAttribute("klass_grade_categories", klassGradeCategoriesList);
 			req.setAttribute("course_grade_categories", courseGradeCategoriesList);
 			req.setAttribute("klass_assignments", klassAssignmentsList);

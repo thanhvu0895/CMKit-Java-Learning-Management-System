@@ -31,6 +31,22 @@ public interface AssignmentRepository {
 	 * @return a list of all Assignments if found or null
 	 */
     List<Assignment> getAssignmentsByKlassId(int klassId);
+    
+    /**
+	 * Get list of Assignments by KlassId with Grader Lists included
+	 * @category LIST
+	 * @return a list of all Assignments if found or null
+	 */
+    List<Assignment> getAssignmentsWithGradersListByKlassId(int klassId);
+
+    
+    /**
+	 * Get list of Assignments by courseId with GraderLists included
+	 * @category LIST
+	 * @return a list of all Assignments if found or null
+	 */
+    List<Assignment> getAssignmentsWithGradersListByCourseId(int courseId);
+    
 	/*
 	 * GET ITEM METHOD
 	 */
@@ -40,6 +56,13 @@ public interface AssignmentRepository {
      * @return Assignment if exists and null if not
      */
     Assignment getAssignmentById(int id);
+    
+    /**
+	 * @category ITEM
+     * Get department by Assignment's id
+     * @return Assignment if exists and null if not
+     */
+    Assignment getAssignmentByIdWithTotalPoint(int id);
     
 	/*
 	 * GET Check True/false METHOD

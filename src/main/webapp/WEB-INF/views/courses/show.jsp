@@ -26,8 +26,7 @@
 		<tr>
 		  <td><t:link_to path="${UrlUtils.ASSIGNMENT_PATH}/:id" id="${a.id}">${a.title}</t:link_to></td>
 		  <td>${not empty course_grade_categories[loop.index] ? course_grade_categories[loop.index].title : "None"}</td>
-		  <%-- <td>${not empty a.grade_category_id ? course_grade_categories[loop.index].title : "None"}</td> --%>
-		  <td><%-- ${a.get_point_value} --%></td>
+		  <td>${a.total_points}</td>
 		  <td>${a.getAssignmentType()}</td>
 		</tr>
 	  </c:forEach>

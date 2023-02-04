@@ -108,6 +108,35 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 		});
 	}
 	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+
+	@Override
+	public List<Assigned> getAssignedsByAssignmentsInCourse(int courseId) {
+		return executeQuery(connection -> {
+			final String query = "SELECT A.id as AssignmentId, AG.* FROM assignments as A\r\n"
+					+ "	LEFT JOIN assigneds as AG\r\n"
+					+ "	ON A.id = AG.assignment_id\r\n"
+					+ " where A.course_id = ?;\r\n";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, courseId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getAssignedsByAssignmentsInCourse: " + statement);
+			List<Assigned> assignedsList = new ArrayList<>();
+			while(results.next()) {
+				if (results.getTimestamp("due_date") == null) {
+					assignedsList.add(new Assigned());
+				} else {
+					assignedsList.add(mapper.map(results));
+				}
+			}
+			close(connection, statement, results);
+			return assignedsList;
+		});
+	}
+	
 	/*
 	 * GET ITEM METHOD
 	 */
