@@ -21,16 +21,18 @@ public class Klass {
     */
 	private ProfessorRepository professorRepository =  ProfessorRepositoryImpl.getInstance();
 	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
-	
 	/*
 	 * OTHER FUNCTIONS
 	 */
 	
 	public boolean isKlassAdmin(User current_user) {
 		Department department = departmentRepository.getDepartmentByCourseId(this.course_id);
-		return professorRepository.isProfessorByUserId(current_user.getId()) || departmentRepository.isDepartmentAdmin(current_user.getId(), department.getId());
+		return isKlassProfessor(current_user) || departmentRepository.isDepartmentAdmin(current_user.getId(), department.getId());
 	}
 	
+	public boolean isKlassProfessor(User current_user) {
+		return professorRepository.isProfessorByUserId(current_user.getId(),this.id);
+	}
 	
 	/*
 	 * Getters, Setters

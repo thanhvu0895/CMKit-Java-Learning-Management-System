@@ -63,7 +63,7 @@ public class SshKeyRepositoryImpl extends AbstractRepository<SshKey> implements 
 	@Override
 	public List<SshKey> getSshKeys() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM ssh_keys";
+			final String query = "\nSELECT * FROM ssh_keys";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getSshKeys: " + statement);
@@ -86,7 +86,7 @@ public class SshKeyRepositoryImpl extends AbstractRepository<SshKey> implements 
 	@Override
 	public SshKey getSshKeyById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM ssh_keys WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM ssh_keys WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();

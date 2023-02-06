@@ -74,7 +74,7 @@ public class ProfessorServlet extends HttpServlet{
 			int klassId = Integer.parseInt(klassIdString);
 			
 			for (String email : professorEmailList) {
-				if (email == "") {
+				if (email.isEmpty()) {
 					continue;
 				}
 				email = email.toLowerCase();
@@ -134,7 +134,7 @@ public class ProfessorServlet extends HttpServlet{
 			
 			req.getSession(false).setAttribute("notice", added.size() + " professors added: " + String.join(",", added) + ";" 
 					+ invited.size() + " professors invited: " + String.join(",", invited) + ";");
-			req.getSession(false).setAttribute("alert", "Failed to add " + failed.size() + " professors: " + String.join(",", added) + ";");
+			req.getSession(false).setAttribute("alert", "Failed to add " + failed.size() + " professors: " + String.join(",", failed) + ";");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_KLASS_PATH, klassId));
 		} catch (Exception e) {
 			e.printStackTrace();

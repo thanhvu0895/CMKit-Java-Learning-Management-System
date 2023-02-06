@@ -21,8 +21,14 @@ public interface GraderRepository {
    	 * @category LIST
    	 * @return a list of all Graders if found or null
    	 */
-       List<Grader> getGradersByKlassId(int klassId);
-       
+     List<Grader> getGradersByKlassId(int klassId);
+     
+     /**
+	 * Get list of Graders
+	 * @category LIST
+	 * @return a list of all Graders if found or null
+	 */
+     List<Grader> getGradersByAssignedStatusInKlass(int assignedId, int klassId);
 	/*
 	 * GET ITEM METHOD
 	 */

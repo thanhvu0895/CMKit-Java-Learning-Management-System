@@ -51,7 +51,7 @@ public interface ProfessorRepository {
     /**
 	 * @category CHECK
      */
-    boolean isProfessorByUserId(int userId);
+    boolean isProfessorByUserId(int userId, int klassId);
     
     /*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS

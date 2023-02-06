@@ -59,7 +59,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 	@Override
 	public List<GradeCategory> getGradeCategoriesByCourseId(int courseId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT GC.id, GC.title, GC.klass_id, GC.course_id, GC.weight FROM grade_categories as GC\r\n"
+			final String query = "\nSELECT GC.id, GC.title, GC.klass_id, GC.course_id, GC.weight FROM grade_categories as GC\r\n"
 					+ " INNER JOIN courses as C \r\n"
 					+ "	ON GC.course_id = C.id and C.id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -75,19 +75,44 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 		});
 	}
 	
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<GradeCategory> getGradeCategoriesByKlassId(int klassId) {
+	public List<GradeCategory> getGradeCategoriesUsedByAssignmentsInCourse(int courseId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT GC.id, GC.title, GC.klass_id, GC.course_id, GC.weight FROM grade_categories as GC\r\n"
-					+ " INNER JOIN klasses as K \r\n"
-					+ "	ON GC.klass_id = K.id and K.id = ?;";
+			final String query = "\nSELECT A.id as AssignmentId, GC.id, GC.weight, GC.title, GC.klass_id, GC.course_id FROM assignments as A\r\n"
+					+ " LEFT JOIN grade_categories as GC\r\n"
+					+ " ON A.grade_category_id = GC.id\r\n"
+					+ " where A.course_id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, courseId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getGradeCategoriesUsedByAssignmentsInCourse: " + statement);
+			List<GradeCategory> gradeCategoryList = new ArrayList<>();
+			while(results.next()) {
+				gradeCategoryList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return gradeCategoryList;
+		});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<GradeCategory> getGradeCategoriesUsedByAssignmentsInKlass(int klassId) {
+		return executeQuery(connection -> {
+			final String query = "\nSELECT A.id as AssignmentId, GC.id, GC.weight, GC.title, GC.klass_id, GC.course_id FROM assignments as A\r\n"
+					+ " LEFT JOIN grade_categories as GC\r\n"
+					+ " ON A.grade_category_id = GC.id\r\n"
+					+ " where A.klass_id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getGradeCategoriesByCourseId: " + statement);
+			System.out.println("getGradeCategoriesUsedByAssignmentsInKlass: " + statement);
 			List<GradeCategory> gradeCategoryList = new ArrayList<>();
 			while(results.next()) {
 				gradeCategoryList.add(mapper.map(results));
@@ -103,7 +128,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 	@Override
 	public List<GradeCategory> getGradeCategoriesUsedByAssignmentInCourse(int courseId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT GC.title, GC.id, GC.title, GC.klass_id, GC.course_id, GC.weight FROM grade_categories as GC\r\n"
+			final String query = "\nSELECT GC.title, GC.id, GC.title, GC.klass_id, GC.course_id, GC.weight FROM grade_categories as GC\r\n"
 					+ " INNER JOIN assignments as A\r\n"
 					+ "	ON A.grade_category_id = GC.id\r\n"
 					+ " INNER JOIN courses as C \r\n"
@@ -131,7 +156,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 	@Override
 	public GradeCategory getGradeCategoryById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT* FROM grade_categories WHERE id = ?;";
+			final String query = "\nSELECT* FROM grade_categories WHERE id = ?;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    System.out.println("getGradeCategoryById: " + statement);
@@ -148,7 +173,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 	@Override
 	public GradeCategory getGradeCategoryByAssignmentId(int assignmentId) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT GC.* FROM grade_categories as GC\r\n"
+			final String query = "\nSELECT GC.* FROM grade_categories as GC\r\n"
 					+ "	INNER JOIN assignments as A \r\n"
 					+ " ON GC.id = A.grade_category_id and A.id = ?;";
 		    PreparedStatement statement = connection.prepareStatement(query);
@@ -170,7 +195,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 	@Override
 	public boolean isUsedByAssignment(int gradeCategoryId) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 as ONE FROM assignments AS A\r\n"
+			 final String query = "\nSELECT 1 as ONE FROM assignments AS A\r\n"
 			 		+ " INNER JOIN grade_categories AS GC\r\n"
 			 		+ "	ON A.grade_category_id = GC.id AND GC.id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
@@ -215,7 +240,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 	@Override
 	public boolean updateGradeCategoryById(String title, double weight, int gradeCategoryId) {
 		return executeUpdate(connection -> {
-			 final String query = "UPDATE grade_categories SET title = ?, weight = ? WHERE id = ?;";
+			 final String query = "\nUPDATE grade_categories SET title = ?, weight = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, title);
 			 statement.setDouble(2, weight);

@@ -67,7 +67,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 	@Override
 	public List<Klass> getklasses() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM klasses";
+			final String query = "\nSELECT * FROM klasses";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getklasses(): " + statement);
@@ -91,7 +91,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 	@Override
 	public Klass getKlassById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM klasses WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM klasses WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
@@ -109,13 +109,13 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 	@Override
 	public List<Klass> getKlassesFromDepartmentId(int departmentId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT \r\n"
+			final String query = "\nSELECT \r\n"
 					+ "	K.id, K.course_id, K.repo_id, K.semester, K.section, K.start_date, K.end_date \r\n"
 					+ "FROM klasses as K\r\n"
 					+ "INNER JOIN courses as C\r\n"
 					+ "	ON C.id = K.course_id\r\n"
 					+ "INNER JOIN departments as D\r\n"
-					+ "	ON D.id = C.department_id AND D.id = ?;";
+					+ "	ON D.id = C.department_id AND D.id = ? ORDER BY K.course_id;";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();
@@ -176,7 +176,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 	//PATCH(UPDATE)
 	public boolean updateKlassById(String semester, Integer section, LocalDate startDate, LocalDate endDate, int klassId) {
 		return executeUpdate(connection -> {
-			 final String query = "UPDATE klasses SET semester = ?, section = ?, start_date = ?, end_date = ? WHERE id = ?;";
+			 final String query = "\nUPDATE klasses SET semester = ?, section = ?, start_date = ?, end_date = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, semester);
 			 statement.setObject(2, section, Types.INTEGER);

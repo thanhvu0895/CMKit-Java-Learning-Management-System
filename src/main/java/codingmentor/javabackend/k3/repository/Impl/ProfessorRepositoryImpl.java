@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import codingmentor.javabackend.k3.mapper.ProfessorMapper;
-import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.model.Professor;
 import codingmentor.javabackend.k3.repository.AbstractRepository;
 import codingmentor.javabackend.k3.repository.ProfessorRepository;
@@ -64,7 +63,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 	@Override
 	public List<Professor> getProfessors() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM professors";
+			final String query = "\nSELECT * FROM professors";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getProfessors: " + statement);
@@ -82,7 +81,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 	 */
 	public List<Professor> getProfessorsByKlassId(int klassId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT P.id, P.user_id, P.klass_id from professors as P\r\n"
+			final String query = "\nSELECT P.id, P.user_id, P.klass_id from professors as P\r\n"
 					+ " INNER JOIN users AS U\r\n"
 					+ " ON P.user_id = U.id and P.klass_id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -109,7 +108,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 	@Override
 	public Professor getProfessorById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM professors WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM professors WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
@@ -128,13 +127,14 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 	 * @category CHECK
      */
 	@Override
-	public boolean isProfessorByUserId(int userId) {
+	public boolean isProfessorByUserId(int userId, int klassId) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 as ONE FROM professors WHERE user_id = ?  LIMIT 1;";
+			 final String query = "\nSELECT 1 as ONE FROM professors WHERE user_id = ? and klass_id = ? LIMIT 1;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, userId);
+			 statement.setInt(2, klassId);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println("isProfessorByUserId" + statement);
+			 System.out.println("isProfessorByUserId: " + statement);
 			 Professor professor = (results.next()) ? new Professor() : null;
 			 close(connection, statement, results);
 			 return professor;

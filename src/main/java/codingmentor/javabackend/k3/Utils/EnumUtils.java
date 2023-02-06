@@ -10,4 +10,8 @@ public class EnumUtils {
 		upload_files_only, provide_urls_only, both
 	}
 	
+	public enum allow_resubmissionsEnum {
+		never_resubmit, resubmit_before_deadline, resubmit_before_graded, resubmit_even_after_graded
+	}
+	
 }

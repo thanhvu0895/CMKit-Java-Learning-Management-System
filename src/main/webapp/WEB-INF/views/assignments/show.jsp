@@ -20,7 +20,7 @@
 <p>
   <strong>Grade category:</strong>
   ${ not empty grade_category ? grade_category.title : "none"}
-  <%-- <br>Worth ${assignment.getPointValue()} --%>
+  <br>Worth ${assignment.total_points == 0 ? 0 : assignment.total_points}
 </p>
 
 <p>
@@ -35,7 +35,7 @@
 
 </center>
 
-<c:if test="${not empty student_repo}">
+<c:if test="${assignment.getAssignmentType() == 'student_repo'}">
 <div class="panel panel-default">
       <div class="panel-heading"><h3>Template Repository</h3></div>
 		<div class="panel-body">

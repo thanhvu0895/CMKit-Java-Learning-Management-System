@@ -2,6 +2,11 @@ package codingmentor.javabackend.k3.model;
 
 import java.time.LocalDateTime;
 
+import codingmentor.javabackend.k3.Utils.DateValidatorDateTimeFormatter;
+import codingmentor.javabackend.k3.Utils.EnumUtils;
+import codingmentor.javabackend.k3.repository.AssignmentRepository;
+import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
+
 public class Assigned {
 	private int id;
 	private int assignment_id;
@@ -9,16 +14,40 @@ public class Assigned {
 	private LocalDateTime due_date;
 	private boolean allow_late_submissions;
 	private int max_contributors;
-	private double max_points_override;
-	private double point_value_scale;
+	private Double max_points_override;
+	private Double point_value_scale;
 	private int repo_id;
 	private boolean limit_resubmissions;
 	private int resubmission_limit;
-	private boolean allow_resubmissions;
+	private int allow_resubmissions;
 	private boolean hide_grades;
+
    /**
     * Repository Functions
     */
+	private AssignmentRepository assignmentRepository =  AssignmentRepositoryImpl.getInstance();
+	
+	public String getAllowResubmissions() {
+		return EnumUtils.allow_resubmissionsEnum.values()[this.allow_resubmissions].toString();
+	}
+	
+	/**
+	 *  OTHER FUNCTIONS:
+	 */
+	
+	public String formatDueDate() {
+		return DateValidatorDateTimeFormatter.formatLocalDateTime(this.due_date);
+	}
+
+	// #Get actual maximum points after adjusted
+	public double getAdjustedMaxGrade() {
+		return (point_value_scale == null) ? this.point_value_scale : getUnscaledMaxGrade();
+	}
+	
+	//   #Get max points, either from override or total of problems
+	public double getUnscaledMaxGrade() {
+		return (max_points_override == null) ? this.max_points_override : assignmentRepository.getAssignmentById(this.assignment_id).getPointValue();
+	}
 	
 	/*
 	 * Getters, Setters
@@ -48,11 +77,11 @@ public class Assigned {
 		return max_contributors;
 	}
 	
-	public double getMax_points_override() {
+	public Double getMax_points_override() {
 		return max_points_override;
 	}
 	
-	public double getPoint_value_scale() {
+	public Double getPoint_value_scale() {
 		return point_value_scale;
 	}
 	
@@ -68,10 +97,11 @@ public class Assigned {
 		return resubmission_limit;
 	}
 	
-	public boolean isAllow_resubmissions() {
+	
+	public int getAllow_resubmissions() {
 		return allow_resubmissions;
 	}
-	
+
 	public boolean isHide_grades() {
 		return hide_grades;
 	}
@@ -109,12 +139,12 @@ public class Assigned {
 	    return this;
 	}
 	
-	public Assigned max_points_override(double max_points_override) {
+	public Assigned max_points_override(Double max_points_override) {
 	    this.max_points_override = max_points_override;
 	    return this;
 	}
 	
-	public Assigned point_value_scale(double point_value_scale) {
+	public Assigned point_value_scale(Double point_value_scale) {
 	    this.point_value_scale = point_value_scale;
 	    return this;
 	}
@@ -134,7 +164,7 @@ public class Assigned {
 	    return this;
 	}
 	
-	public Assigned allow_resubmissions(boolean allow_resubmissions) {
+	public Assigned allow_resubmissions(int allow_resubmissions) {
 	    this.allow_resubmissions = allow_resubmissions;
 	    return this;
 	}

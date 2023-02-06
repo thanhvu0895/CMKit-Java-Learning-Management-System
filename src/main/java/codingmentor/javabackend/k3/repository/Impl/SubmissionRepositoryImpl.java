@@ -63,7 +63,7 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 	@Override
 	public List<Submission> getSubmissions() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM submissions";
+			final String query = "\nSELECT * FROM submissions";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getSubmissions: " + statement);
@@ -75,6 +75,32 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 			return submissionsList;
 		});
 	}
+	
+	/*
+	 * GET LIST METHOD
+	 */
+    
+	/**
+	 * {@inheritDoc}
+	 */
+
+	@Override
+	public List<Submission> getSubmissionsByAssignedId(int assignedId) {
+		return executeQuery(connection -> {
+			final String query = "\nSELECT * FROM submissions where assigned.id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, assignedId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getSubmissions: " + statement);
+			List<Submission> submissionsList = new ArrayList<>();
+			while(results.next()) {
+				submissionsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return submissionsList;
+		});
+	}
+
 
 	/*
 	 * GET ITEM METHOD
@@ -86,7 +112,7 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 	@Override
 	public Submission getSubmissionById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM submissions WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM submissions WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
@@ -138,5 +164,18 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 			return 0;
 		});
 	}
+	
 	//PATCH
+	 public boolean updateCachedGradeNull (int assignedId) {
+		return executeUpdate(connection -> {
+			final String query = "\nUPDATE submissions SET cached_grade = NULL where assigned_id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, assignedId);
+			System.out.println("updateCachedGrade: " + statement);
+			int result = statement.executeUpdate();
+			close(connection, statement, null);
+			return result;
+		}) != 0;
+	 }
+	
 }

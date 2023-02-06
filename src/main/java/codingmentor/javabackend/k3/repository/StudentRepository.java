@@ -17,6 +17,14 @@ public interface StudentRepository {
 	 */
     List<Student> getStudents();
     
+    
+    /**
+	 * Get list of Students
+	 * @category LIST
+	 * @return a list of all Students if found or null
+	 */
+    List<Student> getStudentsByKlassId(int klassId);
+    
 	/*
 	 * GET ITEM METHOD
 	 */

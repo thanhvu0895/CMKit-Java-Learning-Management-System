@@ -11,7 +11,23 @@ public class UserMapper implements RowMapper<User> {
 	
 	@Override
 	public User map(ResultSet results)  throws SQLException {
+			
 		ResultSetMetaData rsmd = (ResultSetMetaData) results.getMetaData();
+		
+		if (rsmd.getColumnCount() == 10) {	
+			return new User()
+					.id(results.getInt("id"))		
+					.email(results.getString("email"))
+					.admin(results.getBoolean("admin"))
+					.first_name(results.getString("first_name"))
+					.last_name(results.getString("last_name"))
+					.preferred_name(results.getString("preferred_name"))
+					.set_up(results.getBoolean("set_up"))
+					.disabled(results.getBoolean("disabled"))
+					.deleted(results.getBoolean("deleted"))
+					.assigned_assignments(results.getInt("assigned_assignments"));
+		}
+		
 		if (rsmd.getColumnCount() <= 9) {
 			return new User()
 				.id(results.getInt("id"))		
@@ -24,6 +40,7 @@ public class UserMapper implements RowMapper<User> {
 				.disabled(results.getBoolean("disabled"))
 				.deleted(results.getBoolean("deleted"));
 		}
+		
 		
 		if (results.getTimestamp("reset_expires") == null) {
 			return new User()
@@ -39,6 +56,8 @@ public class UserMapper implements RowMapper<User> {
 				.disabled(results.getBoolean("disabled"))
 				.deleted(results.getBoolean("deleted"));
 		}
+		
+		
 		return new User()
 				.id(results.getInt("id"))		
 				.email(results.getString("email"))
@@ -52,5 +71,6 @@ public class UserMapper implements RowMapper<User> {
 				.set_up(results.getBoolean("set_up"))
 				.disabled(results.getBoolean("disabled"))
 				.deleted(results.getBoolean("deleted"));
+		
 	}
 }

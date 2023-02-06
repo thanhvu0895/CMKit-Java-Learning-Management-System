@@ -62,10 +62,32 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 	@Override
 	public List<Student> getStudents() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM students";
+			final String query = "\nSELECT * FROM students";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getStudents: " + statement);
+			List<Student> studentsList = new ArrayList<>();
+			while(results.next()) {
+				studentsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return studentsList;
+		});
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+
+	@Override
+	public List<Student> getStudentsByKlassId(int klassId) {
+		return executeQuery(connection -> {
+			final String query = "\nSELECT * FROM students WHERE klass_id = ?";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, klassId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getStudentsByKlassId: " + statement);
 			List<Student> studentsList = new ArrayList<>();
 			while(results.next()) {
 				studentsList.add(mapper.map(results));
@@ -85,7 +107,7 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 	@Override
 	public Student getStudentById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM students WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM students WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
@@ -130,6 +152,8 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 				return 0;
 			});
 	 }
+
+
 	
 	//PATCH
 	    

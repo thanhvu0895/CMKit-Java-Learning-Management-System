@@ -63,7 +63,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 	@Override
 	public List<DepartmentProfessor> getDepartmentProfessors() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM department_professors";
+			final String query = "\nSELECT * FROM department_professors";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getDepartmentProfessors: " + statement);
@@ -82,7 +82,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 	@Override   
 	public List<DepartmentProfessor>  getDepartmentProfessorsByDepartmentId(int departmentId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM department_professors where department_id = ?";
+			final String query = "\nSELECT * FROM department_professors where department_id = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();
@@ -107,7 +107,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 	@Override
 	public DepartmentProfessor getDepartmentProfessorById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM department_professors WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM department_professors WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
@@ -168,7 +168,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 	@Override
 	public boolean updateAdminByDepartmentProfessorId(boolean admin, int id) {
 		return executeUpdate(connection -> {
-			 final String query = "UPDATE department_professors SET admin = ? WHERE id = ?;";
+			 final String query = "\nUPDATE department_professors SET admin = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setBoolean(1, admin);
 			 statement.setInt(2, id);

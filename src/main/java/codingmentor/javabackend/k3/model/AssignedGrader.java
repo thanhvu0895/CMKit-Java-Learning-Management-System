@@ -15,7 +15,7 @@ public class AssignedGrader {
 	public int getId() {
 		return id;
 	}
-	
+
 	public int getUser_id() {
 		return user_id;
 	}
@@ -41,5 +41,6 @@ public class AssignedGrader {
 	    this.assigned_id = assigned_id;
 	    return this;
 	}
+	
 }
 

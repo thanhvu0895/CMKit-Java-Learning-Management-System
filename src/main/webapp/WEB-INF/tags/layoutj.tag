@@ -5,13 +5,6 @@
 <%@tag import="codingmentor.javabackend.k3.Utils.UrlUtils"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%>
-<%
-Enumeration<String> attributes = request.getSession().getAttributeNames();
-while (attributes.hasMoreElements()) {
-    String attribute = (String) attributes.nextElement();
-    System.out.println(attribute+" : "+request.getSession().getAttribute(attribute));
-}
-%> 
 <html lang="en">
 <head>
 <title>Kit | ${pageTitle}</title>
@@ -25,7 +18,7 @@ while (attributes.hasMoreElements()) {
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/application.css">	
 <!-- Viewport,  refresh resubmission fix-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<%@include file="./_fix_refresh_resubmission.jsp"%>
+<%@ include file="./_fix_refresh_resubmission.jsp"%>
 </head>
 <body>
 	<!-- Login Navigation bar -->

@@ -228,7 +228,7 @@ public class UserServlet extends HttpServlet {
 					+ token
 					+  "&user=" + userid;
 			
-			if (new_password == "" || new_password_confirmation == "") {
+			if (new_password.isEmpty() || new_password_confirmation.isEmpty()) {
 				req.getSession(false).setAttribute("alert", "New Password cannot be empty");
 				resp.sendRedirect(currentPath);
 				return;
@@ -261,7 +261,7 @@ public class UserServlet extends HttpServlet {
 	private void postRequestPaswordReset(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {
 			String email = req.getParameter("email").toLowerCase();
-			if (email == "") {
+			if (email.isEmpty()) {
 				req.setAttribute("alert", "Email cannot be empty.");
 				req.getRequestDispatcher(JspUtils.PASSWORD_RESET_SHOW_PASSWORD_RESET_REQUEST)
 				.forward(req, resp);
@@ -318,7 +318,7 @@ public class UserServlet extends HttpServlet {
 			String email = req.getParameter("email");
 			User user = userRepository.findUserByEmail(email);
 			boolean admin = (req.getParameterValues("admin").length == 2);
-			if (email == "") {
+			if (email.isEmpty()) {
 				req.getSession().setAttribute("alert", "User not invited: Email can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 				return;
@@ -375,13 +375,13 @@ public class UserServlet extends HttpServlet {
 			String last_name = req.getParameter("user[last_name]");
 			
 			
-			if (first_name == "" || last_name == "") {
+			if (first_name.isEmpty() || last_name.isEmpty()) {
 				req.getSession(false).setAttribute("alert", "Failed to create account: First name and last name are required.");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.SHOW_USER_INVITE_PATH, id) + "?token=" + token);
 				return;
 			}
 			
-			if (password == "" || password_confirmation == "") {
+			if (password.isEmpty() || password_confirmation.isEmpty()) {
 				req.getSession(false).setAttribute("alert", "Please create a password for your account.");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.SHOW_USER_INVITE_PATH, id) + "?token=" + token);
 				return;
@@ -453,7 +453,7 @@ public class UserServlet extends HttpServlet {
 				return;
 			}
 			
-			if (new_password == "" || new_password_confirmation == "") {
+			if (new_password.isEmpty() || new_password_confirmation.isEmpty()) {
 				req.setAttribute("alert", "New Password cannot be empty");
 				req.getRequestDispatcher(JspUtils.USERS_CHANGE_PASSWORD).forward(req, resp);
 				return;
@@ -528,7 +528,7 @@ public class UserServlet extends HttpServlet {
 			boolean admin = (req.getParameterValues("user[admin]").length == 2);
 			boolean disabled = (req.getParameterValues("user[disabled]").length == 2);
 
-			if (first_name == "" || last_name == "") {
+			if (first_name.isEmpty() || last_name.isEmpty()) {
 				req.setAttribute("alert", "First name and last name must not be blank");
 				req.setAttribute("user", user.filterParams());
 				req.getRequestDispatcher(JspUtils.USERS_EDIT_ADMIN).forward(req, resp);

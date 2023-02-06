@@ -64,7 +64,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 	@Override
 	public List<ReusableComment> getReusableComments() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM reusable_comments";
+			final String query = "\nSELECT * FROM reusable_comments";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getReusableComments: " + statement);
@@ -85,7 +85,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 	@Override
 	public List<ReusableComment> getReusableCommentsByProblemId(int problem_id) {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM reusable_comments where problem_id = ?";
+			final String query = "\nSELECT * FROM reusable_comments where problem_id = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, problem_id);
 			ResultSet results = statement.executeQuery();
@@ -109,7 +109,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 	@Override
 	public ReusableComment getReusableCommentById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM reusable_comments WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM reusable_comments WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
@@ -129,7 +129,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 	@Override
 	public boolean existedByCommentAndProblemId(String comment, int problemId) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 as ONE FROM reusable_comments WHERE comment = ? and problem_id = ? LIMIT 1;";
+			 final String query = "\nSELECT 1 as ONE FROM reusable_comments WHERE comment = ? and problem_id = ? LIMIT 1;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, comment);
 			 statement.setInt(2, problemId);

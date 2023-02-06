@@ -105,7 +105,7 @@ public class CourseServlet extends HttpServlet{
 			Department department = departmentRepository.getDepartmentById(course.getDepartment_id());
 			List<Assignment> assignments = assignmentRepository.getAssignmentsByCourseId(courseId);
 			
-			List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesUsedByAssignmentInCourse(courseId);
+			List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesUsedByAssignmentsInCourse(courseId);
 			req.setAttribute("course_grade_categories", gradeCategoriesList);
 			req.setAttribute("course", course);
 			req.setAttribute("department", department);
@@ -237,7 +237,7 @@ public class CourseServlet extends HttpServlet{
 			String courseCode = req.getParameter("course[course_code]");
 			boolean courseActive = (req.getParameterValues("course[active]").length == 2);
 			
-			if (courseTitle == "") {
+			if (courseTitle.isEmpty()) {
 				req.getSession(false).setAttribute("alert", "Title can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_COURSE_PATH);
 				return;
@@ -261,7 +261,7 @@ public class CourseServlet extends HttpServlet{
 			String title = req.getParameter("course[title]");
 			String course_code = req.getParameter("course[course_code]");
 			boolean active = (req.getParameterValues("course[active]").length == 2);
-			if (title == "") {
+			if (title.isEmpty()) {
 				req.getSession(false).setAttribute("alert", "Title can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_COURSE_PATH, courseId));
 				return;

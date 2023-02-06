@@ -65,7 +65,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 	@Override
 	public List<RubricItem> getRubricItems() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM rubric_items";
+			final String query = "\nSELECT * FROM rubric_items";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getRubricItems: " + statement);
@@ -84,7 +84,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 	@Override
 	public List<RubricItem> getRubricItemsByProblemId(int problem_id) {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM rubric_items where problem_id = ?";
+			final String query = "\nSELECT * FROM rubric_items where problem_id = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, problem_id);
 			ResultSet results = statement.executeQuery();
@@ -101,7 +101,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 	@Override
 	public List<RubricItem> getRubricItemsByProblemIdOrderByLocationAsc(int problem_id) {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM rubric_items where problem_id = ? ORDER BY location ASC";
+			final String query = "\nSELECT * FROM rubric_items where problem_id = ? ORDER BY location ASC";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, problem_id);
 			ResultSet results = statement.executeQuery();
@@ -124,7 +124,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 	@Override
 	public RubricItem getRubricItemById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM rubric_items WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM rubric_items WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
@@ -141,7 +141,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 	@Override
 	public RubricItem getMaxRubricItemByProblemId(int problem_id) {
 		return executeQuerySingle(connection -> {
-			final String query = " SELECT * FROM rubric_items WHERE location = ( SELECT MAX(location) FROM rubric_items where problem_id = ?) and problem_id = ?;";
+			final String query = " \nSELECT * FROM rubric_items WHERE location = ( \nSELECT MAX(location) FROM rubric_items where problem_id = ?) and problem_id = ?;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, problem_id);
 		    statement.setInt(2, problem_id);
@@ -159,7 +159,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 	@Override
 	public RubricItem getRubricItemByLocationAndProblemId(int location, int problem_id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM rubric_items WHERE location = ? and problem_id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM rubric_items WHERE location = ? and problem_id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, location);
 		    statement.setInt(2, problem_id);
@@ -207,7 +207,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 	@Override
 	public boolean updateRubricItemById(String title, double points, int id) {
 		return executeUpdate(connection -> {
-			 final String query = "UPDATE rubric_items SET title = ?, points = ? WHERE id = ?;";
+			 final String query = "\nUPDATE rubric_items SET title = ?, points = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, title);
 			 statement.setDouble(2, points);
@@ -225,7 +225,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 	@Override
 	public boolean updateRubricItemLocationById(int location, int rubricItemId) {
 		return executeUpdate(connection -> {
-			 final String query = "UPDATE rubric_items SET location = ? WHERE id = ?;";
+			 final String query = "\nUPDATE rubric_items SET location = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, location);
 			 statement.setInt(2, rubricItemId);

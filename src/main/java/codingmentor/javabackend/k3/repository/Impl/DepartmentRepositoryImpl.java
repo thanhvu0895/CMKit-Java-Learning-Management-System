@@ -17,6 +17,7 @@ import codingmentor.javabackend.k3.repository.DepartmentRepository;
 public class DepartmentRepositoryImpl extends AbstractRepository<Department> implements DepartmentRepository{
 	private static DepartmentRepository repository = null;
 	private final DepartmentMapper mapper;
+	
 	private DepartmentRepositoryImpl() {
 		mapper = new DepartmentMapper();
 	}
@@ -60,7 +61,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	@Override
 	public List<Department> getDepartments() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM departments";
+			final String query = "\nSELECT * FROM departments";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getDepartments: " + statement);
@@ -77,9 +78,9 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Department> getDepartmentsByUserId(int userId) {
+	public List<Department> getDepartmentsByDPUserId(int userId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT D.id, D.title, D.repo_id FROM departments AS D "
+			final String query = "\nSELECT D.id, D.title, D.repo_id FROM departments AS D "
 					+ "INNER JOIN department_professors AS DP ON DP.department_id = D.id AND DP.user_id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, userId);
@@ -105,7 +106,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	@Override
 	public Department getDepartmentById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM departments WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM departments WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
@@ -123,7 +124,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	@Override
 	public Department getDepartmentByCourseId(int courseId) {
 		return executeQuerySingle(connection -> {
-			final String query = "select D.id, D.title,D.repo_id FROM "
+			final String query = "\nSELECT D.id, D.title,D.repo_id FROM "
 					+ "departments as D \n"
 					+ "	INNER JOIN courses as C \n"
 					+ "ON D.id = C.department_id and C.id = ?;";
@@ -146,7 +147,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	@Override
 	public boolean existedByTitle(String title) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 as ONE FROM departments WHERE title = ?  LIMIT 1;";
+			 final String query = "\nSELECT 1 as ONE FROM departments WHERE title = ?  LIMIT 1;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, title);
 			 ResultSet results = statement.executeQuery();
@@ -163,7 +164,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	@Override
 	public boolean isDepartmentAdmin(int userId, int departmentId) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT \r\n"
+			 final String query = "\nSELECT \r\n"
 			 		+ "	 1 as ONE\r\n"
 			 		+ "FROM  department_professors as DP \r\n"
 			 		+ "INNER JOIN users as U\r\n"
@@ -187,7 +188,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	@Override
 	public boolean isDepartmentProfessor(int userId, int departmentId) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT \r\n"
+			 final String query = "\nSELECT \r\n"
 			 		+ "	1 as ONE\r\n"
 			 		+ "FROM  department_professors as DP \r\n"
 			 		+ "INNER JOIN users as U\r\n"
@@ -248,7 +249,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 	@Override
 	public boolean updateDepartmentTitleById(String title, int id) {
 		return executeUpdate(connection -> {
-			 final String query = "UPDATE departments SET title = ? WHERE id = ?;";
+			 final String query = "\nUPDATE departments SET title = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, title);
 			 statement.setInt(2, id);

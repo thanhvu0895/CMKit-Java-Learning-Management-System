@@ -25,7 +25,15 @@ public interface GradeCategoryRepository {
       * @param userId
       * @return
       */
-    List<GradeCategory> getGradeCategoriesByKlassId(int klassId);
+    List<GradeCategory> getGradeCategoriesUsedByAssignmentsInKlass(int klassId);
+    
+    /**
+ 	 * @category LIST
+      * Get list of gradeCategory from Course's id
+      * @param userId
+      * @return
+      */
+    List<GradeCategory> getGradeCategoriesUsedByAssignmentsInCourse(int courseId);
     
     /**
 	 * @category ITEM
