@@ -74,7 +74,7 @@ public class ProfessorServlet extends HttpServlet{
 			int klassId = Integer.parseInt(klassIdString);
 			
 			for (String email : professorEmailList) {
-				if (email == "") {
+				if (email.isEmpty()) {
 					continue;
 				}
 				email = email.toLowerCase();

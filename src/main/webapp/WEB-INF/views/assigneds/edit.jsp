@@ -4,35 +4,31 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
 <%@taglib prefix="f" tagdir="/WEB-INF/tags/form_tags"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:useBean id="now" class="java.util.Date" />
-<fmt:formatDate var="year" value="${now}" pattern="yyyy" timeZone="GMT-5"/>
-<fmt:formatDate var="day" value="${now}" pattern="dd" timeZone="GMT-5"/>
-<fmt:formatDate var="month" value="${now}" pattern="MM" timeZone="GMT-5"/>
-<fmt:formatDate var="hour" value="${now}" pattern="HH" timeZone="GMT-5"/>
-<fmt:formatDate var="minute" value="${now}" pattern="mm" timeZone="GMT-5"/>
+
+<fmt:parseDate  value="${assigned.due_date}" var="due_date" type="both" pattern="yyyy-MM-dd'T'HH:mm" timeZone="GMT-5"/>
+<fmt:formatDate var="year" value="${due_date}" pattern="yyyy" timeZone="GMT-5"/>
+<fmt:formatDate var="day" value="${due_date}" pattern="dd" timeZone="GMT-5"/>
+<fmt:formatDate var="month" value="${due_date}" pattern="MM" timeZone="GMT-5"/>
+<fmt:formatDate var="hour" value="${due_date}" pattern="HH" timeZone="GMT-5"/>
+<fmt:formatDate var="minute" value="${due_date}" pattern="mm" timeZone="GMT-5"/>
+
 <jsp:useBean id="monthNames" class="java.text.DateFormatSymbols"/>
 <c:set value="${monthNames.months}" var="months" />
 
-<t:layoutj pageTitle="${assignment.title} | Assign">
+<t:layoutj pageTitle="${assignment.title} | Submission Settings">
+
 <ol class="breadcrumb">
-  <li><t:link_to path="${UrlUtils.KLASSES_PATH}">Classes</t:link_to></li>
-  <li><t:link_to path="${UrlUtils.KLASS_ASSIGNMENTS_PATH}" secondId="${klass.id}">${course.course_code}&nbsp${course.title}: ${klass.semester}&nbsp${klass.section}</t:link_to></li>
-  <li><t:link_to path="${UrlUtils.ASSIGNMENT_PATH}/:id" id="${assignment.id}">${assignment.title}</t:link_to></li>
-  <li class="active">Assign</li>
+  <%@ include file="../assigneds/_grading_crumbs.jsp"%>
+  <li class="active">Submission Settings</li>
 </ol>
 
-<h1>Assigning ${assignment.title}</h1>
-<t:form_with url="${UrlUtils.ASSIGNMENT_ASSIGN_PATH}" secondId="${assignment.id}">
-  <div class="field">
-    <input value="${assignment.id}" type="hidden" name="assigned[assignment_id]" id="assigned_assignment_id">
-  </div>
-  
-  <div class="field">
-    <input value="${klass.id}" type="hidden" name="assigned[klass_id]" id="assigned_klass_id">
-  </div>
-  
-  <div class="form-group">
-    <label for="assigned_due_date">Due date</label>
+<jsp:include page="../assigneds/_tabs.jsp"><jsp:param name="current" value=":submission_settings"/></jsp:include>
+
+<h3>Submission Settings for ${assignment.title}</h3>
+
+<t:form_with url="${UrlUtils.ASSIGNMENT_ASSIGNED_PATH}" secondId="${assignment.id}" id="${assigned.id}" method="PATCH">
+<div class="form-group">
+<label for="assigned_due_date">Due date</label>
     <select id="assigned_due_date_1i" name="assigned[due_date(1i)]">
     <c:forEach begin="${year - 5}" end="${year + 5}" var="y">
 	  <c:choose>
@@ -79,25 +75,32 @@
       	</c:choose>
       </c:forEach>
     </select>
-  </div>
-  
-  <div ${!assignment.studentResponsible() ? "hidden=true" : ""}>
+</div>
+
+<c:if test="${assignment.studentResponsible()}">
   <div class="form-group">
     <label for="assigned_Maximum contributors to one submission:">Maximum contributors to one submission:</label>
-	<input step="1" class="form-control" type="number" value="1" name="assigned[max_contributors]" id="assigned_max_contributors">
+	<input step="1" class="form-control" type="number" value="${assigned.max_contributors}" name="assigned[max_contributors]" id="assigned_max_contributors">
   </div>
   
   <div class="form-group">
-  	<f:check_box check_box="allow_late_submissions" model="assigned"></f:check_box>
+  	<f:check_box check_box="allow_late_submissions" model="assigned" value="${assigned.allow_late_submissions}"></f:check_box>
 	<label for="assigned_allow_late_submissions">Allow late submissions</label>
   </div>
  
  <%@ include file="_resubmission_fields.jsp"%>
- 
-  </div>
-  
-  <div class="actions">
-  	<input type="submit" name="commit" value="Assign" class="btn btn-success" data-disable-with="Assign">
-  </div>
- </t:form_with>
+</c:if>
+
+<br> 
+
+<div class="actions">
+  <input type="submit" name="commit" value="Update" class="btn btn-success" data-disable-with="Update">
+</div>
+</t:form_with>
+
+<br><br>
+
+<p>
+<t:link_to path="${UrlUtils.ASSIGNMENT_UNASSIGN_PATH}" classBS="btn btn-danger" id="${assigned.id}" secondId="${assignment.id}" confirm="Are you sure you want to unassign this assignment? ALL EXISTING SUBMISSIONS AND GRADES WILL BE DELETED!">Unassign</t:link_to>
+</p>
 </t:layoutj>

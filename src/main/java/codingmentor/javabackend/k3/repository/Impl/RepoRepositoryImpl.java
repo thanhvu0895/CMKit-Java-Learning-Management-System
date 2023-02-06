@@ -64,7 +64,7 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
 	@Override
 	public List<Repo> getRepos() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM repos";
+			final String query = "\n\nSELECT * FROM repos";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getRepos:" + statement);
@@ -88,7 +88,7 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
 	@Override
 	public Repo getRepoById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM repos WHERE id = ? LIMIT 1;";
+			final String query = "\n\nSELECT * FROM repos WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet result = statement.executeQuery();

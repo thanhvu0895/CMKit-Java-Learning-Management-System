@@ -65,7 +65,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	@Override
 	public List<Assignment> getAssignments() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM assignments";
+			final String query = "\nSELECT * FROM assignments";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getAssignments(): " + statement);
@@ -84,9 +84,9 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	@Override
 	public List<Assignment> getAssignmentsByCourseId(int courseId) {
 		return executeQuery(connection -> {
-			final String query = "WITH A AS (SELECT * FROM assignments where course_id = ?)\r\n"
+			final String query = "WITH A AS (\nSELECT * FROM assignments where course_id = ?)\r\n"
 					+ "\r\n"
-					+ "SELECT a.id, a.title, a.klass_id, a.course_id, a.grade_category_id, a.files_repo_id, a.template_repo_id, a.assignment_type, a.permitted_filetypes, a.description, a.file_limit, a.file_or_link, ifnull(sum(points),0) as total_points\r\n"
+					+ "\nSELECT a.id, a.title, a.klass_id, a.course_id, a.grade_category_id, a.files_repo_id, a.template_repo_id, a.assignment_type, a.permitted_filetypes, a.description, a.file_limit, a.file_or_link, ifnull(sum(points),0) as total_points\r\n"
 					+ "	FROM A a\r\n"
 					+ "    left join problems P\r\n"
 					+ "    on a.id = P.assignment_id\r\n"
@@ -110,13 +110,13 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	@Override
 	public List<Assignment> getAssignmentsByKlassId(int klassId) {
 		return executeQuery(connection -> {
-			final String query = "WITH A AS (SELECT * FROM assignments where klass_id = ?)\r\n"
+			final String query = "\nWITH A AS (\nSELECT * FROM assignments where klass_id = ?)\r\n"
 					+ "\r\n"
-					+ "SELECT a.id, a.title, a.klass_id, a.course_id, a.grade_category_id, a.files_repo_id, a.template_repo_id, a.assignment_type, a.permitted_filetypes, a.description, a.file_limit, a.file_or_link, ifnull(sum(points),0) as total_points\r\n"
+					+ "\nSELECT a.id, a.title, a.klass_id, a.course_id, a.grade_category_id, a.files_repo_id, a.template_repo_id, a.assignment_type, a.permitted_filetypes, a.description, a.file_limit, a.file_or_link, ifnull(sum(points),0) as total_points\r\n"
 					+ "	FROM A a\r\n"
 					+ "    left join problems P\r\n"
 					+ "    on a.id = P.assignment_id\r\n"
-					+ "    group by a.id ;";
+					+ "    group by a.id;";
 			PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
@@ -136,9 +136,9 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	@Override
 	public List<Assignment> getAssignmentsWithGradersListByKlassId(int klassId) {
 		return executeQuery(connection -> {
-			final String query = "WITH TABLE1 AS (\r\n"
-					+ "WITH A AS (SELECT * FROM assignments where klass_id = ?)\r\n"
-					+ "SELECT a.id, a.title, a.klass_id, a.course_id, a.grade_category_id, a.files_repo_id, a.template_repo_id, a.assignment_type, a.permitted_filetypes, a.description, a.file_limit, a.file_or_link, ifnull(sum(points),0) as total_points\r\n"
+			final String query = "\nWITH TABLE1 AS (\r\n"
+					+ "WITH A AS (\nSELECT * FROM assignments where klass_id = ?)\r\n"
+					+ "\nSELECT a.id, a.title, a.klass_id, a.course_id, a.grade_category_id, a.files_repo_id, a.template_repo_id, a.assignment_type, a.permitted_filetypes, a.description, a.file_limit, a.file_or_link, ifnull(sum(points),0) as total_points\r\n"
 					+ "	FROM A a\r\n"
 					+ "    left join problems P\r\n"
 					+ "    on a.id = P.assignment_id\r\n"
@@ -146,8 +146,8 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 					+ "),\r\n"
 					+ "\r\n"
 					+ "TABLE2 AS (\r\n"
-					+ "WITH A AS (SELECT * FROM assignments where klass_id = 3)\r\n"
-					+ "SELECT a.id, GROUP_CONCAT(U.email SEPARATOR ', ') as assigned_graders\r\n"
+					+ "WITH A AS (\nSELECT * FROM assignments where klass_id = ?)\r\n"
+					+ "\nSELECT a.id, GROUP_CONCAT(U.email SEPARATOR ', ') as assigned_graders\r\n"
 					+ "	FROM A a\r\n"
 					+ "    LEFT JOIN assigneds as AG\r\n"
 					+ "		ON AG.assignment_id = a.id\r\n"
@@ -157,13 +157,14 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 					+ "		ON ASG.user_id = U.id group by a.id  \r\n"
 					+ ")\r\n"
 					+ "\r\n"
-					+ "SELECT TABLE1.*, TABLE2.assigned_graders from TABLE1\r\n"
+					+ "\nSELECT TABLE1.*, TABLE2.assigned_graders from TABLE1\r\n"
 					+ " LEFT JOIN TABLE2\r\n"
 					+ "	ON TABLE1.id = TABLE2.id;";
 			PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, klassId);
+		    statement.setInt(2, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getAssignmentsByKlassId: " + statement);
+			System.out.println("getAssignmentsWithGradersListByKlassId: " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -180,8 +181,8 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	public List<Assignment> getAssignmentsWithGradersListByCourseId(int courseId) {
 		return executeQuery(connection -> {
 			final String query = "WITH TABLE1 AS (\r\n"
-					+ "WITH A AS (SELECT * FROM assignments where course_id = ?)\r\n"
-					+ "SELECT a.id, a.title, a.klass_id, a.course_id, a.grade_category_id, a.files_repo_id, a.template_repo_id, a.assignment_type, a.permitted_filetypes, a.description, a.file_limit, a.file_or_link, ifnull(sum(points),0) as total_points\r\n"
+					+ "WITH A AS (\nSELECT * FROM assignments where course_id = ?)\r\n"
+					+ "\nSELECT a.id, a.title, a.klass_id, a.course_id, a.grade_category_id, a.files_repo_id, a.template_repo_id, a.assignment_type, a.permitted_filetypes, a.description, a.file_limit, a.file_or_link, ifnull(sum(points),0) as total_points\r\n"
 					+ "	FROM A a\r\n"
 					+ "    left join problems P\r\n"
 					+ "    on a.id = P.assignment_id\r\n"
@@ -189,8 +190,8 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 					+ "),\r\n"
 					+ "\r\n"
 					+ "TABLE2 AS (\r\n"
-					+ "WITH A AS (SELECT * FROM assignments where klass_id = 3)\r\n"
-					+ "SELECT a.id, GROUP_CONCAT(U.email SEPARATOR ', ') as assigned_graders\r\n"
+					+ "WITH A AS (\nSELECT * FROM assignments where klass_id = 3)\r\n"
+					+ "\nSELECT a.id, GROUP_CONCAT(U.email SEPARATOR ', ') as assigned_graders\r\n"
 					+ "	FROM A a\r\n"
 					+ "    LEFT JOIN assigneds as AG\r\n"
 					+ "		ON AG.assignment_id = a.id\r\n"
@@ -200,7 +201,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 					+ "		ON ASG.user_id = U.id group by a.id  \r\n"
 					+ ")\r\n"
 					+ "\r\n"
-					+ "SELECT TABLE1.*, TABLE2.assigned_graders from TABLE1\r\n"
+					+ "\nSELECT TABLE1.*, TABLE2.assigned_graders from TABLE1\r\n"
 					+ " LEFT JOIN TABLE2\r\n"
 					+ "	ON TABLE1.id = TABLE2.id;";
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -228,7 +229,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	@Override
 	public Assignment getAssignmentById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT id, title, klass_id, course_id, grade_category_id, files_repo_id, template_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link FROM assignments WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT id, title, klass_id, course_id, grade_category_id, files_repo_id, template_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link FROM assignments WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
@@ -244,7 +245,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	@Override
 	public Assignment getAssignmentByIdWithTotalPoint(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT a.id, a.title, a.klass_id, a.course_id, a.grade_category_id, a.files_repo_id, a.template_repo_id, a.assignment_type, a.permitted_filetypes, a.description, a.file_limit, a.file_or_link, ifnull(sum(points),0) AS total_points\r\n"
+			final String query = "\nSELECT a.id, a.title, a.klass_id, a.course_id, a.grade_category_id, a.files_repo_id, a.template_repo_id, a.assignment_type, a.permitted_filetypes, a.description, a.file_limit, a.file_or_link, ifnull(sum(points),0) AS total_points\r\n"
 					+ "	FROM assignments as a\r\n"
 					+ "		LEFT JOIN problems P\r\n"
 					+ "		ON a.id = P.assignment_id\r\n"
@@ -435,7 +436,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	public boolean updateStudentFileAssignmentById(String title, String description, Integer grade_category_id,
 			int file_or_link, String permitted_filetypes, int file_limit, int assignmentId) {
 		return executeUpdate(connection -> {
-			final String query = "UPDATE assignments SET title = ?, description= ?, grade_category_id = ?, file_or_link = ?, permitted_filetypes = ?, file_limit = ?  WHERE id = ?;";
+			final String query = "\nUPDATE assignments SET title = ?, description= ?, grade_category_id = ?, file_or_link = ?, permitted_filetypes = ?, file_limit = ?  WHERE id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, title);
 			statement.setString(2, description);
@@ -457,7 +458,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	@Override
 	public boolean updateAssignmentById(String title, String description, Integer grade_category_id, int assignmentId) {
 		return executeUpdate(connection -> {
-			final String query = "UPDATE assignments SET title = ?, description= ?, grade_category_id = ? WHERE id = ?;";
+			final String query = "\nUPDATE assignments SET title = ?, description= ?, grade_category_id = ? WHERE id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, title);
 			statement.setString(2, description);

@@ -1,19 +1,19 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="now" class="java.util.Date" />
-<fmt:formatDate var="year" value="${now}" pattern="yyyy" />
-<fmt:formatDate var="day" value="${now}" pattern="dd" />
-<fmt:formatDate var="month" value="${now}" pattern="MM" />
+<fmt:formatDate var="year" value="${now}" pattern="yyyy" timeZone="GMT-5"/>
+<fmt:formatDate var="day" value="${now}" pattern="dd" timeZone="GMT-5"/>
+<fmt:formatDate var="month" value="${now}" pattern="MM" timeZone="GMT-5"/>
 
 <c:if test="${not empty klass}">
-  <fmt:parseDate  value="${klass.start_date}" var="selected_start_date" type="date" pattern="yyyy-MM-dd"/>
-  <fmt:formatDate var="start_year" value="${selected_start_date}" pattern="yyyy" />
-  <fmt:formatDate var="start_day" value="${selected_start_date}" pattern="dd" />
-  <fmt:formatDate var="start_month" value="${selected_start_date}" pattern="MM" />
+  <fmt:parseDate  value="${klass.start_date}" var="selected_start_date" type="date" pattern="yyyy-MM-dd" timeZone="GMT-5"/>
+  <fmt:formatDate var="start_year" value="${selected_start_date}" pattern="yyyy" timeZone="GMT-5"/>
+  <fmt:formatDate var="start_day" value="${selected_start_date}" pattern="dd" timeZone="GMT-5"/>
+  <fmt:formatDate var="start_month" value="${selected_start_date}" pattern="MM" timeZone="GMT-5"/>
   
-  <fmt:parseDate  value="${klass.end_date}" var="selected_end_date" type="date" pattern="yyyy-MM-dd"/>
-  <fmt:formatDate var="end_year" value="${selected_end_date}" pattern="yyyy" />
-  <fmt:formatDate var="end_day" value="${selected_end_date}" pattern="dd" />
-  <fmt:formatDate var="end_month" value="${selected_end_date}" pattern="MM" />
+  <fmt:parseDate  value="${klass.end_date}" var="selected_end_date" type="date" pattern="yyyy-MM-dd" timeZone="GMT-5"/>
+  <fmt:formatDate var="end_year" value="${selected_end_date}" pattern="yyyy" timeZone="GMT-5"/>
+  <fmt:formatDate var="end_day" value="${selected_end_date}" pattern="dd" timeZone="GMT-5"/>
+  <fmt:formatDate var="end_month" value="${selected_end_date}" pattern="MM" timeZone="GMT-5"/>
 </c:if>
 <jsp:useBean id="monthNames" class="java.text.DateFormatSymbols" />
 <c:set value="${monthNames.months}" var="months" />

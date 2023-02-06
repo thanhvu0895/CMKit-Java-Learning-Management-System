@@ -1,11 +1,13 @@
 package codingmentor.javabackend.k3.test;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -47,13 +49,17 @@ public class test2 {
 //        System.out.println("Formatted LocalDateTime in String format : " + formattedDateTime);
         
         
-        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("America/New_York"));
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("GMT-5"));
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("EEEE MMM d 'at' hh:mma", Locale.ENGLISH);        
         
         System.out.println(now.format(dtf));
 
-        
-        
+        LocalDateTime assignedDueDate = LocalDateTime.of(2023, 9, 14, 20, 30);
+        LocalDateTime current = LocalDateTime.now();
+        ZoneId zone = ZoneId.of("US/Eastern");
+
+        Timestamp.valueOf(assignedDueDate);
+        System.out.println(Timestamp.valueOf(assignedDueDate));
 
 	}
 }

@@ -64,7 +64,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 	@Override
 	public List<Problem> getProblems() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM problems";
+			final String query = "\nSELECT * FROM problems";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getProblems: " + statement);
@@ -83,7 +83,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 	@Override
 	public List<Problem> getProblemsByAssignmentId(int assignment_id) {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM problems WHERE assignment_id = ?";
+			final String query = "\nSELECT * FROM problems WHERE assignment_id = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, assignment_id);
 			ResultSet results = statement.executeQuery();
@@ -103,7 +103,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 	@Override
 	public List<Problem> getProblemsByAssignmentIdOrderByLocationAsc(int assignment_id) {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM problems WHERE assignment_id = ? ORDER BY location ASC";
+			final String query = "\nSELECT * FROM problems WHERE assignment_id = ? ORDER BY location ASC";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, assignment_id);
 			ResultSet results = statement.executeQuery();
@@ -126,7 +126,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 	@Override
 	public Problem getProblemById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM problems WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM problems WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
@@ -143,7 +143,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 	@Override
 	public Problem getMaxProblemByAssignmentId(int assignment_id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM problems WHERE location = ( SELECT MAX(location) FROM problems where assignment_id = ?) and assignemnt_id = ?;";
+			final String query = "\nSELECT * FROM problems WHERE location = ( \nSELECT MAX(location) FROM problems where assignment_id = ?) and assignemnt_id = ?;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, assignment_id);
 		    statement.setInt(2, assignment_id);
@@ -161,7 +161,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 	@Override
 	public Problem getProblemByLocationAndAssignmentId(int location, int assignment_id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM problems WHERE location = ? and assignment_id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM problems WHERE location = ? and assignment_id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, location);
 		    statement.setInt(2, assignment_id);
@@ -223,7 +223,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 	@Override
 	public boolean updateProblemLocationById(int location, int problem_id) {
 		return executeUpdate(connection -> {
-			 final String query = "UPDATE problems SET location = ? WHERE id = ?;";
+			 final String query = "\nUPDATE problems SET location = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, location);
 			 statement.setInt(2, problem_id);
@@ -240,7 +240,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 	@Override
 	public boolean updateProblemById(String title, double points, String grader_notes, int problem_id) {
 		return executeUpdate(connection -> {
-			 final String query = "UPDATE problems SET title = ?, points = ?, grader_notes = ? WHERE id = ?;";
+			 final String query = "\nUPDATE problems SET title = ?, points = ?, grader_notes = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, title );
 			 statement.setDouble(2, points);

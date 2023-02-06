@@ -35,7 +35,7 @@
 
 </center>
 
-<c:if test="${not empty student_repo}">
+<c:if test="${assignment.getAssignmentType() == 'student_repo'}">
 <div class="panel panel-default">
       <div class="panel-heading"><h3>Template Repository</h3></div>
 		<div class="panel-body">

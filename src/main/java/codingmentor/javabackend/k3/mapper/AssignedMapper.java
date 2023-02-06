@@ -1,5 +1,5 @@
 package codingmentor.javabackend.k3.mapper;
-
+import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -16,8 +16,8 @@ public class AssignedMapper implements RowMapper<Assigned> {
 			.due_date(results.getTimestamp("due_date").toLocalDateTime())
 			.allow_late_submissions(results.getBoolean("allow_late_submissions"))
 			.max_contributors(results.getInt("max_contributors"))
-			.max_points_override(results.getDouble("max_points_override"))
-			.point_value_scale(results.getDouble("point_value_scale"))
+			.max_points_override( (results.getBigDecimal("max_points_override") == null) ? null : results.getBigDecimal("max_points_override").setScale(4, RoundingMode.HALF_UP).doubleValue())
+			.point_value_scale(results.getBigDecimal("point_value_scale") == null ? null : results.getBigDecimal("point_value_scale").setScale(4, RoundingMode.HALF_UP).doubleValue())
 			.repo_id(results.getInt("repo_id"))
 			.limit_resubmissions(results.getBoolean("limit_resubmissions"))
 			.resubmission_limit(results.getInt("resubmission_limit"))

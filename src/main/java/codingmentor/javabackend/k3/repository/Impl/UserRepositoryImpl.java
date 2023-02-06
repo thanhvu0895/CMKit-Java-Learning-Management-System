@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 
 import java.util.List;
@@ -67,7 +66,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public List<User> getUsers() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM users";
+			final String query = "\nSELECT * FROM users";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getUsers: " + statement);
@@ -87,7 +86,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public List<User> getUsersFromDepartmentId(int departmentId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT \r\n"
+			final String query = "\nSELECT \r\n"
 					+ "	U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted \r\n"
 					+ "FROM users as U\r\n"
 					+ "INNER JOIN department_professors as DP \r\n"
@@ -114,7 +113,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public List<User> getUsersFromKlassId(int klassId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted from professors as P"
+			final String query = "\nSELECT U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted from professors as P"
 					+ "	INNER JOIN users AS U"
 					+ " ON P.user_id = U.id and P.klass_id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -137,7 +136,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public List<User> getStudentUsersByKlassId(int klassId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted from students as S"
+			final String query = "\nSELECT U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted from students as S"
 					+ "	INNER JOIN users AS U"
 					+ " ON S.user_id = U.id and S.klass_id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
@@ -159,12 +158,9 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public List<User> getGraderUsersByKlassId(int klassId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT T1.*, ifnull(T2.assigned_assignments, 0) as assigned_assignments\r\n"
-					+ "FROM (SELECT U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted \r\n"
-					+ "	from graders as G INNER JOIN users as U ON U.id = G.user_id AND G.klass_id = ?) AS T1\r\n"
-					+ "LEFT JOIN (SELECT A.user_id, count(user_id) as assigned_assignments\r\n"
-					+ "	from (SELECT AG.* FROM assigned_graders as AG INNER JOIN assigneds as S ON AG.assigned_id = S.id) as A group by user_id) AS T2\r\n"
-					+ "ON T1.id = T2.user_id;";
+			final String query = "\nSELECT U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted FROM graders as G\r\n"
+					+ " INNER JOIN users as U\r\n"
+					+ "	ON U.id = G.user_id AND G.klass_id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
@@ -177,6 +173,32 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 			return usersList;
 		});
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<User> getGraderUsersByKlassIdWithAssignedAssignmentCount(int klassId) {
+		return executeQuery(connection -> {
+			final String query = "\nSELECT T1.*, ifnull(T2.assigned_assignments, 0) as assigned_assignments\r\n"
+					+ "FROM (\nSELECT U.id, U.email, U.admin, U.first_name, U.last_name, U.preferred_name, U.set_up, U.disabled, U.deleted \r\n"
+					+ "	from graders as G INNER JOIN users as U ON U.id = G.user_id AND G.klass_id = ?) AS T1\r\n"
+					+ "LEFT JOIN (\nSELECT A.user_id, count(user_id) as assigned_assignments\r\n"
+					+ "	from (\nSELECT AG.* FROM assigned_graders as AG INNER JOIN assigneds as S ON AG.assigned_id = S.id) as A group by user_id) AS T2\r\n"
+					+ "ON T1.id = T2.user_id;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, klassId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("getGraderUsersByKlassIdWithAssignedAssignmentCount: " + statement);
+			List<User> usersList = new ArrayList<>();
+			while(results.next()) {
+				usersList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return usersList;
+		});
+	}
+	
 
 	/*
 	 * GET Item
@@ -190,7 +212,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		return executeQuerySingle(connection -> {
 
     		// Query to find user by email
-    		final String query = "SELECT * FROM users WHERE id = ?  LIMIT 1;";
+    		final String query = "\nSELECT * FROM users WHERE id = ?  LIMIT 1;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet results = statement.executeQuery();
@@ -211,7 +233,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 		return executeQuerySingle(connection -> {
 	
 			// Query to find user by email
-			final String query = "SELECT * FROM users WHERE email = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM users WHERE email = ? LIMIT 1;";
 	        PreparedStatement statement = connection.prepareStatement(query);
 	        statement.setString(1, email);
 	        ResultSet results = statement.executeQuery();
@@ -232,7 +254,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean existedByEmail(String email) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 AS ONE FROM users WHERE email = ?  LIMIT 1;";
+			 final String query = "\nSELECT 1 AS ONE FROM users WHERE email = ?  LIMIT 1;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, email);
 			 ResultSet results = statement.executeQuery();
@@ -249,7 +271,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean isDepartmentProfessor(int userId) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 AS one FROM department_professors WHERE user_id = ?;";
+			 final String query = "\nSELECT 1 AS one FROM department_professors WHERE user_id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, userId);
 			 ResultSet results = statement.executeQuery();
@@ -266,7 +288,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	 */
 	public boolean isDepartmentProfessorByDepartmentId(int userId, int departmentId) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 AS one FROM department_professors WHERE user_id = ? and department_id = ? LIMIT 1;";
+			 final String query = "\nSELECT 1 AS one FROM department_professors WHERE user_id = ? and department_id = ? LIMIT 1;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, userId);
 			 statement.setInt(2, departmentId);
@@ -284,7 +306,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean isKlassStudentByKlassId(int userId, int klassId) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 AS one FROM students WHERE user_id = ? and klass_id = ? LIMIT 1;";
+			 final String query = "\nSELECT 1 AS one FROM students WHERE user_id = ? and klass_id = ? LIMIT 1;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, userId);
 			 statement.setInt(2, klassId);
@@ -302,7 +324,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean isKlassGraderByKlassId(int userId, int klassId) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 AS one FROM graders WHERE user_id = ? and klass_id = ? LIMIT 1;";
+			 final String query = "\nSELECT 1 AS one FROM graders WHERE user_id = ? and klass_id = ? LIMIT 1;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, userId);
 			 statement.setInt(2, klassId);
@@ -321,7 +343,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean isKlassProfessorByKlassId(int userId, int klassId) {
 		return executeQuerySingle(connection -> {
-			 final String query = "SELECT 1 AS one FROM professors WHERE user_id = ? and klass_id = ? LIMIT 1;";
+			 final String query = "\nSELECT 1 AS one FROM professors WHERE user_id = ? and klass_id = ? LIMIT 1;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, userId);
 			 statement.setInt(2, klassId);
@@ -373,7 +395,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean updateUserEditAdmin(String first_name, String last_name, String preferred_name, boolean admin, boolean disabled, int id) {
 		return executeUpdate(connection -> {
-			final String query = "UPDATE users SET first_name = ?, last_name = ?, preferred_name = ?, admin = ?, disabled = ? WHERE id = ?;";
+			final String query = "\nUPDATE users SET first_name = ?, last_name = ?, preferred_name = ?, admin = ?, disabled = ? WHERE id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setString(1, first_name);
 			statement.setString(2, last_name);
@@ -394,7 +416,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean updatePreferredNameById(String preferred_name, int id) {
 		return executeUpdate(connection -> {
-			 final String query = "UPDATE users SET preferred_name = ? WHERE id = ?;";
+			 final String query = "\nUPDATE users SET preferred_name = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, preferred_name);
 			 statement.setInt(2, id);
@@ -411,7 +433,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean updatePassword(String new_password, User user) {
 		return executeUpdate(connection -> {
-			 final String query = "UPDATE users SET password_digest = ? WHERE id = ?;";
+			 final String query = "\nUPDATE users SET password_digest = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 String password_digest = hasher.hash(new_password.toCharArray());
 			 statement.setString(1, password_digest);
@@ -429,7 +451,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean updateResetDigest(int userid, String reset_digest) {
 		return executeUpdate(connection -> {
-			 final String query = " UPDATE users SET reset_digest = ? WHERE id = ?;";
+			 final String query = "\nUPDATE users SET reset_digest = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, reset_digest);
 			 statement.setInt(2, userid);
@@ -446,9 +468,9 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean updateResetExpires(int userid, LocalDateTime reset_expires) {
 		return executeUpdate(connection -> {
-			 final String query = " UPDATE users SET reset_expires = ?, deleted = 0 WHERE id = ?;";
+			 final String query = "\nUPDATE users SET reset_expires = ?, deleted = 0 WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
-			 statement.setTimestamp(1, Timestamp.from(reset_expires.toInstant(ZoneOffset.of("-05:00"))));
+			 statement.setTimestamp(1, Timestamp.valueOf(reset_expires));
 			 statement.setInt(2, userid);
 			 System.out.println("updateResetExpires: " + statement);
 			 int result = statement.executeUpdate();
@@ -463,7 +485,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean updateUserInviteParams(int userid, String first_name, String last_name, String preferred_name, String password) {
 		return executeUpdate(connection -> {
-			 final String query = " UPDATE users SET first_name = ?, last_name = ?, preferred_name = ?, password_digest = ? WHERE id = ?;";
+			 final String query = "\nUPDATE users SET first_name = ?, last_name = ?, preferred_name = ?, password_digest = ? WHERE id = ?;";
 			 
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, first_name);
@@ -485,7 +507,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean updateSetUpUser(int userid) {
 		return executeUpdate(connection -> {
-			 final String query = " UPDATE users SET set_up = 1 WHERE id = ?;";
+			 final String query = "\nUPDATE users SET set_up = 1 WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, userid);
 			 System.out.println("updateSetUpUser: " + statement);
@@ -502,7 +524,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean deleteUser(int id) {
 		return executeUpdate(connection -> {
-			 final String query = " UPDATE users SET deleted = 1, set_up = 0 WHERE id = ?;";
+			 final String query = "\nUPDATE users SET deleted = 1, set_up = 0 WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, id);
 			 System.out.println("deleteUser: " + statement);
@@ -518,7 +540,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 	@Override
 	public boolean recoverUser(int id) {
 		return executeUpdate(connection -> {
-			 final String query = " UPDATE users SET deleted = 0 WHERE id = ?;";
+			 final String query = "\nUPDATE users SET deleted = 0 WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, id);
 			 System.out.println("recoverUser: " + statement);
@@ -532,7 +554,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
 //	@Override
 //	public List<User> getUserFromIdList (ArrayList<String> userIdsList) {
 //		return executeQuery(connection -> {
-//			String query = "SELECT users.* FROM users WHERE users.id IN (";
+//			String query = "\nSELECT users.* FROM users WHERE users.id IN (";
 //			
 //			if (userIdsList.size() == 0) {
 //				return null;

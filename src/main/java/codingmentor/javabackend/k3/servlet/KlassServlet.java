@@ -156,10 +156,12 @@ public class KlassServlet extends HttpServlet {
 	private void getKlassShow(HttpServletRequest req, HttpServletResponse resp, int klassId) throws ServletException, IOException {
 		try {
 			Klass klass = klassRepository.getKlassById(klassId);
+			
 			if (klass == null) {
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 				return;
 			}
+			
 			req.getRequestDispatcher(JspUtils.KLASSES_SHOW)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -172,6 +174,7 @@ public class KlassServlet extends HttpServlet {
 			Klass klass = klassRepository.getKlassById(klassId);
 			List<User> klassProfessorUsers = userRepository.getUsersFromKlassId(klassId);
 			List<Professor> klassProfessors = professorRepository.getProfessorsByKlassId(klassId);
+			
 			if (klass == null) {
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 				return;
@@ -208,7 +211,7 @@ public class KlassServlet extends HttpServlet {
 			List<GradeCategory> klassGradeCategoriesList = gradeCategoryRepository.getGradeCategoriesUsedByAssignmentsInKlass(klassId);
 			List<GradeCategory> courseGradeCategoriesList = gradeCategoryRepository.getGradeCategoriesUsedByAssignmentsInCourse(klass.getCourse_id());
 			List<Assigned> klassAssignedsList = assignedRepository.getAssignedsByAssignmentsInKlass(klassId);
-			List<Assigned> courseAssignedsList = assignedRepository.getAssignedsByAssignmentsInCourse(klass.getCourse_id());
+			List<Assigned> courseAssignedsList = assignedRepository.getAssignedsByAssignmentsInCourse(klass.getCourse_id(), klassId);
 			
 			req.setAttribute("klass", klass);
 			req.setAttribute("course", course);
@@ -298,7 +301,7 @@ public class KlassServlet extends HttpServlet {
 			
 			Course course = courseRepository.getCourseByKlassId(klassId);
 			List<Grader> gradersList = graderRepository.getGradersByKlassId(klassId);
-			List<User> graderUsersList = userRepository.getGraderUsersByKlassId(klassId);
+			List<User> graderUsersList = userRepository.getGraderUsersByKlassIdWithAssignedAssignmentCount(klassId);
 			
 			req.setAttribute("course", course);
 			req.setAttribute("klass", klass);
@@ -429,7 +432,7 @@ public class KlassServlet extends HttpServlet {
 			boolean isValidKlassStartDate = DateValidatorDateTimeFormatter.isValid(klassStartYearString, klassStartMonthString, klassStartDayString);
 			boolean isValidKlassEndDate = DateValidatorDateTimeFormatter.isValid(klassEndYearString, klassEndMonthString, klassEndDayString);
 			
-			if (klassSemester == "") {
+			if (klassSemester.isEmpty()) {
 				req.getSession().setAttribute("alert", "Semester can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_KLASS_PATH + "?course=" + courseIdString);
 				return;
@@ -486,7 +489,7 @@ public class KlassServlet extends HttpServlet {
 			String klassEndMonthString = req.getParameter("klass[end_date(2i)]");
 			String klassEndDayString = req.getParameter("klass[end_date(3i)]");
 			
-			if (klassSemester == "") {
+			if (klassSemester.isEmpty()) {
 				req.getSession().setAttribute("alert", "Semester can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_KLASS_PATH, klassId));
 				return;
@@ -554,7 +557,7 @@ public class KlassServlet extends HttpServlet {
 			int klassId = Integer.parseInt(klassIdString);
 			
 			for (String email : graderEmailsList) {
-				if (email == "") {
+				if (email.isEmpty()) {
 					continue;
 				}
 				
@@ -641,7 +644,7 @@ public class KlassServlet extends HttpServlet {
 			int klassId = Integer.parseInt(klassIdString);
 			
 			for (String email : studentEmailsList) {
-				if (email == "") {
+				if (email.isEmpty()) {
 					continue;
 				}
 				

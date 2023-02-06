@@ -60,7 +60,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 	@Override
 	public List<Course> getCourses() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM courses";
+			final String query = "\nSELECT * FROM courses";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getCourses()" + statement);
@@ -80,7 +80,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 	@Override
 	public List<Course> getCoursesByDepartmentId(int departmentId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM courses where department_id = ? ORDER BY course_code";
+			final String query = "\nSELECT * FROM courses where department_id = ? ORDER BY course_code";
 			PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();
@@ -100,7 +100,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 	@Override
 	public List<Course> getCoursesWithKlassByDepartmentId(int departmentId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT \r\n"
+			final String query = "\nSELECT \r\n"
 					+ "	C.id, C.title, C.course_code, C.repo_id, C.department_id, C.active \r\n"
 					+ "FROM courses AS C \r\n"
 					+ "INNER JOIN klasses as K\r\n"
@@ -126,7 +126,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 	@Override
 	public List<Course> getCoursesOrderByCourseCode() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM courses ORDER BY course_code";
+			final String query = "\nSELECT * FROM courses ORDER BY course_code";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getCoursesOrderByCourseCode: " + statement);
@@ -149,7 +149,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 	@Override
 	public Course getCourseById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM courses WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM courses WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
@@ -166,8 +166,8 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 	@Override
 	public Course getCourseByKlassId(int klassId) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT C.* FROM courses as C, klasses as K \r\n"
-					+ "where K.course_id = C.id AND K.id = ? LIMIT 1";
+			final String query = "\nSELECT C.* FROM courses as C, klasses as K \r\n"
+					+ "where K.course_id = C.id AND K.id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, klassId);
 		    ResultSet results = statement.executeQuery();
@@ -184,7 +184,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 	@Override
 	public Course getCourseByGradeCategoryId(int klassId) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT C.* FROM courses as C\r\n"
+			final String query = "\nSELECT C.* FROM courses as C\r\n"
 					+ " INNER JOIN grade_categories as GC \r\n"
 					+ " ON GC.course_id = C.id AND GC.id = ? LIMIT 1";
 		    PreparedStatement statement = connection.prepareStatement(query);
@@ -243,7 +243,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
 	@Override
 	public boolean updateCourseById(String title, String courseCode, boolean active, int id){
 		return executeUpdate(connection -> {
-			 final String query = "UPDATE courses SET title = ?, course_code = ?, active = ? WHERE id = ?;";
+			 final String query = "\nUPDATE courses SET title = ?, course_code = ?, active = ? WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, title);
 			 statement.setString(2, courseCode);

@@ -17,6 +17,13 @@ public interface SubmissionRepository {
 	 */
     List<Submission> getSubmissions();
     
+    /**
+	 * Get list of Submissions by assignedId
+	 * @category LIST
+	 * @return a list of all Submissions if found or null
+	 */
+    List<Submission> getSubmissionsByAssignedId(int assignedId);
+    
 	/*
 	 * GET ITEM METHOD
 	 */
@@ -50,7 +57,7 @@ public interface SubmissionRepository {
     /**
      * @category PATCH
 	 */
-    
+    boolean updateCachedGradeNull (int assignedId);
     /**
 	 * @category DELETE
      */

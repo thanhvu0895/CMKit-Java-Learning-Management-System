@@ -242,7 +242,7 @@ public class DepartmentServlet extends HttpServlet{
 	private void postDepartmentsCreate(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {
 			String title = req.getParameter("department[title]");
-			if (title == "") {
+			if (title.isEmpty()) {
 				req.getSession(false).setAttribute("alert", "Title can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.NEW_DEPARTMENT_PATH);
 				return;
@@ -271,7 +271,7 @@ public class DepartmentServlet extends HttpServlet{
 	private void patchDepartmentUpdate(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws IOException {
 		try {
 			String title = req.getParameter("department[title]");
-			if (title == "") {
+			if (title.isEmpty()) {
 				req.getSession(false).setAttribute("alert", "Title can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_DEPARTMENT_PATH, departmentId));
 				return;
@@ -306,7 +306,7 @@ public class DepartmentServlet extends HttpServlet{
 					.split(",");
 			boolean admin = (req.getParameterValues("department_professor[admin]").length == 2);
 			for (String email : departmentProfessorEmailList) {
-				if (email == "") {
+				if (email.isEmpty()) {
 					continue;
 				}
 				email = email.toLowerCase();

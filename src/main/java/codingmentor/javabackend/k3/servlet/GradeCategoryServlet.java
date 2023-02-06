@@ -138,13 +138,13 @@ public class GradeCategoryServlet extends HttpServlet{
 			String gradeCategoryWeightString = req.getParameter("grade_category[weight]");
 			String courseIdString = req.getParameter("grade_category[course_id]");
 			int courseId = Integer.parseInt(courseIdString);
-			if (title == "") {
+			if (title .isEmpty()) {
 				req.getSession(false).setAttribute("alert", "Title can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.NEW_GRADE_CATEGORY_PATH	 + "?course=:id", courseId));
 				return;
 			}
 			
-			if (gradeCategoryWeightString == "") {
+			if (gradeCategoryWeightString .isEmpty()) {
 				req.getSession(false).setAttribute("alert", "Grade Category can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.NEW_GRADE_CATEGORY_PATH	 + "?course=:id", Integer.parseInt(courseIdString)));
 				return;
@@ -172,13 +172,13 @@ public class GradeCategoryServlet extends HttpServlet{
 			String gradeCategoryWeightString = req.getParameter("grade_category[weight]");
 			String courseIdString = req.getParameter("grade_category[course_id]");
 			int courseId = Integer.parseInt(courseIdString);
-			if (title == "") {
+			if (title .isEmpty()) {
 				req.getSession(false).setAttribute("alert", "Title can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.NEW_GRADE_CATEGORY_PATH	 + "?course=:id", courseId));
 				return;
 			}
 			
-			if (gradeCategoryWeightString == "") {
+			if (gradeCategoryWeightString .isEmpty()) {
 				req.getSession(false).setAttribute("alert", "Grade Category can't be blank");
 				resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.NEW_GRADE_CATEGORY_PATH	 + "?course=:id", Integer.parseInt(courseIdString)));
 				return;

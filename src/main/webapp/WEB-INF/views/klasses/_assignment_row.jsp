@@ -2,10 +2,10 @@
 	<td><t:link_to path="${UrlUtils.ASSIGNMENT_PATH}/:id" id="${a.id}">${a.title}</t:link_to></td> 
 	<td>${not empty grade_categories[loop.index].title ? grade_categories[loop.index].title : "None"}</td>
 	<td>
-	   <c:choose><c:when test="${assigneds[loop.index].due_date != null}">
+	   <c:choose><c:when test="${assigneds[loop.index].due_date != null}"> 
+	   <c:if test="${empty assigneds[loop.index].max_points_override && empty assigneds[loop.index].point_value_scale}">${a.total_points == 0 ? 0 : a.total_points}</c:if>
 	   <c:if test="${not empty assigneds[loop.index].point_value_scale}">${assigneds[loop.index].point_value_scale}</c:if>
 	   <c:if test="${not empty assigneds[loop.index].max_points_override && empty assigneds[loop.index].point_value_scale}">${assigneds[loop.index].max_points_override}</c:if>
-	   <c:if test="${empty assigneds[loop.index].max_points_override && empty assigneds[loop.index].point_value_scale}">${a.total_points == 0 ? 0 : a.total_points}</c:if>
 	  </c:when><c:otherwise>
 		${a.total_points == 0 ? 0 : a.total_points}
 	  </c:otherwise></c:choose> 

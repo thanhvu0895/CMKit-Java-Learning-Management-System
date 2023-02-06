@@ -16,6 +16,13 @@ public interface AssignedGraderRepository {
 	 * @return a list of all AssignedGraders if found or null
 	 */
     List<AssignedGrader> getAssignedGraders();
+
+    /**
+	 * Get list of AssignedGraders by Assigned Id
+	 * @category LIST
+	 * @return a list of all AssignedGraders if found or null
+	 */
+    List<AssignedGrader> getAssignedGradersByAssignedId(int assignedId);
     
 	/*
 	 * GET ITEM METHOD
@@ -42,8 +49,10 @@ public interface AssignedGraderRepository {
 	//POST(INSERT INTO)
     /**
      * @category POST
-	 */
-    
+     * Add a new Assigned Grader to DB
+     * @return newly inserted department id if inserted and -1 otherwise
+     */
+    boolean insertAssignedGrader (int user_id, int assigned_id);
     /**
 	 * @category PATCH
      */
@@ -51,4 +60,5 @@ public interface AssignedGraderRepository {
     /**
 	 * @category DELETE
      */
+    boolean deleteAssignedGrader (int assignedGraderId);
 }

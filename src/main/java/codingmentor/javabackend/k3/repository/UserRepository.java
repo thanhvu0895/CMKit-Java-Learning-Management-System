@@ -38,7 +38,12 @@ public interface UserRepository {
      */
     List<User> getGraderUsersByKlassId(int klassId);
     
-
+    /**
+     * @category LIST
+     * Get list of Grader Users details given Klass's id
+     * @return
+     */
+    List<User> getGraderUsersByKlassIdWithAssignedAssignmentCount(int klassId);
     /**
      * @category LIST
      * Get list of Student User Details given Klass's id

@@ -63,7 +63,7 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 	@Override
 	public List<Grader> getGradersByKlassId(int klassId) {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM graders WHERE klass_id = ?";
+			final String query = "\nSELECT * FROM graders WHERE klass_id = ?";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
@@ -82,9 +82,35 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 	 */
 
 	@Override
+	public List<Grader> getGradersByAssignedStatusInKlass(int assignedId, int klassId) {
+		return executeQuery(connection -> {
+			final String query = "\nSELECT G.id, G.user_id, G.klass_id, G.notify_grader_assigned, AG.id as assigned_status FROM graders as G\r\n"
+					+ "	LEFT JOIN assigned_graders AG\r\n"
+					+ "	ON AG.user_id = G.user_id and assigned_id = ?\r\n"
+					+ " WHERE G.klass_id = ?; ";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, assignedId);
+			statement.setInt(2, klassId);;
+			ResultSet results = statement.executeQuery();
+			System.out.println("getGradersByAssignedInKlass: " + statement);
+			List<Grader> gradersList = new ArrayList<>();
+			while(results.next()) {
+				gradersList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return gradersList;
+		});
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+
+	@Override
 	public List<Grader> getGraders() {
 		return executeQuery(connection -> {
-			final String query = "SELECT * FROM graders";
+			final String query = "\nSELECT * FROM graders";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getGraders: " + statement);
@@ -107,7 +133,7 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 	@Override
 	public Grader getGraderById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "SELECT * FROM graders WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM graders WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();

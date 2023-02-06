@@ -65,3 +65,36 @@
     Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
 </p>
 
+<p>
+    Dear William,
+<br><br>
+    Here is the link to reset your Kit password:
+<br>
+    <a href=http://localhost:8080/cmkit/use_password_reset?token=bea199abd7c0f355c9e0001266ac1785a4dccda7007f0e55dda32e168554345c&user=3> http://localhost:8080/cmkit/use_password_reset?token=bea199abd7c0f355c9e0001266ac1785a4dccda7007f0e55dda32e168554345c&user=3 </a>
+<br><br>
+    If you did not request a password reset, you should disregard this email.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>
+<p>
+    Dear William,
+<br><br>
+    Here is the link to reset your Kit password:
+<br>
+    <a href=http://localhost:8080/cmkit/use_password_reset?token=ee7489a8a289e693cc347f764efd52a3e89ad0f141e8defbd128dbd49c3018c5&user=3> http://localhost:8080/cmkit/use_password_reset?token=ee7489a8a289e693cc347f764efd52a3e89ad0f141e8defbd128dbd49c3018c5&user=3 </a>
+<br><br>
+    If you did not request a password reset, you should disregard this email.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>
+<p>
+    Dear William,
+<br><br>
+    Here is the link to reset your Kit password:
+<br>
+    <a href=http://localhost:8080/cmkit/use_password_reset?token=9489deb6d1cda7a39034ac8e6be43e61c7da5bdb74c710a7bae37b2885139445&user=3> http://localhost:8080/cmkit/use_password_reset?token=9489deb6d1cda7a39034ac8e6be43e61c7da5bdb74c710a7bae37b2885139445&user=3 </a>
+<br><br>
+    If you did not request a password reset, you should disregard this email.
+<br><br>
+    Please do not reply to this email, as it was sent by a lazy robot who never checks its inbox.
+</p>

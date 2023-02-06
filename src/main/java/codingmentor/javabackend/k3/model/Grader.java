@@ -6,6 +6,7 @@ public class Grader {
 	private int user_id;
 	private int klass_id;
 	private boolean notify_grader_assigned;
+	private Integer assignedStatus;
 	
    /**
     * Repository Functions
@@ -29,6 +30,10 @@ public class Grader {
 	public boolean isNotify_grader_assigned() {
 		return notify_grader_assigned;
 	}
+	
+	public Integer getAssignedStatus() {
+		return assignedStatus;
+	}
 
 	public Grader() {}
 	
@@ -47,6 +52,12 @@ public class Grader {
 	    this.klass_id = klass_id;
 	    return this;
 	}
+	
+	public Grader assignedStatus(Integer assignedStatus) {
+	    this.assignedStatus = assignedStatus;
+	    return this;
+	}
+
 	
 	public Grader notify_grader_assigned(boolean notify_grader_assigned) {
 	    this.notify_grader_assigned = notify_grader_assigned;
