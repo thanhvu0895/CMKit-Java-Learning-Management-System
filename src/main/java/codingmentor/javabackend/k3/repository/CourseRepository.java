@@ -38,6 +38,37 @@ public interface CourseRepository {
      */
     List<Course> getCoursesWithKlassByDepartmentId(int departmentId);
     
+    /**
+     * @category LIST
+     * Get Student Courses by theird user id
+     * @return Course if exists and null if not
+     */
+    List<Course> getStudentCoursesByUserId(int userId);
+    
+    /**
+     * @category LIST
+     * Get Grader Courses by theird user id
+     * @return Course if exists and null if not
+     */
+    List<Course> getGraderCoursesByUserId(int userId);
+    
+    /**
+     * @category LIST
+     * Get Grader Courses by theird user id
+     * @return Course if exists and null if not
+     */
+    List<Course> getProfessorCoursesByUserId(int userId);
+    
+    List<Course> getProfessorCoursesByUserIdWithStudentsCount(int userId);
+    
+    
+    /**
+     * @category LIST
+     * Get Admin Courses by theird user id
+     * @return Course if exists and null if not
+     */
+    List<Course> getAdminCourses();    
+    
 	/*
 	 * GET ITEM METHOD
 	 */

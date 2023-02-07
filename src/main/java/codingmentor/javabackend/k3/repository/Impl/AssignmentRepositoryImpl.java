@@ -68,7 +68,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			final String query = "\nSELECT * FROM assignments";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getAssignments(): " + statement);
+			System.out.println("-- getAssignments(): " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -84,7 +84,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	@Override
 	public List<Assignment> getAssignmentsByCourseId(int courseId) {
 		return executeQuery(connection -> {
-			final String query = "WITH A AS (\nSELECT * FROM assignments where course_id = ?)\r\n"
+			final String query = "\nWITH A AS (\nSELECT * FROM assignments where course_id = ?)\r\n"
 					+ "\r\n"
 					+ "\nSELECT a.id, a.title, a.klass_id, a.course_id, a.grade_category_id, a.files_repo_id, a.template_repo_id, a.assignment_type, a.permitted_filetypes, a.description, a.file_limit, a.file_or_link, ifnull(sum(points),0) as total_points\r\n"
 					+ "	FROM A a\r\n"
@@ -94,7 +94,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, courseId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getAssignmentsByCourseId: " + statement);
+			System.out.println("-- getAssignmentsByCourseId: " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -120,7 +120,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getAssignmentsByKlassId: " + statement);
+			System.out.println("-- getAssignmentsByKlassId: " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -164,7 +164,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		    statement.setInt(1, klassId);
 		    statement.setInt(2, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getAssignmentsWithGradersListByKlassId: " + statement);
+			System.out.println("-- getAssignmentsWithGradersListByKlassId: " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -180,7 +180,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	@Override
 	public List<Assignment> getAssignmentsWithGradersListByCourseId(int courseId) {
 		return executeQuery(connection -> {
-			final String query = "WITH TABLE1 AS (\r\n"
+			final String query = "\n WITH TABLE1 AS (\r\n"
 					+ "WITH A AS (\nSELECT * FROM assignments where course_id = ?)\r\n"
 					+ "\nSELECT a.id, a.title, a.klass_id, a.course_id, a.grade_category_id, a.files_repo_id, a.template_repo_id, a.assignment_type, a.permitted_filetypes, a.description, a.file_limit, a.file_or_link, ifnull(sum(points),0) as total_points\r\n"
 					+ "	FROM A a\r\n"
@@ -190,7 +190,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 					+ "),\r\n"
 					+ "\r\n"
 					+ "TABLE2 AS (\r\n"
-					+ "WITH A AS (\nSELECT * FROM assignments where klass_id = 3)\r\n"
+					+ "WITH A AS (\nSELECT * FROM assignments where course_id = ?)\r\n"
 					+ "\nSELECT a.id, GROUP_CONCAT(U.email SEPARATOR ', ') as assigned_graders\r\n"
 					+ "	FROM A a\r\n"
 					+ "    LEFT JOIN assigneds as AG\r\n"
@@ -206,8 +206,9 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 					+ "	ON TABLE1.id = TABLE2.id;";
 			PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, courseId);
+		    statement.setInt(2, courseId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getAssignmentsWithGradersListByCourseId: " + statement);
+			System.out.println("-- getAssignmentsWithGradersListByCourseId: " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -233,7 +234,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getAssignmentById: " + statement);
+		    System.out.println("-- getAssignmentById: " + statement);
 		    Assignment assignment = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return assignment;
@@ -254,7 +255,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getAssignmentById: " + statement);
+		    System.out.println("-- getAssignmentById: " + statement);
 		    Assignment assignment = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return assignment;
@@ -278,7 +279,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	@Override
 	public int insertAssignment(String title, int course_id, Integer grade_category_id, int files_repo_id, int assignment_type, String permitted_filetypes, String description, int file_limit, int file_or_link) {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO assignments"
+			final String query = "\nINSERT INTO assignments"
 					+ " (title, course_id, grade_category_id, files_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -291,7 +292,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			statement.setString(7, description);
 			statement.setInt(8, file_limit);
 			statement.setInt(9, file_or_link);
-			System.out.println("insertAssignment: " + statement);
+			System.out.println(" --insertAssignment: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -316,7 +317,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	@Override
 	public int insertAssignmentKlass(String title, int klass_id, Integer grade_category_id, int files_repo_id, int assignment_type, String permitted_filetypes, String description, int file_limit, int file_or_link) {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO assignments"
+			final String query = "\n INSERT INTO assignments"
 					+ " (title, klass_id, grade_category_id, files_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -329,7 +330,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			statement.setString(7, description);
 			statement.setInt(8, file_limit);
 			statement.setInt(9, file_or_link);
-			System.out.println("insertAssignmentKlass: " + statement);
+			System.out.println("-- insertAssignmentKlass: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -354,7 +355,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	@Override
 	public int insertStudentRepoAssignmentKlass(String title, int klass_id, Integer grade_category_id, int files_repo_id, int template_repo_id, int assignment_type, String permitted_filetypes, String description, int file_limit, int file_or_link) {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO assignments"
+			final String query = "\nINSERT INTO assignments"
 					+ " (title, klass_id, grade_category_id, files_repo_id, template_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -368,7 +369,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			statement.setString(8, description);
 			statement.setInt(9, file_limit);
 			statement.setInt(10, file_or_link);
-			System.out.println("insertStudentRepoAssignmentKlass: " + statement);
+			System.out.println("-- insertStudentRepoAssignmentKlass: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -395,7 +396,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 	public int insertStudentRepoAssignment(String title, int course_id, Integer grade_category_id, 
 			int files_repo_id, int template_repo_id, int assignment_type, String permitted_filetypes, String description, int file_limit,int file_or_link) {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO assignments"
+			final String query = "\nINSERT INTO assignments"
 					+ " (title, course_id, grade_category_id, files_repo_id, template_repo_id, assignment_type, permitted_filetypes, description, file_limit, file_or_link)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -409,7 +410,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			statement.setString(8, description);
 			statement.setInt(9, file_limit);
 			statement.setInt(10, file_or_link);
-			System.out.println("insertStudentRepoAssignment: " + statement);
+			System.out.println("-- insertStudentRepoAssignment: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -445,7 +446,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			statement.setString(5, permitted_filetypes);
 			statement.setInt(6, file_limit);
 			statement.setInt(7, assignmentId);
-			 System.out.println("updateStudentFileAssignmentById: " + statement);
+			 System.out.println("-- updateStudentFileAssignmentById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -464,7 +465,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			statement.setString(2, description);
 			statement.setObject(3, grade_category_id, Types.INTEGER);
 			statement.setInt(4, assignmentId);
-			 System.out.println("updateStudentFileAssignmentById: " + statement);
+			 System.out.println("-- updateStudentFileAssignmentById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

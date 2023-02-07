@@ -175,6 +175,23 @@ public class AssignmentServlet extends HttpServlet {
 				getAssignmentAssignedGradeSettings(req, resp, assignmentId, assignedId);
 				return;
 			}
+			
+			if (pathInfoLength == 5 && UrlUtils.isInteger(pathParts[1]) && pathParts[2].equals("assigned")
+					&& UrlUtils.isInteger(pathParts[3]) && pathParts[4].equals("gradebook")) {
+				int assignmentId = Integer.parseInt(pathParts[1]);
+				int assignedId = Integer.parseInt(pathParts[3]);
+				getAssignmentAssignedGradeBook(req, resp, assignmentId, assignedId);
+				return;
+			}
+			
+			if (pathInfoLength == 6 && UrlUtils.isInteger(pathParts[1]) && pathParts[2].equals("assigned")
+					&& UrlUtils.isInteger(pathParts[3]) && pathParts[4].equals("problem") && UrlUtils.isInteger(pathParts[5])) {
+				int assignmentId = Integer.parseInt(pathParts[1]);
+				int assignedId = Integer.parseInt(pathParts[3]);
+				int problemId = Integer.parseInt(pathParts[5]);
+				getAssignmentShowGradeProblem(req, resp, assignmentId, assignedId, problemId);
+				return;
+			}
 
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;
@@ -601,6 +618,62 @@ public class AssignmentServlet extends HttpServlet {
 			req.setAttribute("grader_users", graderUsersList);
 
 			req.getRequestDispatcher(JspUtils.ASSIGNED_GRADE_SETTINGS).forward(req, resp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void getAssignmentAssignedGradeBook(HttpServletRequest req, HttpServletResponse resp, int assignmentId, int assignedId) throws ServletException, IOException {
+		try {
+			Assignment assignment = assignmentRepository.getAssignmentById(assignmentId);
+			Assigned assigned = assignedRepository.getAssignedById(assignedId);
+
+			if (assignment == null || assigned == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+
+			Klass klass = klassRepository.getKlassById(assigned.getKlass_id());
+			Course course = courseRepository.getCourseById(klass.getCourse_id());
+
+			req.setAttribute("course", course);
+			req.setAttribute("klass", klass);
+			req.setAttribute("assigned", assigned);
+			req.setAttribute("assignment", assignment);
+
+			req.getRequestDispatcher(JspUtils.ASSIGNED_GRADEBOOK)
+				.forward(req, resp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void getAssignmentShowGradeProblem(HttpServletRequest req, HttpServletResponse resp, int assignmentId, int assignedId, int problemId) throws ServletException, IOException {
+		try {
+			Assignment assignment = assignmentRepository.getAssignmentById(assignmentId);
+			Assigned assigned = assignedRepository.getAssignedById(assignedId);
+			Problem problem = problemRepository.getProblemById(problemId);
+			
+			if (assignment == null || assigned == null || problem == null) {
+				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				return;
+			}
+			
+			Klass klass = klassRepository.getKlassById(assigned.getKlass_id());
+			Course course = courseRepository.getCourseById(klass.getCourse_id());
+			
+			List<RubricItem> rubricItemsList = rubricItemRepository.getRubricItemsByProblemIdOrderByLocationAsc(problemId);
+			
+			req.setAttribute("course", course);
+			req.setAttribute("klass", klass);
+			req.setAttribute("assigned", assigned);
+			req.setAttribute("assignment", assignment);
+			req.setAttribute("problem", problem);
+			req.setAttribute("rubric_items", rubricItemsList);
+			
+			req.getRequestDispatcher(JspUtils.ASSIGNED_SHOW_PROBLEM)
+				.forward(req, resp);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

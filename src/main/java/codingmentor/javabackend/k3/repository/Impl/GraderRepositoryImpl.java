@@ -67,7 +67,7 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getGradersByKlassId: " + statement);
+			System.out.println("-- getGradersByKlassId: " + statement);
 			List<Grader> gradersList = new ArrayList<>();
 			while(results.next()) {
 				gradersList.add(mapper.map(results));
@@ -92,7 +92,7 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 			statement.setInt(1, assignedId);
 			statement.setInt(2, klassId);;
 			ResultSet results = statement.executeQuery();
-			System.out.println("getGradersByAssignedInKlass: " + statement);
+			System.out.println("-- getGradersByAssignedInKlass: " + statement);
 			List<Grader> gradersList = new ArrayList<>();
 			while(results.next()) {
 				gradersList.add(mapper.map(results));
@@ -113,7 +113,7 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 			final String query = "\nSELECT * FROM graders";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getGraders: " + statement);
+			System.out.println("-- getGraders: " + statement);
 			List<Grader> gradersList = new ArrayList<>();
 			while(results.next()) {
 				gradersList.add(mapper.map(results));
@@ -137,7 +137,7 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getGraderById: " + statement);
+		    System.out.println("-- getGraderById: " + statement);
 		    Grader grader = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return grader;
@@ -159,11 +159,11 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 	@Override
 	public int insertGrader (int user_id, int klass_id) {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO `graders` (`user_id`, `klass_id`) VALUES (?, ?);";
+			final String query = "\nINSERT INTO `graders` (`user_id`, `klass_id`) VALUES (?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, user_id);
 			statement.setInt(2, klass_id);
-			System.out.println("insertGrader: " + statement);
+			System.out.println("-- insertGrader: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();

@@ -43,6 +43,8 @@ public class UrlUtils {
 
 	public static final String ASSIGNMENT_PROBLEMS_PATH = "/assignments/:assignment_id/problems";
 	public static final String ASSIGNMENT_PROBLEM_PATH = "/assignments/:assignment_id/problems/:id";
+	public static final String ASSIGNMENT_GRADE_PROBLEM_PATH = "/assignments/:assignment_id/assigned/:id/problem/:problem_id";
+	
 	public static final String NEW_ASSIGNMENT_PROBLEM_PATH = "/assignments/:assignment_id/problems/new";
 	public static final String EDIT_ASSIGNMENT_PROBLEM_PATH = "/assignments/:assignment_id/problems/:id/edit";
 	public static final String ASSIGNMENT_PROBLEM_MOVE_DOWN_PATH = "/assignments/:assignment_id/problems/:id/move_down";
@@ -63,7 +65,7 @@ public class UrlUtils {
 	public static final String ASSIGNMENT_VIEW_BULK_UPLOAD_PATH = "/assignments/:assignment_id/assigned/:id/bulk_upload";
 	public static final String ASSIGNMENT_VIEW_BULK_SORT_PATH = "/assignments/:assignment_id/assigned/:id/bulk_sort";
 	public static final String ASSIGNMENT_CLONE_ALL_PATH = "/assignments/:assignment_id/assigned/:id/clone_all";
-	
+	public static final String ASSIGNMENT_ASSIGNED_GRADEBOOK_CSV_PATH = "/assignments/:assignment_id/assigned/:id/gradebook_csv";
 	
 	public static final String ASSIGNED_GRADER_PATH = "/assigned_grader";
 	public static final String REMOVE_GRADER_PATH = "/assigned_grader/:id";
@@ -75,9 +77,13 @@ public class UrlUtils {
 	public static final String ASSIGNMENT_PROBLEM_RUBRIC_ITEM_MOVE_DOWN_PATH = "/assignments/:assignment_id/problems/:problem_id/rubric_items/:id/move_down";
 	public static final String ASSIGNMENT_PROBLEM_REUSABLE_COMMENTS_PATH = "/assignments/:assignment_id/problems/:id/reusable_comments";
 	public static final String ASSIGNMENT_PROBLEM_REUSABLE_COMMENT_PATH = "/assignments/:assignment_id/problems/:problem_id/reusable_comments/:id";
-
 	public static final String ASSIGNMENT_SHOW_GRADE_PROBLEM_PATH = "/assignments/:assignment_id/assigned/:id/problem/:problem_id";
-
+	
+	public static final String SUBMISSION_GRADE_PATH = "/submissions/:submission_id/grade";
+	public static final String SUBMISSION_GRADED_PROBLEMS_PATH = "/submissions/:submission_id/graded_problems";
+	public static final String EDIT_SUBMISSION_GRADED_PROBLEM_PATH = "/submissions/:submission_id/graded_problems/:id/edit";
+	
+	
 	public static final String GRADERS_ALL_PATH = "/graders/*";
 	public static final String GRADERS_PATH = "/graders";
 	public static final String ADD_GRADER_PATH = "/add_grader";
@@ -188,5 +194,26 @@ public class UrlUtils {
 	public static Double convertDoubleFromStringWithPrecision(String doubleNumberString, int precision) {
 		return BigDecimal.valueOf(Double.parseDouble(doubleNumberString)).setScale(precision, RoundingMode.HALF_UP)
 				.doubleValue();
+	}
+	
+	public static String get_color_for_grade(double grade) {
+		double red = 0;
+		double green = 0;
+		double blue = 0;
+	  
+	  if (grade < 0.5)
+		red = 255;
+	  else if (grade < 0.75) {
+		red = 255;
+		green = (grade-0.5)*4 * 255;
+	  }
+	  else if (grade <= 1.0) {
+	    green = 255;
+		red = 255 - (grade - 0.75) * 4 * 255;
+	  }
+	  else
+	    green = 255;
+	  
+	  return "rgb(" + Double.toString(red) + "," + Double.toString(green) +"," + Double.toString(blue) + ")";
 	}
 }

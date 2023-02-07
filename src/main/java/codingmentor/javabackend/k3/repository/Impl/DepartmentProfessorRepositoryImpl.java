@@ -66,7 +66,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			final String query = "\nSELECT * FROM department_professors";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getDepartmentProfessors: " + statement);
+			System.out.println("-- getDepartmentProfessors: " + statement);
 			List<DepartmentProfessor> departmentProfessorsList = new ArrayList<>();
 			while(results.next()) {
 				departmentProfessorsList.add(mapper.map(results));
@@ -86,7 +86,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getDepartmentProfessorsByDepartmentId: " + statement);
+			System.out.println("-- getDepartmentProfessorsByDepartmentId: " + statement);
 			List<DepartmentProfessor> departmentProfessorsList = new ArrayList<>();
 			while(results.next()) {
 				departmentProfessorsList.add(mapper.map(results));
@@ -111,7 +111,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getDepartmentProfessorById: " + statement);
+		    System.out.println("-- getDepartmentProfessorById: " + statement);
 		    DepartmentProfessor departmentProfessor = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return departmentProfessor;
@@ -136,12 +136,12 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 	@Override
 	public int insertDepartmentProfessor(int user_id, int department_id, boolean admin) {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO department_professors (`user_id`, `department_id`, `admin`) VALUES (?, ?, ?);";
+			final String query = "\n INSERT INTO department_professors (`user_id`, `department_id`, `admin`) VALUES (?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, user_id);
 			statement.setInt(2, department_id);
 			statement.setBoolean(3, admin);
-			System.out.println("insertDepartmentProfessor: " + statement);
+			System.out.println("-- insertDepartmentProfessor: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -172,7 +172,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setBoolean(1, admin);
 			 statement.setInt(2, id);
-			 System.out.println("updateAdminByDepartmentProfessorId: " + statement);
+			 System.out.println("-- updateAdminByDepartmentProfessorId: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -186,10 +186,10 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 	@Override
 	public boolean deleteDepartmentProfessor(int departmentProfessorId) {
 		return executeUpdate(connection -> {
-			 final String query = "DELETE FROM department_professors WHERE id = ?;";
+			 final String query = "\n DELETE FROM department_professors WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, departmentProfessorId);
-			 System.out.println("deleteDepartmentProfessor: " + statement);
+			 System.out.println("-- deleteDepartmentProfessor: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

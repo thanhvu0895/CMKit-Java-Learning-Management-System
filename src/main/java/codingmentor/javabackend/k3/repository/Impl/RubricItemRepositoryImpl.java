@@ -68,7 +68,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 			final String query = "\nSELECT * FROM rubric_items";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getRubricItems: " + statement);
+			System.out.println("-- getRubricItems: " + statement);
 			List<RubricItem> rubricItemsList = new ArrayList<>();
 			while(results.next()) {
 				rubricItemsList.add(mapper.map(results));
@@ -88,7 +88,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, problem_id);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getRubricItemsByAssignmentId: " + statement);
+			System.out.println("-- getRubricItemsByAssignmentId: " + statement);
 			List<RubricItem> rubricItemsList = new ArrayList<>();
 			while(results.next()) {
 				rubricItemsList.add(mapper.map(results));
@@ -105,7 +105,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, problem_id);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getRubricItemsByAssignmentId: " + statement);
+			System.out.println("-- getRubricItemsByAssignmentId: " + statement);
 			List<RubricItem> rubricItemsList = new ArrayList<>();
 			while(results.next()) {
 				rubricItemsList.add(mapper.map(results));
@@ -128,7 +128,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getRubricItemById: " + statement);
+		    System.out.println("-- getRubricItemById: " + statement);
 		    RubricItem rubricItem = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return rubricItem;
@@ -146,7 +146,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 		    statement.setInt(1, problem_id);
 		    statement.setInt(2, problem_id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getMaxRubricItemByProblemId: " + statement);
+		    System.out.println("-- getMaxRubricItemByProblemId: " + statement);
 		    RubricItem rubricitem = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return rubricitem;
@@ -164,7 +164,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 		    statement.setInt(1, location);
 		    statement.setInt(2, problem_id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getRubricItemByLocationAndProblemId: " + statement);
+		    System.out.println("-- getRubricItemByLocationAndProblemId: " + statement);
 		    RubricItem rubricItem = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return rubricItem;
@@ -187,13 +187,13 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 	@Override
 	public boolean insertRubricItem(int problem_id, String title, double points, int location) {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO rubric_items (problem_id, title, points, location) VALUES (?, ?, ?, ?);";
+			final String query = "\nINSERT INTO rubric_items (problem_id, title, points, location) VALUES (?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, problem_id);
 			statement.setString(2, title);
 			statement.setDouble(3, points);
 			statement.setInt(4, location);
-			System.out.println("insertRubricItem: " + statement);
+			System.out.println("-- insertRubricItem: " + statement);
 			int result = statement.executeUpdate();
 			close(connection, statement, null);			
 			return result;	
@@ -212,7 +212,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 			 statement.setString(1, title);
 			 statement.setDouble(2, points);
 			 statement.setInt(3, id);
-			 System.out.println("updateRubricItemsById: " + statement);
+			 System.out.println("-- updateRubricItemsById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -229,7 +229,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, location);
 			 statement.setInt(2, rubricItemId);
-			 System.out.println("updateRubricItemLocationById: " + statement);
+			 System.out.println("-- updateRubricItemLocationById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

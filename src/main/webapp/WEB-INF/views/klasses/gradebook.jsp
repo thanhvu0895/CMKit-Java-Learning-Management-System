@@ -21,7 +21,7 @@
 
 <br><br>
 
-</div> <%--  Close page's responsive container so that table can use entire width --%>
+</div><%--  Close page's responsive container so that table can use entire width --%>
 <center>
 <div style="width:95vw;height:100vh;overflow:scroll"><%-- class="table-responsive">--%>
 <table class="table table-bordered" style="border-collapse: separate;">
@@ -30,7 +30,7 @@
   <tr id="header1" style="position:sticky;top:0;background:white;z-index:1">
 	  <th style="border-right: solid;border-bottom:hidden;background:white;left:0;position:sticky"></th>
 	  <c:forEach var="cat" items="${klass_grade_categories}">
-	    <th class="text-center" colspan="" style="border-right: solid"> ${cat.title} (${cat.weight}%) </th>
+	    <th class="text-center" colspan="<%-- @klass.assigned.select{|ad| ad.assignment.grade_category==cat}.count + 2% --%>" style="border-right: solid"> ${cat.title} (${cat.weight}%) </th>
 	  </c:forEach>
 	  <th style="border-left:double;border-bottom:hidden"></th>
   </tr>
@@ -38,15 +38,32 @@
   <tr id="header2" style="position:sticky;top:100px;background:white;z-index:1">
 	<th style="border-right:solid;background:white;left:0;position:sticky"> Name </th>
 	
-	<th></th>
-	
-	<th style="border-left:dotted"> ${cat.title} Total </th>
-	<th style="border-right:solid"> ${cat.title} Percent </th>
-	
+	<%-- <% max_grade = [] %> --%>
+
+	 <c:forEach var="cat" items="${klass_grade_categories}">
+	 <%-- <% @klass.get_grade_categories.each do |cat| %> --%>
+	 	<c:forEach var="ad" items="${assigned}">
+   <%-- <% @assigneds.select{|ad| ad.assignment.grade_category == cat}.each do |ad| %>
+		   <% max_grade[ad.id] = ad.get_adjusted_max_grade %> --%>
+		   <th><%-- <%= link_to submissions_path(assigned: ad), style: "color:black" do %><%= ad.assignment.title %> (/<%= max_grade[ad.id] %>) --%>
+	 	   <c:if test="${assigned.hide_grades}">
+      <%-- <% if ad.hide_grades? %> --%>
+		     <div style="color:red">
+			   <i>Not Counted: Hidden from students!</i>
+			 </div>
+			</c:if>
+	 	</c:forEach>
+	 		</th>	
+	  <th style="border-left:dotted"> ${cat.title} Total </th>
+	  <th style="border-right:solid"> ${cat.title} Percent </th>
+	 
+	 </c:forEach> 
 	<th style="border-left:double">Total Grade</th>
   </tr>
+  
   </thead>
   <tbody>
+  
   <tr>
   </tr>
    </tbody>

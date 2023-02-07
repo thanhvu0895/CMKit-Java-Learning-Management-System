@@ -15,15 +15,37 @@ public interface KlassRepository {
 	 * @category LIST
 	 * @return a list of all Klasss if found or null
 	 */
-	public List<Klass> getklasses();
+	List<Klass> getklasses();
 	
 
     /**
 	 * @category LIST
      * @param department's is
-     * @return list of courses 
+     * @return list of klasses 
      */
-    public List<Klass> getKlassesFromDepartmentId (int departmentId);
+    List<Klass> getKlassesFromDepartmentId (int departmentId);
+    
+    /**
+	 * @category LIST
+     * @param user's is
+     * @return list of klasses
+     */
+    List<Klass> getStudentKlassesByUserId (int userId);
+
+    
+    /**
+	 * @category LIST
+     * @param user's is
+     * @return list of klasses 
+     */
+    List<Klass> getGraderKlassesByUserId(int userId);
+    
+    /**
+	 * @category LIST
+     * @param user's is
+     * @return list of klasses 
+     */
+    List<Klass> getProfessorKlassesByUserId(int userId);
     
 	/*
 	 * GET ITEM METHOD
@@ -54,14 +76,14 @@ public interface KlassRepository {
      * Add a new Klass to DB
      * @return newly inserted Klass id if inserted and -1 otherwise
      */
-    public int insertKlass (int course_id, int repo_id, String semester, Integer section, LocalDate startDate, LocalDate endDate);
+    int insertKlass (int course_id, int repo_id, String semester, Integer section, LocalDate startDate, LocalDate endDate);
 
     //PATCH(UPDATE)
     /** Update Klass's semester, section, start date and end date
 	 * @category PATCH
      * @return true if updated, and false if update was unsuccessful
      */
-    public boolean updateKlassById(String semester, Integer section, LocalDate startDate, LocalDate endDate, int klassId);
+    boolean updateKlassById(String semester, Integer section, LocalDate startDate, LocalDate endDate, int klassId);
     
     /**
 	 * @category DELETE

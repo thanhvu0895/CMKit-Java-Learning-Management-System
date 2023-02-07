@@ -34,6 +34,14 @@ public class Klass {
 		return professorRepository.isProfessorByUserId(current_user.getId(),this.id);
 	}
 	
+	public boolean isPast() {
+		return this.end_date.isBefore(LocalDate.now());
+	}
+	
+	public boolean isCurrent() {
+		return this.end_date.isAfter(LocalDate.now()) || this.end_date.isEqual(LocalDate.now());
+	}
+	
 	/*
 	 * Getters, Setters
 	 */

@@ -66,7 +66,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 			final String query = "\nSELECT * FROM professors";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getProfessors: " + statement);
+			System.out.println("-- getProfessors: " + statement);
 			List<Professor> professorsList = new ArrayList<>();
 			while(results.next()) {
 				professorsList.add(mapper.map(results));
@@ -87,7 +87,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getProfessorsByKlassId: " + statement);
+			System.out.println("-- getProfessorsByKlassId: " + statement);
 			List<Professor> professorsList = new ArrayList<>();
 			while(results.next()) {
 				professorsList.add(mapper.map(results));
@@ -112,7 +112,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getProfessorById: " + statement);
+		    System.out.println("-- getProfessorById: " + statement);
 		    Professor professor = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return professor;
@@ -134,7 +134,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 			 statement.setInt(1, userId);
 			 statement.setInt(2, klassId);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println("isProfessorByUserId: " + statement);
+			 System.out.println("-- isProfessorByUserId: " + statement);
 			 Professor professor = (results.next()) ? new Professor() : null;
 			 close(connection, statement, results);
 			 return professor;
@@ -151,11 +151,11 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 	@Override
 	public int insertProfessor (int user_id, int klass_id) {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO professors (user_id, klass_id) VALUES (?, ?);";
+			final String query = "\nINSERT INTO professors (user_id, klass_id) VALUES (?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, user_id);
 			statement.setInt(2, klass_id);
-			System.out.println("insertProfessor: " + statement);
+			System.out.println("-- insertProfessor: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -182,19 +182,13 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 	@Override
 	public boolean deleteProfessor(int professorId) {
 		return executeUpdate(connection -> {
-			 final String query = "DELETE FROM professors WHERE id = ?;";
+			 final String query = "\n DELETE FROM professors WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, professorId);
-			 System.out.println("deleteProfessor: " + statement);
+			 System.out.println("-- deleteProfessor: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
 		}) != 0;
-	}
-
-	@Override
-	public Professor getProfessorByUserId(int userId) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

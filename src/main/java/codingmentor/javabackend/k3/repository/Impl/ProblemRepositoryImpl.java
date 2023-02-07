@@ -67,7 +67,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 			final String query = "\nSELECT * FROM problems";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getProblems: " + statement);
+			System.out.println("-- getProblems: " + statement);
 			List<Problem> problemsList = new ArrayList<>();
 			while(results.next()) {
 				problemsList.add(mapper.map(results));
@@ -87,7 +87,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, assignment_id);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getProblemsByAssignmentId: " + statement);
+			System.out.println("-- getProblemsByAssignmentId: " + statement);
 			List<Problem> problemsList = new ArrayList<>();
 			while(results.next()) {
 				problemsList.add(mapper.map(results));
@@ -107,7 +107,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, assignment_id);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getProblemsByAssignmentId: " + statement);
+			System.out.println("-- getProblemsByAssignmentId: " + statement);
 			List<Problem> problemsList = new ArrayList<>();
 			while(results.next()) {
 				problemsList.add(mapper.map(results));
@@ -130,7 +130,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getProblemById: " + statement);
+		    System.out.println("-- getProblemById: " + statement);
 		    Problem problem = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return problem;
@@ -148,7 +148,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 		    statement.setInt(1, assignment_id);
 		    statement.setInt(2, assignment_id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getMaxProblemByAssignmentId: " + statement);
+		    System.out.println("-- getMaxProblemByAssignmentId: " + statement);
 		    Problem problem = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return problem;
@@ -166,7 +166,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 		    statement.setInt(1, location);
 		    statement.setInt(2, assignment_id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getProblemByLocationAndAssignmentId: " + statement);
+		    System.out.println("-- getProblemByLocationAndAssignmentId: " + statement);
 		    Problem problem = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return problem;
@@ -189,14 +189,14 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 	@Override
 	public int insertProblem (int assignment_id, String title, Double points, int location, String grader_notes) {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO problems (assignment_id, title, points, location, grader_notes) VALUES (?, ?, ?, ?, ?);";
+			final String query = "\nINSERT INTO problems (assignment_id, title, points, location, grader_notes) VALUES (?, ?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, assignment_id);
 			statement.setString(2, title);
 			statement.setDouble(3, points);
 			statement.setInt(4, location);
 			statement.setString(5, grader_notes);
-			System.out.println("insertProblemrepository: " + statement);
+			System.out.println("-- insertProblemrepository: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -227,7 +227,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, location);
 			 statement.setInt(2, problem_id);
-			 System.out.println("updateProblemLocationById: " + statement);
+			 System.out.println("-- updateProblemLocationById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -246,7 +246,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
 			 statement.setDouble(2, points);
 			 statement.setString(3, grader_notes);
 			 statement.setInt(4, problem_id);
-			 System.out.println("updateProblemById: " + statement);
+			 System.out.println("-- updateProblemById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

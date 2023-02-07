@@ -66,7 +66,7 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 			final String query = "\nSELECT * FROM submissions";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getSubmissions: " + statement);
+			System.out.println("-- getSubmissions: " + statement);
 			List<Submission> submissionsList = new ArrayList<>();
 			while(results.next()) {
 				submissionsList.add(mapper.map(results));
@@ -91,7 +91,7 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, assignedId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getSubmissions: " + statement);
+			System.out.println("-- getSubmissions: " + statement);
 			List<Submission> submissionsList = new ArrayList<>();
 			while(results.next()) {
 				submissionsList.add(mapper.map(results));
@@ -116,7 +116,7 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getSubmissionById: " + statement);
+		    System.out.println("-- getSubmissionById: " + statement);
 		    Submission submission = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return submission;
@@ -141,11 +141,11 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 	@Override
 	public int insertSubmission(int assigned_id, double percent_modifier) {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO `Submissions` (`user_id`, `klass_id`) VALUES (?, ?);";
+			final String query = "\nINSERT INTO `Submissions` (`user_id`, `klass_id`) VALUES (?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, assigned_id);
 			statement.setDouble(2, percent_modifier);
-			System.out.println("insertSubmission: " + statement);
+			System.out.println("-- insertSubmission: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -171,7 +171,7 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 			final String query = "\nUPDATE submissions SET cached_grade = NULL where assigned_id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, assignedId);
-			System.out.println("updateCachedGrade: " + statement);
+			System.out.println("-- updateCachedGrade: " + statement);
 			int result = statement.executeUpdate();
 			close(connection, statement, null);
 			return result;

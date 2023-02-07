@@ -67,7 +67,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 			final String query = "\nSELECT * FROM reusable_comments";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getReusableComments: " + statement);
+			System.out.println("-- getReusableComments: " + statement);
 			List<ReusableComment> reusable_commentsList = new ArrayList<>();
 			while(results.next()) {
 				reusable_commentsList.add(mapper.map(results));
@@ -89,7 +89,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, problem_id);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getReusableCommentsByProblemId: " + statement);
+			System.out.println("-- getReusableCommentsByProblemId: " + statement);
 			List<ReusableComment> reusable_commentsList = new ArrayList<>();
 			while(results.next()) {
 				reusable_commentsList.add(mapper.map(results));
@@ -113,7 +113,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getReusableCommentById: " + statement);
+		    System.out.println("-- getReusableCommentById: " + statement);
 		    ReusableComment reusableComment = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return reusableComment;
@@ -134,7 +134,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 			 statement.setString(1, comment);
 			 statement.setInt(2, problemId);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println("existedByCommentAndProblemId" + statement);
+			 System.out.println("-- existedByCommentAndProblemId" + statement);
 			 ReusableComment reusableComment = (results.next()) ? new ReusableComment() : null;
 			 close(connection, statement, results);
 			 return reusableComment;
@@ -153,11 +153,11 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 	@Override
 	public boolean insertReusableComment(int problem_id, String comment) {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO reusable_comments (problem_id, comment) VALUES (?, ?);";
+			final String query = "\nINSERT INTO reusable_comments (problem_id, comment) VALUES (?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, problem_id);
 			statement.setString(2, comment);
-			System.out.println("insertReusableComment: " + statement);
+			System.out.println("-- insertReusableComment: " + statement);
 			int result = statement.executeUpdate();
 			close(connection, statement, null);			
 			return result;	

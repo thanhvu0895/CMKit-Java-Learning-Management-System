@@ -36,15 +36,7 @@ public interface ProfessorRepository {
      * @return Professor if exists and null if not
      */
     Professor getProfessorById(int id);
-    
-    /**
-	 * @category ITEM
-     * Get Professor by User id
-     * @return Professor if exists and null if not
-     */
-    Professor getProfessorByUserId(int userId);
-    
-    
+ 
 	/*
 	 * GET Check True/false METHOD
 	 */
