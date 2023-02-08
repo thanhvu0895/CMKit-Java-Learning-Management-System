@@ -218,7 +218,28 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		});
 	}
 	
-	
+	@Override
+	public List<Assignment> getAssignedAssignmentsByUserInKlassOrderByDueDate(int userId, int klassId) {
+		return executeQuery(connection -> {
+			final String query = "\nSELECT AM.id, AM.title, AM.klass_id, AM.course_id, AM.grade_category_id, AM.files_repo_id, AM.template_repo_id, AM.assignment_type, AM.permitted_filetypes, AM.description, AM.file_limit, AM.file_or_link FROM assigneds AS A\r\n"
+					+ "	LEFT JOIN assigned_graders as AG\r\n"
+					+ "		ON AG.assigned_id = A.id\r\n"
+					+ "	LEFT JOIN assignments as AM\r\n"
+					+ "		ON AM.id = A.assignment_id\r\n"
+					+ "WHERE A.klass_id = ? and AG.user_id = ? ORDER BY A.due_date DESC;";
+			PreparedStatement statement = connection.prepareStatement(query);
+		    statement.setInt(1, klassId);
+		    statement.setInt(2, userId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("-- getAssignedAssignmentsByUserInKlassOrderByDueDate: " + statement);
+			List<Assignment> assignmentsList = new ArrayList<>();
+			while(results.next()) {
+				assignmentsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return assignmentsList;
+		});
+	}	
 	
 	/*
 	 * GET ITEM METHOD
@@ -470,5 +491,5 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			 close(connection, statement, null);
 			 return result;
 		}) != 0;
-	}	
+	}
 }

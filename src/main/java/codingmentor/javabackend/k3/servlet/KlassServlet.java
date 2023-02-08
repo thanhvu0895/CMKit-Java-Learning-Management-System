@@ -202,6 +202,25 @@ public class KlassServlet extends HttpServlet {
 				return;
 			}
 			
+			Course course = courseRepository.getCourseByKlassId(klassId);
+			
+			User current_user = (User) req.getSession(false).getAttribute("current_user");
+			
+			if (klass.isKlassGrader(current_user)) {
+				System.out.println("I WAS HERE");
+				List<Assigned> assignedsList = assignedRepository.getAssignedsByUserInKlassOrderByDueDate(current_user.getId(), klassId);
+				List<Assignment> assignmentsList = assignmentRepository.getAssignedAssignmentsByUserInKlassOrderByDueDate(current_user.getId(), klassId);
+				req.setAttribute("grader_assigneds", assignedsList);
+				req.setAttribute("grader_assignments", assignmentsList);
+			}
+			
+			
+			List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesByCourseId(klass.getCourse_id());
+			
+			req.setAttribute("grade_categories", gradeCategoriesList);
+			req.setAttribute("course", course);
+			req.setAttribute("klass", klass);
+			
 			req.getRequestDispatcher(JspUtils.KLASSES_SHOW)
 				.forward(req, resp);
 		} catch (Exception e) {

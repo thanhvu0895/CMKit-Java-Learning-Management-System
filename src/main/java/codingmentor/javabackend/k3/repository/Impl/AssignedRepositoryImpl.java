@@ -138,6 +138,32 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 		});
 	}
 	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	
+	@Override
+	public List<Assigned> getAssignedsByUserInKlassOrderByDueDate(int userId, int klassId) {
+		return executeQuery(connection -> {
+			final String query = "\nSELECT A.* FROM assigneds AS A\r\n"
+					+ "	LEFT JOIN assigned_graders as AG\r\n"
+					+ "	ON AG.assigned_id = A.id\r\n"
+					+ " WHERE A.klass_id = ? and AG.user_id = ? ORDER BY A.due_date DESC;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, klassId);
+			statement.setInt(2, userId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("-- getAssignedsByUserInKlassOrderByDueDate: " + statement);
+			List<Assigned> assignedsList = new ArrayList<>();
+			while(results.next()) {
+				assignedsList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return assignedsList;
+		});
+	}
+	
 	/*
 	 * GET ITEM METHOD
 	 */
@@ -176,7 +202,6 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 		    return Assigned;
     	});
 	}
-
 	
 	/*
 	 * GET Check True/false METHOD
@@ -322,9 +347,5 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 			close(connection, statement, null);
 			return result;
 		}) != 0;
-	}
-
-
-
-	    
+	}	    
 }

@@ -64,7 +64,9 @@ public interface KlassRepository {
     
     /**
      * @category CHECK
-	 */
+     * @return true if user is Grader of this klass, otherwise false
+     */
+    public boolean isKlassGrader(int userId, int klassId);
     
     /*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS

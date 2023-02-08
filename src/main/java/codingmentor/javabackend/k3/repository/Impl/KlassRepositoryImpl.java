@@ -203,6 +203,24 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 	 * GET Check True/false METHOD
 	 */
 
+
+	@Override
+	public boolean isKlassGrader(int userId, int klassId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "\nSELECT 1 as ONE from klasses as K\r\n"
+			 		+ "	INNER JOIN graders as G\r\n"
+			 		+ "		ON G.klass_id = K.id\r\n"
+			 		+ "where G.user_id = ? and K.id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 statement.setInt(2, klassId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println("-- isKlassGrader: " +statement);
+			 Klass klass = results.next() ? new Klass() : null;
+			 close(connection, statement, results);
+			 return klass;
+		}) != null;
+	}
 	
 	/*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
@@ -259,4 +277,5 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			 return result;
 		}) != 0;
 	}
+
 }
