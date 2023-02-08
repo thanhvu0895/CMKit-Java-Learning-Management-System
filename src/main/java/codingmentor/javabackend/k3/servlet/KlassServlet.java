@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import codingmentor.javabackend.k3.Utils.AccountsMailer;
 import codingmentor.javabackend.k3.Utils.DateValidatorDateTimeFormatter;
 import codingmentor.javabackend.k3.Utils.JspUtils;
@@ -71,6 +74,7 @@ public class KlassServlet extends HttpServlet {
 	private GraderRepository graderRepository = null;
 	private StudentRepository studentRepository = null;
 	private AssignedRepository assignedRepository = null;
+	private final Logger logger =  LogManager.getLogger("codingmentor");
 	
 	@Override
 	public void init() throws ServletException {
@@ -207,7 +211,7 @@ public class KlassServlet extends HttpServlet {
 			User current_user = (User) req.getSession(false).getAttribute("current_user");
 			
 			if (klass.isKlassGrader(current_user)) {
-				System.out.println("I WAS HERE");
+				logger.info("I WAS HERE");
 				List<Assigned> assignedsList = assignedRepository.getAssignedsByUserInKlassOrderByDueDate(current_user.getId(), klassId);
 				List<Assignment> assignmentsList = assignmentRepository.getAssignedAssignmentsByUserInKlassOrderByDueDate(current_user.getId(), klassId);
 				req.setAttribute("grader_assigneds", assignedsList);

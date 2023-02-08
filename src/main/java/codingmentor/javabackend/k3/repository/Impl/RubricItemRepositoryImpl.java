@@ -1,6 +1,7 @@
 package codingmentor.javabackend.k3.repository.Impl;
 
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,10 @@ import codingmentor.javabackend.k3.repository.RubricItemRepository;
 public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> implements RubricItemRepository{
 	private static RubricItemRepository repository = null;
 	private final RubricItemMapper mapper;
+	private final Logger logger;
+	
 	private RubricItemRepositoryImpl() {
+		logger = LogManager.getLogger("codingmentor");
 		mapper = new RubricItemMapper();
 	}
 	 
@@ -68,7 +72,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 			final String query = "\nSELECT * FROM rubric_items";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getRubricItems: " + statement);
+			logger.info("-- getRubricItems: " + statement);
 			List<RubricItem> rubricItemsList = new ArrayList<>();
 			while(results.next()) {
 				rubricItemsList.add(mapper.map(results));
@@ -88,7 +92,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, problem_id);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getRubricItemsByAssignmentId: " + statement);
+			logger.info("-- getRubricItemsByAssignmentId: " + statement);
 			List<RubricItem> rubricItemsList = new ArrayList<>();
 			while(results.next()) {
 				rubricItemsList.add(mapper.map(results));
@@ -105,7 +109,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, problem_id);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getRubricItemsByAssignmentId: " + statement);
+			logger.info("-- getRubricItemsByAssignmentId: " + statement);
 			List<RubricItem> rubricItemsList = new ArrayList<>();
 			while(results.next()) {
 				rubricItemsList.add(mapper.map(results));
@@ -128,7 +132,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getRubricItemById: " + statement);
+		    logger.info("-- getRubricItemById: " + statement);
 		    RubricItem rubricItem = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return rubricItem;
@@ -146,7 +150,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 		    statement.setInt(1, problem_id);
 		    statement.setInt(2, problem_id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getMaxRubricItemByProblemId: " + statement);
+		    logger.info("-- getMaxRubricItemByProblemId: " + statement);
 		    RubricItem rubricitem = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return rubricitem;
@@ -164,7 +168,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 		    statement.setInt(1, location);
 		    statement.setInt(2, problem_id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getRubricItemByLocationAndProblemId: " + statement);
+		    logger.info("-- getRubricItemByLocationAndProblemId: " + statement);
 		    RubricItem rubricItem = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return rubricItem;
@@ -193,7 +197,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 			statement.setString(2, title);
 			statement.setDouble(3, points);
 			statement.setInt(4, location);
-			System.out.println("-- insertRubricItem: " + statement);
+			logger.info("-- insertRubricItem: " + statement);
 			int result = statement.executeUpdate();
 			close(connection, statement, null);			
 			return result;	
@@ -212,7 +216,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 			 statement.setString(1, title);
 			 statement.setDouble(2, points);
 			 statement.setInt(3, id);
-			 System.out.println("-- updateRubricItemsById: " + statement);
+			 logger.info("-- updateRubricItemsById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -229,7 +233,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, location);
 			 statement.setInt(2, rubricItemId);
-			 System.out.println("-- updateRubricItemLocationById: " + statement);
+			 logger.info("-- updateRubricItemLocationById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

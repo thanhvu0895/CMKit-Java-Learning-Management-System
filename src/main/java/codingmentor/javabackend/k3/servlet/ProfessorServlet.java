@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import codingmentor.javabackend.k3.Utils.AccountsMailer;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
@@ -27,6 +30,7 @@ public class ProfessorServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private ProfessorRepository professorRepository = null;
 	private UserRepository userRepository = null;
+	private final Logger logger =  LogManager.getLogger("codingmentor");
 	
 	@Override
 	public void init() throws ServletException {

@@ -53,7 +53,7 @@
 		</RollingFile>
 	</Appenders>
 	<Loggers>
-		<Logger name="Test3" additivity="false" level="debug">
+		<Logger name="codingmentor" additivity="false" level="debug">
 			<AppenderRef ref="console" />
 			<AppenderRef ref="debug" />
 			<AppenderRef ref="info" />

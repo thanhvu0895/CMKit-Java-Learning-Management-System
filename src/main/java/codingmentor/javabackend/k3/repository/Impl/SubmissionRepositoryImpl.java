@@ -1,6 +1,7 @@
 package codingmentor.javabackend.k3.repository.Impl;
 
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,10 @@ import codingmentor.javabackend.k3.repository.SubmissionRepository;
 public class SubmissionRepositoryImpl extends AbstractRepository<Submission> implements SubmissionRepository{
 	private static SubmissionRepository repository = null;
 	private final SubmissionMapper mapper;
+	private final Logger logger;
+	
 	private SubmissionRepositoryImpl() {
+		logger = LogManager.getLogger("codingmentor");
 		mapper = new SubmissionMapper();
 	}
 	 
@@ -66,7 +70,7 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 			final String query = "\nSELECT * FROM submissions";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getSubmissions: " + statement);
+			logger.info("-- getSubmissions: " + statement);
 			List<Submission> submissionsList = new ArrayList<>();
 			while(results.next()) {
 				submissionsList.add(mapper.map(results));
@@ -91,7 +95,7 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, assignedId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getSubmissions: " + statement);
+			logger.info("-- getSubmissions: " + statement);
 			List<Submission> submissionsList = new ArrayList<>();
 			while(results.next()) {
 				submissionsList.add(mapper.map(results));
@@ -116,7 +120,7 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getSubmissionById: " + statement);
+		    logger.info("-- getSubmissionById: " + statement);
 		    Submission submission = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return submission;
@@ -145,7 +149,7 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, assigned_id);
 			statement.setDouble(2, percent_modifier);
-			System.out.println("-- insertSubmission: " + statement);
+			logger.info("-- insertSubmission: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -171,7 +175,7 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
 			final String query = "\nUPDATE submissions SET cached_grade = NULL where assigned_id = ?;";
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, assignedId);
-			System.out.println("-- updateCachedGrade: " + statement);
+			logger.info("-- updateCachedGrade: " + statement);
 			int result = statement.executeUpdate();
 			close(connection, statement, null);
 			return result;

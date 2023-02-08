@@ -25,10 +25,10 @@ public class test2 {
 //		for (AssignmentTypes a  : AssignmentTypes.values()) {
 //			ALL.add(a);
 //		}
-//		System.out.println(AssignmentTypes.valueOf("student_repo").ordinal());
-//		System.out.println(ALL.get(0));
+//		logger.info(AssignmentTypes.valueOf("student_repo").ordinal());
+//		logger.info(ALL.get(0));
 //		
-//		System.out.println(AssignmentTypes.values()[0].toString());
+//		logger.info(AssignmentTypes.values()[0].toString());
 //		
 //		
 //		String test = "/assignments/:assignment_id/problems/:problem_id/rubric_items/:id/move_up";
@@ -36,30 +36,30 @@ public class test2 {
 //		test = UrlUtils.putSecondInPath(test, 2);
 //		test = UrlUtils.putSecondInPath(test, 3);
 //		
-//		System.out.println(test);
+//		logger.info(test);
 		
 //		LocalDateTime now = LocalDateTime.now();
-//		System.out.println(now.getDayOfWeek());
+//		logger.info(now.getDayOfWeek());
 //		DateTimeFormatter dtf = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.MEDIUM);
-//		System.out.println(now.format(dtf));
+//		logger.info(now.format(dtf));
 //		
 //        LocalDateTime currentLocalDateTime = LocalDateTime.now();
 //        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE MMM d, uuuu h:mm:ss a ");
 //        String formattedDateTime = currentLocalDateTime.format(dateTimeFormatter);
-//        System.out.println("Formatted LocalDateTime in String format : " + formattedDateTime);
+//        logger.info("Formatted LocalDateTime in String format : " + formattedDateTime);
         
         
         ZonedDateTime now = ZonedDateTime.now(ZoneId.of("GMT-5"));
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("EEEE MMM d 'at' hh:mma", Locale.ENGLISH);        
         
-        System.out.println(now.format(dtf));
+       
 
         LocalDateTime assignedDueDate = LocalDateTime.of(2023, 9, 14, 20, 30);
         LocalDateTime current = LocalDateTime.now();
         ZoneId zone = ZoneId.of("US/Eastern");
 
         Timestamp.valueOf(assignedDueDate);
-        System.out.println(Timestamp.valueOf(assignedDueDate));
+        
         
 
 	}

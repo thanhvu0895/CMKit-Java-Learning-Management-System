@@ -1,6 +1,7 @@
 package codingmentor.javabackend.k3.repository.Impl;
 
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -20,8 +21,11 @@ import codingmentor.javabackend.k3.repository.KlassRepository;
 public class KlassRepositoryImpl extends AbstractRepository<Klass> implements KlassRepository{
 	private static KlassRepository repository = null;
 	private final KlassMapper mapper;
+	private final Logger logger;
+	
 	private KlassRepositoryImpl() {
 		mapper = new KlassMapper();
+		logger = LogManager.getLogger("codingmentor");
 	}
 	 
 	public static KlassRepository getInstance() {
@@ -70,7 +74,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			final String query = "\nSELECT * FROM klasses";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getklasses(): " + statement);
+			logger.info("-- getklasses(): " + statement);
 			List<Klass> klassesList = new ArrayList<>();
 			while(results.next()) {
 				klassesList.add(mapper.map(results));
@@ -93,7 +97,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, userId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getStudentKlassesByUserId: " + statement);
+			logger.info("-- getStudentKlassesByUserId: " + statement);
 			List<Klass> klassesList = new ArrayList<>();
 			while(results.next()) {
 				klassesList.add(mapper.map(results));
@@ -116,7 +120,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, userId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getGraderKlassesByUserId: " + statement);
+			logger.info("-- getGraderKlassesByUserId: " + statement);
 			List<Klass> klassesList = new ArrayList<>();
 			while(results.next()) {
 				klassesList.add(mapper.map(results));
@@ -139,7 +143,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, userId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getProfessorKlassesByUserId: " + statement);
+			logger.info("-- getProfessorKlassesByUserId: " + statement);
 			List<Klass> klassesList = new ArrayList<>();
 			while(results.next()) {
 				klassesList.add(mapper.map(results));
@@ -165,7 +169,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getKlassById: " + statement);
+		    logger.info("-- getKlassById: " + statement);
 		    Klass klass = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return klass;
@@ -189,7 +193,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getKlassesFromDepartmentId: " + statement);
+			logger.info("-- getKlassesFromDepartmentId: " + statement);
 			List<Klass> usersList = new ArrayList<>();
 			while(results.next()) {
 				usersList.add(mapper.map(results));
@@ -215,7 +219,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			 statement.setInt(1, userId);
 			 statement.setInt(2, klassId);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println("-- isKlassGrader: " +statement);
+			 logger.info("-- isKlassGrader: " +statement);
 			 Klass klass = results.next() ? new Klass() : null;
 			 close(connection, statement, results);
 			 return klass;
@@ -241,7 +245,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			statement.setObject(4, section, Types.INTEGER);
 			statement.setDate(5, Date.valueOf(startDate));
 			statement.setDate(6, Date.valueOf(endDate));
-			System.out.println("-- insertKlass: " + statement);
+			logger.info("-- insertKlass: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -271,7 +275,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			 statement.setDate(3, Date.valueOf(startDate));
 			 statement.setDate(4, Date.valueOf(endDate));
 			 statement.setInt(5, klassId);
-			 System.out.println("-- updateKlassById: " + statement);
+			 logger.info("-- updateKlassById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

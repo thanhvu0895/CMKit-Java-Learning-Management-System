@@ -13,12 +13,17 @@ import codingmentor.javabackend.k3.mapper.GraderMapper;
 import codingmentor.javabackend.k3.model.Grader;
 import codingmentor.javabackend.k3.repository.AbstractRepository;
 import codingmentor.javabackend.k3.repository.GraderRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class GraderRepositoryImpl extends AbstractRepository<Grader> implements GraderRepository{
 	private static GraderRepository repository = null;
 	private final GraderMapper mapper;
+	private final Logger logger;
+	
 	private GraderRepositoryImpl() {
 		mapper = new GraderMapper();
+		logger = LogManager.getLogger("codingmentor");
 	}
 	 
 	public static GraderRepository getInstance() {
@@ -67,7 +72,7 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getGradersByKlassId: " + statement);
+			logger.info("-- getGradersByKlassId: " + statement);
 			List<Grader> gradersList = new ArrayList<>();
 			while(results.next()) {
 				gradersList.add(mapper.map(results));
@@ -92,7 +97,7 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 			statement.setInt(1, assignedId);
 			statement.setInt(2, klassId);;
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getGradersByAssignedInKlass: " + statement);
+			logger.info("-- getGradersByAssignedInKlass: " + statement);
 			List<Grader> gradersList = new ArrayList<>();
 			while(results.next()) {
 				gradersList.add(mapper.map(results));
@@ -113,7 +118,7 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 			final String query = "\nSELECT * FROM graders";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getGraders: " + statement);
+			logger.info("-- getGraders: " + statement);
 			List<Grader> gradersList = new ArrayList<>();
 			while(results.next()) {
 				gradersList.add(mapper.map(results));
@@ -137,7 +142,7 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getGraderById: " + statement);
+		    logger.info("-- getGraderById: " + statement);
 		    Grader grader = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return grader;
@@ -163,7 +168,7 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, user_id);
 			statement.setInt(2, klass_id);
-			System.out.println("-- insertGrader: " + statement);
+			logger.info("-- insertGrader: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();

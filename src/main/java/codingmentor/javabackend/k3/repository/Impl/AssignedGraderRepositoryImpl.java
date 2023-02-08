@@ -69,7 +69,7 @@ public class AssignedGraderRepositoryImpl extends AbstractRepository<AssignedGra
 			final String query = "\nSELECT * FROM assigned_graders";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getAssignedGraders: " + statement);
+			logger.info("-- getAssignedGraders: " + statement);
 			List<AssignedGrader> assigned_gradersList = new ArrayList<>();
 			while(results.next()) {
 				assigned_gradersList.add(mapper.map(results));
@@ -90,7 +90,7 @@ public class AssignedGraderRepositoryImpl extends AbstractRepository<AssignedGra
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, assignedId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getAssignedGraders: " + statement);
+			logger.info("-- getAssignedGraders: " + statement);
 			List<AssignedGrader> assigned_gradersList = new ArrayList<>();
 			while(results.next()) {
 				assigned_gradersList.add(mapper.map(results));
@@ -114,7 +114,7 @@ public class AssignedGraderRepositoryImpl extends AbstractRepository<AssignedGra
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getAssignedGraderById: " + statement);
+		    logger.info("-- getAssignedGraderById: " + statement);
 		    AssignedGrader department = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return department;
@@ -141,7 +141,7 @@ public class AssignedGraderRepositoryImpl extends AbstractRepository<AssignedGra
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, user_id);
 			statement.setInt(2, assigned_id);
-			System.out.println("-- insertAssignedGrader: " + statement);
+			logger.info("-- insertAssignedGrader: " + statement);
 			int result = statement.executeUpdate();
 			close(connection, statement, null);			
 			return result;	
@@ -162,7 +162,7 @@ public class AssignedGraderRepositoryImpl extends AbstractRepository<AssignedGra
 			 final String query = "\nDELETE FROM assigned_graders WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, assignedGraderId);
-			 System.out.println("-- deleteAssignedGrader: " + statement);
+			 logger.info("-- deleteAssignedGrader: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

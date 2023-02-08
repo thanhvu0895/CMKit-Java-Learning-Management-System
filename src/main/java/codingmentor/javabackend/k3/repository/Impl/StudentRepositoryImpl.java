@@ -1,6 +1,7 @@
 package codingmentor.javabackend.k3.repository.Impl;
 
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,10 @@ import codingmentor.javabackend.k3.repository.StudentRepository;
 public class StudentRepositoryImpl extends AbstractRepository<Student> implements StudentRepository{
 	private static StudentRepository repository = null;
 	private final StudentMapper mapper;
+	private final Logger logger;
+	
 	private StudentRepositoryImpl() {
+		logger = LogManager.getLogger("codingmentor");
 		mapper = new StudentMapper();
 	}
 	 
@@ -65,7 +69,7 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 			final String query = "\nSELECT * FROM students";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getStudents: " + statement);
+			logger.info("-- getStudents: " + statement);
 			List<Student> studentsList = new ArrayList<>();
 			while(results.next()) {
 				studentsList.add(mapper.map(results));
@@ -87,7 +91,7 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getStudentsByKlassId: " + statement);
+			logger.info("-- getStudentsByKlassId: " + statement);
 			List<Student> studentsList = new ArrayList<>();
 			while(results.next()) {
 				studentsList.add(mapper.map(results));
@@ -111,7 +115,7 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getStudentById: " + statement);
+		    logger.info("-- getStudentById: " + statement);
 		    Student student = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return student;
@@ -133,7 +137,7 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 				PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 				statement.setInt(1, user_id);
 				statement.setInt(2, klass_id);
-				System.out.println("-- insertStudent: " + statement);
+				logger.info("-- insertStudent: " + statement);
 				ResultSet rs = statement.getGeneratedKeys();
 				rs.next();
 				int affectedRows = statement.executeUpdate();

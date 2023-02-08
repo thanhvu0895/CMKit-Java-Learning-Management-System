@@ -40,7 +40,7 @@
 //	  }
 //	   
 //
-//	    System.out.println("Final sum is: " + sum);
+//	    logger.info("Final sum is: " + sum);
 //	    return sum;
 //
 //	  }

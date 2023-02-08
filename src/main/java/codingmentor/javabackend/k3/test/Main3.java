@@ -9,9 +9,9 @@
 //    int countRepetition = 0;
 //    String repeatedString = "";
 //    for (String s : strsArray) {
-//    	System.out.println("before replace: " + s);
+//    	logger.info("before replace: " + s);
 //      s = s.replaceAll("[^A-Za-z]", "");
-//      System.out.println(s);
+//      logger.info(s);
 //      int maxCount = 0;
 //      for (int i = 0; i < s.length(); i ++) {
 //        int count = 1;

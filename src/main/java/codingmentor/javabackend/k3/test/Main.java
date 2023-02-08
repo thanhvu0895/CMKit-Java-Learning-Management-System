@@ -20,8 +20,8 @@ public class Main {
 //		String password = "1234";
 //    	PBKDF2Hasher hasher = new PBKDF2Hasher();
 //    	String hashedPass = hasher.hash(password.toCharArray());
-//    	System.out.println(hashedPass);
-//    	System.out.println(hasher.checkPassword(password.toCharArray(), hashedPass));
+//    	logger.info(hashedPass);
+//    	logger.info(hasher.checkPassword(password.toCharArray(), hashedPass));
 //    	
 //    	String emailBody = "<p>\r\n"
 //    			+ "    Dear,\r\n"
@@ -38,11 +38,11 @@ public class Main {
 //    			+ "</p>\r\n"
 //    			+ "\r\n"
 //    			+ "";
-//    	System.out.println("Body of email: " + emailBody);
+//    	logger.info("Body of email: " + emailBody);
 //    	UserRepository userRepository = UserRepositoryImpl.getInstance();
 //    	userRepository.findUserById(123124809);
 //	    LocalDateTime now = LocalDateTime.now();    
-//	    System.out.println(now.toInstant(ZoneOffset.of("-00:00")));
+//	    logger.info(now.toInstant(ZoneOffset.of("-00:00")));
 //	    
 //	  
 //	    int offsetInSeconds = TimeZone.getTimeZone("EST").getRawOffset() / 1000;
@@ -50,15 +50,15 @@ public class Main {
 //	    ZoneOffset zoneOffset = ZoneOffset.ofTotalSeconds(offsetInSeconds);
 //
 //	    String zoneOffsetString = zoneOffset.toString();
-//	    System.out.println(zoneOffsetString);
+//	    logger.info(zoneOffsetString);
 //	     //  LocalDateTime to Timestamp
 //        Timestamp timestamp = Timestamp.valueOf("2023-01-19 19:36:23.770611");
-//        System.out.println(timestamp);
+//        logger.info(timestamp);
 //        LocalDateTime localDateTime = timestamp.toLocalDateTime();
-//        System.out.println(localDateTime);  // 2019-06-14T15:50:36.068076300
+//        logger.info(localDateTime);  // 2019-06-14T15:50:36.068076300
 
 		LocalDate today = LocalDate.of(2023, 2, 31);
-		System.out.println(today);
+		
         
 	}
 	

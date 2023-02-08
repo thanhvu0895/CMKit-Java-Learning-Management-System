@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.Assignment;
@@ -38,6 +41,7 @@ public class CourseServlet extends HttpServlet{
 	private DepartmentRepository departmentRepository = null;
 	private AssignmentRepository assignmentRepository = null;
 	private GradeCategoryRepository gradeCategoryRepository = null;
+	private final Logger logger =  LogManager.getLogger("codingmentor");
 	
 	@Override
 	public void init() throws ServletException {

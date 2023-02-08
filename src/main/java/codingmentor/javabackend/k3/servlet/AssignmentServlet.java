@@ -1,5 +1,7 @@
 package codingmentor.javabackend.k3.servlet;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
@@ -73,6 +75,7 @@ public class AssignmentServlet extends HttpServlet {
 	private UserRepository userRepository = null;
 	private GraderRepository graderRepository = null;
 	private AssignedGraderRepository assignedGraderRepository = null;
+	private final Logger logger =  LogManager.getLogger("codingmentor");
 
 	@Override
 	public void init() throws ServletException {

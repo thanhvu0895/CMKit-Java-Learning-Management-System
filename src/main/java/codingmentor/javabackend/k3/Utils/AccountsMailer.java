@@ -11,9 +11,13 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import codingmentor.javabackend.k3.model.User;
 
 public class AccountsMailer {
+	private static final Logger logger =  LogManager.getLogger("codingmentor");
 	
 	public static void passwordResetEmail(HttpServletRequest request, User user, String token) throws IOException, URISyntaxException{ 
 		try {
@@ -138,10 +142,10 @@ public class AccountsMailer {
 			// Send the actual HTML message.
 			message.setContent(body, "text/html");
 
-			System.out.println("sending...");
+			logger.info("sending...");
 			// Send message
 			Transport.send(message);
-			System.out.println("Sent message successfully....");
+			logger.info("Sent message successfully....");
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
 		}

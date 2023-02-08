@@ -13,12 +13,17 @@ import codingmentor.javabackend.k3.mapper.DepartmentProfessorMapper;
 import codingmentor.javabackend.k3.model.DepartmentProfessor;
 import codingmentor.javabackend.k3.repository.AbstractRepository;
 import codingmentor.javabackend.k3.repository.DepartmentProfessorRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DepartmentProfessorRepositoryImpl extends AbstractRepository<DepartmentProfessor> implements DepartmentProfessorRepository{
 	private static DepartmentProfessorRepository repository = null;
 	private final DepartmentProfessorMapper mapper;
+	private final Logger logger;
+	
 	private DepartmentProfessorRepositoryImpl() {
 		mapper = new DepartmentProfessorMapper();
+		logger = LogManager.getLogger("codingmentor");
 	}
 	 
 	public static DepartmentProfessorRepository getInstance() {
@@ -66,7 +71,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			final String query = "\nSELECT * FROM department_professors";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getDepartmentProfessors: " + statement);
+			logger.info("-- getDepartmentProfessors: " + statement);
 			List<DepartmentProfessor> departmentProfessorsList = new ArrayList<>();
 			while(results.next()) {
 				departmentProfessorsList.add(mapper.map(results));
@@ -86,7 +91,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getDepartmentProfessorsByDepartmentId: " + statement);
+			logger.info("-- getDepartmentProfessorsByDepartmentId: " + statement);
 			List<DepartmentProfessor> departmentProfessorsList = new ArrayList<>();
 			while(results.next()) {
 				departmentProfessorsList.add(mapper.map(results));
@@ -111,7 +116,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getDepartmentProfessorById: " + statement);
+		    logger.info("-- getDepartmentProfessorById: " + statement);
 		    DepartmentProfessor departmentProfessor = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return departmentProfessor;
@@ -141,7 +146,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			statement.setInt(1, user_id);
 			statement.setInt(2, department_id);
 			statement.setBoolean(3, admin);
-			System.out.println("-- insertDepartmentProfessor: " + statement);
+			logger.info("-- insertDepartmentProfessor: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -172,7 +177,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setBoolean(1, admin);
 			 statement.setInt(2, id);
-			 System.out.println("-- updateAdminByDepartmentProfessorId: " + statement);
+			 logger.info("-- updateAdminByDepartmentProfessorId: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -189,7 +194,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
 			 final String query = "\n DELETE FROM department_professors WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, departmentProfessorId);
-			 System.out.println("-- deleteDepartmentProfessor: " + statement);
+			 logger.info("-- deleteDepartmentProfessor: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

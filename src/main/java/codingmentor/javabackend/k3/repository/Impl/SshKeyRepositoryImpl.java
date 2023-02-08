@@ -1,6 +1,7 @@
 package codingmentor.javabackend.k3.repository.Impl;
 
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,10 @@ import codingmentor.javabackend.k3.repository.SshKeyRepository;
 public class SshKeyRepositoryImpl extends AbstractRepository<SshKey> implements SshKeyRepository{
 	private static SshKeyRepository repository = null;
 	private final SshKeyMapper mapper;
+	private final Logger logger;
+	
 	private SshKeyRepositoryImpl() {
+		logger = LogManager.getLogger("codingmentor");
 		mapper = new SshKeyMapper();
 	}
 	 
@@ -66,7 +70,7 @@ public class SshKeyRepositoryImpl extends AbstractRepository<SshKey> implements 
 			final String query = "\nSELECT * FROM ssh_keys";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getSshKeys: " + statement);
+			logger.info("-- getSshKeys: " + statement);
 			List<SshKey> sshKeysList = new ArrayList<>();
 			while(results.next()) {
 				sshKeysList.add(mapper.map(results));
@@ -90,7 +94,7 @@ public class SshKeyRepositoryImpl extends AbstractRepository<SshKey> implements 
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getSshKeyById: " + statement);
+		    logger.info("-- getSshKeyById: " + statement);
 		    SshKey sshKey = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return sshKey;

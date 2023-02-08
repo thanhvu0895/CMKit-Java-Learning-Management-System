@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.Course;
@@ -25,6 +28,7 @@ public class GradeCategoryServlet extends HttpServlet{
 	private static final long serialVersionUID = 1515497142397284883L;
 	private GradeCategoryRepository gradeCategoryRepository = null;
 	private CourseRepository courseRepository = null;
+	private final Logger logger =  LogManager.getLogger("codingmentor");
 	
 	@Override
 	public void init() throws ServletException {

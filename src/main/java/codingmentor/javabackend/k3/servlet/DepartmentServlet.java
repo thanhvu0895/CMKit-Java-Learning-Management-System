@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import codingmentor.javabackend.k3.Utils.AccountsMailer;
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
@@ -45,6 +48,7 @@ public class DepartmentServlet extends HttpServlet{
 	private UserRepository userRepository = null;
 	private DepartmentProfessorRepository departmentProfessorRepository = null;
 	private KlassRepository klassRepository = null;
+	private final Logger logger =  LogManager.getLogger("codingmentor");
 	
 	@Override
 	public void init() throws ServletException {
@@ -310,7 +314,7 @@ public class DepartmentServlet extends HttpServlet{
 					continue;
 				}
 				email = email.toLowerCase();
-				System.out.println("Value of email is: " + email);
+				logger.info("Value of email is: " + email);
 				User u = userRepository.findUserByEmail(email);
 				if (u != null  && !u.isDeleted() && !userRepository.isDepartmentProfessorByDepartmentId(u.getId(), departmentId)) {
 					// User already exists and not a department professor

@@ -1,6 +1,7 @@
 package codingmentor.javabackend.k3.repository.Impl;
 
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,10 @@ import codingmentor.javabackend.k3.repository.ReusableCommentRepository;
 public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableComment> implements ReusableCommentRepository{
 	private static ReusableCommentRepository repository = null;
 	private final ReusableCommentMapper mapper;
+	private final Logger logger;
+	
 	private ReusableCommentRepositoryImpl() {
+		logger = LogManager.getLogger("codingmentor");
 		mapper = new ReusableCommentMapper();
 	}
 	 
@@ -67,7 +71,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 			final String query = "\nSELECT * FROM reusable_comments";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getReusableComments: " + statement);
+			logger.info("-- getReusableComments: " + statement);
 			List<ReusableComment> reusable_commentsList = new ArrayList<>();
 			while(results.next()) {
 				reusable_commentsList.add(mapper.map(results));
@@ -89,7 +93,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, problem_id);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getReusableCommentsByProblemId: " + statement);
+			logger.info("-- getReusableCommentsByProblemId: " + statement);
 			List<ReusableComment> reusable_commentsList = new ArrayList<>();
 			while(results.next()) {
 				reusable_commentsList.add(mapper.map(results));
@@ -113,7 +117,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getReusableCommentById: " + statement);
+		    logger.info("-- getReusableCommentById: " + statement);
 		    ReusableComment reusableComment = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return reusableComment;
@@ -134,7 +138,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 			 statement.setString(1, comment);
 			 statement.setInt(2, problemId);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println("-- existedByCommentAndProblemId" + statement);
+			 logger.info("-- existedByCommentAndProblemId" + statement);
 			 ReusableComment reusableComment = (results.next()) ? new ReusableComment() : null;
 			 close(connection, statement, results);
 			 return reusableComment;
@@ -157,7 +161,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, problem_id);
 			statement.setString(2, comment);
-			System.out.println("-- insertReusableComment: " + statement);
+			logger.info("-- insertReusableComment: " + statement);
 			int result = statement.executeUpdate();
 			close(connection, statement, null);			
 			return result;	

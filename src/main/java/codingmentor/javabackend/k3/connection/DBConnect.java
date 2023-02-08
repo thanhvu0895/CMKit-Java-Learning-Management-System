@@ -20,11 +20,11 @@ public class DBConnect {
 			conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 		}  catch (ClassNotFoundException e) {
 			logger.error("Driver not Found!", e.getMessage());
-            //System.out.println("Driver not Found!");
+            //logger.info("Driver not Found!");
             //logger.error(e.getMessage());
         } catch (SQLException e) {
 			logger.error("DB not found", e.getMessage());
-        	//System.out.println("DB not found");
+        	//logger.info("DB not found");
         	//logger.error(e.getMessage());
         }
 		return conn;
@@ -48,6 +48,6 @@ public class DBConnect {
 
 	public static void main(String[] args) {
         logger.info(isConnectionValid(getConnection()));
-		//System.out.println(isConnectionValid(getConnection()));
+		//logger.info(isConnectionValid(getConnection()));
 	}
 }

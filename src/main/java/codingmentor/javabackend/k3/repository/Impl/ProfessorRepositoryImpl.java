@@ -1,6 +1,7 @@
 package codingmentor.javabackend.k3.repository.Impl;
 
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +18,11 @@ import codingmentor.javabackend.k3.repository.ProfessorRepository;
 public class ProfessorRepositoryImpl extends AbstractRepository<Professor> implements ProfessorRepository{
 	private static ProfessorRepository repository = null;
 	private final ProfessorMapper mapper;
+	private final Logger logger;
+	
 	private ProfessorRepositoryImpl() {
 		mapper = new ProfessorMapper();
+		logger = LogManager.getLogger("codingmentor");
 	}
 	 
 	public static ProfessorRepository getInstance() {
@@ -66,7 +70,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 			final String query = "\nSELECT * FROM professors";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getProfessors: " + statement);
+			logger.info("-- getProfessors: " + statement);
 			List<Professor> professorsList = new ArrayList<>();
 			while(results.next()) {
 				professorsList.add(mapper.map(results));
@@ -87,7 +91,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getProfessorsByKlassId: " + statement);
+			logger.info("-- getProfessorsByKlassId: " + statement);
 			List<Professor> professorsList = new ArrayList<>();
 			while(results.next()) {
 				professorsList.add(mapper.map(results));
@@ -112,7 +116,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getProfessorById: " + statement);
+		    logger.info("-- getProfessorById: " + statement);
 		    Professor professor = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return professor;
@@ -134,7 +138,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 			 statement.setInt(1, userId);
 			 statement.setInt(2, klassId);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println("-- isProfessorByUserId: " + statement);
+			 logger.info("-- isProfessorByUserId: " + statement);
 			 Professor professor = (results.next()) ? new Professor() : null;
 			 close(connection, statement, results);
 			 return professor;
@@ -155,7 +159,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, user_id);
 			statement.setInt(2, klass_id);
-			System.out.println("-- insertProfessor: " + statement);
+			logger.info("-- insertProfessor: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -185,7 +189,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
 			 final String query = "\n DELETE FROM professors WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, professorId);
-			 System.out.println("-- deleteProfessor: " + statement);
+			 logger.info("-- deleteProfessor: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

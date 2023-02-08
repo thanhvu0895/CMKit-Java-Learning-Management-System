@@ -1,6 +1,7 @@
 package codingmentor.javabackend.k3.repository.Impl;
 
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,7 +18,10 @@ import codingmentor.javabackend.k3.repository.RepoRepository;
 public class RepoRepositoryImpl extends AbstractRepository<Repo> implements RepoRepository{
 	private static RepoRepository repository = null;
 	private final RepoMapper mapper;
+	private final Logger logger;
+	
 	private RepoRepositoryImpl() {
+		logger = LogManager.getLogger("codingmentor");
 		mapper = new RepoMapper();
 	}
 	 
@@ -67,7 +71,7 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
 			final String query = "\nSELECT * FROM repos";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getRepos:" + statement);
+			logger.info("getRepos:" + statement);
 			List<Repo> reposList = new ArrayList<>();
 			while(results.next()) {
 				reposList.add(mapper.map(results));
@@ -92,7 +96,7 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet result = statement.executeQuery();
-		    System.out.println("-- getRepoById: " + statement);
+		    logger.info("-- getRepoById: " + statement);
 		    Repo repo = (result.next()) ? mapper.map(result) : null;
 		    close(connection, statement, result);
 		    return repo;
@@ -116,7 +120,7 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
 		return executeUpdate(connection -> {
 			final String query = "\nINSERT INTO repos () VALUES ();";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			System.out.println("-- insertRepo(): " + statement);
+			logger.info("-- insertRepo(): " + statement);
 			ResultSet rs  = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();

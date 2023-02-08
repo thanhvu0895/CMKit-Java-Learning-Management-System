@@ -13,13 +13,18 @@ import codingmentor.javabackend.k3.mapper.DepartmentMapper;
 import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.repository.AbstractRepository;
 import codingmentor.javabackend.k3.repository.DepartmentRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DepartmentRepositoryImpl extends AbstractRepository<Department> implements DepartmentRepository{
 	private static DepartmentRepository repository = null;
 	private final DepartmentMapper mapper;
+	private final Logger logger;
+	
 	
 	private DepartmentRepositoryImpl() {
 		mapper = new DepartmentMapper();
+		logger = LogManager.getLogger("codingmentor");
 	}
 	 
 	public static DepartmentRepository getInstance() {
@@ -64,7 +69,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			final String query = "\nSELECT * FROM departments";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getDepartments: " + statement);
+			logger.info("-- getDepartments: " + statement);
 			List<Department> departmentsList = new ArrayList<>();
 			while(results.next()) {
 				departmentsList.add(mapper.map(results));
@@ -85,7 +90,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, userId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getDepartmentsByDPUserId: " + statement);
+			logger.info("-- getDepartmentsByDPUserId: " + statement);
 			List<Department> departmentsList = new ArrayList<>();
 			while(results.next()) {
 				departmentsList.add(mapper.map(results));
@@ -110,7 +115,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getDepartmentById: " + statement);
+		    logger.info("-- getDepartmentById: " + statement);
 		    Department department = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return department;
@@ -131,7 +136,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, courseId);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getDepartmentByCourseId: " + statement);
+		    logger.info("-- getDepartmentByCourseId: " + statement);
 		    Department department = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return department;
@@ -151,7 +156,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, title);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println("-- existedByTitle" + statement);
+			 logger.info("-- existedByTitle" + statement);
 			 Department department = (results.next()) ? new Department() : null;
 			 close(connection, statement, results);
 			 return department;
@@ -175,7 +180,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			 statement.setInt(1, userId);
 			 statement.setInt(2, departmentId);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println("-- isDepartmentAdmin: " +statement);
+			 logger.info("-- isDepartmentAdmin: " +statement);
 			 Department department = results.next() ? new Department() : null;
 			 close(connection, statement, results);
 			 return department;
@@ -199,7 +204,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			 statement.setInt(1, userId);
 			 statement.setInt(2, departmentId);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println("-- isDepartmentProfessor: " + statement);
+			 logger.info("-- isDepartmentProfessor: " + statement);
 			 Department department = results.next() ? new Department() : null;
 			 close(connection, statement, results);
 			 return department;
@@ -221,7 +226,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, title);
 			statement.setInt(2, repo_id);
-			System.out.println("-- insertDepartment: " + statement);
+			logger.info("-- insertDepartment: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -253,7 +258,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setString(1, title);
 			 statement.setInt(2, id);
-			 System.out.println("-- updateDepartmentTitleById: " + statement);
+			 logger.info("-- updateDepartmentTitleById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

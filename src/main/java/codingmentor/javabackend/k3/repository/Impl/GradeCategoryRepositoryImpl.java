@@ -13,11 +13,17 @@ import codingmentor.javabackend.k3.mapper.GradeCategoryMapper;
 import codingmentor.javabackend.k3.model.GradeCategory;
 import codingmentor.javabackend.k3.repository.AbstractRepository;
 import codingmentor.javabackend.k3.repository.GradeCategoryRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategory> implements GradeCategoryRepository{
 	private static GradeCategoryRepository repository = null;
 	private final GradeCategoryMapper mapper;
+	private final Logger logger;
+	
 	private GradeCategoryRepositoryImpl() {
+		logger = LogManager.getLogger("codingmentor");
 		mapper = new GradeCategoryMapper();
 	}
 	 
@@ -65,7 +71,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, courseId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getGradeCategoriesByCourseId: " + statement);
+			logger.info("-- getGradeCategoriesByCourseId: " + statement);
 			List<GradeCategory> gradeCategoryList = new ArrayList<>();
 			while(results.next()) {
 				gradeCategoryList.add(mapper.map(results));
@@ -89,7 +95,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, courseId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getGradeCategoriesUsedByAssignmentsInCourse: " + statement);
+			logger.info("-- getGradeCategoriesUsedByAssignmentsInCourse: " + statement);
 			List<GradeCategory> gradeCategoryList = new ArrayList<>();
 			while(results.next()) {
 				gradeCategoryList.add(mapper.map(results));
@@ -112,7 +118,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getGradeCategoriesUsedByAssignmentsInKlass: " + statement);
+			logger.info("-- getGradeCategoriesUsedByAssignmentsInKlass: " + statement);
 			List<GradeCategory> gradeCategoryList = new ArrayList<>();
 			while(results.next()) {
 				gradeCategoryList.add(mapper.map(results));
@@ -136,7 +142,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, courseId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getGradeCategoriesUsedByAssignmentInCourse: " + statement);
+			logger.info("-- getGradeCategoriesUsedByAssignmentInCourse: " + statement);
 			List<GradeCategory> gradeCategoryList = new ArrayList<>();
 			while(results.next()) {
 				gradeCategoryList.add(mapper.map(results));
@@ -159,7 +165,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 			final String query = "\nSELECT* FROM grade_categories WHERE id = ?;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
-		    System.out.println("-- getGradeCategoryById: " + statement);
+		    logger.info("-- getGradeCategoryById: " + statement);
 		    ResultSet results = statement.executeQuery();
 		    GradeCategory gradeCategory = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
@@ -178,7 +184,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 					+ " ON GC.id = A.grade_category_id and A.id = ?;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, assignmentId);
-		    System.out.println("-- getGradeCategoryById: " + statement);
+		    logger.info("-- getGradeCategoryById: " + statement);
 		    ResultSet results = statement.executeQuery();
 		    GradeCategory gradeCategory = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
@@ -201,7 +207,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, gradeCategoryId);
 			 ResultSet results = statement.executeQuery();
-			 System.out.println("-- isUsedByAssignment" + statement);
+			 logger.info("-- isUsedByAssignment" + statement);
 			 GradeCategory gradeCategory = (results.next()) ? new GradeCategory() : null;
 			 close(connection, statement, results);
 			 return gradeCategory;
@@ -226,7 +232,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 			statement.setString(1, title);
 			statement.setInt(2, course_id);
 			statement.setDouble(3, weight);
-			System.out.println("-- insertGradeCategory: " + statement);
+			logger.info("-- insertGradeCategory: " + statement);
 			int result = statement.executeUpdate();
 			close(connection, statement, null);			
 			return result;	
@@ -245,7 +251,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 			 statement.setString(1, title);
 			 statement.setDouble(2, weight);
 			 statement.setInt(3, gradeCategoryId);
-			 System.out.println("-- updateGradeCategoryById: " + statement);
+			 logger.info("-- updateGradeCategoryById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -263,7 +269,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
 			 final String query = "\nDELETE FROM grade_categories WHERE id = ?;";
 			 PreparedStatement statement = connection.prepareStatement(query);
 			 statement.setInt(1, gradeCategoryId);
-			 System.out.println("-- deleteGradeCategory: " + statement);
+			 logger.info("-- deleteGradeCategory: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;

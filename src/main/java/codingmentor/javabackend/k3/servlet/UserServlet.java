@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import codingmentor.javabackend.k3.Utils.AccountsMailer;
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
@@ -34,12 +37,14 @@ public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = -8801001997853031448L;
 	private UserRepository userRepository = null;
 	private PBKDF2Hasher hasher = null;
+	private Logger logger =  null;
 
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		userRepository = UserRepositoryImpl.getInstance();
     	hasher = new PBKDF2Hasher();
+    	logger = LogManager.getLogger("codingmentor");
 	}
 
 	@Override

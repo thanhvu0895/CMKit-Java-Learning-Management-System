@@ -14,12 +14,17 @@ import codingmentor.javabackend.k3.mapper.AssignmentMapper;
 import codingmentor.javabackend.k3.model.Assignment;
 import codingmentor.javabackend.k3.repository.AbstractRepository;
 import codingmentor.javabackend.k3.repository.AssignmentRepository;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> implements AssignmentRepository{
 	private static AssignmentRepository repository = null;
 	private final AssignmentMapper mapper;
+	private final Logger logger;
+	
 	private AssignmentRepositoryImpl() {
 		mapper = new AssignmentMapper();
+		logger = LogManager.getLogger("codingmentor");
 	}
 	 
 	public static AssignmentRepository getInstance() {
@@ -68,7 +73,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			final String query = "\nSELECT * FROM assignments";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getAssignments(): " + statement);
+			logger.info("-- getAssignments(): " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -94,7 +99,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, courseId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getAssignmentsByCourseId: " + statement);
+			logger.info("-- getAssignmentsByCourseId: " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -120,7 +125,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getAssignmentsByKlassId: " + statement);
+			logger.info("-- getAssignmentsByKlassId: " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -164,7 +169,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		    statement.setInt(1, klassId);
 		    statement.setInt(2, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getAssignmentsWithGradersListByKlassId: " + statement);
+			logger.info("-- getAssignmentsWithGradersListByKlassId: " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -208,7 +213,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		    statement.setInt(1, courseId);
 		    statement.setInt(2, courseId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getAssignmentsWithGradersListByCourseId: " + statement);
+			logger.info("-- getAssignmentsWithGradersListByCourseId: " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -231,7 +236,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		    statement.setInt(1, klassId);
 		    statement.setInt(2, userId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("-- getAssignedAssignmentsByUserInKlassOrderByDueDate: " + statement);
+			logger.info("-- getAssignedAssignmentsByUserInKlassOrderByDueDate: " + statement);
 			List<Assignment> assignmentsList = new ArrayList<>();
 			while(results.next()) {
 				assignmentsList.add(mapper.map(results));
@@ -255,7 +260,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getAssignmentById: " + statement);
+		    logger.info("-- getAssignmentById: " + statement);
 		    Assignment assignment = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return assignment;
@@ -276,7 +281,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("-- getAssignmentById: " + statement);
+		    logger.info("-- getAssignmentById: " + statement);
 		    Assignment assignment = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return assignment;
@@ -313,7 +318,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			statement.setString(7, description);
 			statement.setInt(8, file_limit);
 			statement.setInt(9, file_or_link);
-			System.out.println(" --insertAssignment: " + statement);
+			logger.info(" --insertAssignment: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -351,7 +356,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			statement.setString(7, description);
 			statement.setInt(8, file_limit);
 			statement.setInt(9, file_or_link);
-			System.out.println("-- insertAssignmentKlass: " + statement);
+			logger.info("-- insertAssignmentKlass: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -390,7 +395,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			statement.setString(8, description);
 			statement.setInt(9, file_limit);
 			statement.setInt(10, file_or_link);
-			System.out.println("-- insertStudentRepoAssignmentKlass: " + statement);
+			logger.info("-- insertStudentRepoAssignmentKlass: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -431,7 +436,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			statement.setString(8, description);
 			statement.setInt(9, file_limit);
 			statement.setInt(10, file_or_link);
-			System.out.println("-- insertStudentRepoAssignment: " + statement);
+			logger.info("-- insertStudentRepoAssignment: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -467,7 +472,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			statement.setString(5, permitted_filetypes);
 			statement.setInt(6, file_limit);
 			statement.setInt(7, assignmentId);
-			 System.out.println("-- updateStudentFileAssignmentById: " + statement);
+			 logger.info("-- updateStudentFileAssignmentById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
@@ -486,7 +491,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
 			statement.setString(2, description);
 			statement.setObject(3, grade_category_id, Types.INTEGER);
 			statement.setInt(4, assignmentId);
-			 System.out.println("-- updateStudentFileAssignmentById: " + statement);
+			 logger.info("-- updateStudentFileAssignmentById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
