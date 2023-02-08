@@ -287,7 +287,7 @@ public class AssignmentServlet extends HttpServlet {
 			}
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -329,7 +329,7 @@ public class AssignmentServlet extends HttpServlet {
 				req.getRequestDispatcher(JspUtils.ASSIGNMENTS_SHOW_COPY_ASSIGNMENT).forward(req, resp);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -361,7 +361,7 @@ public class AssignmentServlet extends HttpServlet {
 			req.setAttribute("grade_category", gradeCategory);
 			req.getRequestDispatcher(JspUtils.ASSIGNMENTS_SHOW).forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -398,7 +398,7 @@ public class AssignmentServlet extends HttpServlet {
 			req.setAttribute("assignment_grade_categories", gradeCategoriesList);
 			req.getRequestDispatcher(JspUtils.ASSIGNMENTS_EDIT).forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -432,7 +432,7 @@ public class AssignmentServlet extends HttpServlet {
 			req.setAttribute("problems", problemsList);
 			req.getRequestDispatcher(JspUtils.PROBLEMS_INDEX).forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -504,7 +504,7 @@ public class AssignmentServlet extends HttpServlet {
 			req.setAttribute("reusable_comments", reusableComments);
 			req.getRequestDispatcher(JspUtils.PROBLEMS_EDIT).forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -537,7 +537,7 @@ public class AssignmentServlet extends HttpServlet {
 
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -562,7 +562,7 @@ public class AssignmentServlet extends HttpServlet {
 
 			req.getRequestDispatcher(JspUtils.ASSIGNED_EDIT).forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -590,7 +590,7 @@ public class AssignmentServlet extends HttpServlet {
 
 			req.getRequestDispatcher(JspUtils.ASSIGNED_PROBLEMS).forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -619,7 +619,7 @@ public class AssignmentServlet extends HttpServlet {
 
 			req.getRequestDispatcher(JspUtils.ASSIGNED_GRADE_SETTINGS).forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -644,7 +644,7 @@ public class AssignmentServlet extends HttpServlet {
 			req.getRequestDispatcher(JspUtils.ASSIGNED_GRADEBOOK)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -675,7 +675,7 @@ public class AssignmentServlet extends HttpServlet {
 				.forward(req, resp);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -842,7 +842,7 @@ public class AssignmentServlet extends HttpServlet {
 						assigned.getId()));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -862,7 +862,7 @@ public class AssignmentServlet extends HttpServlet {
 						assignedId));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1159,7 +1159,7 @@ public class AssignmentServlet extends HttpServlet {
 				resp.sendRedirect(req.getContextPath() + UrlUtils.ASSIGNMENT_PATH + "/" + assignmentId);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1217,7 +1217,7 @@ public class AssignmentServlet extends HttpServlet {
 					req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.ASSIGNMENT_PATH + "/:id", assignmentId));
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1225,7 +1225,7 @@ public class AssignmentServlet extends HttpServlet {
 			throws IOException {
 		try {
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1270,7 +1270,7 @@ public class AssignmentServlet extends HttpServlet {
 				return;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1305,7 +1305,7 @@ public class AssignmentServlet extends HttpServlet {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1337,7 +1337,7 @@ public class AssignmentServlet extends HttpServlet {
 			resp.sendRedirect(
 					req.getContextPath() + UrlUtils.putSecondInPath(UrlUtils.ASSIGNMENT_PROBLEMS_PATH, assignmentId));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1366,7 +1366,7 @@ public class AssignmentServlet extends HttpServlet {
 			resp.sendRedirect(
 					req.getContextPath() + UrlUtils.putSecondInPath(UrlUtils.ASSIGNMENT_PROBLEMS_PATH, assignmentId));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1375,7 +1375,7 @@ public class AssignmentServlet extends HttpServlet {
 		try {
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1408,7 +1408,7 @@ public class AssignmentServlet extends HttpServlet {
 						UrlUtils.putSecondInPath(UrlUtils.EDIT_ASSIGNMENT_PROBLEM_PATH, assignmentId), problemId));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1450,7 +1450,7 @@ public class AssignmentServlet extends HttpServlet {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1482,7 +1482,7 @@ public class AssignmentServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(
 					UrlUtils.putSecondInPath(UrlUtils.EDIT_ASSIGNMENT_PROBLEM_PATH, assignmentId), problemId));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1513,7 +1513,7 @@ public class AssignmentServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(
 					UrlUtils.putSecondInPath(UrlUtils.EDIT_ASSIGNMENT_PROBLEM_PATH, assignmentId), problemId));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1522,7 +1522,7 @@ public class AssignmentServlet extends HttpServlet {
 		try {
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1560,7 +1560,7 @@ public class AssignmentServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(
 					UrlUtils.putSecondInPath(UrlUtils.EDIT_ASSIGNMENT_PROBLEM_PATH, assignmentId), problemId));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1673,7 +1673,7 @@ public class AssignmentServlet extends HttpServlet {
 			resp.sendRedirect(
 					req.getContextPath() + UrlUtils.putSecondInPath(UrlUtils.KLASS_ASSIGNMENTS_PATH, klassId));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1772,7 +1772,7 @@ public class AssignmentServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putSecondInPath(
 					UrlUtils.putIdInPath(UrlUtils.ASSIGNMENT_ASSIGNED_PATH, assignedId), assignmentId));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1780,7 +1780,7 @@ public class AssignmentServlet extends HttpServlet {
 		try {
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -1806,7 +1806,7 @@ public class AssignmentServlet extends HttpServlet {
 			req.getSession(false).setAttribute("notice", "Updated grading adjustments.");
 			resp.sendRedirect(req.getContextPath() +  UrlUtils.putIdInPath(UrlUtils.SUBMISSIONS_PATH + "?assigned=:id", assignedId));			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 }

@@ -113,7 +113,7 @@ public class CourseServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.COURSES_SHOW)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -132,7 +132,7 @@ public class CourseServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.COURSES_FILES)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -153,7 +153,7 @@ public class CourseServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.COURSES_GRADE_CATEGORIES)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -173,7 +173,7 @@ public class CourseServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.COURSES_EDIT)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -193,7 +193,7 @@ public class CourseServlet extends HttpServlet{
 			}
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -251,7 +251,7 @@ public class CourseServlet extends HttpServlet{
 				return;
 			}	
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -271,14 +271,14 @@ public class CourseServlet extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_COURSE_PATH, courseId));
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
 	private void deleteCourseDestroy(HttpServletRequest req, HttpServletResponse resp, int courseId) throws IOException {
 		try {
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	

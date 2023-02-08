@@ -189,7 +189,7 @@ public class KlassServlet extends HttpServlet {
 			req.getRequestDispatcher(JspUtils.KLASSES_INDEX)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -224,7 +224,7 @@ public class KlassServlet extends HttpServlet {
 			req.getRequestDispatcher(JspUtils.KLASSES_SHOW)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -250,7 +250,7 @@ public class KlassServlet extends HttpServlet {
 			req.getRequestDispatcher(JspUtils.KLASSES_EDIT)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -284,7 +284,7 @@ public class KlassServlet extends HttpServlet {
 			req.getRequestDispatcher(JspUtils.ASSIGNMENTS_INDEX)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -307,7 +307,7 @@ public class KlassServlet extends HttpServlet {
 				.forward(req, resp);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -330,7 +330,7 @@ public class KlassServlet extends HttpServlet {
 			req.getRequestDispatcher(JspUtils.KLASSES_GRADE_BOOK)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -346,7 +346,7 @@ public class KlassServlet extends HttpServlet {
 			req.getRequestDispatcher(JspUtils.KLASSES_GRADE_BOOK)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -370,7 +370,7 @@ public class KlassServlet extends HttpServlet {
 			req.getRequestDispatcher(JspUtils.GRADERS_INDEX)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -404,7 +404,7 @@ public class KlassServlet extends HttpServlet {
 			req.getRequestDispatcher(JspUtils.STUDENTS_INDEX)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -427,7 +427,7 @@ public class KlassServlet extends HttpServlet {
 					.forward(req, resp);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -526,7 +526,7 @@ public class KlassServlet extends HttpServlet {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -588,7 +588,7 @@ public class KlassServlet extends HttpServlet {
 			req.getSession().setAttribute("notice", "Class was successfully updated.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_KLASS_PATH, klassId));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -596,7 +596,7 @@ public class KlassServlet extends HttpServlet {
 	private void deleteKlassDestroy(HttpServletRequest req, HttpServletResponse resp, int klassId) throws IOException {
 		try {
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -683,7 +683,7 @@ public class KlassServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putSecondInPath(UrlUtils.KLASS_GRADERS_PATH, klassId));
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -770,7 +770,7 @@ public class KlassServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putSecondInPath(UrlUtils.KLASS_STUDENTS_PATH, klassId));
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	

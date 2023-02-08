@@ -48,7 +48,7 @@ public class SshKeyRepositoryImpl extends AbstractRepository<SshKey> implements 
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
     

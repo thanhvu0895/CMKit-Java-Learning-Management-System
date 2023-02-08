@@ -9,6 +9,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import codingmentor.javabackend.k3.mapper.AssignedGraderMapper;
 import codingmentor.javabackend.k3.model.AssignedGrader;
 import codingmentor.javabackend.k3.repository.AbstractRepository;
@@ -17,8 +20,10 @@ import codingmentor.javabackend.k3.repository.AssignedGraderRepository;
 public class AssignedGraderRepositoryImpl extends AbstractRepository<AssignedGrader> implements AssignedGraderRepository{
 	private static AssignedGraderRepository repository = null;
 	private final AssignedGraderMapper mapper;
-	
+	private final Logger logger;
+
 	private AssignedGraderRepositoryImpl() {
+		logger = LogManager.getLogger("codingmentor");
 		mapper = new AssignedGraderMapper();
 	}
 	 
@@ -46,7 +51,7 @@ public class AssignedGraderRepositoryImpl extends AbstractRepository<AssignedGra
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
     

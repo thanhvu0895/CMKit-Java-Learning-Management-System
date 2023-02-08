@@ -45,7 +45,7 @@ public class CourseRepositoryImpl extends AbstractRepository<Course> implements 
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
 

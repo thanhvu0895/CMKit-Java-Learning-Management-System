@@ -48,7 +48,7 @@ public class SubmissionRepositoryImpl extends AbstractRepository<Submission> imp
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
     

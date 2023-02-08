@@ -48,7 +48,7 @@ public class ProfessorRepositoryImpl extends AbstractRepository<Professor> imple
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
 

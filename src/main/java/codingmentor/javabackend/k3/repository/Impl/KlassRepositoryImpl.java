@@ -51,7 +51,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
     

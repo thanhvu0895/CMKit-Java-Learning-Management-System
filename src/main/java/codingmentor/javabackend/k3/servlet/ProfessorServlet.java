@@ -137,7 +137,7 @@ public class ProfessorServlet extends HttpServlet{
 			req.getSession(false).setAttribute("alert", "Failed to add " + failed.size() + " professors: " + String.join(",", failed) + ";");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_KLASS_PATH, klassId));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -149,7 +149,7 @@ public class ProfessorServlet extends HttpServlet{
 			req.getSession(false).setAttribute("notice", "Professor was successfully removed.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_KLASS_PATH, professor.getKlass_id()));
 		} catch (Exception e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 		}
 	}
 }

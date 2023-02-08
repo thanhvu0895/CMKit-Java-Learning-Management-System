@@ -100,7 +100,7 @@ public class UserServlet extends HttpServlet {
 			req.setAttribute("users", users);
 			req.getRequestDispatcher(JspUtils.USERS_INDEX).forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -128,7 +128,7 @@ public class UserServlet extends HttpServlet {
 			
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	/**
@@ -151,7 +151,7 @@ public class UserServlet extends HttpServlet {
 				return;
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -250,7 +250,7 @@ public class UserServlet extends HttpServlet {
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -288,7 +288,7 @@ public class UserServlet extends HttpServlet {
 			req.getSession(false).setAttribute("notice", "If a valid email has been supplied, an email with further instructions will be sent shortly.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.LOGIN_PATH);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	/**
@@ -304,7 +304,7 @@ public class UserServlet extends HttpServlet {
 			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 			req.getSession(false).setAttribute("notice", "Invitation email resent.");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -360,7 +360,7 @@ public class UserServlet extends HttpServlet {
 			req.getSession(false).setAttribute("notice", "User invited");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		} 
 		
 	}
@@ -406,7 +406,7 @@ public class UserServlet extends HttpServlet {
 			req.getSession(false).setAttribute("notice", "Accout created!");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH + "/");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -430,7 +430,7 @@ public class UserServlet extends HttpServlet {
 			req.getSession(false).setAttribute("notice", "User was successfully deleted.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -476,7 +476,7 @@ public class UserServlet extends HttpServlet {
 			session.setAttribute("notice", "Password changed.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH + "/");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -505,7 +505,7 @@ public class UserServlet extends HttpServlet {
 			req.getSession(false).setAttribute("notice", "Your settings have been successfully updated.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.ROOT_PATH + "/");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -547,7 +547,7 @@ public class UserServlet extends HttpServlet {
 
 			resp.sendRedirect(req.getContextPath() + UrlUtils.USERS_PATH);	
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 }

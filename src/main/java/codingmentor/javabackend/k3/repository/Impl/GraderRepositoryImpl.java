@@ -48,7 +48,7 @@ public class GraderRepositoryImpl extends AbstractRepository<Grader> implements 
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
     

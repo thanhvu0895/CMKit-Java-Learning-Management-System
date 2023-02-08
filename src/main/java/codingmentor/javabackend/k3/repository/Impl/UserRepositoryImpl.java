@@ -50,7 +50,7 @@ public class UserRepositoryImpl extends AbstractRepository<User> implements User
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
     

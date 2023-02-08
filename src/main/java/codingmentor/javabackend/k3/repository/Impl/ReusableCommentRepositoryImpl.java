@@ -48,7 +48,7 @@ public class ReusableCommentRepositoryImpl extends AbstractRepository<ReusableCo
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
 

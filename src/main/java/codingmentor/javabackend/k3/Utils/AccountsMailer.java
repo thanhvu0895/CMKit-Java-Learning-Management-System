@@ -52,7 +52,7 @@ public class AccountsMailer {
 	      	mail(user.getEmail(), "Kit Password Reset", emailBody);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -96,7 +96,7 @@ public class AccountsMailer {
 	    	
 	    	mail(user.getEmail(), "Kit Account Setup", emailBody);    	
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
