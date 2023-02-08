@@ -45,7 +45,7 @@ public class GradeCategoryRepositoryImpl extends AbstractRepository<GradeCategor
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
     

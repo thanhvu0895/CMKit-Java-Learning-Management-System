@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="Warn">
+	<Properties>
+		<Property name="LOG_PATTERN">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} -
+			%msg%n
+		</Property>
+		<Property name="APP_LOG_ROOT">C:\logs
+		</Property>
+	</Properties>
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+		<RollingFile name="error"
+			fileName="${APP_LOG_ROOT}/error.log"
+			filePattern="${APP_LOG_ROOT}/error-%d{yyyy-MM-dd}-%i.log">
+			<LevelRangeFilter minLevel="ERROR" maxLevel="ERROR"
+				onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="1MB" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="debug"
+			fileName="${APP_LOG_ROOT}/debug.log"
+			filePattern="${APP_LOG_ROOT}/debug-%d{yyyy-MM-dd}-%i.log">
+			<LevelRangeFilter minLevel="DEBUG" maxLevel="DEBUG"
+				onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="1MB" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="info"
+			fileName="${APP_LOG_ROOT}/info.log"
+			filePattern="${APP_LOG_ROOT}/info-%d{yyyy-MM-dd}-%i.log">
+			<LevelRangeFilter minLevel="INFO" maxLevel="INFO"
+				onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="1MB" />
+			</Policies>
+		</RollingFile>
+		<RollingFile name="warn"
+			fileName="${APP_LOG_ROOT}/warn.log"
+			filePattern="${APP_LOG_ROOT}/warn-%d{yyyy-MM-dd}-%i.log">
+			<LevelRangeFilter minLevel="WARN" maxLevel="WARN"
+				onMatch="ACCEPT" onMismatch="DENY" />
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+				<SizeBasedTriggeringPolicy size="1MB" />
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<!--
+		<Logger name="codingmentor" additivity="false" level="debug">
+			<AppenderRef ref="console" />
+			<AppenderRef ref="debug" />
+			<AppenderRef ref="info" />
+			<AppenderRef ref="error" />
+			<AppenderRef ref="warn" />		
+		</Logger>
+		-->
+		<Root level="debug">
+			<AppenderRef ref="console" />
+		    <AppenderRef ref="debug" />
+			<AppenderRef ref="info" />
+			<AppenderRef ref="error" />
+			<AppenderRef ref="warn" />	
+		</Root>
+	</Loggers>
+</Configuration>

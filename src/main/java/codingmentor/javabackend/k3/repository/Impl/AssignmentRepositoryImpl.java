@@ -49,7 +49,7 @@ public class AssignmentRepositoryImpl extends AbstractRepository<Assignment> imp
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
     

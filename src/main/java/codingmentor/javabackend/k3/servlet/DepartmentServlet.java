@@ -102,7 +102,7 @@ public class DepartmentServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_INDEX)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -119,7 +119,7 @@ public class DepartmentServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_COURSES)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -138,7 +138,7 @@ public class DepartmentServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_EDIT)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 		
@@ -157,7 +157,7 @@ public class DepartmentServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_FILES)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -178,7 +178,7 @@ public class DepartmentServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_KLASSES)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -187,7 +187,7 @@ public class DepartmentServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.DEPARTMENTS_NEW) 
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -264,7 +264,7 @@ public class DepartmentServlet extends HttpServlet{
 			}	
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -281,7 +281,7 @@ public class DepartmentServlet extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.DEPARTMENT_COURSES_PATH, departmentId));
 			return;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -289,7 +289,7 @@ public class DepartmentServlet extends HttpServlet{
 	private void deleteDepartmentDestroy(HttpServletRequest req, HttpServletResponse resp, int departmentId) throws IOException {
 		try {
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -367,7 +367,7 @@ public class DepartmentServlet extends HttpServlet{
 			req.getSession(false).setAttribute("alert", "Failed to add " + failed.size() + " professors: " + String.join(",", failed) + ";");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_DEPARTMENT_PATH, departmentId));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -378,7 +378,7 @@ public class DepartmentServlet extends HttpServlet{
 			req.getSession(false).setAttribute("notice", "Professor updated.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_DEPARTMENT_PATH, departmentId));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -389,7 +389,7 @@ public class DepartmentServlet extends HttpServlet{
 			req.getSession(false).setAttribute("notice", "Professor removed.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.EDIT_DEPARTMENT_PATH, departmentId));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 

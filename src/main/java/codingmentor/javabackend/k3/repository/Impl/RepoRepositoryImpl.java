@@ -48,7 +48,7 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
 

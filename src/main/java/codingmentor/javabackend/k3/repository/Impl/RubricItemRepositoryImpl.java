@@ -48,7 +48,7 @@ public class RubricItemRepositoryImpl extends AbstractRepository<RubricItem> imp
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
 

@@ -48,7 +48,7 @@ public class ProblemRepositoryImpl extends AbstractRepository<Problem> implement
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
 

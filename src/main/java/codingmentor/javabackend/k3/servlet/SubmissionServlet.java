@@ -86,7 +86,7 @@ public class SubmissionServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.SUBMISSIONS_INDEX)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -110,7 +110,7 @@ public class SubmissionServlet extends HttpServlet{
 	
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	

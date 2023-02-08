@@ -48,7 +48,7 @@ public class DepartmentProfessorRepositoryImpl extends AbstractRepository<Depart
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
 

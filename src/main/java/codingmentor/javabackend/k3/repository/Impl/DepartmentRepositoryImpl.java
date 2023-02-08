@@ -46,7 +46,7 @@ public class DepartmentRepositoryImpl extends AbstractRepository<Department> imp
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
     

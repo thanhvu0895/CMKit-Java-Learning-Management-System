@@ -51,7 +51,7 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
 

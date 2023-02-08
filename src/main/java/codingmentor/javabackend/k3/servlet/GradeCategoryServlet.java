@@ -79,7 +79,7 @@ public class GradeCategoryServlet extends HttpServlet{
 			req.getRequestDispatcher(JspUtils.GRADE_CATEGORIES_EDIT)
 				.forward(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 		
@@ -100,7 +100,7 @@ public class GradeCategoryServlet extends HttpServlet{
 			}
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -162,7 +162,7 @@ public class GradeCategoryServlet extends HttpServlet{
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.COURSE_GRADE_CATEGORIES_PATH, courseId));
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -195,7 +195,7 @@ public class GradeCategoryServlet extends HttpServlet{
 			req.getSession(false).setAttribute("alert", "Invalid value for grade category.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.COURSE_GRADE_CATEGORIES_PATH, courseId));
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
@@ -207,7 +207,7 @@ public class GradeCategoryServlet extends HttpServlet{
 			req.getSession(false).setAttribute("notice", "Grade category was successfully deleted.");
 			resp.sendRedirect(req.getContextPath() + UrlUtils.putIdInPath(UrlUtils.COURSE_GRADE_CATEGORIES_PATH, gradeCategory.getCourse_id()));		
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 }

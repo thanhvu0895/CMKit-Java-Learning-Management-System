@@ -48,7 +48,7 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
     		}
 
     	} catch (SQLException e) {
-    		e.printStackTrace();
+    		logger.error(e.getMessage());
     	}
     }
     
