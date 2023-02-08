@@ -47,6 +47,13 @@ public interface AssignmentRepository {
 	 */
     List<Assignment> getAssignmentsWithGradersListByCourseId(int courseId);
     
+    /**
+	 * Get list of Assignments by klassId and userId
+	 * @category LIST
+	 * @return a list of all Assignments if found or null
+	 */
+    List<Assignment> getAssignedAssignmentsByUserInKlassOrderByDueDate(int userId, int klassId);
+    
 	/*
 	 * GET ITEM METHOD
 	 */

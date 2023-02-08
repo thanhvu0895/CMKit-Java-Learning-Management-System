@@ -70,7 +70,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			final String query = "\nSELECT * FROM klasses";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getklasses(): " + statement);
+			System.out.println("-- getklasses(): " + statement);
 			List<Klass> klassesList = new ArrayList<>();
 			while(results.next()) {
 				klassesList.add(mapper.map(results));
@@ -80,6 +80,76 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 		});
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Klass> getStudentKlassesByUserId(int userId) {
+		return executeQuery(connection -> {
+			final String query = "\nSELECT K.id, K.course_id, K.repo_id, K.semester, K.section, K.start_date, K.end_date from klasses as K\r\n"
+					+ "	INNER JOIN students as S\r\n"
+					+ "		ON S.klass_id = K.id\r\n"
+					+ "where S.user_id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, userId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("-- getStudentKlassesByUserId: " + statement);
+			List<Klass> klassesList = new ArrayList<>();
+			while(results.next()) {
+				klassesList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return klassesList;
+		});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Klass> getGraderKlassesByUserId(int userId) {
+		return executeQuery(connection -> {
+			final String query = "\nSELECT K.id, K.course_id, K.repo_id, K.semester, K.section, K.start_date, K.end_date from klasses as K\r\n"
+					+ "	INNER JOIN graders as G\r\n"
+					+ "		ON G.klass_id = K.id\r\n"
+					+ "where G.user_id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, userId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("-- getGraderKlassesByUserId: " + statement);
+			List<Klass> klassesList = new ArrayList<>();
+			while(results.next()) {
+				klassesList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return klassesList;
+		});
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<Klass> getProfessorKlassesByUserId(int userId) {
+		return executeQuery(connection -> {
+			final String query = "\nSELECT K.id, K.course_id, K.repo_id, K.semester, K.section, K.start_date, K.end_date from klasses as K\r\n"
+					+ "	INNER JOIN professors as P\r\n"
+					+ "		ON P.klass_id = K.id\r\n"
+					+ "where P.user_id = ?;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, userId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("-- getProfessorKlassesByUserId: " + statement);
+			List<Klass> klassesList = new ArrayList<>();
+			while(results.next()) {
+				klassesList.add(mapper.map(results));
+			}
+			close(connection, statement, results);
+			return klassesList;
+		});
+	}
+	
+	
 	
 	/*
 	 * GET ITEM METHOD
@@ -95,7 +165,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getKlassById: " + statement);
+		    System.out.println("-- getKlassById: " + statement);
 		    Klass klass = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return klass;
@@ -119,7 +189,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, departmentId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getKlassesFromDepartmentId: " + statement);
+			System.out.println("-- getKlassesFromDepartmentId: " + statement);
 			List<Klass> usersList = new ArrayList<>();
 			while(results.next()) {
 				usersList.add(mapper.map(results));
@@ -133,6 +203,24 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 	 * GET Check True/false METHOD
 	 */
 
+
+	@Override
+	public boolean isKlassGrader(int userId, int klassId) {
+		return executeQuerySingle(connection -> {
+			 final String query = "\nSELECT 1 as ONE from klasses as K\r\n"
+			 		+ "	INNER JOIN graders as G\r\n"
+			 		+ "		ON G.klass_id = K.id\r\n"
+			 		+ "where G.user_id = ? and K.id = ?;";
+			 PreparedStatement statement = connection.prepareStatement(query);
+			 statement.setInt(1, userId);
+			 statement.setInt(2, klassId);
+			 ResultSet results = statement.executeQuery();
+			 System.out.println("-- isKlassGrader: " +statement);
+			 Klass klass = results.next() ? new Klass() : null;
+			 close(connection, statement, results);
+			 return klass;
+		}) != null;
+	}
 	
 	/*
 	 * POST(CREATE) PUT(REPLACE) PATCH(UPDATE) METHODS
@@ -145,7 +233,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 	@Override
 	public int insertKlass (int course_id, int repo_id, String semester, Integer section, LocalDate startDate, LocalDate endDate) {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO klasses (course_id, repo_id, semester, section, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?);";
+			final String query = "\nINSERT INTO klasses (course_id, repo_id, semester, section, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?);";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			statement.setInt(1, course_id);
 			statement.setInt(2, repo_id);
@@ -153,7 +241,7 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			statement.setObject(4, section, Types.INTEGER);
 			statement.setDate(5, Date.valueOf(startDate));
 			statement.setDate(6, Date.valueOf(endDate));
-			System.out.println("insertKlass: " + statement);
+			System.out.println("-- insertKlass: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -183,10 +271,11 @@ public class KlassRepositoryImpl extends AbstractRepository<Klass> implements Kl
 			 statement.setDate(3, Date.valueOf(startDate));
 			 statement.setDate(4, Date.valueOf(endDate));
 			 statement.setInt(5, klassId);
-			 System.out.println("updateKlassById: " + statement);
+			 System.out.println("-- updateKlassById: " + statement);
 			 int result = statement.executeUpdate();
 			 close(connection, statement, null);
 			 return result;
 		}) != 0;
 	}
+
 }

@@ -12,6 +12,7 @@ public class Course {
 	private int repo_id;
 	private int department_id;
 	private boolean active;
+	private int student_count;
 	
 	
    /**
@@ -31,6 +32,10 @@ public class Course {
 		return id;
 	}
 	
+	public int getStudent_count() {
+		return student_count;
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -82,6 +87,11 @@ public class Course {
 	
 	public Course active(boolean active) {
 	    this.active = active;
+	    return this;
+	}
+	
+	public Course student_count(int student_count) {
+	    this.student_count = student_count;
 	    return this;
 	}
 }

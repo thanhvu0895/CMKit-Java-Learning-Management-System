@@ -17,7 +17,7 @@
   	  <td>
   	    ${a.assigned_graders}
   	  </td>
-  	  <td width="30%">ASSIGNMENT STATUS</td>
+  	  <td width="30%"><%@ include file="../klasses/_assignment_status.jsp" %></td>
   	  <td>
  	  	  <c:choose><c:when test="${a.getAssignmentType() == 'student_file' || a.getAssignmentType() == 'student_repo'}">
 	  		<t:link_to path="${UrlUtils.SUBMISSIONS_PATH}?assigned=:id" classBS="btn btn-primary" id="${assigneds[loop.index].id}">Submissions & Grading</t:link_to>

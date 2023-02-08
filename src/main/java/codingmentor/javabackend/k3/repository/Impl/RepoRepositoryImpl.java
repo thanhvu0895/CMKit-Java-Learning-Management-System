@@ -64,7 +64,7 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
 	@Override
 	public List<Repo> getRepos() {
 		return executeQuery(connection -> {
-			final String query = "\n\nSELECT * FROM repos";
+			final String query = "\nSELECT * FROM repos";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
 			System.out.println("getRepos:" + statement);
@@ -88,11 +88,11 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
 	@Override
 	public Repo getRepoById(int id) {
 		return executeQuerySingle(connection -> {
-			final String query = "\n\nSELECT * FROM repos WHERE id = ? LIMIT 1;";
+			final String query = "\nSELECT * FROM repos WHERE id = ? LIMIT 1;";
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet result = statement.executeQuery();
-		    System.out.println("getRepoById: " + statement);
+		    System.out.println("-- getRepoById: " + statement);
 		    Repo repo = (result.next()) ? mapper.map(result) : null;
 		    close(connection, statement, result);
 		    return repo;
@@ -114,9 +114,9 @@ public class RepoRepositoryImpl extends AbstractRepository<Repo> implements Repo
 	@Override
 	public int insertRepo() {
 		return executeUpdate(connection -> {
-			final String query = "INSERT INTO repos () VALUES ();";
+			final String query = "\nINSERT INTO repos () VALUES ();";
 			PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-			System.out.println("insertRepo(): " + statement);
+			System.out.println("-- insertRepo(): " + statement);
 			ResultSet rs  = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();

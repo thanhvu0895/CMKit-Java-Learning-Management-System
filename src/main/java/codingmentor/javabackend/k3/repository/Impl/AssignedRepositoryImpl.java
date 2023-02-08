@@ -70,7 +70,7 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 			final String query = "\nSELECT * FROM assigneds";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getAssigneds: " + statement);
+			System.out.println("-- getAssigneds: " + statement);
 			List<Assigned> assignedsList = new ArrayList<>();
 			while(results.next()) {
 				assignedsList.add(mapper.map(results));
@@ -94,7 +94,7 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getAssignedsByAssignmentsInKlass: " + statement);
+			System.out.println("-- getAssignedsByAssignmentsInKlass: " + statement);
 			List<Assigned> assignedsList = new ArrayList<>();
 			while(results.next()) {
 				if (results.getTimestamp("due_date") == null) {
@@ -124,7 +124,7 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 			statement.setInt(1, klassId);
 			statement.setInt(2, courseId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getAssignedsByAssignmentsInCourse: " + statement);
+			System.out.println("-- getAssignedsByAssignmentsInCourse: " + statement);
 			List<Assigned> assignedsList = new ArrayList<>();
 			while(results.next()) {
 				if (results.getTimestamp("due_date") == null) {
@@ -132,6 +132,32 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 				} else {
 					assignedsList.add(mapper.map(results));
 				}
+			}
+			close(connection, statement, results);
+			return assignedsList;
+		});
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	
+	@Override
+	public List<Assigned> getAssignedsByUserInKlassOrderByDueDate(int userId, int klassId) {
+		return executeQuery(connection -> {
+			final String query = "\nSELECT A.* FROM assigneds AS A\r\n"
+					+ "	LEFT JOIN assigned_graders as AG\r\n"
+					+ "	ON AG.assigned_id = A.id\r\n"
+					+ " WHERE A.klass_id = ? and AG.user_id = ? ORDER BY A.due_date DESC;";
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setInt(1, klassId);
+			statement.setInt(2, userId);
+			ResultSet results = statement.executeQuery();
+			System.out.println("-- getAssignedsByUserInKlassOrderByDueDate: " + statement);
+			List<Assigned> assignedsList = new ArrayList<>();
+			while(results.next()) {
+				assignedsList.add(mapper.map(results));
 			}
 			close(connection, statement, results);
 			return assignedsList;
@@ -151,7 +177,7 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getAssignedById: " + statement);
+		    System.out.println("-- getAssignedById: " + statement);
 		    Assigned Assigned = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return Assigned;
@@ -170,12 +196,12 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, assignedGraderId);
 		    ResultSet results = statement.executeQuery();
+		    System.out.println("-- getAssignedByAssignedGraderId: " + statement);
 		    Assigned Assigned = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return Assigned;
     	});
 	}
-
 	
 	/*
 	 * GET Check True/false METHOD
@@ -202,7 +228,7 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 			 statement.setInt(6, repo_id); 
 			 statement.setBoolean(7, limit_resubmissions); 
 			 statement.setInt(8, allow_resubmissions); 
-			System.out.println("insertAssigned: " + statement);
+			System.out.println("-- insertAssigned: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -239,7 +265,7 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 			 statement.setBoolean(7, limit_resubmissions);
 			 statement.setInt(8, resubmission_limit);
 			 statement.setInt(9, allow_resubmissions); 
-			System.out.println("insertAssignedResubmissionLimit: " + statement);
+			System.out.println("-- insertAssignedResubmissionLimit: " + statement);
 			ResultSet rs = statement.getGeneratedKeys();
 			rs.next();
 			int affectedRows = statement.executeUpdate();
@@ -274,7 +300,7 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 			statement.setBoolean(4, limit_resubmissions); 
 			statement.setInt(5, allow_resubmissions); 
 			statement.setInt(6, assigned_id); 
-			System.out.println("updateAssigned: " + statement);
+			System.out.println("-- updateAssigned: " + statement);
 			int result = statement.executeUpdate();
 			close(connection, statement, null);
 			return result;
@@ -298,7 +324,7 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 			statement.setInt(5, resubmission_limit);
 			statement.setInt(6, allow_resubmissions); 
 			statement.setInt(7, assigned_id); 
-			System.out.println("updateAssignedResubmissionLimit: " + statement);
+			System.out.println("-- updateAssignedResubmissionLimit: " + statement);
 			int result = statement.executeUpdate();
 			close(connection, statement, null);
 			return result;
@@ -316,14 +342,10 @@ public class AssignedRepositoryImpl extends AbstractRepository<Assigned> impleme
 			statement.setObject(1, max_points_override, Types.DOUBLE);
 			statement.setObject(2, point_value_scale, Types.DOUBLE);
 			statement.setInt(3, assignedId);  
-			System.out.println("updateAssignedAdjustment: " + statement);
+			System.out.println("-- updateAssignedAdjustment: " + statement);
 			int result = statement.executeUpdate();
 			close(connection, statement, null);
 			return result;
 		}) != 0;
-	}
-
-
-
-	    
+	}	    
 }

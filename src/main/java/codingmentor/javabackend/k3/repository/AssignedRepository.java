@@ -18,10 +18,6 @@ public interface AssignedRepository {
 	 */
     List<Assigned> getAssigneds();
     
-    
-	/*
-	 * GET LIST METHOD
-	 */
     /**
 	 * Get list of Assigneds of assignments in a klass
 	 * @category LIST
@@ -29,15 +25,20 @@ public interface AssignedRepository {
 	 */
     List<Assigned> getAssignedsByAssignmentsInKlass(int klassId);
     
-	/*
-	 * GET LIST METHOD
-	 */
     /**
 	 * Get list of Assigneds of assignments in a Course
 	 * @category LIST
 	 * @return a list of all Assigneds if found or null
 	 */
     List<Assigned> getAssignedsByAssignmentsInCourse(int courseId, int klassId);
+    
+    /**
+	 * Get list of Assigneds of user in a Klass
+	 * @category LIST
+	 * @return a list of all Assigneds if found or null
+	 */
+    List<Assigned> getAssignedsByUserInKlassOrderByDueDate(int userId, int klassId);
+    
     
 	/*
 	 * GET ITEM METHOD

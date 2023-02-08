@@ -27,12 +27,19 @@
   <br><br>
   
   Notify me on new submissions:
+  <a class="btn btn-danger" rel="nofollow" data-method="post" href="/assigneds/1/toggle_submission_notification?return_url=http%3A%2F%2F159.223.110.59%3A3000%2Fsubmissions%3Fassigned%3D1">
+    OFF <span class="glyphicon glyphicon-volume-off"></span>
+  </a>
   <%-- <%= render 'users/notification_toggle_button', property: current_user.notify_grader_new_submissions.where(assigned: @assigned).any?, link: toggle_submitted_to_grader_notification_path(@assigned, return_url: request.original_url)%> --%>
 
 </c:if>
 
 <br>
 Notify me on regrade requests:
+<a class="btn btn-danger" rel="nofollow" data-method="post" href="/assigneds/1/toggle_regrade_request_notification?return_url=http%3A%2F%2F159.223.110.59%3A3000%2Fsubmissions%3Fassigned%3D1">
+    OFF <span class="glyphicon glyphicon-volume-off"></span>
+</a>
+
 <%-- <%= render 'users/notification_toggle_button', property: current_user.notify_grader_regrade_request.where(assigned: @assigned).any?, link: toggle_regrade_request_notification_path(@assigned, return_url: request.original_url)%> --%>
 
 <br><br>

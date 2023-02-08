@@ -2,8 +2,10 @@ package codingmentor.javabackend.k3.model;
 import java.time.LocalDate;
 
 import codingmentor.javabackend.k3.repository.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.KlassRepository;
 import codingmentor.javabackend.k3.repository.ProfessorRepository;
 import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
+import codingmentor.javabackend.k3.repository.Impl.KlassRepositoryImpl;
 import codingmentor.javabackend.k3.repository.Impl.ProfessorRepositoryImpl;
 
 
@@ -21,6 +23,7 @@ public class Klass {
     */
 	private ProfessorRepository professorRepository =  ProfessorRepositoryImpl.getInstance();
 	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
+	private KlassRepository klassRepository =  KlassRepositoryImpl.getInstance();
 	/*
 	 * OTHER FUNCTIONS
 	 */
@@ -32,6 +35,19 @@ public class Klass {
 	
 	public boolean isKlassProfessor(User current_user) {
 		return professorRepository.isProfessorByUserId(current_user.getId(),this.id);
+	}
+	
+	public boolean isKlassGrader(User current_user) {
+		return klassRepository.isKlassGrader(current_user.getId(), this.id);
+	}
+	
+	
+	public boolean isPast() {
+		return this.end_date.isBefore(LocalDate.now());
+	}
+	
+	public boolean isCurrent() {
+		return this.end_date.isAfter(LocalDate.now()) || this.end_date.isEqual(LocalDate.now());
 	}
 	
 	/*

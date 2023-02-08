@@ -65,7 +65,7 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 			final String query = "\nSELECT * FROM students";
 			PreparedStatement statement = connection.prepareStatement(query);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getStudents: " + statement);
+			System.out.println("-- getStudents: " + statement);
 			List<Student> studentsList = new ArrayList<>();
 			while(results.next()) {
 				studentsList.add(mapper.map(results));
@@ -87,7 +87,7 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 			PreparedStatement statement = connection.prepareStatement(query);
 			statement.setInt(1, klassId);
 			ResultSet results = statement.executeQuery();
-			System.out.println("getStudentsByKlassId: " + statement);
+			System.out.println("-- getStudentsByKlassId: " + statement);
 			List<Student> studentsList = new ArrayList<>();
 			while(results.next()) {
 				studentsList.add(mapper.map(results));
@@ -111,7 +111,7 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 		    PreparedStatement statement = connection.prepareStatement(query);
 		    statement.setInt(1, id);
 		    ResultSet results = statement.executeQuery();
-		    System.out.println("getStudentById: " + statement);
+		    System.out.println("-- getStudentById: " + statement);
 		    Student student = (results.next()) ? mapper.map(results) : null;
 		    close(connection, statement, results);
 		    return student;
@@ -129,11 +129,11 @@ public class StudentRepositoryImpl extends AbstractRepository<Student> implement
 	//POST(INSERT INTO)
 	 public int insertStudent (int user_id, int klass_id) {
 		 return executeUpdate(connection -> {
-				final String query = "INSERT INTO `students` (`user_id`, `klass_id`) VALUES (?, ?);";
+				final String query = "\nINSERT INTO `students` (`user_id`, `klass_id`) VALUES (?, ?);";
 				PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 				statement.setInt(1, user_id);
 				statement.setInt(2, klass_id);
-				System.out.println("insertStudent: " + statement);
+				System.out.println("-- insertStudent: " + statement);
 				ResultSet rs = statement.getGeneratedKeys();
 				rs.next();
 				int affectedRows = statement.executeUpdate();

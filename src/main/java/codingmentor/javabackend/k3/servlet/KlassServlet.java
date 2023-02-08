@@ -54,7 +54,8 @@ import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
 	UrlUtils.KLASSES_ALL_PATH,
 	UrlUtils.NEW_KLASS_PATH,
 	UrlUtils.GRADERS_ALL_PATH,
-	UrlUtils.STUDENTS_ALL_PATH
+	UrlUtils.STUDENTS_ALL_PATH,
+	UrlUtils.ROOT_PATH
 })
 public class KlassServlet extends HttpServlet {
 
@@ -91,6 +92,9 @@ public class KlassServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		switch(req.getServletPath()) {
+		case UrlUtils.ROOT_PATH:
+			getKlassIndex(req, resp);
+			break;
 		case UrlUtils.NEW_KLASS_PATH:
 			getKlassNew(req, resp);
 			break;
@@ -146,6 +150,42 @@ public class KlassServlet extends HttpServlet {
 	
 	private void getKlassIndex(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+			User current_user = (User) req.getSession(false).getAttribute("current_user");
+			
+			List<Klass> studentKlassesList = klassRepository.getStudentKlassesByUserId(current_user.getId());
+						
+			if (!studentKlassesList.isEmpty()) {
+				List<Course> studentCoursesList = courseRepository.getStudentCoursesByUserId(current_user.getId());
+				req.setAttribute("student_klasses", studentKlassesList);
+				req.setAttribute("student_courses", studentCoursesList);
+			}
+			
+			List<Klass> graderKlassesList = klassRepository.getGraderKlassesByUserId(current_user.getId());
+			
+			if (!graderKlassesList.isEmpty()) {
+				List<Course> graderCoursesList = courseRepository.getGraderCoursesByUserId(current_user.getId());
+				req.setAttribute("grader_klasses", graderKlassesList);
+				req.setAttribute("grader_courses", graderCoursesList);
+			}
+			
+			
+			List<Klass> professorKlassesList = klassRepository.getProfessorKlassesByUserId(current_user.getId());
+			
+			if (!professorKlassesList.isEmpty()) {
+				List<Course> professorCoursesList = courseRepository.getProfessorCoursesByUserIdWithStudentsCount(current_user.getId());
+				req.setAttribute("professor_klasses", professorKlassesList);
+				req.setAttribute("professor_courses", professorCoursesList);
+			}			
+			
+			
+			
+			if (current_user.isAdmin()) {
+				List<Klass> adminKlassesList = klassRepository.getklasses();
+				List<Course> adminCoursesList = courseRepository.getAdminCourses();
+				req.setAttribute("admin_klasses", adminKlassesList);
+				req.setAttribute("admin_courses", adminCoursesList);
+			}
+
 			req.getRequestDispatcher(JspUtils.KLASSES_INDEX)
 				.forward(req, resp);
 		} catch (Exception e) {
@@ -161,6 +201,25 @@ public class KlassServlet extends HttpServlet {
 				resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 				return;
 			}
+			
+			Course course = courseRepository.getCourseByKlassId(klassId);
+			
+			User current_user = (User) req.getSession(false).getAttribute("current_user");
+			
+			if (klass.isKlassGrader(current_user)) {
+				System.out.println("I WAS HERE");
+				List<Assigned> assignedsList = assignedRepository.getAssignedsByUserInKlassOrderByDueDate(current_user.getId(), klassId);
+				List<Assignment> assignmentsList = assignmentRepository.getAssignedAssignmentsByUserInKlassOrderByDueDate(current_user.getId(), klassId);
+				req.setAttribute("grader_assigneds", assignedsList);
+				req.setAttribute("grader_assignments", assignmentsList);
+			}
+			
+			
+			List<GradeCategory> gradeCategoriesList = gradeCategoryRepository.getGradeCategoriesByCourseId(klass.getCourse_id());
+			
+			req.setAttribute("grade_categories", gradeCategoriesList);
+			req.setAttribute("course", course);
+			req.setAttribute("klass", klass);
 			
 			req.getRequestDispatcher(JspUtils.KLASSES_SHOW)
 				.forward(req, resp);
@@ -207,7 +266,7 @@ public class KlassServlet extends HttpServlet {
 			Course course = courseRepository.getCourseByKlassId(klassId);
 			
 			List<Assignment> klassAssignmentsList = assignmentRepository.getAssignmentsWithGradersListByKlassId(klassId);
-			List<Assignment> courseAssignmentList = assignmentRepository.getAssignmentsByCourseId(klass.getCourse_id());
+			List<Assignment> courseAssignmentList = assignmentRepository.getAssignmentsWithGradersListByCourseId(klass.getCourse_id());
 			List<GradeCategory> klassGradeCategoriesList = gradeCategoryRepository.getGradeCategoriesUsedByAssignmentsInKlass(klassId);
 			List<GradeCategory> courseGradeCategoriesList = gradeCategoryRepository.getGradeCategoriesUsedByAssignmentsInCourse(klass.getCourse_id());
 			List<Assigned> klassAssignedsList = assignedRepository.getAssignedsByAssignmentsInKlass(klassId);

@@ -52,9 +52,26 @@
 	  <tr>
 	   <td data-raw-name="${student_users[loop.index].getFull_name()}"><t:link_to path="${UrlUtils.STUDENTS_PATH}/:id" id="${student.id}">${student_users[loop.index].getFull_name()}</t:link_to></td>
 	   <td><a href="mailto:${student_users[loop.index].email}">${student_users[loop.index].email}</a></td>
-	   <td>- </td>
-	   <td>- </td>
-	   <td>- </td>
+	   <td>
+		    <div class="progress"> 
+			  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="3" style="width:33.33333333333333%">
+				1 ready to grade
+			  </div>
+			  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="3" style="width:33.33333333333333%">
+				1 overdue
+			  </div>
+			  <div>
+				<center>1 missing</center>
+			  </div>
+			</div>
+		</td>
+	   <td><div class="progress"></div>
+	   <td><div class="progress" style="position: relative; text-align: center">
+			  <div class="progress-bar" role="progressbar" aria-hidden="true" style="width:233.0%;background-color:rgb(0,255,0)"></div>
+		      <span style="position:absolute; left: 0; right: 0">
+			    233.0%
+			  </span>
+		    </div></td>
 	  </tr>
 	 </c:forEach>
 	</tbody>
