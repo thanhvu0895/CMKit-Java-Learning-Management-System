@@ -1,10 +1,8 @@
 package codingmentor.javabackend.k3.model;
 import java.util.List;
 
-import codingmentor.javabackend.k3.repository.CourseRepository;
-import codingmentor.javabackend.k3.repository.DepartmentRepository;
-import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.CourseRepository;
+import codingmentor.javabackend.k3.repository.impl.DepartmentRepository;
 
 public class Department {
 	private int id;
@@ -14,8 +12,8 @@ public class Department {
    /**
     * Repository Functions
     */
-	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
-	private CourseRepository courseRepository =  CourseRepositoryImpl.getInstance();
+	private DepartmentRepository departmentRepository =  DepartmentRepository.getInstance();
+	private CourseRepository courseRepository =  CourseRepository.getInstance();
 	
 	public List<Course> getCourses() {
 		return courseRepository.getCoursesByDepartmentId(this.id);

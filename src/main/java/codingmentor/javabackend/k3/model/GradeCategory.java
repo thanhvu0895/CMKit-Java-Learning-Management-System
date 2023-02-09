@@ -1,7 +1,5 @@
 package codingmentor.javabackend.k3.model;
-
-import codingmentor.javabackend.k3.repository.GradeCategoryRepository;
-import codingmentor.javabackend.k3.repository.Impl.GradeCategoryRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.GradeCategoryRepository;
 
 public class GradeCategory {
 	private int id;
@@ -13,7 +11,7 @@ public class GradeCategory {
    /**
     * Repository Functions
     */
-	private GradeCategoryRepository gradeCategoryRepository =  GradeCategoryRepositoryImpl.getInstance();
+	private GradeCategoryRepository gradeCategoryRepository =  GradeCategoryRepository.getInstance();
 	
 	public boolean isUsedByAssignment() {
 		return gradeCategoryRepository.isUsedByAssignment(this.id);

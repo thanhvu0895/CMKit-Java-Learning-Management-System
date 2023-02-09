@@ -22,18 +22,12 @@ import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.model.DepartmentProfessor;
 import codingmentor.javabackend.k3.model.Klass;
 import codingmentor.javabackend.k3.model.User;
-import codingmentor.javabackend.k3.repository.CourseRepository;
-import codingmentor.javabackend.k3.repository.DepartmentProfessorRepository;
-import codingmentor.javabackend.k3.repository.DepartmentRepository;
-import codingmentor.javabackend.k3.repository.KlassRepository;
-import codingmentor.javabackend.k3.repository.RepoRepository;
-import codingmentor.javabackend.k3.repository.UserRepository;
-import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.DepartmentProfessorRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.KlassRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.CourseRepository;
+import codingmentor.javabackend.k3.repository.impl.DepartmentProfessorRepository;
+import codingmentor.javabackend.k3.repository.impl.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.impl.KlassRepository;
+import codingmentor.javabackend.k3.repository.impl.RepoRepository;
+import codingmentor.javabackend.k3.repository.impl.UserRepository;
 
 
 @WebServlet(urlPatterns = {
@@ -53,12 +47,12 @@ public class DepartmentServlet extends HttpServlet{
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		departmentRepository = DepartmentRepositoryImpl.getInstance();
-		repoRepository = RepoRepositoryImpl.getInstance();
-		courseRepository = CourseRepositoryImpl.getInstance();
-		departmentProfessorRepository = DepartmentProfessorRepositoryImpl.getInstance();
-		userRepository = UserRepositoryImpl.getInstance();
-		klassRepository = KlassRepositoryImpl.getInstance();
+		departmentRepository = DepartmentRepository.getInstance();
+		repoRepository = RepoRepository.getInstance();
+		courseRepository = CourseRepository.getInstance();
+		departmentProfessorRepository = DepartmentProfessorRepository.getInstance();
+		userRepository = UserRepository.getInstance();
+		klassRepository = KlassRepository.getInstance();
 	}
 	
 	@Override

@@ -18,16 +18,11 @@ import codingmentor.javabackend.k3.model.Assignment;
 import codingmentor.javabackend.k3.model.Course;
 import codingmentor.javabackend.k3.model.Department;
 import codingmentor.javabackend.k3.model.GradeCategory;
-import codingmentor.javabackend.k3.repository.AssignmentRepository;
-import codingmentor.javabackend.k3.repository.CourseRepository;
-import codingmentor.javabackend.k3.repository.DepartmentRepository;
-import codingmentor.javabackend.k3.repository.GradeCategoryRepository;
-import codingmentor.javabackend.k3.repository.RepoRepository;
-import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.GradeCategoryRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.AssignmentRepository;
+import codingmentor.javabackend.k3.repository.impl.CourseRepository;
+import codingmentor.javabackend.k3.repository.impl.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.impl.GradeCategoryRepository;
+import codingmentor.javabackend.k3.repository.impl.RepoRepository;
 
 
 @WebServlet(urlPatterns = {
@@ -46,11 +41,11 @@ public class CourseServlet extends HttpServlet{
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		repoRepository = RepoRepositoryImpl.getInstance();
-		courseRepository = CourseRepositoryImpl.getInstance();
-		departmentRepository = DepartmentRepositoryImpl.getInstance();
-		assignmentRepository = AssignmentRepositoryImpl.getInstance();
-		gradeCategoryRepository = GradeCategoryRepositoryImpl.getInstance();
+		repoRepository = RepoRepository.getInstance();
+		courseRepository = CourseRepository.getInstance();
+		departmentRepository = DepartmentRepository.getInstance();
+		assignmentRepository = AssignmentRepository.getInstance();
+		gradeCategoryRepository = GradeCategoryRepository.getInstance();
 	}
 	
 	@Override

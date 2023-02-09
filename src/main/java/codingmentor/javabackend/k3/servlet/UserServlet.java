@@ -20,8 +20,7 @@ import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.User;
-import codingmentor.javabackend.k3.repository.UserRepository;
-import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.UserRepository;
 
 @WebServlet(urlPatterns = { 
 		UrlUtils.USERS_PATH, 
@@ -42,7 +41,7 @@ public class UserServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		userRepository = UserRepositoryImpl.getInstance();
+		userRepository = UserRepository.getInstance();
     	hasher = new PBKDF2Hasher();
     	logger = LogManager.getLogger("codingmentor");
 	}
@@ -136,11 +135,7 @@ public class UserServlet extends HttpServlet {
 			logger.error(e.getMessage());
 		}
 	}
-	/**
-	 * Implement processSetUpUser 1/16/2023
-	 * @throws IOException 
-	 * @throws ServletException 
-	 */
+
 	private void getSetUpUserPage (HttpServletRequest req, HttpServletResponse resp, int id) throws ServletException, IOException {
 		try {
 			String token = req.getParameter("token");
@@ -205,7 +200,7 @@ public class UserServlet extends HttpServlet {
 			if (pathInfoLength == 3 && UrlUtils.isInteger(pathParts[1])) { // If request pattern is PATH: /users/:id/*
 				int id = Integer.parseInt(pathParts[1]);
 				switch (pathParts[2]) {
-				case "accept_invite": // FROM_PATH: SHOW_USER_INVITE_PATH | TO_PATH: ACCEPT_USER_INVITE_PATH  |  JSP: USERS_SHOW_INVITE
+				case "accept_invite": 
 					postSetupUser(req, resp, id);
 					break;
 				case "resend_invite":
@@ -215,10 +210,7 @@ public class UserServlet extends HttpServlet {
 			}
 		}
 	}
-	
-	/**
-	 * postUserPasswordReset
-	 */
+
 	private void postUserPasswordReset(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {
 			String new_password = req.getParameter("new_password");
@@ -258,11 +250,7 @@ public class UserServlet extends HttpServlet {
 			logger.error(e.getMessage());
 		}
 	}
-	
-	/**
-	 * postRequestPaswordReset
-	 */
-	
+
 	private void postRequestPaswordReset(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		try {
 			String email = req.getParameter("email").toLowerCase();
@@ -296,10 +284,7 @@ public class UserServlet extends HttpServlet {
 			logger.error(e.getMessage());
 		}
 	}
-	/**
-	 * 
-	 */
-	
+
 	private void postResendInvite(HttpServletRequest req, HttpServletResponse resp, int id) throws IOException {
 		try {
 			String token = RandomUtils.unique64();
@@ -313,9 +298,6 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 	
-	/**
-	 * Implement processCreateUserInvite 1/16/2023
-	 */
 	private void postSendInvite(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		
 		try {
@@ -414,13 +396,7 @@ public class UserServlet extends HttpServlet {
 			logger.error(e.getMessage());
 		}
 	}
-	
-	
-	
 
-	/***
-	 * Implement processDeletePassword method Date: 1/14/2023
-	 */
 	private void postDeleteUser(HttpServletRequest req, HttpServletResponse resp, int userid)
 			throws IOException, ServletException {
 		try {
@@ -439,9 +415,6 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 
-	/***
-	 * Implement processChangePassword method Date: 1/14/2023
-	 */
 	private void postChangePassword(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
 		try {
@@ -485,9 +458,6 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 
-	/***
-	 * Implement updateUserPreferredName method Date: 1/14/2023
-	 */
 	private void postUpdateUserPreferredName(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
 		try {
@@ -514,9 +484,6 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 
-	/***
-	 * Implement processEditAdmin method Date: 1/14/2023
-	 */
 	private void postEditAdmin(HttpServletRequest req, HttpServletResponse resp, int userid)
 			throws IOException, ServletException {
 		try {	

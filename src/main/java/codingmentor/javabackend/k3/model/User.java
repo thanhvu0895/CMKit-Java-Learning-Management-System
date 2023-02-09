@@ -6,10 +6,8 @@ import java.util.List;
 
 import codingmentor.javabackend.k3.Utils.PBKDF2Hasher;
 import codingmentor.javabackend.k3.Utils.RandomUtils;
-import codingmentor.javabackend.k3.repository.DepartmentRepository;
-import codingmentor.javabackend.k3.repository.UserRepository;
-import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.impl.UserRepository;
 
 
 public class User implements Serializable {
@@ -32,17 +30,13 @@ public class User implements Serializable {
      * Repository Functions
      */
     private PBKDF2Hasher hasher = new PBKDF2Hasher();  
-	private UserRepository userRepository =  UserRepositoryImpl.getInstance();
-	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
+	private UserRepository userRepository =  UserRepository.getInstance();
+	private DepartmentRepository departmentRepository =  DepartmentRepository.getInstance();
 	
 	public List<Department> getDepartments() {
     	return departmentRepository.getDepartmentsByDPUserId(this.id);
 	}
 	
-	/**
-	 * If user is admin
-	 * @return
-	 */
 	public List<Department> getDepartmentsCheckAdmin() {	
     	return isAdmin() ? departmentRepository.getDepartments() : departmentRepository.getDepartmentsByDPUserId(this.id);
 	}
@@ -67,20 +61,15 @@ public class User implements Serializable {
 			.deleted(this.deleted)
 			.disabled(this.disabled);
 	}
+	
 	/**
 	 * Authenticate User's password
 	 */
-	
+
 	public boolean authenticate(String password) {
 		return hasher.checkPassword(password.toCharArray(), this.password_digest);	
 	}
 	
-	/**
-     * 
-     * @param token stored in user's password_digest
-     * @return true if token is valid and false if token is invalid
-     * @throws NoSuchAlgorithmException
-     */
     public boolean validateInviteToken(String token) throws NoSuchAlgorithmException {
     	return (this.reset_digest != null) && this.reset_digest.equals(RandomUtils.SHA256Base64(token));
     }

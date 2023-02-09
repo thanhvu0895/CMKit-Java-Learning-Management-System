@@ -17,14 +17,10 @@ import codingmentor.javabackend.k3.model.Assigned;
 import codingmentor.javabackend.k3.model.Assignment;
 import codingmentor.javabackend.k3.model.Course;
 import codingmentor.javabackend.k3.model.Klass;
-import codingmentor.javabackend.k3.repository.AssignedRepository;
-import codingmentor.javabackend.k3.repository.AssignmentRepository;
-import codingmentor.javabackend.k3.repository.CourseRepository;
-import codingmentor.javabackend.k3.repository.KlassRepository;
-import codingmentor.javabackend.k3.repository.Impl.AssignedRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.KlassRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.AssignedRepository;
+import codingmentor.javabackend.k3.repository.impl.AssignmentRepository;
+import codingmentor.javabackend.k3.repository.impl.CourseRepository;
+import codingmentor.javabackend.k3.repository.impl.KlassRepository;
 
 
 
@@ -42,10 +38,10 @@ public class SubmissionServlet extends HttpServlet{
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		klassRepository = KlassRepositoryImpl.getInstance();
-		assignedRepository = AssignedRepositoryImpl.getInstance();
-		assignmentRepository = AssignmentRepositoryImpl.getInstance();
-		courseRepository = CourseRepositoryImpl.getInstance();
+		klassRepository = KlassRepository.getInstance();
+		assignedRepository = AssignedRepository.getInstance();
+		assignmentRepository = AssignmentRepository.getInstance();
+		courseRepository = CourseRepository.getInstance();
 	}
 	
 	@Override

@@ -3,8 +3,7 @@ package codingmentor.javabackend.k3.model;
 import java.util.List;
 
 import codingmentor.javabackend.k3.Utils.EnumUtils;
-import codingmentor.javabackend.k3.repository.ProblemRepository;
-import codingmentor.javabackend.k3.repository.Impl.ProblemRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.ProblemRepository;
 
 public class Assignment {
 	private int id;
@@ -26,7 +25,7 @@ public class Assignment {
 /**
     * Repository and Enum Functions
     */
-	private ProblemRepository problemRepository =  ProblemRepositoryImpl.getInstance();
+	private ProblemRepository problemRepository =  ProblemRepository.getInstance();
 	
 	public String getFileOrLinkString() {
 		return EnumUtils.file_or_linkEnum.values()[this.file_or_link].toString();		

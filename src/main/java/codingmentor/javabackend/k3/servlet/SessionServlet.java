@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import codingmentor.javabackend.k3.model.User;
-import codingmentor.javabackend.k3.repository.UserRepository;
-import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.UserRepository;
 import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 
@@ -30,7 +29,7 @@ public class SessionServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 	    super.init();
-		this.userRepository = UserRepositoryImpl.getInstance();
+		this.userRepository = UserRepository.getInstance();
 	}
 
 	@Override
