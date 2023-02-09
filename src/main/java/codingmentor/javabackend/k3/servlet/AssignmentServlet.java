@@ -28,39 +28,26 @@ import codingmentor.javabackend.k3.model.Problem;
 import codingmentor.javabackend.k3.model.ReusableComment;
 import codingmentor.javabackend.k3.model.RubricItem;
 import codingmentor.javabackend.k3.model.User;
-import codingmentor.javabackend.k3.repository.AssignedGraderRepository;
-import codingmentor.javabackend.k3.repository.AssignedRepository;
-import codingmentor.javabackend.k3.repository.AssignmentRepository;
-import codingmentor.javabackend.k3.repository.CourseRepository;
-import codingmentor.javabackend.k3.repository.DepartmentRepository;
-import codingmentor.javabackend.k3.repository.GradeCategoryRepository;
-import codingmentor.javabackend.k3.repository.GraderRepository;
-import codingmentor.javabackend.k3.repository.KlassRepository;
-import codingmentor.javabackend.k3.repository.ProblemRepository;
-import codingmentor.javabackend.k3.repository.RepoRepository;
-import codingmentor.javabackend.k3.repository.ReusableCommentRepository;
-import codingmentor.javabackend.k3.repository.RubricItemRepository;
-import codingmentor.javabackend.k3.repository.SubmissionRepository;
-import codingmentor.javabackend.k3.repository.UserRepository;
-import codingmentor.javabackend.k3.repository.Impl.AssignedGraderRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.AssignedRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.GradeCategoryRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.GraderRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.KlassRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.ProblemRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.ReusableCommentRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.RubricItemRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.SubmissionRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.AssignedGraderRepository;
+import codingmentor.javabackend.k3.repository.impl.AssignedRepository;
+import codingmentor.javabackend.k3.repository.impl.AssignmentRepository;
+import codingmentor.javabackend.k3.repository.impl.CourseRepository;
+import codingmentor.javabackend.k3.repository.impl.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.impl.GradeCategoryRepository;
+import codingmentor.javabackend.k3.repository.impl.GraderRepository;
+import codingmentor.javabackend.k3.repository.impl.KlassRepository;
+import codingmentor.javabackend.k3.repository.impl.ProblemRepository;
+import codingmentor.javabackend.k3.repository.impl.RepoRepository;
+import codingmentor.javabackend.k3.repository.impl.ReusableCommentRepository;
+import codingmentor.javabackend.k3.repository.impl.RubricItemRepository;
+import codingmentor.javabackend.k3.repository.impl.SubmissionRepository;
+import codingmentor.javabackend.k3.repository.impl.UserRepository;
 
 @WebServlet(urlPatterns = { UrlUtils.ASSIGNMENT_ALL_PATH, UrlUtils.NEW_ASSIGNMENT_PATH,
 		UrlUtils.SHOW_COPY_ASSIGNMENT_PATH, UrlUtils.ADD_GRADER_PATH, UrlUtils.ASSIGNED_GRADER_ALL_PATH })
 public class AssignmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
 	private AssignmentRepository assignmentRepository = null;
 	private CourseRepository courseRepository = null;
 	private DepartmentRepository departmentRepository = null;
@@ -80,20 +67,20 @@ public class AssignmentServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		courseRepository = CourseRepositoryImpl.getInstance();
-		assignmentRepository = AssignmentRepositoryImpl.getInstance();
-		departmentRepository = DepartmentRepositoryImpl.getInstance();
-		klassRepository = KlassRepositoryImpl.getInstance();
-		gradeCategoryRepository = GradeCategoryRepositoryImpl.getInstance();
-		repoRepository = RepoRepositoryImpl.getInstance();
-		problemRepository = ProblemRepositoryImpl.getInstance();
-		rubricItemRepository = RubricItemRepositoryImpl.getInstance();
-		reusableCommentRepository = ReusableCommentRepositoryImpl.getInstance();
-		assignedRepository = AssignedRepositoryImpl.getInstance();
-		submissionRepository = SubmissionRepositoryImpl.getInstance();
-		userRepository = UserRepositoryImpl.getInstance();
-		graderRepository = GraderRepositoryImpl.getInstance();
-		assignedGraderRepository = AssignedGraderRepositoryImpl.getInstance();
+		courseRepository = CourseRepository.getInstance();
+		assignmentRepository = AssignmentRepository.getInstance();
+		departmentRepository = DepartmentRepository.getInstance();
+		klassRepository = KlassRepository.getInstance();
+		gradeCategoryRepository = GradeCategoryRepository.getInstance();
+		repoRepository = RepoRepository.getInstance();
+		problemRepository = ProblemRepository.getInstance();
+		rubricItemRepository = RubricItemRepository.getInstance();
+		reusableCommentRepository = ReusableCommentRepository.getInstance();
+		assignedRepository = AssignedRepository.getInstance();
+		submissionRepository = SubmissionRepository.getInstance();
+		userRepository = UserRepository.getInstance();
+		graderRepository = GraderRepository.getInstance();
+		assignedGraderRepository = AssignedGraderRepository.getInstance();
 	}
 
 	@Override

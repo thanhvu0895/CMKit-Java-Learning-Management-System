@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="Warn">
 	<Properties>
-		<Property name="LOG_PATTERN">%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} -
+		<Property name="LOG_PATTERN">-- %d{HH:mm:ss.SSS} [%t] %-5level %logger{36} -
 			%msg%n
 		</Property>
 		<Property name="APP_LOG_ROOT">C:\logs
@@ -61,7 +61,9 @@
 			<AppenderRef ref="warn" />		
 		</Logger>
 		<Root level="debug">
-			<AppenderRef ref="console" />	
+			<AppenderRef ref="info" />
+			<AppenderRef ref="console" />
+			<AppenderRef ref="error" />	
 		</Root>
 	</Loggers>
 </Configuration>

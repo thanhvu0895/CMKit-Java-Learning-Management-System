@@ -18,10 +18,8 @@ import codingmentor.javabackend.k3.Utils.RandomUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.Professor;
 import codingmentor.javabackend.k3.model.User;
-import codingmentor.javabackend.k3.repository.ProfessorRepository;
-import codingmentor.javabackend.k3.repository.UserRepository;
-import codingmentor.javabackend.k3.repository.Impl.ProfessorRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.ProfessorRepository;
+import codingmentor.javabackend.k3.repository.impl.UserRepository;
 
 @WebServlet(urlPatterns = {
 		UrlUtils.PROFESSORS_ALL_PATH,
@@ -35,8 +33,8 @@ public class ProfessorServlet extends HttpServlet{
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		professorRepository = ProfessorRepositoryImpl.getInstance();
-		userRepository = UserRepositoryImpl.getInstance();
+		professorRepository = ProfessorRepository.getInstance();
+		userRepository = UserRepository.getInstance();
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

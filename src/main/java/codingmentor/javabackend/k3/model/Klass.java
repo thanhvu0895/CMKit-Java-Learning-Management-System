@@ -1,12 +1,9 @@
 package codingmentor.javabackend.k3.model;
 import java.time.LocalDate;
 
-import codingmentor.javabackend.k3.repository.DepartmentRepository;
-import codingmentor.javabackend.k3.repository.KlassRepository;
-import codingmentor.javabackend.k3.repository.ProfessorRepository;
-import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.KlassRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.ProfessorRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.impl.KlassRepository;
+import codingmentor.javabackend.k3.repository.impl.ProfessorRepository;
 
 
 public class Klass {
@@ -21,9 +18,9 @@ public class Klass {
    /**
     * Repository Functions
     */
-	private ProfessorRepository professorRepository =  ProfessorRepositoryImpl.getInstance();
-	private DepartmentRepository departmentRepository =  DepartmentRepositoryImpl.getInstance();
-	private KlassRepository klassRepository =  KlassRepositoryImpl.getInstance();
+	private ProfessorRepository professorRepository =  ProfessorRepository.getInstance();
+	private DepartmentRepository departmentRepository =  DepartmentRepository.getInstance();
+	private KlassRepository klassRepository =  KlassRepository.getInstance();
 	/*
 	 * OTHER FUNCTIONS
 	 */

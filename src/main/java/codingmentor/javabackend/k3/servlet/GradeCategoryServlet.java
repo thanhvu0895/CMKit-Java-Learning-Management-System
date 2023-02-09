@@ -14,10 +14,8 @@ import codingmentor.javabackend.k3.Utils.JspUtils;
 import codingmentor.javabackend.k3.Utils.UrlUtils;
 import codingmentor.javabackend.k3.model.Course;
 import codingmentor.javabackend.k3.model.GradeCategory;
-import codingmentor.javabackend.k3.repository.CourseRepository;
-import codingmentor.javabackend.k3.repository.GradeCategoryRepository;
-import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.GradeCategoryRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.CourseRepository;
+import codingmentor.javabackend.k3.repository.impl.GradeCategoryRepository;
 
 
 @WebServlet(urlPatterns = {
@@ -33,8 +31,8 @@ public class GradeCategoryServlet extends HttpServlet{
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		gradeCategoryRepository = GradeCategoryRepositoryImpl.getInstance();
-		courseRepository = CourseRepositoryImpl.getInstance();
+		gradeCategoryRepository = GradeCategoryRepository.getInstance();
+		courseRepository = CourseRepository.getInstance();
 	}
 	
 	@Override

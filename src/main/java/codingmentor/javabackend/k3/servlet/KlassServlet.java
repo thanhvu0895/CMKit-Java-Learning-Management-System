@@ -29,28 +29,17 @@ import codingmentor.javabackend.k3.model.Klass;
 import codingmentor.javabackend.k3.model.Professor;
 import codingmentor.javabackend.k3.model.Student;
 import codingmentor.javabackend.k3.model.User;
-import codingmentor.javabackend.k3.repository.AssignedRepository;
-import codingmentor.javabackend.k3.repository.AssignmentRepository;
-import codingmentor.javabackend.k3.repository.CourseRepository;
-import codingmentor.javabackend.k3.repository.DepartmentRepository;
-import codingmentor.javabackend.k3.repository.GradeCategoryRepository;
-import codingmentor.javabackend.k3.repository.GraderRepository;
-import codingmentor.javabackend.k3.repository.KlassRepository;
-import codingmentor.javabackend.k3.repository.ProfessorRepository;
-import codingmentor.javabackend.k3.repository.RepoRepository;
-import codingmentor.javabackend.k3.repository.StudentRepository;
-import codingmentor.javabackend.k3.repository.UserRepository;
-import codingmentor.javabackend.k3.repository.Impl.AssignedRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.CourseRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.DepartmentRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.GradeCategoryRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.GraderRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.KlassRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.ProfessorRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.RepoRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.StudentRepositoryImpl;
-import codingmentor.javabackend.k3.repository.Impl.UserRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.AssignedRepository;
+import codingmentor.javabackend.k3.repository.impl.AssignmentRepository;
+import codingmentor.javabackend.k3.repository.impl.CourseRepository;
+import codingmentor.javabackend.k3.repository.impl.DepartmentRepository;
+import codingmentor.javabackend.k3.repository.impl.GradeCategoryRepository;
+import codingmentor.javabackend.k3.repository.impl.GraderRepository;
+import codingmentor.javabackend.k3.repository.impl.KlassRepository;
+import codingmentor.javabackend.k3.repository.impl.ProfessorRepository;
+import codingmentor.javabackend.k3.repository.impl.RepoRepository;
+import codingmentor.javabackend.k3.repository.impl.StudentRepository;
+import codingmentor.javabackend.k3.repository.impl.UserRepository;
 
 
 @WebServlet(urlPatterns = {
@@ -79,17 +68,17 @@ public class KlassServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		klassRepository = KlassRepositoryImpl.getInstance();
-		repoRepository = RepoRepositoryImpl.getInstance();
-		courseRepository = CourseRepositoryImpl.getInstance();
-		departmentRepository = DepartmentRepositoryImpl.getInstance();
-		professorRepository = ProfessorRepositoryImpl.getInstance();
-		userRepository = UserRepositoryImpl.getInstance();
-		assignmentRepository = AssignmentRepositoryImpl.getInstance();
-		gradeCategoryRepository = GradeCategoryRepositoryImpl.getInstance();
-		graderRepository = GraderRepositoryImpl.getInstance();
-		studentRepository = StudentRepositoryImpl.getInstance();
-		assignedRepository = AssignedRepositoryImpl.getInstance();
+		klassRepository = KlassRepository.getInstance();
+		repoRepository = RepoRepository.getInstance();
+		courseRepository = CourseRepository.getInstance();
+		departmentRepository = DepartmentRepository.getInstance();
+		professorRepository = ProfessorRepository.getInstance();
+		userRepository = UserRepository.getInstance();
+		assignmentRepository = AssignmentRepository.getInstance();
+		gradeCategoryRepository = GradeCategoryRepository.getInstance();
+		graderRepository = GraderRepository.getInstance();
+		studentRepository = StudentRepository.getInstance();
+		assignedRepository = AssignedRepository.getInstance();
 	}
 	
 	@Override

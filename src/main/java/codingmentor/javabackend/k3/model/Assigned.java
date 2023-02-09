@@ -4,8 +4,7 @@ import java.time.LocalDateTime;
 
 import codingmentor.javabackend.k3.Utils.DateValidatorDateTimeFormatter;
 import codingmentor.javabackend.k3.Utils.EnumUtils;
-import codingmentor.javabackend.k3.repository.AssignmentRepository;
-import codingmentor.javabackend.k3.repository.Impl.AssignmentRepositoryImpl;
+import codingmentor.javabackend.k3.repository.impl.AssignmentRepository;
 
 public class Assigned {
 	private int id;
@@ -25,7 +24,7 @@ public class Assigned {
    /**
     * Repository Functions
     */
-	private AssignmentRepository assignmentRepository =  AssignmentRepositoryImpl.getInstance();
+	private AssignmentRepository assignmentRepository =  AssignmentRepository.getInstance();
 	
 	public String getAllowResubmissions() {
 		return EnumUtils.allow_resubmissionsEnum.values()[this.allow_resubmissions].toString();
