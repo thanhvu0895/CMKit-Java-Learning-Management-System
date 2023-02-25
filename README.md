@@ -15,6 +15,11 @@ When school begins, there is a spreadsheet with student emails (provided [here](
 You can add all students from the list to Kit by following this tutorial:
 ![](https://i.imgur.com/gAw8ZAV.gif)
 
+The invitation links will be sent to the student's emails so they can create an account. Similarly, you can add graders and professors to the system. 
+
+- Students will receive assignments assigned by professors
+- Proffesors can create, assign assignments then grade assignments
+- Graders can grade assignments from students (Graders usually are Teaching Assistants)
 
 [Demo 2](bit.ly/cmkitdemo) - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis:
 
