@@ -1,4 +1,4 @@
-# CMKit - Learning Management System
+# CMKit - A Learning Management System
 
 [CMKit](codingmentorkit.com) is designed to facilitate online assignment submissions, grading and grade analysis, and secure storage of digital class materials.
 ![image](https://user-images.githubusercontent.com/75138396/221333862-2a0e123a-00d4-4fd1-9828-7daa1d6a4c6e.png)
@@ -7,9 +7,12 @@
 
 # Features:
 
- User Managements and CRUD Features:
- 
-![](https://s9.gifyu.com/images/CodingMentorKit.md.gif)
+1. Signing up for a CMKit account
+
+When school begins, there is a spreadsheet with student emails (provided [here](https://docs.google.com/spreadsheets/d/18tLlYL6Ftcdbk3ESXvmq6mcj5V_AyjW4V-mDUHLGiyk/edit#gid=0))
+![image](https://user-images.githubusercontent.com/75138396/221344040-07e4b542-3ac7-48aa-aaf3-205f74d4a720.png)
+
+
 
 [Demo 2](bit.ly/cmkitdemo) - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis:
 
