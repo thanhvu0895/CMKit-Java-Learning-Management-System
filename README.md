@@ -32,7 +32,7 @@ The invitation links will be sent to the student's emails so they can create an 
 
 
 
-[Demo 2](bit.ly/cmkitdemo) - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis
+[Demo 2](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view) - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis
 
 # Front End:
 
