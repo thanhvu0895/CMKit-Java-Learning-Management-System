@@ -55,7 +55,7 @@ The invitation links will be sent to the student's emails so they can create an 
 **- Find a course:  **  
 ![image](https://user-images.githubusercontent.com/75138396/221346966-7ed1d63f-cb29-4d0c-a89f-74abc874ef28.png)
 
-**- Enrolling in a course:  **  
+**- Enrolling in a course:**  
 Students will be enrolled to a course after they accept the invitation link sent to their account:
 ![image](https://user-images.githubusercontent.com/75138396/221348527-94cedb18-2320-4e43-a919-e0dc08e37510.png)
 
