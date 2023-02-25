@@ -7,7 +7,8 @@
 
 # Features:
 
-[Demo 1](https://i.imgur.com/yTYdtp4.mp4) User Managements and CRUD Features:
+ User Managements and CRUD Features:
+ <blockquote class="imgur-embed-pub" lang="en" data-id="a/SMfbKhn"><a href="//imgur.com/SMfbKhn"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 
 ![](https://i.imgur.com/yTYdtp4.mp4)
 
