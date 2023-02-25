@@ -1,12 +1,14 @@
-# CMKit - A Learning Management System
+# I. Introduction
+
+CMKit - A Learning Management System
 
 [CMKit](codingmentorkit.com) is designed to facilitate online assignment submissions, grading and grade analysis, and secure storage of digital class materials.
 
 - CMKit is written in **Pure Java** (with help from **Java Server Pages** and **Servlet**). 
 
-# Features:
+# II. Getting Started:
 
-1. Signing up for a CMKit account
+### 1. Signing up for a CMKit account
 
 When school begins, professors often create a spreadsheet of student emails (provided [here](https://docs.google.com/spreadsheets/d/18tLlYL6Ftcdbk3ESXvmq6mcj5V_AyjW4V-mDUHLGiyk/edit#gid=0))
 ![image](https://user-images.githubusercontent.com/75138396/221344040-07e4b542-3ac7-48aa-aaf3-205f74d4a720.png)
@@ -20,7 +22,7 @@ The invitation links will be sent to the student's emails so they can create an 
 - Proffesors can create, assign assignments then grade assignments
 - Graders can grade assignments from students (Graders usually are Teaching Assistants)
 
-2. Navigating the CMKit interface
+### 2. Navigating the CMKit interface
 
 ![](https://i.imgur.com/YsTt7sa.jpg)
 
@@ -31,7 +33,37 @@ The invitation links will be sent to the student's emails so they can create an 
 ![](https://i.imgur.com/QE2G9Nj.jpg)
 
 
-3. Customizing your CMKit profile
+### 3. Customizing your CMKit profile
+
+# III. Accessing Courses on CMKit:
+
+- Find a course:
+![image](https://user-images.githubusercontent.com/75138396/221346966-7ed1d63f-cb29-4d0c-a89f-74abc874ef28.png)
+
+- Enrolling in a course:
+Students will be added to a course using Add Students feature mentioned above.
+
+- Accessing course materials on CMKit]
+Instructors can add materials to a course/ a class as following:
+![image](https://user-images.githubusercontent.com/75138396/221347258-79db8124-12fe-4639-a271-faf38eaa1b0e.png)
+
+# IV. Interacting with Course Content on CMKit
+
+- Viewing course content on CMKit
+Materials added to a course will be visible to all enrolled students when they click on their class from home page:
+![image](https://user-images.githubusercontent.com/75138396/221347440-835e823d-82cb-4605-8f8c-23cfe6a94dba.png)
+The shared materials look like this to a student:
+![image](https://user-images.githubusercontent.com/75138396/221347154-bd7ff856-672a-404a-9193-ea5651e7dc51.png)
+
+- Completing assignments on CMKit:
+
+
+- Participating in discussions on CMKit
+
+
+- Attendance:
+![image](https://user-images.githubusercontent.com/75138396/221346807-30dc16cf-6f08-4caa-b8c5-af9a906a7ca2.png)
+
 
 
 [Demo 2](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view) - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis
