@@ -41,9 +41,9 @@ The invitation links will be sent to the student's emails so they can create an 
 ![image](https://user-images.githubusercontent.com/75138396/221346966-7ed1d63f-cb29-4d0c-a89f-74abc874ef28.png)
 
 - Enrolling in a course:
-Students will be added to a course using Add Students feature mentioned above.
+Students will be added to a course using Add Students feature mentioned in section I
 
-- Accessing course materials on CMKit]
+- Accessing course materials on CMKit
 Instructors can add materials to a course/ a class as following:
 ![image](https://user-images.githubusercontent.com/75138396/221347258-79db8124-12fe-4639-a271-faf38eaa1b0e.png)
 
@@ -55,14 +55,20 @@ Materials added to a course will be visible to all enrolled students when they c
 The shared materials look like this to a student:
 ![image](https://user-images.githubusercontent.com/75138396/221347154-bd7ff856-672a-404a-9193-ea5651e7dc51.png)
 
-- Completing assignments on CMKit:
+- Professor assigning and Student completing assignments on CMKit:
+![](https://i.imgur.com/zvVtYPJ.gif)
 
+- Participating in group assignments on CMKit:
 
-- Participating in discussions on CMKit
+# V. Tracking Progress on CMKit
 
-
-- Attendance:
+- Monitoring course progress on CMKit
 ![image](https://user-images.githubusercontent.com/75138396/221346807-30dc16cf-6f08-4caa-b8c5-af9a906a7ca2.png)
+
+- Checking grades and feedback on CMKit
+- Reviewing course history on CMKit
+
+
 
 
 
