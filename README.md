@@ -98,8 +98,14 @@ Students can access material and assignment submissions from previous courses by
 
 # VIII. Conclusion
 
-Summary of key takeaways for using CMKit
+Summary of key takeaways for using CMKit:
+
+- CMKit provides a platform for students to collaborate on code projects in a Git controlled environment, with version control and easy access to feedback and support.
+
+- The Git environment provides an opportunity for students to develop skills in code management and collaborative coding practices, which are highly valued in industry settings.
+
 Final thoughts and recommendations for using CMKit
+By providing a structured and collaborative environment for students to learn and practice coding skills, instructors can help to prepare students for success in future careers in the field.
 
 # Kit Presentation 
-[Demo 2](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view) 
+[![Presentation link](https://i.imgur.com/tnuMkYt.png)](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view)
