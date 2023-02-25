@@ -1,10 +1,10 @@
 # I. Introduction
 
-CMKit - A Learning Management System
+[CMKit - A Learning Management System](codingmentorkit.com)
 
-[CMKit](codingmentorkit.com) is designed to facilitate online assignment submissions, grading and grade analysis, and secure storage of digital class materials.
+CMKit is designed to facilitate online assignment submissions, grading and grade analysis, and secure storage of digital class materials.
 
-- CMKit is written in **Pure Java** (with help from **Java Server Pages** and **Servlet**). 
+- CMKit is written in **Pure Java** (together with **Java Server Pages** and **Servlet**)
 
 # II. Getting Started:
 
@@ -24,16 +24,12 @@ The invitation links will be sent to the student's emails so they can create an 
 
 ### 2. Navigating the CMKit interface
 
-![](https://i.imgur.com/YsTt7sa.jpg)
+![student home](https://i.imgur.com/YsTt7sa.jpg)
 
-![](https://i.imgur.com/Q8lGsfj.jpg)
+![klass view](https://i.imgur.com/Q8lGsfj.jpg)
 
-![](https://i.imgur.com/8mTLYMU.jpg)
+![assignment view](https://user-images.githubusercontent.com/75138396/221348916-6495c393-08df-420f-8140-806f0d9b99b2.png)
 
-![](https://i.imgur.com/QE2G9Nj.jpg)
-
-
-### 3. Customizing your CMKit profile
 
 # III. Accessing Courses on CMKit:
 
@@ -41,7 +37,11 @@ The invitation links will be sent to the student's emails so they can create an 
 ![image](https://user-images.githubusercontent.com/75138396/221346966-7ed1d63f-cb29-4d0c-a89f-74abc874ef28.png)
 
 - Enrolling in a course:  
-Students will be added to a course using Add Students feature mentioned in section I
+Students will be enrolled to a course after they accept the invitation link sent to their account:
+![image](https://user-images.githubusercontent.com/75138396/221348527-94cedb18-2320-4e43-a919-e0dc08e37510.png)
+
+After clinking on the invitation link, students will then enter their account information on Kit:
+![image](https://user-images.githubusercontent.com/75138396/221348557-2e9be32d-572f-4b5a-a7ce-11b7942e77ce.png)
 
 - Accessing course materials on CMKit:  
 Instructors can add materials to a course/ a class as following:  
@@ -60,18 +60,26 @@ The shared materials look like this to a student:
 - Professor assigning and Student completing assignments on CMKit:  
 ![](https://i.imgur.com/zvVtYPJ.gif)
 
-- Participating in group assignments on CMKit:  
+- Participating in group assignments on CMKit: 
 
 # V. Tracking Progress on CMKit
 
 - Monitoring course progress on CMKit:  
 ![image](https://user-images.githubusercontent.com/75138396/221346807-30dc16cf-6f08-4caa-b8c5-af9a906a7ca2.png)
-
+![](https://i.imgur.com/8mTLYMU.jpg)
+![](https://i.imgur.com/QE2G9Nj.jpg)
 - Checking grades and feedback on CMKit:  
+Students can view feedback for a certain assignment by clicking on that assignment while viewing the class:
+![](https://i.imgur.com/nBrFzMC.gif)
 
 - Reviewing course history on CMKit:  
 
 [Demo 2](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view) - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis
+
+# VIII. Conclusion
+
+Summary of key takeaways for using CMKit
+Final thoughts and recommendations for using CMKit.
 
 # Front End:
 
