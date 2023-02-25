@@ -20,7 +20,21 @@ The invitation links will be sent to the student's emails so they can create an 
 - Proffesors can create, assign assignments then grade assignments
 - Graders can grade assignments from students (Graders usually are Teaching Assistants)
 
-[Demo 2](bit.ly/cmkitdemo) - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis:
+2. Navigating the CMKit interface
+
+![](https://i.imgur.com/YsTt7sa.jpg)
+
+![](https://i.imgur.com/Q8lGsfj.jpg)
+
+![](https://i.imgur.com/pq7jLmo.jpg)
+
+![](https://i.imgur.com/8mTLYMU.jpg)
+
+![](https://i.imgur.com/QE2G9Nj.jpg)
+
+
+
+[Demo 2](bit.ly/cmkitdemo) - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis
 
 # Front End:
 
