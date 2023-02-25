@@ -7,8 +7,9 @@
 
 # Features:
 
-Demo 1 User Managements and CRUD Features:
-![](https://i.imgur.com/yTYdtp4.mp4))
+[Demo 1](https://i.imgur.com/yTYdtp4.mp4) User Managements and CRUD Features:
+
+![](https://i.imgur.com/yTYdtp4.mp4)
 
 [Demo 2](bit.ly/cmkitdemo) - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis:
 
