@@ -6,6 +6,25 @@ CMKit is designed to facilitate online assignment submissions, grading and grade
 
 - CMKit is written in **Pure Java** (together with **Java Server Pages** and **Servlet**)
 
+### Front End:
+
+- Similar to **React.js**, Kit utilizes Java Server Page **Custom Tag** to break the user interface down into small, reusable components that allows developers to build scalable, maintainable front-end code.
+- CMKit also uses **AJAX (Asynchronous JavaScript and XML)** which allows a web page to update dynamically without requiring a full page refresh. This means that **Ajax** can handle user input **without waiting for the database** because it sends an asynchronous request to the server and then continues to process other user actions while waiting for the response from the server.
+
+### Back End:
+
+- CMKit uses Singleton design patter to help improve efficiency by managing resources, optimizing memory usage, providing thread safety, enabling global access, and offering flexibility. 
+- Model-View-Control Architecture: Servlet + JSP + JDBC + CRUD
+![image](https://user-images.githubusercontent.com/75138396/221334562-8e5d23de-6d76-49e9-a14a-d492fa3bbfe5.png)
+- Log4J (info.log, debug.log, warn.log, error.log) 
+![image](https://user-images.githubusercontent.com/75138396/221334584-7a94e4f9-b5d7-4140-968a-e43fa7a7a35a.png)
+
+- Git doesn't provide any built-in user management features, making it challenging for project administrators to control who can access and modify repositories. CMKit solves this problem by providing a centralized way to manage Git repositories and their associated access rights.
+
+### Database
+
+Kit stores data in a **MySQL server**. All tables are indexed (full-text + key index) to reduce query time, and data are written in Third normal form (3nf) to reduce the duplication of data, avoid data anomalies
+
 # II. Getting Started:
 
 ### 1. Signing up for a CMKit account
@@ -72,8 +91,7 @@ The shared materials look like this to a student:
 Students can view feedback for a certain assignment by clicking on that assignment while viewing the class:
 ![](https://i.imgur.com/nBrFzMC.gif)
 
-**- Reviewing course history on CMKit:  **
-
+**- Reviewing course history on CMKit:**
 Students can access material and assignment submissions from previous courses by navigating to Past Classes Section from the home page:
 ![image](https://user-images.githubusercontent.com/75138396/221349089-ec661f57-af97-4bf8-96a7-9c42b0e6c708.png)
 
@@ -86,25 +104,3 @@ Final thoughts and recommendations for using CMKit.
 
 - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis
 [Demo 2](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view) 
-
-
-# Front End:
-
-- Similar to **React.js**, Kit utilizes Java Server Page **Custom Tag** to break the user interface down into small, reusable components that allows developers to build scalable, maintainable front-end code.
-- CMKit also uses **AJAX (Asynchronous JavaScript and XML)** which allows a web page to update dynamically without requiring a full page refresh. This means that **Ajax** can handle user input **without waiting for the database** because it sends an asynchronous request to the server and then continues to process other user actions while waiting for the response from the server.
-
-# Back End:
-
-- CMKit uses Singleton design patter to help improve efficiency by managing resources, optimizing memory usage, providing thread safety, enabling global access, and offering flexibility. 
-- Model-View-Control Architecture: Servlet + JSP + JDBC + CRUD
-![image](https://user-images.githubusercontent.com/75138396/221334562-8e5d23de-6d76-49e9-a14a-d492fa3bbfe5.png)
-- Log4J (info.log, debug.log, warn.log, error.log) 
-![image](https://user-images.githubusercontent.com/75138396/221334584-7a94e4f9-b5d7-4140-968a-e43fa7a7a35a.png)
-
-- Git doesn't provide any built-in user management features, making it challenging for project administrators to control who can access and modify repositories. CMKit solves this problem by providing a centralized way to manage Git repositories and their associated access rights.
-
-# Database
-
-Kit stores data in a **MySQL server**. All tables are indexed (full-text + key index) to reduce query time, and data are written in Third normal form (3nf) to reduce the duplication of data, avoid data anomalies
-
-
