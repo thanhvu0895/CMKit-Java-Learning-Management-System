@@ -1,9 +1,8 @@
-# Coding Mentor Kit:
+# Kit - Learning Management System
 
-### User accounts and roles:
-Accounts can be created in two ways:
-- Manually by an administrator
-- automatically when adding student to a class for the 1st time
-In either case, the new user is sent an invitation email with an unique link to set up their account.
-User provide name, an optional preferred nick name, and a password. Once this is complete, they can sign in 
-from their browser
+Kit is designed to facilitate online assignment submissions, grading and grade analysis, and secure storage of digital class materials.
+
+![image](https://user-images.githubusercontent.com/75138396/221333862-2a0e123a-00d4-4fd1-9828-7daa1d6a4c6e.png)
+
+
+
