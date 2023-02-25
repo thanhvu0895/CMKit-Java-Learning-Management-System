@@ -37,40 +37,39 @@ The invitation links will be sent to the student's emails so they can create an 
 
 # III. Accessing Courses on CMKit:
 
-- Find a course:
+- Find a course:  
 ![image](https://user-images.githubusercontent.com/75138396/221346966-7ed1d63f-cb29-4d0c-a89f-74abc874ef28.png)
 
-- Enrolling in a course:
+- Enrolling in a course:  
 Students will be added to a course using Add Students feature mentioned in section I
 
-- Accessing course materials on CMKit
-Instructors can add materials to a course/ a class as following:
+- Accessing course materials on CMKit:  
+Instructors can add materials to a course/ a class as following:  
 ![image](https://user-images.githubusercontent.com/75138396/221347258-79db8124-12fe-4639-a271-faf38eaa1b0e.png)
 
 # IV. Interacting with Course Content on CMKit
 
-- Viewing course content on CMKit
-Materials added to a course will be visible to all enrolled students when they click on their class from home page:
+- Viewing course content on CMKit:  
+
+Materials added to a course will be visible to all enrolled students when they click on their class from home page:  
 ![image](https://user-images.githubusercontent.com/75138396/221347440-835e823d-82cb-4605-8f8c-23cfe6a94dba.png)
-The shared materials look like this to a student:
+
+The shared materials look like this to a student:  
 ![image](https://user-images.githubusercontent.com/75138396/221347154-bd7ff856-672a-404a-9193-ea5651e7dc51.png)
 
-- Professor assigning and Student completing assignments on CMKit:
+- Professor assigning and Student completing assignments on CMKit:  
 ![](https://i.imgur.com/zvVtYPJ.gif)
 
-- Participating in group assignments on CMKit:
+- Participating in group assignments on CMKit:  
 
 # V. Tracking Progress on CMKit
 
-- Monitoring course progress on CMKit
+- Monitoring course progress on CMKit:  
 ![image](https://user-images.githubusercontent.com/75138396/221346807-30dc16cf-6f08-4caa-b8c5-af9a906a7ca2.png)
 
-- Checking grades and feedback on CMKit
-- Reviewing course history on CMKit
+- Checking grades and feedback on CMKit:  
 
-
-
-
+- Reviewing course history on CMKit:  
 
 [Demo 2](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view) - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis
 
