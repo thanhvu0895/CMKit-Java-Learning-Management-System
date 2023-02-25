@@ -26,8 +26,6 @@ The invitation links will be sent to the student's emails so they can create an 
 
 ![](https://i.imgur.com/Q8lGsfj.jpg)
 
-![](https://i.imgur.com/pq7jLmo.jpg)
-
 ![](https://i.imgur.com/8mTLYMU.jpg)
 
 ![](https://i.imgur.com/QE2G9Nj.jpg)
