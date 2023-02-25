@@ -12,6 +12,8 @@
 When school begins, there is a spreadsheet with student emails (provided [here](https://docs.google.com/spreadsheets/d/18tLlYL6Ftcdbk3ESXvmq6mcj5V_AyjW4V-mDUHLGiyk/edit#gid=0))
 ![image](https://user-images.githubusercontent.com/75138396/221344040-07e4b542-3ac7-48aa-aaf3-205f74d4a720.png)
 
+You can add all students from the list to Kit by following this tutorial:
+![](https://i.imgur.com/gAw8ZAV.gif)
 
 
 [Demo 2](bit.ly/cmkitdemo) - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis:
