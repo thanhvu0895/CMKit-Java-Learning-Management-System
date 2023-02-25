@@ -30,6 +30,10 @@ The invitation links will be sent to the student's emails so they can create an 
 
 ![](https://i.imgur.com/QE2G9Nj.jpg)
 
+
+3. Customizing your CMKit profile
+
+
 [Demo 2](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view) - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis
 
 # Front End:
@@ -45,7 +49,7 @@ The invitation links will be sent to the student's emails so they can create an 
 - Log4J (info.log, debug.log, warn.log, error.log) 
 ![image](https://user-images.githubusercontent.com/75138396/221334584-7a94e4f9-b5d7-4140-968a-e43fa7a7a35a.png)
 
-- Gitosis
+- Git doesn't provide any built-in user management features, making it challenging for project administrators to control who can access and modify repositories. CMKit solves this problem by providing a centralized way to manage Git repositories and their associated access rights.
 
 # Database
 
