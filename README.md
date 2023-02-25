@@ -8,9 +8,8 @@
 # Features:
 
  User Managements and CRUD Features:
- <blockquote class="imgur-embed-pub" lang="en" data-id="a/SMfbKhn"><a href="//imgur.com/SMfbKhn"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
-
-![](https://i.imgur.com/yTYdtp4.mp4)
+ 
+![](https://s9.gifyu.com/images/CodingMentorKit.md.gif)
 
 [Demo 2](bit.ly/cmkitdemo) - Assign, Grade assignments, Positive and Negative Scoring, Collaboration on Programming Project, Grade Analysis:
 
