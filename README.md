@@ -33,7 +33,8 @@ When school begins, professors often create a spreadsheet of student emails (pro
 ![image](https://user-images.githubusercontent.com/75138396/221344040-07e4b542-3ac7-48aa-aaf3-205f74d4a720.png)
 
 Professors can then use CMKit to add these students to a class:
-![](https://i.imgur.com/gAw8ZAV.gif)
+![add-students-cropped](https://user-images.githubusercontent.com/75138396/221392328-bc2f81d1-e07e-46e8-8be9-3f3e8ba350f8.gif)
+
 
 The invitation links will be sent to the student's emails so they can create an account. Similarly, you can add graders and professors to the system. 
 
