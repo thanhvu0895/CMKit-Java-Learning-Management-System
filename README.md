@@ -19,7 +19,7 @@ CMKit is designed to facilitate online assignment submissions, grading and grade
 - Log4J (info.log, debug.log, warn.log, error.log) 
 ![image](https://user-images.githubusercontent.com/75138396/221334584-7a94e4f9-b5d7-4140-968a-e43fa7a7a35a.png)
 
-- Git doesn't provide any built-in user management features, making it challenging for project administrators to control who can access and modify repositories. CMKit solves this problem by providing a centralized way to manage Git repositories and their associated access rights with Gitosis.
+- Git doesn't provide any built-in user management features, making it challenging for project administrators to control who can access and modify repositories. CMKit solves this problem by providing a centralized way to manage Git repositories and their associated access rights with **Gitosis**.
 
 ### Database
 
