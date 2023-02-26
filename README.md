@@ -9,7 +9,7 @@ CMKit is designed to facilitate online assignment submissions, grading and grade
 ### Front End:
 
 - Similar to **React.js**, Kit utilizes **JSP Custom Tag** feature to break the user interface down into small, reusable components that allows developers to build scalable, maintainable front-end code.
-- CMKit also uses **AJAX (Asynchronous JavaScript and XML)** which allows a web page to update dynamically without requiring a full page refresh. This means that **Ajax** can handle user input **without waiting for the database** because it sends an asynchronous request to the server and then continues to process other user actions while waiting for the response from the server.
+- CMKit also uses **AJAX (Asynchronous JavaScript and XML)** which allows a web page to update dynamically without requiring a full page refresh. This means that **Ajax** can handle user input **without waiting for the database**.
 
 ### Back End:
 
