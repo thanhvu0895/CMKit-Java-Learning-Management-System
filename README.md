@@ -88,9 +88,10 @@ The shared materials look like this to a student:
 ![](https://i.imgur.com/8mTLYMU.jpg)
 ![](https://i.imgur.com/QE2G9Nj.jpg)
 
+
 **- Checking grades and feedback on CMKit:**  
 Students can view feedback for a certain assignment by clicking on that assignment while viewing the class:
-![](https://i.imgur.com/nBrFzMC.gif)
+![Feedback-cropped](https://user-images.githubusercontent.com/75138396/221392232-3f88e719-24e1-4adf-aa4b-58cea890fe32.gif)
 
 **- Reviewing course history on CMKit:**
 Students can access material and assignment submissions from previous courses by navigating to Past Classes Section from the home page:
