@@ -1,3 +1,15 @@
+Table of Contents:
+
+I. [Introduction](#i-introduction)
+II. Getting Started
+III. Accessing Courses on CMKit
+IV. Interacting with Course Content on CMKit
+V. Tracking Progress on CMKit
+VI. Conclusion
+VII. Kit Presentation
+
+
+
 # I. Introduction
 
 [CMKit - A Learning Management System](codingmentorkit.com)
