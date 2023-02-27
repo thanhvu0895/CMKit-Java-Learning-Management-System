@@ -89,8 +89,8 @@ Note: If the script detects that Git for Windows is not installed, please instal
 ![setup-git-caption2](https://user-images.githubusercontent.com/75138396/221642502-276cecaf-109e-4f62-9250-bb1328ae0fc1.gif)
 
 Student 1 and 2 works on the project by adding commits:
-![image](https://user-images.githubusercontent.com/75138396/221645281-fa130adf-828a-4ec4-b548-707a5a3c2c12.png)
 ![commit-1](https://user-images.githubusercontent.com/75138396/221660301-0862c00f-d238-45b8-878b-30fcd20099d3.gif)
+![image](https://user-images.githubusercontent.com/75138396/221645281-fa130adf-828a-4ec4-b548-707a5a3c2c12.png)
 
 # VI. Tracking Progress on CMKit
 
