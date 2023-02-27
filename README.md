@@ -12,58 +12,43 @@ Table of Contents:
 
 # I. Introduction
 
-[CMKit - A Learning Management System](codingmentorkit.com)
-
-CMKit is designed to facilitate online assignment submissions, grading and grade analysis, and secure storage of digital class materials.
-
-- CMKit is written in **Pure Java** (together with **Java Server Pages** and **Servlet**)
+CMKit is a Learning Management System that simplifies the online submission of assignments, grading, and grade analysis, and provides secure storage of digital class materials. It is written in Pure Java, along with Java Server Pages and Servlet.
 
 ### Front End:
 
-- Similar to **React.js**, Kit utilizes **JSP Custom Tag** feature to break the user interface down into small, reusable components that allows developers to build scalable, maintainable front-end code.
-- CMKit also uses **AJAX (Asynchronous JavaScript and XML)** which allows a web page to update dynamically without requiring a full page refresh. This means that **Ajax** can handle user input **without waiting for the database**.
+- CMKit uses JSP Custom Tag feature, similar to React.js, to break the user interface down into small, reusable components, enabling developers to build scalable, maintainable front-end code. 
+- CMKit also uses AJAX (Asynchronous JavaScript and XML), which allows a web page to update dynamically without requiring a full page refresh. This means that Ajax can handle user input without waiting for the database.  
 
 ### Back End:
 
-- CMKit uses Singleton design patter to help improve efficiency by managing resources, optimizing memory usage, providing thread safety, enabling global access, and offering flexibility. 
-- Model-View-Control Architecture: Servlet + JSP + JDBC + CRUD
+- CMKit uses Singleton design pattern to help improve efficiency by managing resources, optimizing memory usage, providing thread safety, enabling global access, and offering flexibility. 
+- Model-View-Control Architecture: Servlet + JSP + JDBC + CRUD. Log4J (info.log, debug.log, warn.log, error.log). 
 ![image](https://user-images.githubusercontent.com/75138396/221334562-8e5d23de-6d76-49e9-a14a-d492fa3bbfe5.png)
-- Log4J (info.log, debug.log, warn.log, error.log) 
+- CMKit runs Gitosis to provide a centralized Server to manage Git repositories and their associated access rights.
 ![image](https://user-images.githubusercontent.com/75138396/221334584-7a94e4f9-b5d7-4140-968a-e43fa7a7a35a.png)
 
-- CMKit runs Gitosis to provide a centralized Server to manage Git repositories and their associated access rights.
 
 ### Database
 
-Kit stores data in a **MySQL server**. All tables are indexed (full-text + key index) to reduce query time, and data are written in Third normal form (3nf) to reduce the duplication of data, avoid data anomalies
+CMKit stores data in a MySQL server. All tables are indexed (full-text + key index) to reduce query time, and data are written in Third normal form (3nf) to reduce the duplication of data and avoid data anomalies.
 
 # II. Getting Started:
 
 ### 1. Signing up for a CMKit account
 
-When school begins, professors often create a spreadsheet of student emails (provided [here](https://docs.google.com/spreadsheets/d/18tLlYL6Ftcdbk3ESXvmq6mcj5V_AyjW4V-mDUHLGiyk/edit#gid=0))
-![image](https://user-images.githubusercontent.com/75138396/221344040-07e4b542-3ac7-48aa-aaf3-205f74d4a720.png)
-
-Professors can then use CMKit to add these students to a class:
+Professors create a [spreadsheet of student emails]((https://docs.google.com/spreadsheets/d/18tLlYL6Ftcdbk3ESXvmq6mcj5V_AyjW4V-mDUHLGiyk/edit#gid=0))), and they can use CMKit to add these students to a class. Invitation links are sent to the student's emails so they can create an account. Similarly, graders and professors can be added to the system.
 ![add-students-cropped](https://user-images.githubusercontent.com/75138396/221392328-bc2f81d1-e07e-46e8-8be9-3f3e8ba350f8.gif)
-
-
-The invitation links will be sent to the student's emails so they can create an account. Similarly, you can add graders and professors to the system. 
-
-- Students will receive assignments assigned by professors
-- Proffesors can create, assign assignments then grade assignments
-- Graders can grade assignments from students (Graders usually are Teaching Assistants)
 
 ### 2. Navigating the CMKit interface
 
+Students can view the courses they are enrolled in and access course materials, view assignments and their grades, and participate in group assignments.
 ![student home](https://i.imgur.com/YsTt7sa.jpg)
-
 ![klass view](https://i.imgur.com/Q8lGsfj.jpg)
-
 ![assignment view](https://user-images.githubusercontent.com/75138396/221348916-6495c393-08df-420f-8140-806f0d9b99b2.png)
 
-
 # III. Accessing Courses on CMKit:
+
+Students can find and enroll in a course by accepting the invitation link sent to their account. Instructors can add materials to a course/class, which will be visible to all enrolled students when they click on their class from the home page.
 
 **- Find a course:**  
 ![image](https://user-images.githubusercontent.com/75138396/221346966-7ed1d63f-cb29-4d0c-a89f-74abc874ef28.png)
@@ -80,20 +65,20 @@ Instructors can add materials to a course/ a class as following:
 ![image](https://user-images.githubusercontent.com/75138396/221347258-79db8124-12fe-4639-a271-faf38eaa1b0e.png)
 
 # IV. Interacting with Course Content on CMKit
+Students can view materials and assignments added to a course/class and can complete assignments, which are then graded by the professor or the grader.
+
 
 **- Viewing course content on CMKit:**   
-
-Materials added to a course will be visible to all enrolled students when they click on their class from home page:  
 ![image](https://user-images.githubusercontent.com/75138396/221347440-835e823d-82cb-4605-8f8c-23cfe6a94dba.png)
 
 The shared materials look like this to a student:  
 ![image](https://user-images.githubusercontent.com/75138396/221347154-bd7ff856-672a-404a-9193-ea5651e7dc51.png)
 
+
 **- Assigning and Completing assignments:**
 ![](https://i.imgur.com/zvVtYPJ.gif)
 
 **- Participating in group assignments on CMKit:**  
-
 If you are new to CMKit, you will need to create an ssh key for interacting with Git Server. 
 For Windows users, here are the steps to follow:  
   
