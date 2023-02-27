@@ -4,7 +4,7 @@
 - **[II. Getting Started](#ii-getting-started)**  
 - **[III. Accessing Courses on CMKit](#iii-accessing-courses-on-cmkit)**  
 - **[IV. Interacting with Course Content on CMKit](#iv-interacting-with-course-content-on-cmkit)**   
-- **[V- Participating in group assignments on CMKit]()
+- **[V- Participating in group assignments on CMKit](#V- Participating in group assignments on CMKit)
 - **[V. Tracking Progress on CMKit](#v-tracking-progress-on-cmkit)**  
 - **[VI. Conclusion](#viii-conclusion)**  
 - **[VII. Kit Presentation](#kit-presentation)**  
