@@ -82,7 +82,8 @@ The shared materials look like this to a student:
 # V- Participating in group assignments on CMKit
 [Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)
 
-- Professor assigning collaborative assignment which allows 2 contributors
+- Professor assigning collaborative assignment which allows 2 contributors:
+![assign-collaborative](https://user-images.githubusercontent.com/75138396/221622838-f3c76c02-4e0b-4f1b-b39f-ee10a9bb8d6e.gif)
 
 - Student 1 set up their Git environment:
 
