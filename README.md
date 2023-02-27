@@ -85,11 +85,11 @@ The shared materials look like this to a student:
 If you are new to CMKit, you will need to create an ssh key for interacting with Git Server. 
 For Windows users, here are the steps to follow:  
   
-Step 1: Install Git on your computer by either downloading it from here or using this installgit.zip bat script.  
+Step 1: Install Git on your computer by either downloading it from here or using this [installgit.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10840528/installgit.zip) bat script.  
   
-Step 2: Generate an SSH key on your Windows machine by running a script. The key will be saved to your computer's clipboard. To add the key to http://codingmentorkit.com/ssh_keys/new, you must first log in to CMKit.
+Step 2: Generate an SSH key on your Windows machine by running a script.
 [setup-sshkey.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10840516/setup-sshkey.zip)
-
+The key will be saved to your computer's clipboard. To add the key to http://codingmentorkit.com/ssh_keys/new, you must first log in to CMKit.
 
 # V. Tracking Progress on CMKit
 
