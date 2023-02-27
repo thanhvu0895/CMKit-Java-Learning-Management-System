@@ -1,7 +1,7 @@
 Table of Contents:
 
 [I.Introduction](#i-introduction)  
-[II. Getting Started](#ii-getting-started)
+[II. Getting Started](#ii-getting-started)  
 [III. Accessing Courses on CMKit](#iii-accessing-courses-on-cmkit)  
 [IV. Interacting with Course Content on CMKit](#iv-interacting-with-course-content-on-cmkit)  
 [V. Tracking Progress on CMKit](#v-tracking-progress-on-cmkit)  
