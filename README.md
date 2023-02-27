@@ -19,7 +19,7 @@ CMKit is designed to facilitate online assignment submissions, grading and grade
 - Log4J (info.log, debug.log, warn.log, error.log) 
 ![image](https://user-images.githubusercontent.com/75138396/221334584-7a94e4f9-b5d7-4140-968a-e43fa7a7a35a.png)
 
-- Git doesn't provide any built-in user management features, making it challenging for project administrators to control who can access and modify repositories. CMKit solves this problem by providing a centralized way to manage Git repositories and their associated access rights with **Gitosis**.
+- CMKit runs Gitosis to provide a centralized Server to manage Git repositories and their associated access rights.
 
 ### Database
 
@@ -88,6 +88,7 @@ For Windows users, here are the steps to follow:
 Step 1: Install Git on your computer by either downloading it from here or using this installgit.zip bat script.  
   
 Step 2: Generate an SSH key on your Windows machine by running a script. The key will be saved to your computer's clipboard. To add the key to http://codingmentorkit.com/ssh_keys/new, you must first log in to CMKit.
+[setup-sshkey.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10840516/setup-sshkey.zip)
 
 
 # V. Tracking Progress on CMKit
