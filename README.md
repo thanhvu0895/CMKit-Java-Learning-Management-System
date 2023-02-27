@@ -80,15 +80,14 @@ The shared materials look like this to a student:
 ![](https://i.imgur.com/zvVtYPJ.gif)
 
 # V- Participating in group assignments on CMKit
-If you are new to CMKit, you will need to create an ssh key for interacting with Git Server. 
-For Windows users, here are the steps to follow:  
-  
-Step 1 (SKIP IF GIT IS INSTALLED): Install Git on your computer by downloading it from [here](https://github.com/git-for-windows/git/releases/download/v2.39.2.windows.1/Git-2.39.2-64-bit.exe) 
 
+- Professor assigning collaborative assignment which allows 2 contributors
 
-Step 2: Generate an SSH key on your Windows machine by running a script.
-[setup-sshkey.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10840516/setup-sshkey.zip)
-The key will be saved to your computer's clipboard. To add the key to http://codingmentorkit.com/ssh_keys/new, you must first log in to CMKit.
+- Student 1 set up their Git environment
+
+- Student 2 set up their Git environment then make a few commits
+
+- 1 student turns in the collaborated assignment
 
 # VI. Tracking Progress on CMKit
 
