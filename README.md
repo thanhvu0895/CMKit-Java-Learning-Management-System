@@ -1,3 +1,38 @@
+# V- Participating in group assignments on CMKit
+- Professor assigning collaborative assignment which allows 2 contributors:
+![assign-collaborative](https://user-images.githubusercontent.com/75138396/221622838-f3c76c02-4e0b-4f1b-b39f-ee10a9bb8d6e.gif)
+
+- Student 1 set up their Git environment:
+[Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)
+
+```
+git clone  git@codingmentorkit.com:r280  demorepo  
+cd demorepo  
+echo This is sample text > MyFile.txt  
+git add .  
+git commit -m "Student 1 commit 1"  
+echo This is sample text > MyFile2.txt  
+git commit -am "Student 1 make 2nd commit"  
+git checkout -b master  
+git push -u origin master  
+```
+
+- Student 2 set up their Git environment then make a few commits  
+
+```
+git clone  git@codingmentorkit.com:r280  demorepo
+cd demorepo  
+echo This is sample text 2 > MyFile.txt  
+git add .  
+git commit -m "Student 2 commit 1"  
+echo This is sample text > MyFile2.txt  
+git commit -am "Student 2 make 2nd commit"  
+git push -u origin master  
+```
+
+- One student turns in the collaborated assignment
+
+
 # Table of Contents:
 
 - **[I.Introduction](#i-introduction)**  
@@ -78,41 +113,6 @@ The shared materials look like this to a student:
 
 **- Assigning and Completing assignments:**
 ![](https://i.imgur.com/zvVtYPJ.gif)
-
-# V- Participating in group assignments on CMKit
-[Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)
-
-- Professor assigning collaborative assignment which allows 2 contributors:
-![assign-collaborative](https://user-images.githubusercontent.com/75138396/221622838-f3c76c02-4e0b-4f1b-b39f-ee10a9bb8d6e.gif)
-
-- Student 1 set up their Git environment:
-
-```
-git clone  git@codingmentorkit.com:r280  demorepo  
-cd demorepo  
-echo This is sample text > MyFile.txt  
-git add .  
-git commit -m "Student 1 commit 1"  
-echo This is sample text > MyFile2.txt  
-git commit -am "Student 1 make 2nd commit"  
-git checkout -b master  
-git push -u origin master  
-```
-
-- Student 2 set up their Git environment then make a few commits  
-
-```
-git clone  git@codingmentorkit.com:r280  demorepo
-cd demorepo  
-echo This is sample text 2 > MyFile.txt  
-git add .  
-git commit -m "Student 2 commit 1"  
-echo This is sample text > MyFile2.txt  
-git commit -am "Student 2 make 2nd commit"  
-git push -u origin master  
-```
-
-- One student turns in the collaborated assignment
 
 # VI. Tracking Progress on CMKit
 
