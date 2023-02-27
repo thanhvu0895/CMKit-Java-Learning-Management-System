@@ -82,6 +82,12 @@ The shared materials look like this to a student:
 
 - Participating in group assignments on CMKit: 
 
+If you are new to CMKit, you will need to create an ssh key for interacting with Git Server. 
+For Windows user, follow these steps:
+Step 1: You can download and install Git ![here](https://git-scm.com/download/win). Alternatively, you can also run this bat script on windows:
+Step 2: Run this sh script to generate an ssh key for your machine: 
+
+
 # V. Tracking Progress on CMKit
 
 **- Monitoring course progress on CMKit:**
