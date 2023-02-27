@@ -2,11 +2,17 @@
 - Professor assigning collaborative assignment which allows 2 contributors:
 ![assign-collaborative](https://user-images.githubusercontent.com/75138396/221622838-f3c76c02-4e0b-4f1b-b39f-ee10a9bb8d6e.gif)
 
-- Student 1 set up their Git environment:
+
 [Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)
 
+- Running script 1 will check if Git for Windows is installed. If git is not, please download latest version of [Git For Windows](https://git-scm.com/download/win).
+- After git is installed, run script 2 and follow instructions to set up SSH key.
+
+
+- Student 1 set up their Git environment:
+- 
 ```
-git clone  git@codingmentorkit.com:r280  demorepo  
+git clone  git@codingmentorkit.com:r272  demorepo  
 cd demorepo  
 echo This is sample text > MyFile.txt  
 git add .  
@@ -20,7 +26,7 @@ git push -u origin master
 - Student 2 set up their Git environment then make a few commits  
 
 ```
-git clone  git@codingmentorkit.com:r280  demorepo
+git clone  git@codingmentorkit.com:r272  demorepo
 cd demorepo  
 echo This is sample text 2 > MyFile.txt  
 git add .  
