@@ -1,14 +1,3 @@
-# V- Participating in group assignments on CMKit
-
-Professor assigning collaborative assignment which allows 2 contributors:
-![assign-collaborative](https://user-images.githubusercontent.com/75138396/221622838-f3c76c02-4e0b-4f1b-b39f-ee10a9bb8d6e.gif)
-
-Student 1 and 2 works on the project by adding commits:
-
-Students can setup CMKit account with SSH key using this script: [Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)  
-Note: If the script detects that Git for Windows is not installed, please install latest version from [Git For Windows](https://git-scm.com/download/win)  
-![setup-git-caption2](https://user-images.githubusercontent.com/75138396/221642502-276cecaf-109e-4f62-9250-bb1328ae0fc1.gif)
-
 # Table of Contents:
 
 - **[I.Introduction](#i-introduction)**  
@@ -89,6 +78,19 @@ The shared materials look like this to a student:
 
 **- Assigning and Completing assignments:**
 ![](https://i.imgur.com/zvVtYPJ.gif)
+
+# V- Participating in group assignments on CMKit
+
+Professor assigning collaborative assignment which allows 2 contributors:
+![assign-collaborative](https://user-images.githubusercontent.com/75138396/221622838-f3c76c02-4e0b-4f1b-b39f-ee10a9bb8d6e.gif)
+
+Students can setup CMKit account with SSH key using this script: [Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)  
+Note: If the script detects that Git for Windows is not installed, please install latest version from [Git For Windows](https://git-scm.com/download/win)  
+![setup-git-caption2](https://user-images.githubusercontent.com/75138396/221642502-276cecaf-109e-4f62-9250-bb1328ae0fc1.gif)
+
+Student 1 and 2 works on the project by adding commits:
+![image](https://user-images.githubusercontent.com/75138396/221645281-fa130adf-828a-4ec4-b548-707a5a3c2c12.png)
+![commit-1](https://user-images.githubusercontent.com/75138396/221660301-0862c00f-d238-45b8-878b-30fcd20099d3.gif)
 
 # VI. Tracking Progress on CMKit
 
