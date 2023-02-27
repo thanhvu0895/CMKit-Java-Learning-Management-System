@@ -81,7 +81,7 @@ The shared materials look like this to a student:
 
 # V- Participating in group assignments on CMKit
 
-Professor assigning collaborative assignment which allows 2 contributors:
+Professor assigning collaborative assignment which allows more than 1 contributor:
 ![assign-collaborative](https://user-images.githubusercontent.com/75138396/221622838-f3c76c02-4e0b-4f1b-b39f-ee10a9bb8d6e.gif)
 
 Students can setup CMKit account with SSH key using this script: [Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)  
