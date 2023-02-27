@@ -100,7 +100,6 @@ Student 1 and 2 works on the project by adding commits:
 ![image](https://user-images.githubusercontent.com/75138396/221662214-0561a312-3f6d-472e-9cf2-4a11c1bdcea4.png)
 ![](https://i.imgur.com/QE2G9Nj.jpg)
 
-
 **- Checking grades and feedback on CMKit:**  
 Students can view feedback for a certain assignment by clicking on that assignment while viewing the class:
 ![Feedback-cropped](https://user-images.githubusercontent.com/75138396/221392232-3f88e719-24e1-4adf-aa4b-58cea890fe32.gif)
