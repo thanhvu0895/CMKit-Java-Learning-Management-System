@@ -98,6 +98,7 @@ Student 1 and 2 works on the project by adding commits:
 
 **- Monitoring course progress on CMKit:**
 ![image](https://user-images.githubusercontent.com/75138396/221346807-30dc16cf-6f08-4caa-b8c5-af9a906a7ca2.png)
+![image](https://user-images.githubusercontent.com/75138396/221664208-4a6af776-3654-4ca3-9ffe-d29d763a0008.png)
 ![](https://i.imgur.com/8mTLYMU.jpg)
 ![68747470733a2f2f692e696d6775722e636f6d2f51453247394e6a2e6a7067_auto_x2](https://user-images.githubusercontent.com/75138396/221663960-59719a7e-f852-48d4-bc94-b32b3f1670de.jpg)
 
