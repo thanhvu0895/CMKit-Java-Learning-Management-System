@@ -119,7 +119,7 @@ Students can view feedback for a certain assignment by clicking on that assignme
 Students can access material and assignment submissions from previous courses by navigating to Past Classes Section from the home page:
 ![image](https://user-images.githubusercontent.com/75138396/221349089-ec661f57-af97-4bf8-96a7-9c42b0e6c708.png)
 
-# VIII. Conclusion
+# VI. Conclusion
 
 Summary of key takeaways for using CMKit:
 
