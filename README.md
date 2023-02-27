@@ -92,7 +92,7 @@ The shared materials look like this to a student:
 **- Assigning and Completing assignments:**
 ![](https://i.imgur.com/zvVtYPJ.gif)
 
-- Participating in group assignments on CMKit: 
+**- Participating in group assignments on CMKit:**  
 
 If you are new to CMKit, you will need to create an ssh key for interacting with Git Server. 
 For Windows users, here are the steps to follow:  
