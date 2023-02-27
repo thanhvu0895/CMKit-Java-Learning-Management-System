@@ -80,6 +80,7 @@ The shared materials look like this to a student:
 ![](https://i.imgur.com/zvVtYPJ.gif)
 
 # V- Participating in group assignments on CMKit
+[Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)
 
 - Professor assigning collaborative assignment which allows 2 contributors
 
