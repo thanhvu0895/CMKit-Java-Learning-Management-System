@@ -78,7 +78,7 @@ The shared materials look like this to a student:
 **- Assigning and Completing assignments:**
 ![](https://i.imgur.com/zvVtYPJ.gif)
 
-**- Participating in group assignments on CMKit:**  
+# V- Participating in group assignments on CMKit
 If you are new to CMKit, you will need to create an ssh key for interacting with Git Server. 
 For Windows users, here are the steps to follow:  
   
@@ -88,7 +88,7 @@ Step 2: Generate an SSH key on your Windows machine by running a script.
 [setup-sshkey.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10840516/setup-sshkey.zip)
 The key will be saved to your computer's clipboard. To add the key to http://codingmentorkit.com/ssh_keys/new, you must first log in to CMKit.
 
-# V. Tracking Progress on CMKit
+# VI. Tracking Progress on CMKit
 
 **- Monitoring course progress on CMKit:**
 ![image](https://user-images.githubusercontent.com/75138396/221346807-30dc16cf-6f08-4caa-b8c5-af9a906a7ca2.png)
@@ -104,7 +104,7 @@ Students can view feedback for a certain assignment by clicking on that assignme
 Students can access material and assignment submissions from previous courses by navigating to Past Classes Section from the home page:
 ![image](https://user-images.githubusercontent.com/75138396/221349089-ec661f57-af97-4bf8-96a7-9c42b0e6c708.png)
 
-# VIII. Conclusion
+# VII. Conclusion
 
 Summary of key takeaways for using CMKit:
 
@@ -115,5 +115,5 @@ Summary of key takeaways for using CMKit:
 Final thoughts and recommendations for using CMKit
 By providing a structured and collaborative environment for students to learn and practice coding skills, instructors can help to prepare students for success in future careers in the field.
 
-# Kit Presentation 
+# VIII Kit Presentation 
 [![Presentation link](https://i.imgur.com/tnuMkYt.png)](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view)
