@@ -85,8 +85,26 @@ The shared materials look like this to a student:
 - Professor assigning collaborative assignment which allows 2 contributors
 
 - Student 1 set up their Git environment
+git clone  git@codingmentorkit.com:r280  demorepo
+cd demorepo
+echo This is sample text > MyFile.txt
+git add .
+git commit -m "Student 1 commit 1"
+echo This is sample text > MyFile2.txt
+git commit -am "Student 1 make 2nd commit"
+git checkout -b master
+git push -u origin master
 
 - Student 2 set up their Git environment then make a few commits
+
+git clone  git@codingmentorkit.com:r280  demorepo
+cd demorepo
+echo This is sample text 2 > MyFile.txt
+git add .
+git commit -m "Student 2 commit 1"
+echo This is sample text > MyFile2.txt
+git commit -am "Student 2 make 2nd commit"
+git push -u origin master
 
 - 1 student turns in the collaborated assignment
 
