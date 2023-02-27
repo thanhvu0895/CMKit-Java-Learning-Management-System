@@ -1,16 +1,15 @@
 # V- Participating in group assignments on CMKit
 
-
-
 Professor assigning collaborative assignment which allows 2 contributors:
 ![assign-collaborative](https://user-images.githubusercontent.com/75138396/221622838-f3c76c02-4e0b-4f1b-b39f-ee10a9bb8d6e.gif)
 
-For student to collaborate on the assignments, they must first set up their environment. For help with setting up on Windows, use the provided scripts: [Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)
+Student can setup CMKit account with SSH key using this script: [Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)
+![setup-git-caption](https://user-images.githubusercontent.com/75138396/221641634-e7c25df6-fdd1-4130-b78d-cae2e1f9009d.gif)
 
-If Git for Windows is installed, please install latest version from [Git For Windows](https://git-scm.com/download/win).  
-
+Note: If Git for Windows is installed, please install latest version from [Git For Windows](https://git-scm.com/download/win).  
 
 Student 1 and 2 works on the project by adding commits:
+
 
 
 
