@@ -76,6 +76,7 @@ The shared materials look like this to a student:
 ![image](https://user-images.githubusercontent.com/75138396/221347154-bd7ff856-672a-404a-9193-ea5651e7dc51.png)
 
 
+
 **- Assigning and Completing assignments:**
 ![](https://i.imgur.com/zvVtYPJ.gif)
 
@@ -91,14 +92,15 @@ Note: If the script detects that Git for Windows is not installed, please instal
 Student 1 and 2 works on the project by adding commits:
 ![commit-1](https://user-images.githubusercontent.com/75138396/221660301-0862c00f-d238-45b8-878b-30fcd20099d3.gif)
 ![image](https://user-images.githubusercontent.com/75138396/221661753-8bc2c3c1-866c-458d-ae6b-ada6c9923719.png)
-![image](https://user-images.githubusercontent.com/75138396/221645281-fa130adf-828a-4ec4-b548-707a5a3c2c12.png)
+
 
 # VI. Tracking Progress on CMKit
 
 **- Monitoring course progress on CMKit:**
 ![image](https://user-images.githubusercontent.com/75138396/221346807-30dc16cf-6f08-4caa-b8c5-af9a906a7ca2.png)
 ![](https://i.imgur.com/8mTLYMU.jpg)
-![](https://i.imgur.com/QE2G9Nj.jpg)
+![68747470733a2f2f692e696d6775722e636f6d2f51453247394e6a2e6a7067_auto_x2](https://user-images.githubusercontent.com/75138396/221663960-59719a7e-f852-48d4-bc94-b32b3f1670de.jpg)
+
 
 **- Checking grades and feedback on CMKit:**  
 Students can view feedback for a certain assignment by clicking on that assignment while viewing the class:
