@@ -5,9 +5,9 @@
 - **[III. Accessing Courses on CMKit](#iii-accessing-courses-on-cmkit)**  
 - **[IV. Interacting with Course Content on CMKit](#iv-interacting-with-course-content-on-cmkit)**   
 - **[V. Participating in group assignments on CMKit](#v--participating-in-group-assignments-on-cmkit)**  
-- **[VI. Tracking Progress on CMKit](#v-tracking-progress-on-cmkit)**  
-- **[VII. Conclusion](#viii-conclusion)**  
-- **[VIII. Kit Presentation](#kit-presentation)**  
+- **[VI. Tracking Progress on CMKit](#vi-tracking-progress-on-cmkit)**  
+- **[VII. Conclusion](#vii-conclusion)**  
+- **[VIII. Kit Presentation](#viii-kit-presentation)**  
 
 
 
