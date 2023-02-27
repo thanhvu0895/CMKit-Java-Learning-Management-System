@@ -36,7 +36,7 @@ CMKit stores data in a MySQL server. All tables are indexed (full-text + key ind
 
 ### 1. Signing up for a CMKit account
 
-Professors create a [spreadsheet of student emails]((https://docs.google.com/spreadsheets/d/18tLlYL6Ftcdbk3ESXvmq6mcj5V_AyjW4V-mDUHLGiyk/edit#gid=0))), and they can use CMKit to add these students to a class. Invitation links are sent to the student's emails so they can create an account. Similarly, graders and professors can be added to the system.
+Professors create a [spreadsheet of student emails](https://docs.google.com/spreadsheets/d/18tLlYL6Ftcdbk3ESXvmq6mcj5V_AyjW4V-mDUHLGiyk/edit#gid=0), and they can use CMKit to add these students to a class. Invitation links are sent to the student's emails so they can create an account. Similarly, graders and professors can be added to the system.
 ![add-students-cropped](https://user-images.githubusercontent.com/75138396/221392328-bc2f81d1-e07e-46e8-8be9-3f3e8ba350f8.gif)
 
 ### 2. Navigating the CMKit interface
