@@ -4,7 +4,7 @@ Professor assigning collaborative assignment which allows 2 contributors:
 ![assign-collaborative](https://user-images.githubusercontent.com/75138396/221622838-f3c76c02-4e0b-4f1b-b39f-ee10a9bb8d6e.gif)
 
 Student can setup CMKit account with SSH key using this script: [Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)
-![setup-git-caption](https://user-images.githubusercontent.com/75138396/221641634-e7c25df6-fdd1-4130-b78d-cae2e1f9009d.gif)
+![setup-git-caption2](https://user-images.githubusercontent.com/75138396/221642502-276cecaf-109e-4f62-9250-bb1328ae0fc1.gif)
 
 Note: If Git for Windows is installed, please install latest version from [Git For Windows](https://git-scm.com/download/win).  
 
