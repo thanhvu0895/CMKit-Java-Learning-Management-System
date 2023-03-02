@@ -122,7 +122,7 @@ Future Ideas:
 # VII Presentation 
 [![Presentation link](https://i.imgur.com/tnuMkYt.png)](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view)
 
-# Developments 
+# More information about developments 
 ### Front End:
 
 - CMKit uses JSP Custom Tag feature, similar to React.js, to break the user interface down into small, reusable components, enabling developers to build scalable, maintainable front-end code. 
