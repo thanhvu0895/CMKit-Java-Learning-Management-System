@@ -87,6 +87,7 @@ This is a paragraph of text.
 
   a[data-target]:target + .modal {
     display: block
+```
 
 # Table of Contents:
 
