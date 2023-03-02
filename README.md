@@ -81,8 +81,14 @@ Professor assigning collaborative assignment which allows more than 1 contributo
 Students install latest version of [Git For Windows](https://git-scm.com/download/win), then run [Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip).
 ![setup-git-caption2](https://user-images.githubusercontent.com/75138396/221642502-276cecaf-109e-4f62-9250-bb1328ae0fc1.gif)
 
-After setting up, students can work collaboratively by adding commit:
+After setting up, students can work collaboratively by:
+
+Inviting others to collaborate:
 ![commit-1](https://user-images.githubusercontent.com/75138396/221660301-0862c00f-d238-45b8-878b-30fcd20099d3.gif)
+
+Accepting invitation:
+![Accepting Collaboration](https://user-images.githubusercontent.com/75138396/222424644-d6519e2b-998e-41a1-bacd-3c32e5c216ab.gif)
+
 ![image](https://user-images.githubusercontent.com/75138396/221661753-8bc2c3c1-866c-458d-ae6b-ada6c9923719.png)
 
 
