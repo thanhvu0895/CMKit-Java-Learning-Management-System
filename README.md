@@ -32,11 +32,10 @@ A Learning Management System written in Pure Java, along with Java Server Pages 
 
 ### 1. Signing up for an account
 
-Professors often have a spreadsheet of student emails, which you can find [here](https://docs.google.com/spreadsheets/d/18tLlYL6Ftcdbk3ESXvmq6mcj5V_AyjW4V-mDUHLGiyk/edit#gid=0). They can use CMKit to add students from the list to a class. Invitation links are sent to the student's emails so they can create an account. Similarly, graders and professors can be added to the system.
- 
+Professors often have a spreadsheet of student emails, which you can find [here](https://docs.google.com/spreadsheets/d/18tLlYL6Ftcdbk3ESXvmq6mcj5V_AyjW4V-mDUHLGiyk/edit#gid=0). They can use CMKit to add students from the list to a class.  
 <img src="https://user-images.githubusercontent.com/75138396/221392328-bc2f81d1-e07e-46e8-8be9-3f3e8ba350f8.gif" alt="add-students-cropped" width="150%" height="150%">
 
-
+Invitation links are sent to the student's emails so they can create an account. Similarly, graders and professors can be added to the system.
 
 ### 2. Navigating the interface
 
