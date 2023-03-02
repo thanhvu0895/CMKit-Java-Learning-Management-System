@@ -102,7 +102,7 @@ Students can view feedback for a certain assignment by clicking on that assignme
 Students can access material and assignment submissions from previous courses by navigating to Past Classes Section from the home page:
 ![image](https://user-images.githubusercontent.com/75138396/221349089-ec661f57-af97-4bf8-96a7-9c42b0e6c708.png)
 
-# VI. Conclusion
+# VI. Conclusion and Future Ideas
 
 Summary of key takeaways:
 
@@ -114,7 +114,7 @@ Summary of key takeaways:
 
 Future Ideas:  
 
-- GithubCLI to browse assignments online: [github cli.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10848853/github.cli.zip). 
+- GithubCLI using Github API to grade assignments without having to download files: [github cli.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10848853/github.cli.zip). 
 
 # VII Presentation 
 [![Presentation link](https://i.imgur.com/tnuMkYt.png)](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view)
