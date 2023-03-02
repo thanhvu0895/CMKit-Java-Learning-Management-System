@@ -28,25 +28,6 @@ A Learning Management System written in Pure Java, along with Java Server Pages 
 - **[VI. Conclusion](#vi-conclusion)**  
 - **[VII. Kit Presentation](#vii-kit-presentation)**  
 
-
-
-### Front End:
-
-- CMKit uses JSP Custom Tag feature, similar to React.js, to break the user interface down into small, reusable components, enabling developers to build scalable, maintainable front-end code. 
-- CMKit also uses AJAX (Asynchronous JavaScript and XML), which allows a web page to update dynamically without requiring a full page refresh. This means that Ajax can handle user input without waiting for the database.  
-
-### Back End:
-
-- CMKit uses Singleton design pattern to help improve efficiency by managing resources, optimizing memory usage, providing thread safety, enabling global access, and offering flexibility. 
-- Model-View-Control Architecture: Servlet + JSP + JDBC + CRUD. Log4J (info.log, debug.log, warn.log, error.log). 
-![image](https://user-images.githubusercontent.com/75138396/221334562-8e5d23de-6d76-49e9-a14a-d492fa3bbfe5.png)
-![image](https://user-images.githubusercontent.com/75138396/221334584-7a94e4f9-b5d7-4140-968a-e43fa7a7a35a.png)
-- CMKit runs Gitosis to provide a centralized Server to manage Git repositories and their associated access rights.
-
-### Database
-
-CMKit stores data in a MySQL server. All tables are indexed (full-text + key index) to reduce query time, and data are written in Third normal form (3nf) to reduce the duplication of data and avoid data anomalies.
-
 # I. Getting Started:
 
 ### 1. Signing up for a CMKit account
@@ -116,7 +97,6 @@ Student 1 and 2 works on the project by adding commits:
 ![](https://i.imgur.com/8mTLYMU.jpg)
 ![68747470733a2f2f692e696d6775722e636f6d2f51453247394e6a2e6a7067_auto_x2](https://user-images.githubusercontent.com/75138396/221663960-59719a7e-f852-48d4-bc94-b32b3f1670de.jpg)
 
-
 **- Checking grades and feedback on CMKit:**  
 Students can view feedback for a certain assignment by clicking on that assignment while viewing the class:
 ![Feedback-cropped](https://user-images.githubusercontent.com/75138396/221392232-3f88e719-24e1-4adf-aa4b-58cea890fe32.gif)
@@ -141,3 +121,22 @@ Future Ideas:
 
 # VII Kit Presentation 
 [![Presentation link](https://i.imgur.com/tnuMkYt.png)](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view)
+
+# Developments 
+### Front End:
+
+- CMKit uses JSP Custom Tag feature, similar to React.js, to break the user interface down into small, reusable components, enabling developers to build scalable, maintainable front-end code. 
+- CMKit also uses AJAX (Asynchronous JavaScript and XML), which allows a web page to update dynamically without requiring a full page refresh. This means that Ajax can handle user input without waiting for the database.  
+
+### Back End:
+
+- CMKit uses Singleton design pattern to help improve efficiency by managing resources, optimizing memory usage, providing thread safety, enabling global access, and offering flexibility. 
+- Model-View-Control Architecture: Servlet + JSP + JDBC + CRUD. Log4J (info.log, debug.log, warn.log, error.log). 
+![image](https://user-images.githubusercontent.com/75138396/221334562-8e5d23de-6d76-49e9-a14a-d492fa3bbfe5.png)
+![image](https://user-images.githubusercontent.com/75138396/221334584-7a94e4f9-b5d7-4140-968a-e43fa7a7a35a.png)
+- CMKit runs Gitosis to provide a centralized Server to manage Git repositories and their associated access rights.
+
+### Database
+
+CMKit stores data in a MySQL server. All tables are indexed (full-text + key index) to reduce query time, and data are written in Third normal form (3nf) to reduce the duplication of data and avoid data anomalies.
+
