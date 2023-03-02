@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  This Learning Management System makes it easy to submit, grade, and analyze assignments online, while securely storing digital class materials.
+  Makes it easy to submit, grade, and analyze assignments online, while securely storing digital class materials.
   <br>
   <a href="http://codingmentorkit.com"><strong>Explore CMKit »</strong></a>
   <br>
@@ -17,17 +17,16 @@
 
 # CMKit
 
-CMKit is a Learning Management System that simplifies the online submission of assignments, grading, and grade analysis, and provides secure storage of digital class materials. It is written in Pure Java, along with Java Server Pages and Servlet.
+A Learning Management System written in Pure Java, along with Java Server Pages and Servlet.
 
 # Table of Contents:
-- **[I.Introduction](#i-introduction)**  
-- **[II. Getting Started](#ii-getting-started)**  
-- **[III. Accessing Courses on CMKit](#iii-accessing-courses-on-cmkit)**  
-- **[IV. Interacting with Course Content on CMKit](#iv-interacting-with-course-content-on-cmkit)**   
-- **[V. Participating in group assignments on CMKit](#v--participating-in-group-assignments-on-cmkit)**  
-- **[VI. Tracking Progress on CMKit](#vi-tracking-progress-on-cmkit)**  
-- **[VII. Conclusion](#vii-conclusion)**  
-- **[VIII. Kit Presentation](#viii-kit-presentation)**  
+- **[I. Getting Started](#i-getting-started)**  
+- **[II. Accessing Courses on CMKit](#ii-accessing-courses-on-cmkit)**  
+- **[III. Interacting with Course Content on CMKit](#iii-interacting-with-course-content-on-cmkit)**   
+- **[IV. Participating in group assignments on CMKit](#iv--participating-in-group-assignments-on-cmkit)**  
+- **[V. Tracking Progress on CMKit](#v-tracking-progress-on-cmkit)**  
+- **[VI. Conclusion](#vi-conclusion)**  
+- **[VII. Kit Presentation](#vii-kit-presentation)**  
 
 
 
@@ -48,7 +47,7 @@ CMKit is a Learning Management System that simplifies the online submission of a
 
 CMKit stores data in a MySQL server. All tables are indexed (full-text + key index) to reduce query time, and data are written in Third normal form (3nf) to reduce the duplication of data and avoid data anomalies.
 
-# II. Getting Started:
+# I. Getting Started:
 
 ### 1. Signing up for a CMKit account
 
@@ -62,7 +61,7 @@ Students can view the courses they are enrolled in and access course materials, 
 ![klass view](https://i.imgur.com/Q8lGsfj.jpg)
 ![assignment view](https://user-images.githubusercontent.com/75138396/221348916-6495c393-08df-420f-8140-806f0d9b99b2.png)
 
-# III. Accessing Courses on CMKit:
+# II. Accessing Courses on CMKit:
 
 Students can find and enroll in a course by accepting the invitation link sent to their account. Instructors can add materials to a course/class, which will be visible to all enrolled students when they click on their class from the home page.
 
@@ -80,7 +79,7 @@ After clinking on the invitation link, students will then enter their account in
 Instructors can add materials to a course/ a class as following:  
 ![image](https://user-images.githubusercontent.com/75138396/221347258-79db8124-12fe-4639-a271-faf38eaa1b0e.png)
 
-# IV. Interacting with Course Content on CMKit
+# III. Interacting with Course Content on CMKit
 Students can view materials and assignments added to a course/class and can complete assignments, which are then graded by the professor or the grader.
 
 
@@ -95,7 +94,7 @@ The shared materials look like this to a student:
 **- Assigning and Completing assignments:**
 ![](https://i.imgur.com/zvVtYPJ.gif)
 
-# V- Participating in group assignments on CMKit
+# IV- Participating in group assignments on CMKit
 
 Professor assigning collaborative assignment which allows more than 1 contributor:
 ![assign-collaborative](https://user-images.githubusercontent.com/75138396/221622838-f3c76c02-4e0b-4f1b-b39f-ee10a9bb8d6e.gif)
@@ -109,7 +108,7 @@ Student 1 and 2 works on the project by adding commits:
 ![image](https://user-images.githubusercontent.com/75138396/221661753-8bc2c3c1-866c-458d-ae6b-ada6c9923719.png)
 
 
-# VI. Tracking Progress on CMKit
+# V. Tracking Progress on CMKit
 
 **- Monitoring course progress on CMKit:**
 ![image](https://user-images.githubusercontent.com/75138396/221346807-30dc16cf-6f08-4caa-b8c5-af9a906a7ca2.png)
@@ -126,7 +125,7 @@ Students can view feedback for a certain assignment by clicking on that assignme
 Students can access material and assignment submissions from previous courses by navigating to Past Classes Section from the home page:
 ![image](https://user-images.githubusercontent.com/75138396/221349089-ec661f57-af97-4bf8-96a7-9c42b0e6c708.png)
 
-# VII. Conclusion
+# VI. Conclusion
 
 Summary of key takeaways for using CMKit:
 
@@ -140,5 +139,5 @@ By providing a structured and collaborative environment for students to learn an
 Future Ideas:
 - GithubCLI to browse Git directory without having to download: [github cli.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10848853/github.cli.zip). 
 
-# VIII Kit Presentation 
+# VII Kit Presentation 
 [![Presentation link](https://i.imgur.com/tnuMkYt.png)](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view)
