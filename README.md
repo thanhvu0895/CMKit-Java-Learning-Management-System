@@ -1,3 +1,4 @@
+![github-cli](https://user-images.githubusercontent.com/75138396/222449306-fc617e58-970b-40eb-a79c-eaa067bc9582.gif)
 
 # CMKit  
 A Learning Management System written in Pure Java, along with Java Server Pages and Servlet.
