@@ -54,7 +54,7 @@ Students can find and enroll in a course by accepting the invitation link sent t
 Students will be enrolled to a course after they accept the invitation link sent to their account:
 ![image](https://user-images.githubusercontent.com/75138396/221348527-94cedb18-2320-4e43-a919-e0dc08e37510.png)
 
-After clinking on the invitation link, students will then enter their account information on Kit:  
+After clinking on the invitation link, students will then enter their account information:  
 ![image](https://user-images.githubusercontent.com/75138396/221348557-2e9be32d-572f-4b5a-a7ce-11b7942e77ce.png)
 
 **- Accessing course materials:**
@@ -81,7 +81,7 @@ The shared materials look like this to a student:
 Professor assigning collaborative assignment which allows more than 1 contributor:
 ![assign-collaborative](https://user-images.githubusercontent.com/75138396/221622838-f3c76c02-4e0b-4f1b-b39f-ee10a9bb8d6e.gif)
 
-Students can setup CMKit account with SSH key using this script: [Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)  
+Students can setup their account with SSH key using this script: [Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)  
 Note: If the script detects that Git for Windows is not installed, please install latest version from [Git For Windows](https://git-scm.com/download/win)  
 ![setup-git-caption2](https://user-images.githubusercontent.com/75138396/221642502-276cecaf-109e-4f62-9250-bb1328ae0fc1.gif)
 
@@ -108,16 +108,16 @@ Students can access material and assignment submissions from previous courses by
 
 # VI. Conclusion
 
-Summary of key takeaways for using CMKit:
+Summary of key takeaways:
 
 - CMKit provides a platform for students to collaborate on code projects in a Git controlled environment, with version control and easy access to feedback and support.
 
 - The Git environment provides an opportunity for students to develop skills in code management and collaborative coding practices, which are highly valued in industry settings.
 
-Final thoughts and recommendations for using CMKit
-By providing a structured and collaborative environment for students to learn and practice coding skills, instructors can help to prepare students for success in future careers in the field.
+- By providing a structured and collaborative environment for students to learn and practice coding skills, instructors can help to prepare students for success in future careers in the field.
 
-Future Ideas:
+Future Ideas:  
+
 - GithubCLI to browse Git directory without having to download: [github cli.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10848853/github.cli.zip). 
 
 # VII Presentation 
