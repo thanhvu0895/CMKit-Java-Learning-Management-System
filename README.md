@@ -133,11 +133,12 @@ Key Takeaways:
 - By providing collaborative environment for students to practice coding skills, instructors can prepare students for success in future careers.
 
 
-
+<!--
 
 # VII Presentation 
 [![Presentation link](https://i.imgur.com/tnuMkYt.png)](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view)
 
+!-->
 # Development Information:
 ### Front End:
 
