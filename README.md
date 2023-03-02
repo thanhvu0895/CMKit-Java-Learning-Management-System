@@ -30,19 +30,19 @@ A Learning Management System written in Pure Java, along with Java Server Pages 
 
 # I. Getting Started:
 
-### 1. Signing up for a CMKit account
+### 1. Signing up for an account
 
 Professors often have a spreadsheet of student emails, which you can find [here](https://docs.google.com/spreadsheets/d/18tLlYL6Ftcdbk3ESXvmq6mcj5V_AyjW4V-mDUHLGiyk/edit#gid=0). They can use CMKit to add students from the list to a class. Invitation links are sent to the student's emails so they can create an account. Similarly, graders and professors can be added to the system.
 ![add-students-cropped](https://user-images.githubusercontent.com/75138396/221392328-bc2f81d1-e07e-46e8-8be9-3f3e8ba350f8.gif)
 
-### 2. Navigating the CMKit interface
+### 2. Navigating the interface
 
 Students can view the courses they are enrolled in and access course materials, view assignments and their grades, and participate in group assignments.  
 ![student home](https://i.imgur.com/YsTt7sa.jpg)
 ![klass view](https://i.imgur.com/Q8lGsfj.jpg)
 ![assignment view](https://user-images.githubusercontent.com/75138396/221348916-6495c393-08df-420f-8140-806f0d9b99b2.png)
 
-# II. Accessing Courses:
+# II. Accessing Courses
 
 Students can find and enroll in a course by accepting the invitation link sent to their account. Instructors can add materials to a course/class, which will be visible to all enrolled students when they click on their class from the home page.
 
