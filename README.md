@@ -1,3 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Animated GIF Modal Example</title>
+	<style>
+		/* Style the modal */
+		.modal {
+			display: none; /* Hidden by default */
+			position: fixed; /* Stay in place */
+			z-index: 1; /* Sit on top */
+			left: 0;
+			top: 0;
+			width: 100%; /* Full width */
+			height: 100%; /* Full height */
+			overflow: auto; /* Enable scroll if needed */
+			background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+		}
+
+		/* Style the modal content */
+		.modal-content {
+			margin: auto;
+			display: block;
+			width: 80%;
+			max-width: 700px;
+			animation-name: modalopen;
+			animation-duration: 0.5s;
+		}
+
+		/* Modal open animation */
+		@keyframes modalopen {
+			from {transform: scale(0)}
+			to {transform: scale(1)}
+		}
+
+		/* Style the close button */
+		.close {
+			color: #fff;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+			color: #bbb;
+			text-decoration: none;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+
+	<!-- The video -->
+	<img src="https://media.giphy.com/media/13HgwGsXF0aiGY/giphy.gif" alt="Animated GIF" width="300" height="200" onclick="openModal()">
+
+	<!-- The modal -->
+	<div id="myModal" class="modal">
+		<!-- Modal content -->
+		<div class="modal-content">
+			<span class="close" onclick="closeModal()">&times;</span>
+			<iframe src="https://giphy.com/embed/13HgwGsXF0aiGY" width="640" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+		</div>
+	</div>
+
+	<!-- JavaScript to handle modal opening and closing -->
+	<script>
+		// Get the modal
+		var modal = document.getElementById("myModal");
+
+		// Get the video element
+		var video = document.getElementsByTagName("img")[0];
+
+		// When the user clicks on the video, open the modal
+		function openModal() {
+			modal.style.display = "block";
+			video.pause();
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		function closeModal() {
+			modal.style.display = "none";
+			video.play();
+		}
+	</script>
+
+</body>
+</html>
+
+
 # Table of Contents:
 
 - **[I.Introduction](#i-introduction)**  
