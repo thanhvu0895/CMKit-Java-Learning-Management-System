@@ -15,8 +15,6 @@
   <a href="https://github.com/thanhvu0895/CMKit-Learning-Management-System/issues/new?assignees=&labels=feature+request&template=feature_request.md&title=">Request feature</a>
 </p>
 
-# CMKit
-
 A Learning Management System written in Pure Java, along with Java Server Pages and Servlet.
 
 # Table of Contents:
