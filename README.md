@@ -117,9 +117,14 @@ Students can view feedback for a certain assignment by clicking on that assignme
 Students can access material and assignment submissions from previous courses by navigating to Past Classes Section from the home page:
 ![image](https://user-images.githubusercontent.com/75138396/221349089-ec661f57-af97-4bf8-96a7-9c42b0e6c708.png)
 
-# VI. Conclusion and Future Ideas
+# VI. Future Ideas and Key Takeaways
 
-Summary of key takeaways:
+Future Ideas:  
+
+- [GitHub CLI using Github API](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10848853/github.cli.zip) for professors/graders to view student's assignments without having to download files: 
+![github-cli](https://user-images.githubusercontent.com/75138396/222483989-7aa4073e-b468-45c9-949d-f2640f1fbfb8.gif)
+
+Key Takeaways:
 
 - CMKit provides a platform for students to collaborate on code projects with easy access to feedback and support.
 
@@ -127,10 +132,7 @@ Summary of key takeaways:
 
 - By providing collaborative environment for students to practice coding skills, instructors can prepare students for success in future careers.
 
-Future Ideas:  
 
-- [GitHub CLI using Github API](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10848853/github.cli.zip) for professors/graders to view student's assignments without having to download files: 
-![github-cli](https://user-images.githubusercontent.com/75138396/222438434-854d6476-23de-4ce8-8e4c-ad85eeb7ad48.gif)
 
 
 # VII Presentation 
