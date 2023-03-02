@@ -110,11 +110,11 @@ Making contribution to the assignment:
 ![68747470733a2f2f692e696d6775722e636f6d2f51453247394e6a2e6a7067_auto_x2](https://user-images.githubusercontent.com/75138396/221663960-59719a7e-f852-48d4-bc94-b32b3f1670de.jpg)
 
 **Checking grades and feedback**  
-Students can view feedback for a certain assignment by clicking on that assignment while viewing the class:
+Students can view feedback for a certain assignment by clicking on that assignment while viewing the class
 ![Feedback-cropped](https://user-images.githubusercontent.com/75138396/221392232-3f88e719-24e1-4adf-aa4b-58cea890fe32.gif)
 
 **- Reviewing course history**
-Students can access material and assignment submissions from previous courses by navigating to Past Classes Section from the home page:
+Students can access material and assignment submissions from previous courses by navigating to Past Classes Section from the home page
 ![past-klasses](https://user-images.githubusercontent.com/75138396/222487606-b0064018-1951-46af-81da-f351d6551c0d.gif)
 
 # VI. Future Ideas and Key Takeaways
