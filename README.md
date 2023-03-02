@@ -98,14 +98,17 @@ Making contribution to the assignment:
 
 # V. Tracking Progress
 
-**- Monitoring course progress on CMKit:**
+**Participation:**
 
-Grading Participation - Individual:
+![image](https://user-images.githubusercontent.com/75138396/221346807-30dc16cf-6f08-4caa-b8c5-af9a906a7ca2.png)
+
+For Individual:
 ![grading-individual](https://user-images.githubusercontent.com/75138396/222444213-e8ce00ea-2583-4ec9-8215-af26e6f0c49c.gif)
 
-Grading Participation - Multiple Students:
+For Multiple Students:
 ![grading-multiple](https://user-images.githubusercontent.com/75138396/222446595-d755af1f-c191-497a-856c-201e3886f560.gif)
-![image](https://user-images.githubusercontent.com/75138396/221346807-30dc16cf-6f08-4caa-b8c5-af9a906a7ca2.png)
+
+**Monitor Course progress**
 ![image](https://user-images.githubusercontent.com/75138396/221664811-dd82dac6-8c23-4fe2-a027-efc2dc023b3a.png)
 ![](https://i.imgur.com/8mTLYMU.jpg)
 ![68747470733a2f2f692e696d6775722e636f6d2f51453247394e6a2e6a7067_auto_x2](https://user-images.githubusercontent.com/75138396/221663960-59719a7e-f852-48d4-bc94-b32b3f1670de.jpg)
