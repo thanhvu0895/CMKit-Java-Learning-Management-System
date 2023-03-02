@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://thanhvu0895.github.io/CMKit-Learning-Management-System/">
-    <img src="https://user-images.githubusercontent.com/75138396/222400712-e7827e82-c1d6-4b12-b2f7-37b88f2143c9.png" alt="CMKit logo" width="50" height="45">
+    <img src="https://user-images.githubusercontent.com/75138396/222400712-e7827e82-c1d6-4b12-b2f7-37b88f2143c9.png" alt="CMKit logo" width="100" height="90">
   </a>
 </p>
 
