@@ -25,7 +25,7 @@ A Learning Management System written in Pure Java, along with Java Server Pages 
 - **[IV. Participating in group assignments](#iv--participating-in-group-assignments)**  
 - **[V. Tracking Progress](#v-tracking-progres)**  
 - **[VI. Conclusion](#vi-conclusion)**  
-- **[Presentation](#vii-presentation)** 
+- **[VII. Presentation](#vii-presentation)** 
 - **[More Information](#more-information-about-developments)**  
 
 # I. Getting Started:
