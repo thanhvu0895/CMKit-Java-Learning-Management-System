@@ -46,7 +46,7 @@ Students can view the courses they are enrolled in and access course materials, 
 
 # II. Accessing Courses
 
-Students can find and enroll in a course by accepting the invitation link sent to their account. Instructors can add materials to a course/class, which will be visible to all enrolled students when they click on their class from the home page.
+Students can find and enroll in a course by accepting the invitation link sent to their account. 
 
 **- Find a course:**  
 ![image](https://user-images.githubusercontent.com/75138396/221346966-7ed1d63f-cb29-4d0c-a89f-74abc874ef28.png)
@@ -59,7 +59,7 @@ After clinking on the invitation link, students will then enter their account in
 ![image](https://user-images.githubusercontent.com/75138396/221348557-2e9be32d-572f-4b5a-a7ce-11b7942e77ce.png)
 
 **- Accessing course materials:**
-Instructors can add materials to a course/ a class as following:  
+Instructors can add materials to a course/class, which will be visible to all enrolled students:
 ![image](https://user-images.githubusercontent.com/75138396/221347258-79db8124-12fe-4639-a271-faf38eaa1b0e.png)
 
 # III. Interacting with Course Content
