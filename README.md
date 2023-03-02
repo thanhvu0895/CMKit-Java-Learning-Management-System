@@ -24,7 +24,7 @@ A Learning Management System written in Pure Java, along with Java Server Pages 
 - **[II. Accessing Courses](#ii-accessing-courses)**  
 - **[III. Interacting with Course Content](#iii-interacting-with-course-content)**   
 - **[IV. Participating in group assignments](#iv--participating-in-group-assignments)**  
-- **[V. Tracking Progress](#v-tracking-progress-on-cmkit)**  
+- **[V. Tracking Progress](#v-tracking-progres)**  
 - **[VI. Conclusion](#vi-conclusion)**  
 - **[VII. Kit Presentation](#vii-kit-presentation)**  
 
@@ -89,7 +89,7 @@ Student 1 and 2 works on the project by adding commits:
 ![image](https://user-images.githubusercontent.com/75138396/221661753-8bc2c3c1-866c-458d-ae6b-ada6c9923719.png)
 
 
-# V. Tracking Progress on CMKit
+# V. Tracking Progress
 
 **- Monitoring course progress on CMKit:**
 ![image](https://user-images.githubusercontent.com/75138396/221346807-30dc16cf-6f08-4caa-b8c5-af9a906a7ca2.png)
