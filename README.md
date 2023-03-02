@@ -114,15 +114,16 @@ Students can access material and assignment submissions from previous courses by
 
 Summary of key takeaways:
 
-- CMKit provides a platform for students to collaborate on code projects in a Git controlled environment, with version control and easy access to feedback and support.
+- CMKit provides a platform for students to collaborate on code projects with easy access to feedback and support.
 
 - The Git environment provides an opportunity for students to develop skills in code management and collaborative coding practices, which are highly valued in industry settings.
 
-- By providing a structured and collaborative environment for students to learn and practice coding skills, instructors can help to prepare students for success in future careers in the field.
+- By providing collaborative environment for students to practice coding skills, instructors can prepare students for success in future careers.
 
 Future Ideas:  
 
-- GithubCLI using Github API to grade assignments without having to download files: [github cli.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10848853/github.cli.zip). 
+- [GitHub CLI](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10848853/github.cli.zip) using Github API to grade assignments without having to download files: 
+![github-cli](https://user-images.githubusercontent.com/75138396/222437556-fb4c26b5-045a-43e4-845e-3bdca8c27203.gif)
 
 # VII Presentation 
 [![Presentation link](https://i.imgur.com/tnuMkYt.png)](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view)
