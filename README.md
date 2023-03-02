@@ -118,6 +118,7 @@ Future Ideas:
 
 # VII Presentation 
 [![Presentation link](https://i.imgur.com/tnuMkYt.png)](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view)
+<a href="https://www.youtube.com/watch?v=3FbswLoDg0o&hl=en&cc_lang_pref=en&autoplay=1&rel=0&start=0&mute=1&controls=1&cc_load_policy=1&iv_load_policy=3&vq=hd720&speed=1.5&tlang=en">Play Video</a>
 
 # More information about developments 
 ### Front End:
