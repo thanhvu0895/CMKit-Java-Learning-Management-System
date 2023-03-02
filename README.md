@@ -26,7 +26,7 @@ A Learning Management System written in Pure Java, along with Java Server Pages 
 - **[V. Tracking Progress](#v-tracking-progres)**  
 - **[VI. Conclusion](#vi-conclusion)**  
 - **[VII. Presentation](#vii-presentation)** 
-- **[Development Information](#development-information)**  
+- **[VIII. Development Information](#development-information)**  
 
 # I. Getting Started:
 
