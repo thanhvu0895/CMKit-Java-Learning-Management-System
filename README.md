@@ -78,11 +78,10 @@ The shared materials look like this to a student:
 Professor assigning collaborative assignment which allows more than 1 contributor:
 ![assign-collaborative](https://user-images.githubusercontent.com/75138396/221622838-f3c76c02-4e0b-4f1b-b39f-ee10a9bb8d6e.gif)
 
-Students can setup their account with SSH key using this script: [Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip)  
-Note: If the script detects that Git for Windows is not installed, please install latest version from [Git For Windows](https://git-scm.com/download/win)  
+Students install latest version of [Git For Windows](https://git-scm.com/download/win), then run [Setup Scripts.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10841670/Setup.Scripts.zip).
 ![setup-git-caption2](https://user-images.githubusercontent.com/75138396/221642502-276cecaf-109e-4f62-9250-bb1328ae0fc1.gif)
 
-Student 1 and 2 works on the project by adding commits:
+After setting up, students can work collaboratively by adding commit:
 ![commit-1](https://user-images.githubusercontent.com/75138396/221660301-0862c00f-d238-45b8-878b-30fcd20099d3.gif)
 ![image](https://user-images.githubusercontent.com/75138396/221661753-8bc2c3c1-866c-458d-ae6b-ada6c9923719.png)
 
