@@ -89,8 +89,8 @@ Inviting other students to collaborate and making some commits:
 Other students accepting invitation:
 ![Accepting Collaboration](https://user-images.githubusercontent.com/75138396/222424644-d6519e2b-998e-41a1-bacd-3c32e5c216ab.gif)
 
-
-
+Making contribution to the assignment:
+![Collaborative Commits](https://user-images.githubusercontent.com/75138396/222432741-60498b08-9e04-4235-acfa-a9bcac69e004.gif)
 ![image](https://user-images.githubusercontent.com/75138396/221661753-8bc2c3c1-866c-458d-ae6b-ada6c9923719.png)
 
 
