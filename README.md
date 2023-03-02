@@ -102,6 +102,7 @@ Making contribution to the assignment:
 
 ![image](https://user-images.githubusercontent.com/75138396/221346807-30dc16cf-6f08-4caa-b8c5-af9a906a7ca2.png)
 
+<!--![grading-individual](https://user-images.githubusercontent.com/75138396/222448637-4c2b3f68-3a02-493c-8156-b85701d7ec48.gif)  !-->
 <!-- ![grading-multiple](https://user-images.githubusercontent.com/75138396/222446595-d755af1f-c191-497a-856c-201e3886f560.gif) !-->
 
 **Checking Overall Course progress**
