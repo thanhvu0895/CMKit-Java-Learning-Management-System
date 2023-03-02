@@ -1,3 +1,7 @@
+
+# CMKit  
+A Learning Management System written in Pure Java, along with Java Server Pages and Servlet.
+
 <p align="center">
   <a href="https://thanhvu0895.github.io/CMKit-Learning-Management-System/">
     <img src="https://user-images.githubusercontent.com/75138396/222400712-e7827e82-c1d6-4b12-b2f7-37b88f2143c9.png" alt="CMKit logo" width="100" height="90">
@@ -15,8 +19,6 @@
   <a href="https://github.com/thanhvu0895/CMKit-Learning-Management-System/issues/new?assignees=&labels=feature+request&template=feature_request.md&title=">Request feature</a>
 </p>
 
-# CMKit  
-A Learning Management System written in Pure Java, along with Java Server Pages and Servlet.
 
 # Table of Contents:
 - **[I. Getting Started](#i-getting-started)**  
