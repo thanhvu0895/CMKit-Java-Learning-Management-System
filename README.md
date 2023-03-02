@@ -46,8 +46,6 @@ Students can view the courses they are enrolled in and access course materials, 
 
 # II. Accessing Courses
 
-Students can find and enroll in a course by accepting the invitation link sent to their account. 
-
 **- Find a course:**  
 ![image](https://user-images.githubusercontent.com/75138396/221346966-7ed1d63f-cb29-4d0c-a89f-74abc874ef28.png)
  
@@ -65,13 +63,11 @@ Instructors can add materials to a course/class, which will be visible to all en
 # III. Interacting with Course Content
 Students can view materials and assignments added to a course/class and can complete assignments, which are then graded by the professor or the grader.
 
-
 **- Viewing course content:**   
 ![image](https://user-images.githubusercontent.com/75138396/221347440-835e823d-82cb-4605-8f8c-23cfe6a94dba.png)
 
-The shared materials look like this to a student:  
+The shared materials look like this to a student: 
 ![image](https://user-images.githubusercontent.com/75138396/221347154-bd7ff856-672a-404a-9193-ea5651e7dc51.png)
-
 
 
 **- Assigning and Completing assignments:**
