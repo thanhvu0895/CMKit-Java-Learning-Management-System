@@ -123,7 +123,7 @@ Summary of key takeaways:
 Future Ideas:  
 
 - [GitHub CLI](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10848853/github.cli.zip) using Github API to grade assignments without having to download files: 
-![github-cli](https://user-images.githubusercontent.com/75138396/222437556-fb4c26b5-045a-43e4-845e-3bdca8c27203.gif)
+![github-cli](https://user-images.githubusercontent.com/75138396/222438349-d715a2f2-9ecd-4a3f-95be-914838d07651.gif)
 
 # VII Presentation 
 [![Presentation link](https://i.imgur.com/tnuMkYt.png)](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view)
