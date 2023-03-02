@@ -21,10 +21,10 @@ A Learning Management System written in Pure Java, along with Java Server Pages 
 
 # Table of Contents:
 - **[I. Getting Started](#i-getting-started)**  
-- **[II. Accessing Courses on CMKit](#ii-accessing-courses-on-cmkit)**  
-- **[III. Interacting with Course Content on CMKit](#iii-interacting-with-course-content-on-cmkit)**   
-- **[IV. Participating in group assignments on CMKit](#iv--participating-in-group-assignments-on-cmkit)**  
-- **[V. Tracking Progress on CMKit](#v-tracking-progress-on-cmkit)**  
+- **[II. Accessing Courses](#ii-accessing-courses)**  
+- **[III. Interacting with Course Content](#iii-interacting-with-course-content)**   
+- **[IV. Participating in group assignments](#iv--participating-in-group-assignments)**  
+- **[V. Tracking Progress](#v-tracking-progress-on-cmkit)**  
 - **[VI. Conclusion](#vi-conclusion)**  
 - **[VII. Kit Presentation](#vii-kit-presentation)**  
 
@@ -42,7 +42,7 @@ Students can view the courses they are enrolled in and access course materials, 
 ![klass view](https://i.imgur.com/Q8lGsfj.jpg)
 ![assignment view](https://user-images.githubusercontent.com/75138396/221348916-6495c393-08df-420f-8140-806f0d9b99b2.png)
 
-# II. Accessing Courses on CMKit:
+# II. Accessing Courses:
 
 Students can find and enroll in a course by accepting the invitation link sent to their account. Instructors can add materials to a course/class, which will be visible to all enrolled students when they click on their class from the home page.
 
@@ -56,15 +56,15 @@ Students will be enrolled to a course after they accept the invitation link sent
 After clinking on the invitation link, students will then enter their account information on Kit:  
 ![image](https://user-images.githubusercontent.com/75138396/221348557-2e9be32d-572f-4b5a-a7ce-11b7942e77ce.png)
 
-**- Accessing course materials on CMKit:**
+**- Accessing course materials:**
 Instructors can add materials to a course/ a class as following:  
 ![image](https://user-images.githubusercontent.com/75138396/221347258-79db8124-12fe-4639-a271-faf38eaa1b0e.png)
 
-# III. Interacting with Course Content on CMKit
+# III. Interacting with Course Content
 Students can view materials and assignments added to a course/class and can complete assignments, which are then graded by the professor or the grader.
 
 
-**- Viewing course content on CMKit:**   
+**- Viewing course content:**   
 ![image](https://user-images.githubusercontent.com/75138396/221347440-835e823d-82cb-4605-8f8c-23cfe6a94dba.png)
 
 The shared materials look like this to a student:  
@@ -75,7 +75,7 @@ The shared materials look like this to a student:
 **- Assigning and Completing assignments:**
 ![](https://i.imgur.com/zvVtYPJ.gif)
 
-# IV- Participating in group assignments on CMKit
+# IV- Participating in group assignments
 
 Professor assigning collaborative assignment which allows more than 1 contributor:
 ![assign-collaborative](https://user-images.githubusercontent.com/75138396/221622838-f3c76c02-4e0b-4f1b-b39f-ee10a9bb8d6e.gif)
@@ -97,11 +97,11 @@ Student 1 and 2 works on the project by adding commits:
 ![](https://i.imgur.com/8mTLYMU.jpg)
 ![68747470733a2f2f692e696d6775722e636f6d2f51453247394e6a2e6a7067_auto_x2](https://user-images.githubusercontent.com/75138396/221663960-59719a7e-f852-48d4-bc94-b32b3f1670de.jpg)
 
-**- Checking grades and feedback on CMKit:**  
+**- Checking grades and feedback**  
 Students can view feedback for a certain assignment by clicking on that assignment while viewing the class:
 ![Feedback-cropped](https://user-images.githubusercontent.com/75138396/221392232-3f88e719-24e1-4adf-aa4b-58cea890fe32.gif)
 
-**- Reviewing course history on CMKit:**
+**- Reviewing course history**
 Students can access material and assignment submissions from previous courses by navigating to Past Classes Section from the home page:
 ![image](https://user-images.githubusercontent.com/75138396/221349089-ec661f57-af97-4bf8-96a7-9c42b0e6c708.png)
 
@@ -119,7 +119,7 @@ By providing a structured and collaborative environment for students to learn an
 Future Ideas:
 - GithubCLI to browse Git directory without having to download: [github cli.zip](https://github.com/thanhvu0895/CMKit-Java-Learning-Management-System/files/10848853/github.cli.zip). 
 
-# VII Kit Presentation 
+# VII Presentation 
 [![Presentation link](https://i.imgur.com/tnuMkYt.png)](https://drive.google.com/file/d/1HmIBZJtRYmAtaYE_QU23V37QcD_5UOAY/view)
 
 # Developments 
