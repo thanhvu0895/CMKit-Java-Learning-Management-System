@@ -1,4 +1,23 @@
-[https://thanhvu0895.github.io/CMKit-Learning-Management-System/](https://thanhvu0895.github.io/CMKit-Learning-Management-System/)
+<p align="center">
+  <a href="https://thanhvu0895.github.io/CMKit-Learning-Management-System/">
+    <img src="https://user-images.githubusercontent.com/75138396/222400712-e7827e82-c1d6-4b12-b2f7-37b88f2143c9.png" alt="CMKit logo" width="200" height="165">
+  </a>
+</p>
+
+<p align="center">
+  This Learning Management System makes it easy to submit, grade, and analyze assignments online, while securely storing digital class materials.
+  <br>
+  <a href="http://codingmentorkit.com"><strong>Explore CMKit »</strong></a>
+  <br>
+  <br>
+  <a href="https://github.com/thanhvu0895/CMKit-Learning-Management-System/issues/new">Report bug</a>
+  ·
+  <a href="https://github.com/thanhvu0895/CMKit-Learning-Management-System/issues/new?assignees=&labels=feature+request&template=feature_request.md&title=">Request feature</a>
+</p>
+
+# CMKit
+
+CMKit is a Learning Management System that simplifies the online submission of assignments, grading, and grade analysis, and provides secure storage of digital class materials. It is written in Pure Java, along with Java Server Pages and Servlet.
 
 # Table of Contents:
 - **[I.Introduction](#i-introduction)**  
@@ -11,10 +30,6 @@
 - **[VIII. Kit Presentation](#viii-kit-presentation)**  
 
 
-
-# I. Introduction
-
-CMKit is a Learning Management System that simplifies the online submission of assignments, grading, and grade analysis, and provides secure storage of digital class materials. It is written in Pure Java, along with Java Server Pages and Servlet.
 
 ### Front End:
 
