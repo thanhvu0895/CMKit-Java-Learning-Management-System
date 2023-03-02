@@ -25,9 +25,8 @@ CMKit is a Learning Management System that simplifies the online submission of a
 - CMKit uses Singleton design pattern to help improve efficiency by managing resources, optimizing memory usage, providing thread safety, enabling global access, and offering flexibility. 
 - Model-View-Control Architecture: Servlet + JSP + JDBC + CRUD. Log4J (info.log, debug.log, warn.log, error.log). 
 ![image](https://user-images.githubusercontent.com/75138396/221334562-8e5d23de-6d76-49e9-a14a-d492fa3bbfe5.png)
-- CMKit runs Gitosis to provide a centralized Server to manage Git repositories and their associated access rights.
 ![image](https://user-images.githubusercontent.com/75138396/221334584-7a94e4f9-b5d7-4140-968a-e43fa7a7a35a.png)
-
+- CMKit runs Gitosis to provide a centralized Server to manage Git repositories and their associated access rights.
 
 ### Database
 
