@@ -3,7 +3,7 @@ A Learning Management System written in Pure Java, along with Java Server Pages 
 
 <p align="center">
   <a href="https://thanhvu0895.github.io/CMKit-Learning-Management-System/">
-    <img src="https://user-images.githubusercontent.com/75138396/222668090-0acd9d6a-8d21-4632-ab89-4c969d4bd3f5.jpeg" alt="CMKit logo" width="100" height="90">
+    <img src="https://user-images.githubusercontent.com/75138396/222668090-0acd9d6a-8d21-4632-ab89-4c969d4bd3f5.jpeg" alt="CMKit logo" width="500" height="450">
   </a>
 </p>
 
