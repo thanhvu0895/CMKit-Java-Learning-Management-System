@@ -1,10 +1,9 @@
 A Learning Management System written in Pure Java, along with Java Server Pages and Servlet.
 <!-- [cmkit-logo.zip](https://github.com/thanhvu0895/CMKit-Learning-Management-System/files/10874365/cmkit-logo.zip) !-->
 
-
 <p align="center">
   <a href="https://thanhvu0895.github.io/CMKit-Learning-Management-System/">
-    <img src="https://user-images.githubusercontent.com/75138396/222400712-e7827e82-c1d6-4b12-b2f7-37b88f2143c9.png" alt="CMKit logo" width="100" height="90">
+    <img src="https://user-images.githubusercontent.com/75138396/222668090-0acd9d6a-8d21-4632-ab89-4c969d4bd3f5.jpeg" alt="CMKit logo" width="100" height="90">
   </a>
 </p>
 
