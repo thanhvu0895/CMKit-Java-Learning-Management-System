@@ -44,7 +44,7 @@ Students can:
 - Access course materials and view assignments
 ![materials+assignments](https://user-images.githubusercontent.com/75138396/222874747-d6de72c4-bbbd-41e2-a380-bae5a3dc858e.png)
 
-- View Grades:
+- Check current grade:
 ![grades](https://user-images.githubusercontent.com/75138396/222874788-195c1896-d65b-4167-bef9-55d303fd0e9e.png)
 
 # II. Accessing Courses
