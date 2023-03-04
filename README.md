@@ -42,10 +42,10 @@ Students can:
 ![klass-view](https://user-images.githubusercontent.com/75138396/222874551-3e977f88-c904-4d01-a822-a015038201b9.png)
 
 - Access course materials and view assignments
-![image](https://user-images.githubusercontent.com/75138396/222874747-d6de72c4-bbbd-41e2-a380-bae5a3dc858e.png)
+![materials+assignments](https://user-images.githubusercontent.com/75138396/222874747-d6de72c4-bbbd-41e2-a380-bae5a3dc858e.png)
 
 - View Grades:
-![assignment view](https://user-images.githubusercontent.com/75138396/221348916-6495c393-08df-420f-8140-806f0d9b99b2.png)
+![grades](https://user-images.githubusercontent.com/75138396/222874788-195c1896-d65b-4167-bef9-55d303fd0e9e.png)
 
 # II. Accessing Courses
 
