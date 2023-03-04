@@ -67,7 +67,8 @@ The shared materials look like this to a student:
 
 
 **- Assigning and Completing assignments:**
-![](https://i.imgur.com/zvVtYPJ.gif)
+![Assign-Submit-edited](https://user-images.githubusercontent.com/75138396/222881722-099e6ff0-1fab-48e3-a8aa-e640f2b3f468.gif)
+
 
 # IV- Participating in group assignments
 
