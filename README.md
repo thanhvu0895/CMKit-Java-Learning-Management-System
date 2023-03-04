@@ -37,10 +37,8 @@ Professors often have a spreadsheet of student emails, which you can find [here]
 
 ### 2. Navigating the interface
 
-Students can view the courses they are enrolled in, access materials, check assignments and grades:
+Students can view the courses they are enrolled in, access course materials and assignments, check current grades:
 ![image](https://user-images.githubusercontent.com/75138396/222875217-4e229109-beb5-4f21-bc47-ec94f835ad22.png)
-
-![image](https://user-images.githubusercontent.com/75138396/222875233-966132c5-9f88-40c5-8e56-b9c8c7dfa584.png)
 
 # II. Accessing Courses
 
